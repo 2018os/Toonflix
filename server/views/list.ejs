@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Webtoon List</title>
+  </head>
+  <body>
+    <h1>Webtoon List</h1>
+    All of webtoon in our database: <%= webtoons.length %>
+    <ul>
+      <% webtoons.forEach(webtoon => { %>
+        <oi>
+          <h2>Title: <%= webtoon.title %></h2>
+          <h3>Authors: <%= webtoon.authors %></h3>
+          <h4>Method: <%= webtoon.method %></h4>
+          <h4>Genres: <%= webtoon.genres %></h4>
+          <% if(webtoon.isFinish) { %>
+            <h4>완결</h4>
+          <% } else { %>
+            <h4>연재 중</h4>
+          <% } %>
+          <% if(webtoon.isAdult) { %>
+            <h4>성인</h4>
+          <% } %>
+          <img src=<%= webtoon.thumb %> />
+        </oi>
+      <% }) %>
+    </ul>
+  </body>
+</html>
