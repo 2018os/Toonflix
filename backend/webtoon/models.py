@@ -11,7 +11,7 @@ class Webtoon(models.Model):
 	)
 	title = models.CharField(max_length=100)
 	genre = models.CharField(max_length=50) # n:n
-	author = models.CharField(max_length=100) # n:n
+	# author = models.CharField(max_length=100) # n:n
 	isFinish = models.BooleanField()
 	isAdult = models.BooleanField()
 	isFree = models.BooleanField()
@@ -25,3 +25,13 @@ class Webtoon(models.Model):
 
 	def __str__(self):
 		return self.title
+
+class Author(models.Model):
+	name = models.CharField(max_length=100)
+	webtoons = models.ManyToManyField(Webtoon)
+
+	class Meta:
+		ordering = ["name"]
+
+	def __str__(self):
+		return self.name
