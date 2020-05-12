@@ -33,20 +33,12 @@ class Webtoon(models.Model):
 	platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES)
 	thumbnail = models.URLField(max_length=300)
 
-	# need testing
-	class Meta:
-		ordering = ["genre"]
-
 	def __str__(self):
 		return self.title
 
 
 class Author(models.Model):
 	name = models.CharField(max_length=100)
-	webtoons = models.ManyToManyField(Webtoon)
-
-	class Meta:
-		ordering = ["name"]
 
 	def __str__(self):
 		return self.name
