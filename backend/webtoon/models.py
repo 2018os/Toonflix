@@ -11,10 +11,10 @@ class Webtoon(models.Model):
 	)
 	title = models.CharField(max_length=100)
 	genre = models.CharField(max_length=50) # n:n
-	# author = models.CharField(max_length=100) # n:n
-	isFinish = models.BooleanField()
-	isAdult = models.BooleanField()
-	isFree = models.BooleanField()
+	author = models.CharField(max_length=100) # n:n
+	is_finish = models.BooleanField()
+	is_adult = models.BooleanField()
+	is_free = models.BooleanField()
 	theme = models.CharField(max_length=200, null=True) # n:n
 	platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES) # choice
 	thumbnail = models.URLField(max_length=300)
