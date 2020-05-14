@@ -16,6 +16,13 @@ class Theme(models.Model):
 		return self.title
 
 
+class Author(models.Model):
+	name = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.name
+
+
 class Webtoon(models.Model):
 	PLATFORM_CHOICES = (
 		# ('db', 'form')
@@ -24,21 +31,14 @@ class Webtoon(models.Model):
 		('L', 'Lezhin')
 	)
 	title = models.CharField(max_length=100)
-	genre = models.ManyToManyField(Genre)
-	author = models.ManyToManyField('Author')
+	genre = models.ManyToManyField(Genre, related_name='webtoons')
+	author = models.ManyToManyField(Author, related_name='webtoons')
 	is_finish = models.BooleanField()
 	is_adult = models.BooleanField()
 	is_free = models.BooleanField()
-	theme = models.ManyToManyField(Theme, null=True)
+	theme = models.ManyToManyField(Theme, related_name='webtoons', blank=True)
 	platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES)
 	thumbnail = models.URLField(max_length=300)
 
 	def __str__(self):
 		return self.title
-
-
-class Author(models.Model):
-	name = models.CharField(max_length=100)
-
-	def __str__(self):
-		return self.name
