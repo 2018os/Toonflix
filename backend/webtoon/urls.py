@@ -3,8 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.ListWebtoon.as_view()),
-    path('<int:pk>/', views.DetailWebtoon.as_view()),
+    path('webtoons/', views.ListWebtoon.as_view()),
+    path('webtoon/<int:pk>/', views.DetailWebtoon.as_view()),
     path('themes/', views.ListTheme.as_view()),
     path('theme/<int:pk>/', views.DetailTheme.as_view()),
     path('genres/', views.ListGenre.as_view()),
