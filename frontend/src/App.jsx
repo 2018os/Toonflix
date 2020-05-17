@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Loading from './Loading';
+import WebtoonCard from './WebtoonCard';
 
 const App = () => {
   const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -26,11 +27,7 @@ const App = () => {
       {
         isLoading
         ? <Loading />
-        : data.map(webtoon => (
-          <h1 key={webtoon.id}>
-            {webtoon.title}
-          </h1>
-        ))
+        : <WebtoonCard data={data} />
       }
     </div>
   );
