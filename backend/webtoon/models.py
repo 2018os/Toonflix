@@ -11,6 +11,7 @@ class Genre(models.Model):
 
 class Theme(models.Model):
 	title = models.CharField(max_length=200)
+	webtoons = models.ManyToManyField("Webtoon", related_name='themes')
 
 	def __str__(self):
 		return self.title
@@ -36,7 +37,6 @@ class Webtoon(models.Model):
 	is_finish = models.BooleanField()
 	is_adult = models.BooleanField()
 	is_free = models.BooleanField()
-	themes = models.ManyToManyField(Theme, related_name='webtoons', blank=True)
 	platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES)
 	thumbnail = models.URLField(max_length=300)
 
