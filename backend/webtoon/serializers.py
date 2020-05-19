@@ -2,17 +2,19 @@ from rest_framework import serializers
 from .models import Theme, Genre, Author, Webtoon
 
 class WebtoonSerializer(serializers.ModelSerializer):
+	genres = serializers.StringRelatedField(many=True)
+	authors = serializers.StringRelatedField(many=True)
+
 	class Meta:
 		model = Webtoon
 		fields = (
 			'id',
 			'title',
-			'genre',
-			'author',
+			'genres',
+			'authors',
 			'is_finish',
 			'is_adult',
 			'is_free',
-			'theme',
 			'platform',
 			'thumbnail',
 		)
@@ -20,6 +22,7 @@ class WebtoonSerializer(serializers.ModelSerializer):
 
 class ThemeSerializer(serializers.ModelSerializer):
 	webtoons = WebtoonSerializer(many=True, read_only=True)
+
 	class Meta:
 		model = Theme
 		fields = (
@@ -31,6 +34,7 @@ class ThemeSerializer(serializers.ModelSerializer):
 
 class GenreSerializer(serializers.ModelSerializer):
 	webtoons = WebtoonSerializer(many=True, read_only=True)
+
 	class Meta:
 		model = Genre
 		fields = (
@@ -40,8 +44,10 @@ class GenreSerializer(serializers.ModelSerializer):
 		)
 
 
+
 class AuthorSerializer(serializers.ModelSerializer):
 	webtoons = WebtoonSerializer(many=True, read_only=True)
+
 	class Meta:
 		model = Author
 		fields = (
