@@ -14,7 +14,7 @@ class WebtoonSerializer(serializers.ModelSerializer):
 			'authors',
 			'is_finish',
 			'is_adult',
-			'is_free',
+			'is_pay',
 			'platform',
 			'thumbnail',
 		)

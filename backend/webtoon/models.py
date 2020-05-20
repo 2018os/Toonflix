@@ -36,7 +36,7 @@ class Webtoon(models.Model):
 	authors = models.ManyToManyField(Author, related_name='webtoons')
 	is_finish = models.BooleanField()
 	is_adult = models.BooleanField()
-	is_free = models.BooleanField()
+	is_pay = models.BooleanField()
 	platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES)
 	thumbnail = models.URLField(max_length=300)
 
