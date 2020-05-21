@@ -1,5 +1,5 @@
 import React from 'react';
-import WebtoonList from './WebtoonList';
+import WebtoonList from './components/WebtoonList';
 
 const App = () => (
   <div>

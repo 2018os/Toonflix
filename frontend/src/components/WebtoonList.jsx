@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Card, Carousel } from 'antd';
+import { Carousel } from 'antd';
 import 'antd/dist/antd.css';
 
 import Error from './Error';
@@ -60,15 +60,7 @@ const WebtoonList = () => {
 							>
 								{
 									data.webtoons.map(webtoon => (
-										<Card
-											cover={<img src={webtoon.thumbnail} alt="thumbnail" />}
-											key={webtoon.id}
-										>
-											<Card.Meta
-												title={webtoon.title}
-												description={webtoon.authors}
-											/>
-										</Card>
+										<WebtoonCard webtoon={webtoon} key={webtoon.id} />
 									))
 								}
 							</Carousel>

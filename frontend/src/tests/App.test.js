@@ -3,7 +3,7 @@ import { render, waitForElement } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import App from './App';
+import App from '../App';
 
 describe('<App />', () => {
   const mock = new MockAdapter(axios, { delayResponse: 200 });

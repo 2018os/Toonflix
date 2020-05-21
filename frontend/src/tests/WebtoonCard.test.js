@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import WebtoonCard from './WebtoonCard';
+import WebtoonCard from '../components/WebtoonCard';
 
 describe('<WebtoonCard />', () => {
   const data = [
