@@ -1,16 +1,18 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 import WebtoonList from './components/WebtoonList';
 import Container from './layout/Container';
+import theme from './theme';
 
 const App = () => (
-  <div>
+  <ThemeProvider theme={theme}>
     {/* TODO: Add <Navigation />
     TODO: Add <TopBanner /> */}
     <Container>
       <WebtoonList />
     </Container>
     {/* TODO: Add <Footer /> */}
-  </div>
+  </ThemeProvider>
 )
 
 export default App;
