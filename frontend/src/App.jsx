@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Loading from './Loading';
+import Error from './Error';
 import WebtoonCard from './WebtoonCard';
 
 const App = () => {
@@ -25,9 +26,13 @@ const App = () => {
   return (
     <div className="App">
       {
-        isLoading
-        ? <Loading />
-        : <WebtoonCard data={data} />
+        isError
+        ? <Error />
+        : (
+          !isLoading && data
+          ? <WebtoonCard data={data} />
+          : <Loading />
+        )
       }
     </div>
   );
