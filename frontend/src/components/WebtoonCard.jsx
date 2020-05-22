@@ -12,6 +12,11 @@ const WebtoonCard = ({ webtoon }) => {
     <Card
       cover={<img src={thumbnail} alt="thumbnail" />}
       key={id}
+      style={{
+        maxWidth: 236,
+        margin: 'auto',
+      }}
+      hoverable
     >
       <Card.Meta
         title={title}

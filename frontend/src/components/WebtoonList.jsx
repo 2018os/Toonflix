@@ -1,18 +1,56 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { Carousel } from 'antd';
 import 'antd/dist/antd.css';
 
 import Error from './Error';
 import Loading from './Loading';
 import WebtoonCard from './WebtoonCard';
+import Container from '../layout/Container';
 
 const settings = {
 	dots: false,
 	infinite: true,
 	slidesToShow: 4,
-	slidesToScroll: 4
+	autoplay: true,
+	autoplaySpeed: 1500,
+	draggable: true,
+	initialSlide: 0,
+	responsive: [
+		{
+			breakpoint: 1024,
+			settings: {
+				slidesToShow: 3,
+				slidesToScroll: 3,
+				infinite: true,
+				dots: true
+			}
+		},
+		{
+			breakpoint: 600,
+			settings: {
+				slidesToShow: 2,
+				slidesToScroll: 2,
+				initialSlide: 2
+			}
+		},
+		{
+			breakpoint: 480,
+			settings: {
+				slidesToShow: 1,
+				slidesToScroll: 1
+			}
+		}
+	]
 }
+
+const StyledCarousel = styled(Carousel)`
+	& > .slick-list > .slick-track > .slick-slide > div {
+		margin-right: 5px;
+		margin-left: 5px;
+	}
+`;
 
 const WebtoonList = () => {
 	const [data, setData] = useState();
@@ -41,7 +79,7 @@ const WebtoonList = () => {
 	};
 
   return (
-    <div className="App">
+    <Container>
       {
         isError
         ? <Error />
@@ -52,7 +90,7 @@ const WebtoonList = () => {
 							<strong>#{data.name}</strong>
 							<button onClick={onClickPrev}>←</button>
 							<button onClick={onClickNext}>→</button>
-							<Carousel
+							<StyledCarousel
 								{...settings}
 								ref={ref => {
 									slider.current = ref
@@ -63,13 +101,13 @@ const WebtoonList = () => {
 										<WebtoonCard webtoon={webtoon} key={webtoon.id} />
 									))
 								}
-							</Carousel>
+							</StyledCarousel>
 						</div>
 					)
           : <Loading />
         )
       }
-    </div>
+    </Container>
   );
 };
 

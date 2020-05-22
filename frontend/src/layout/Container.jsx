@@ -1,8 +1,13 @@
 import React from 'react';
-import { Margin } from 'styled-components-spacing';
+import styled from 'styled-components';
+
+const Margin = styled.div`
+  width: 900px;
+  margin: auto;
+`;
 
 const Container = ({ children }) => (
-  <Margin horizontal={6}>
+  <Margin>
     {children}
   </Margin>
 );
