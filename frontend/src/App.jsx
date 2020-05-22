@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import WebtoonList from './components/WebtoonList';
 import Container from './layout/Container';
 import theme from './theme';
+import './App.less';
 
 import styled from 'styled-components';
 
