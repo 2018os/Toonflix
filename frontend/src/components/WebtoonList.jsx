@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Carousel } from 'antd';
+import { Button, Carousel, Space } from 'antd';
 import 'antd/dist/antd.css';
 
 import Error from './Error';
@@ -52,6 +52,17 @@ const StyledCarousel = styled(Carousel)`
 	}
 `;
 
+const ThemeTitle = styled.div`
+	color: ${props => props.theme.primaryColor};
+	font-size: ${props => props.theme.fontSizes.h2};
+`;
+
+const ListHeader = styled.div`
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+`;
+
 const WebtoonList = () => {
 	const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -87,9 +98,18 @@ const WebtoonList = () => {
           !isLoading && data
           ? (
 						<div>
-							<strong>#{data.name}</strong>
-							<button onClick={onClickPrev}>←</button>
-							<button onClick={onClickNext}>→</button>
+							<ListHeader>
+								<Space align="baseline">
+									<ThemeTitle>
+										{data.name}
+									</ThemeTitle>
+									<div style={{ marginLeft: '8px' }}>대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</div>
+								</Space>
+								<div>
+									<Button onClick={onClickPrev}>←</Button>
+									<Button onClick={onClickNext}>→</Button>
+								</div>
+							</ListHeader>
 							<StyledCarousel
 								{...settings}
 								ref={ref => {
