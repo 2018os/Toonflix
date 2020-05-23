@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Margin = styled.div`
-  width: 900px;
+const Page = styled.div`
+  max-width: 900px;
   margin: auto;
 `;
 
 const Container = ({ children }) => (
-  <Margin>
+  <Page>
     {children}
-  </Margin>
+  </Page>
 );
 
 export default Container;
