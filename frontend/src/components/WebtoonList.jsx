@@ -62,7 +62,7 @@ const ListHeader = styled.div`
 	justify-content: space-between;
 `;
 
-const WebtoonList = () => {
+const WebtoonList = ({ fetchUrl }) => {
 	const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
@@ -71,7 +71,7 @@ const WebtoonList = () => {
       setIsError(false);
       setIsLoading(true);
       try {
-				const result = await axios('http://127.0.0.1:8000/api/genre/4');
+				const result = await axios(fetchUrl);
         setData(result.data);
         setIsLoading(false);
       } catch(err) {
