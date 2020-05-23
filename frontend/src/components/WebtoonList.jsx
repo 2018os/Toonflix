@@ -14,7 +14,6 @@ const settings = {
 	infinite: true,
 	slidesToShow: 4,
 	autoplay: true,
-	autoplaySpeed: 1500,
 	draggable: true,
 	initialSlide: 0,
 	responsive: [
