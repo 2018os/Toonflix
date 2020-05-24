@@ -64,7 +64,6 @@ const ListHeader = styled.div`
 
 const WebtoonList = ({ fetchUrl }) => {
 	const [data, setData] = useState();
-	const [isAuto, setIsAuto] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
   useEffect(() => {
@@ -124,7 +123,7 @@ const WebtoonList = ({ fetchUrl }) => {
 								ref={ref => {
 									slider.current = ref
 								}}
-								autoplay={isAuto}
+								autoplay
 							>
 								{
 									data.webtoons.map(webtoon => (
