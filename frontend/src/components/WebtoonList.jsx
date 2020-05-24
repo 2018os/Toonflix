@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Button, Carousel, Space, Switch } from 'antd';
+import { Margin } from 'styled-components-spacing';
+import { Button, Carousel, Space } from 'antd';
 import 'antd/dist/antd.css';
 
 import Error from './Error';
@@ -50,8 +51,8 @@ const StyledButton = styled(Button)`
 
 const StyledCarousel = styled(Carousel)`
 	& > .slick-list > .slick-track > .slick-slide > div {
-		margin-right: 5px;
-		margin-left: 5px;
+		margin-right: ${props => props.theme.spacing[1]};
+		margin-left: ${props => props.theme.spacing[1]};
 	}
 `;
 
@@ -102,11 +103,12 @@ const WebtoonList = ({ fetchUrl }) => {
 						<div>
 							<ListHeader>
 								<Space align="baseline">
-									<Title size="h3">
+									<Title size="h2">
 										{data.name}
 									</Title>
-									<Text size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Text>
-									<Switch onClick={() => setIsAuto(!isAuto)} checked={isAuto} />
+									<Margin bottom={3}>
+										<Text size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Text>
+									</Margin>
 								</Space>
 								<div>
 									<StyledButton onClick={onClickPrev}>

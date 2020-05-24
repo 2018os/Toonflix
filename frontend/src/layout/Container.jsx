@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Page = styled.div`
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
 `;
 
