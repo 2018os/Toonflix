@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Button, Carousel, Space } from 'antd';
+import { Button, Carousel, Space, Switch } from 'antd';
 import 'antd/dist/antd.css';
 
 import Error from './Error';
@@ -14,7 +14,6 @@ const settings = {
 	dots: false,
 	infinite: true,
 	slidesToShow: 4,
-	autoplay: true,
 	draggable: true,
 	initialSlide: 0,
 	responsive: [
@@ -64,6 +63,7 @@ const ListHeader = styled.div`
 
 const WebtoonList = ({ fetchUrl }) => {
 	const [data, setData] = useState();
+	const [isAuto, setIsAuto] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
   useEffect(() => {
@@ -80,10 +80,13 @@ const WebtoonList = ({ fetchUrl }) => {
     };
     fetchData();
 	}, [fetchUrl]);
+
 	const slider = useRef();
+
 	const onClickNext = () => {
 		slider.current.next();
 	};
+
 	const onClickPrev = () => {
 		slider.current.prev();
 	};
@@ -103,12 +106,13 @@ const WebtoonList = ({ fetchUrl }) => {
 										{data.name}
 									</Title>
 									<Text size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Text>
+									<Switch onClick={() => setIsAuto(!isAuto)} checked={isAuto} />
 								</Space>
 								<div>
 									<StyledButton onClick={onClickPrev}>
 										←
 									</StyledButton>
-									<StyledButton onClick={onClickNext} >
+									<StyledButton onClick={onClickNext}>
 										→
 									</StyledButton>
 								</div>
@@ -118,6 +122,7 @@ const WebtoonList = ({ fetchUrl }) => {
 								ref={ref => {
 									slider.current = ref
 								}}
+								autoplay={isAuto}
 							>
 								{
 									data.webtoons.map(webtoon => (
