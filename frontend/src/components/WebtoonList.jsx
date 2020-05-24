@@ -8,6 +8,7 @@ import Error from './Error';
 import Loading from './Loading';
 import WebtoonCard from './WebtoonCard';
 import Container from '../layout/Container';
+import { Title, Text } from '../styles/Typography';
 
 const settings = {
 	dots: false,
@@ -49,11 +50,6 @@ const StyledCarousel = styled(Carousel)`
 		margin-right: 5px;
 		margin-left: 5px;
 	}
-`;
-
-const ThemeTitle = styled.div`
-	color: ${props => props.theme.primaryColor};
-	font-size: ${props => props.theme.fontSizes.h2};
 `;
 
 const ListHeader = styled.div`
@@ -99,10 +95,10 @@ const WebtoonList = ({ fetchUrl }) => {
 						<div>
 							<ListHeader>
 								<Space align="baseline">
-									<ThemeTitle>
+									<Title size="h3">
 										{data.name}
-									</ThemeTitle>
-									<div style={{ marginLeft: '8px' }}>대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</div>
+									</Title>
+									<Text size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Text>
 								</Space>
 								<div>
 									<Button onClick={onClickPrev}>←</Button>
