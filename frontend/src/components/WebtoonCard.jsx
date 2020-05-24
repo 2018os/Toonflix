@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card } from 'antd';
 
+import Thumbnail from './Thumbnail';
+
 const WebtoonCard = ({ webtoon }) => {
   const {
     id,
@@ -10,11 +12,10 @@ const WebtoonCard = ({ webtoon }) => {
   } = webtoon;
   return (
     <Card
-      cover={<img src={thumbnail} alt="thumbnail" />}
+      cover={<Thumbnail src={thumbnail} />}
       key={id}
       style={{
         maxWidth: 236,
-        margin: 'auto',
       }}
       hoverable
     >
