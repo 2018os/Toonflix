@@ -79,7 +79,7 @@ const WebtoonList = ({ fetchUrl }) => {
       }
     };
     fetchData();
-	}, []);
+	}, [fetchUrl]);
 	const slider = useRef();
 	const onClickNext = () => {
 		slider.current.next();
