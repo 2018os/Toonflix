@@ -8,11 +8,24 @@ const fontSizes = {
   h1 : '48px',
   h2 : '36px',
   h3 : '24px',
-}
+};
+
+const colors = {
+  primaryColor: '#5e74ff',
+  gray: '#EAEDED',
+  black: '#212121',
+};
+
+const textColors = {
+  primaryColor: '#5e74ff',
+  gray: '#7A7A7A',
+  black: '#212121',
+};
 
 const theme = {
   // colors
-  primaryColor: '#5e74ff',
+  colors,
+  textColors,
   // fontSizes
   fontSizes,
   // spaces

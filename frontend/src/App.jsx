@@ -22,7 +22,7 @@ const Div = styled.div`
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <Background color="#EAEDED">
+    <Background color="gray">
 
       {/*
       TODO: Add <Navigation />
