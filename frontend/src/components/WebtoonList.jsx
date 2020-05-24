@@ -45,6 +45,10 @@ const settings = {
 	]
 }
 
+const StyledButton = styled(Button)`
+	border-radius: 10px;
+`;
+
 const StyledCarousel = styled(Carousel)`
 	& > .slick-list > .slick-track > .slick-slide > div {
 		margin-right: 5px;
@@ -101,8 +105,12 @@ const WebtoonList = ({ fetchUrl }) => {
 									<Text size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Text>
 								</Space>
 								<div>
-									<Button onClick={onClickPrev}>←</Button>
-									<Button onClick={onClickNext}>→</Button>
+									<StyledButton onClick={onClickPrev}>
+										←
+									</StyledButton>
+									<StyledButton onClick={onClickNext} >
+										→
+									</StyledButton>
 								</div>
 							</ListHeader>
 							<StyledCarousel
