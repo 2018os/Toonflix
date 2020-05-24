@@ -22,6 +22,14 @@ const textColors = {
   black: '#212121',
 };
 
+const spacing = {
+  1: '8px',
+  2: '16px',
+  3: '24px',
+  4: '32px',
+  5: '40px'
+};
+
 const theme = {
   // colors
   colors,
@@ -29,6 +37,7 @@ const theme = {
   // fontSizes
   fontSizes,
   // spaces
+  spacing,
 };
 
 export default theme;
