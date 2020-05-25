@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-유료_24x24);
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-size: 18px;
+        font-family: NotoSansCJKkr-Medium, Noto Sans CJK KR;
+        font-weight: 500;
+      }
+
+      .cls-3 {
+        fill: #5e74ff;
+      }
+    </style>
+    <clipPath id="clip-유료_24x24">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="유료_24x24" data-name="유료 24x24" class="cls-1">
+    <rect class="cls-3" width="24" height="24"/>
+    <text id="_" data-name="$" class="cls-2" transform="translate(7 18)"><tspan x="0" y="0">$</tspan></text>
+  </g>
+</svg>
