@@ -5,10 +5,17 @@ import styled from 'styled-components';
 const StyledImg = styled.img`
   border-radius: 5px !important;
   margin-bottom: 1px;
+  margin-left: auto;
+`;
+
+const AdultWidgetWrapper = styled.div`
+  position: absolute;
 `;
 
 const AdultWidget = () => (
-  <StyledImg src="/icon/adult.svg" />
+  <AdultWidgetWrapper>
+    <StyledImg src="/icon/adult.svg" />
+  </AdultWidgetWrapper>
 );
 
 const PayWidget = () => (

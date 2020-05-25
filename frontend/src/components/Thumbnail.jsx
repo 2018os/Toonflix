@@ -9,7 +9,7 @@ const ThumbnailWrapper = styled.div`
 const WidgetWrapper = styled.div`
   padding: ${props => props.theme.spacing[1]};
   position: absolute;
-  right: 0;
+  width: 100%;
   & > img:last-child {
     margin-bottom: 0;
   }
