@@ -44,15 +44,13 @@ const WebtoonCard = ({ webtoon }) => {
       hoverable
     >
       <Card.Meta
-        title={title}
+        title={(<Text>{title}</Text>)}
         description={(
           <div>
             {
-              authors.map((author, i) => (
-                <Text key={`author-${i}`}>
-                  {author}
-                </Text>
-              ))
+              <Text size="smallest" color="gray">
+                {authors.join(' / ')}
+              </Text>
             }
             <Margin top={1}>
               {
