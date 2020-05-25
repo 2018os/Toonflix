@@ -99,31 +99,31 @@ const WebtoonList = ({ fetchUrl }) => {
         : (
           !isLoading && data
           ? (
-						<div>
-							<ListHeader>
-								<Space align="baseline">
-									<Title size="h2">
-										{data.name}
-									</Title>
-									<Margin bottom={3}>
+						<Margin bottom={5}>
+							<Margin bottom={2}>
+								<ListHeader>
+									<Space align="baseline">
+										<Title size="h2">
+											{data.name}
+										</Title>
 										<Text size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Text>
-									</Margin>
-								</Space>
-								<div>
-									<StyledButton onClick={onClickPrev}>
-										←
-									</StyledButton>
-									<StyledButton onClick={onClickNext}>
-										→
-									</StyledButton>
-								</div>
-							</ListHeader>
+									</Space>
+									<div>
+										<StyledButton onClick={onClickPrev}>
+											←
+										</StyledButton>
+										<StyledButton onClick={onClickNext}>
+											→
+										</StyledButton>
+									</div>
+								</ListHeader>
+							</Margin>
 							<StyledCarousel
 								{...settings}
 								ref={ref => {
 									slider.current = ref
 								}}
-								autoplay
+								// autoplay
 							>
 								{
 									data.webtoons.map(webtoon => (
@@ -131,7 +131,7 @@ const WebtoonList = ({ fetchUrl }) => {
 									))
 								}
 							</StyledCarousel>
-						</div>
+						</Margin>
 					)
           : <Loading />
         )
