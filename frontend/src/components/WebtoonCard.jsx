@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Margin } from 'styled-components-spacing';
 import { Card } from 'antd';
 
 import Thumbnail from './Thumbnail';
+import Tag from '../styles/Tag';
+import { Text } from '../styles/Typography';
 
 // TODO: Remove CSS override
 const StyledCard = styled(Card)`
@@ -16,6 +19,7 @@ const WebtoonCard = ({ webtoon }) => {
     id,
     title,
     authors,
+    genres,
     thumbnail,
     is_pay,
     is_adult,
@@ -41,7 +45,26 @@ const WebtoonCard = ({ webtoon }) => {
     >
       <Card.Meta
         title={title}
-        description={authors}
+        description={(
+          <div>
+            {
+              authors.map((author, i) => (
+                <Text key={`author-${i}`}>
+                  {author}
+                </Text>
+              ))
+            }
+            <Margin top={1}>
+              {
+                genres.map((genre, j) => (
+                  <Tag key={`genre-${j}`}>
+                    #{genre}
+                  </Tag>
+                ))
+              }
+            </Margin>
+          </div>
+        )}
       />
     </StyledCard>
   );
