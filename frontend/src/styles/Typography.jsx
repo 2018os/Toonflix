@@ -10,7 +10,12 @@ const SubTitle = styled.h2`
 	font-size: ${props => props.theme.fontSizes[props.size]};
 `;
 
-const Text = styled.p`
+const Text = styled.span`
+	color: ${props => props.theme.textColors[props.color]};
+	font-size: ${props => props.theme.fontSizes[props.size]};
+`;
+
+const Paragraph = styled.p`
 	color: ${props => props.theme.textColors[props.color]};
 	font-size: ${props => props.theme.fontSizes[props.size]};
 `;
@@ -30,8 +35,14 @@ Text.defaultProps = {
   size: 'default',
 }
 
+Paragraph.defaultProps = {
+  color: 'black',
+  size: 'default',
+}
+
 export {
   Title,
   SubTitle,
-  Text
+  Text,
+  Paragraph,
 };

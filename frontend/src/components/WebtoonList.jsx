@@ -9,7 +9,7 @@ import Error from './Error';
 import Loading from './Loading';
 import WebtoonCard from './WebtoonCard';
 import Container from '../layout/Container';
-import { Title, Text } from '../styles/Typography';
+import { Title, Paragraph } from '../styles/Typography';
 
 const settings = {
 	dots: false,
@@ -106,7 +106,7 @@ const WebtoonList = ({ fetchUrl }) => {
 										<Title size="h2">
 											{data.name}
 										</Title>
-										<Text size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Text>
+										<Paragraph size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Paragraph>
 									</Space>
 									<div>
 										<StyledButton onClick={onClickPrev}>
