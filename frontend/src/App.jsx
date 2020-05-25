@@ -4,8 +4,10 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import theme from './theme';
 import './styles/globals';
 import Page from './layout/Page';
+import Section from './layout/Section';
 
 import Main from './components/Main';
+import Topbanner from './components/Topbanner';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -62,16 +64,18 @@ const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
     <Page backgroundColor="gray">
-
       {/*
       TODO: Add <Navigation />
-      TODO: Add <TopBanner />
       */}
-      <Main />
+      <Section backgroundColor="primaryColor">
+        <Topbanner />
+      </Section>
+      <Section>
+        <Main />
+      </Section>
       {/*
       TODO: Add <Footer />
       */}
-
     </Page>
   </ThemeProvider>
 )
