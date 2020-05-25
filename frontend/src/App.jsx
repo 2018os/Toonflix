@@ -3,7 +3,7 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 import theme from './theme';
 import './styles/globals';
-import Background from './layout/Background';
+import Page from './layout/Page';
 
 import Main from './components/Main';
 
@@ -61,7 +61,7 @@ table {
 const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
-    <Background color="gray">
+    <Page backgroundColor="gray">
 
       {/*
       TODO: Add <Navigation />
@@ -72,7 +72,7 @@ const App = () => (
       TODO: Add <Footer />
       */}
 
-    </Background>
+    </Page>
   </ThemeProvider>
 )
 
