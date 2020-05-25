@@ -45,6 +45,9 @@ const WebtoonCard = ({ webtoon }) => {
     >
       <Card.Meta
         title={(<Text>{title}</Text>)}
+        style={{
+          textAlign: 'center',
+        }}
         description={(
           <div>
             {
