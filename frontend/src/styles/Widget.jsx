@@ -14,16 +14,16 @@ const AdultWidgetWrapper = styled.div`
 
 const AdultWidget = () => (
   <AdultWidgetWrapper>
-    <StyledImg src="/icon/adult.svg" />
+    <StyledImg src="/icon/widgets/adult.svg" />
   </AdultWidgetWrapper>
 );
 
 const PayWidget = () => (
-  <StyledImg src="/icon/pay.svg" />
+  <StyledImg src="/icon/widgets/pay.svg" />
 );
 
 const PlatFormWidget = ({ platform }) => (
-  <StyledImg src={`/icon/small${platform}.svg`} />
+  <StyledImg src={`/icon/widgets/${platform}.svg`} />
 );
 
 export {
