@@ -104,9 +104,9 @@ const WebtoonList = ({ fetchUrl }) => {
 								<ListHeader>
 									<Space align="baseline">
 										<Title size="h2">
-											{data.name}
+											{data.title}
 										</Title>
-										<Paragraph size="small">대~~~~~충 이런 느낌의 20 글자 짜리 테마 소개</Paragraph>
+										<Paragraph size="small">{data.description}</Paragraph>
 									</Space>
 									<div>
 										<StyledButton onClick={onClickPrev}>
