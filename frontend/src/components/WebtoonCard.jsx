@@ -40,6 +40,7 @@ const WebtoonCard = ({ webtoon }) => {
       key={id}
       style={{
         maxWidth: 236,
+        height: 360,
       }}
       hoverable
     >
