@@ -4,6 +4,7 @@ from .models import Theme, Genre, Author, Webtoon
 class WebtoonSerializer(serializers.ModelSerializer):
 	genres = serializers.StringRelatedField(many=True)
 	authors = serializers.StringRelatedField(many=True)
+	platform = serializers.CharField(source='get_platform_display')
 
 	class Meta:
 		model = Webtoon
@@ -17,6 +18,7 @@ class WebtoonSerializer(serializers.ModelSerializer):
 			'is_pay',
 			'platform',
 			'thumbnail',
+			'description',
 		)
 
 
@@ -28,7 +30,8 @@ class ThemeSerializer(serializers.ModelSerializer):
 		fields = (
 			'id',
 			'title',
-			"webtoons",
+			'webtoons',
+			'description',
 		)
 
 
@@ -40,7 +43,7 @@ class GenreSerializer(serializers.ModelSerializer):
 		fields = (
 			'id',
 			'name',
-			"webtoons",
+			'webtoons',
 		)
 
 
@@ -53,5 +56,5 @@ class AuthorSerializer(serializers.ModelSerializer):
 		fields = (
 			'id',
 			'name',
-			"webtoons",
+			'webtoons',
 		)
