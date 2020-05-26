@@ -44,7 +44,7 @@ const WebtoonCard = ({ webtoon }) => {
       hoverable
     >
       <Card.Meta
-        title={(<Text>{title}</Text>)}
+        title={(<Text bold>{title}</Text>)}
         style={{
           textAlign: 'center',
         }}

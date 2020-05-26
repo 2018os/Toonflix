@@ -1,23 +1,25 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const baseTypoCss = css`
+  color: ${props => props.theme.textColors[props.color]};
+  font-size: ${props => props.theme.fontSizes[props.size]};
+  font-weight: ${props => props.bold && 'bold'};
+`;
 
 const Title = styled.h1`
-	color: ${props => props.theme.textColors[props.color]};
-	font-size: ${props => props.theme.fontSizes[props.size]};
+  ${baseTypoCss}
 `;
 
 const SubTitle = styled.h2`
-	color: ${props => props.theme.textColors[props.color]};
-	font-size: ${props => props.theme.fontSizes[props.size]};
+  ${baseTypoCss}
 `;
 
 const Text = styled.span`
-	color: ${props => props.theme.textColors[props.color]};
-	font-size: ${props => props.theme.fontSizes[props.size]};
+  ${baseTypoCss}
 `;
 
 const Paragraph = styled.p`
-	color: ${props => props.theme.textColors[props.color]};
-	font-size: ${props => props.theme.fontSizes[props.size]};
+  ${baseTypoCss}
 `;
 
 Title.defaultProps = {
