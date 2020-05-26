@@ -12,9 +12,14 @@ class Genre(models.Model):
 class Theme(models.Model):
 	title = models.CharField(max_length=200)
 	webtoons = models.ManyToManyField("Webtoon", related_name='themes')
+	description = models.TextField()
+
+	class Meta:
+		ordering = ['id']
 
 	def __str__(self):
 		return self.title
+
 
 
 class Author(models.Model):
@@ -39,6 +44,11 @@ class Webtoon(models.Model):
 	is_pay = models.BooleanField()
 	platform = models.CharField(max_length=1, choices=PLATFORM_CHOICES)
 	thumbnail = models.URLField(max_length=300)
+	description = models.TextField()
+	source = models.URLField(max_length=200)
+
+	class Meta:
+		ordering = ['id']
 
 	def __str__(self):
 		return self.title
