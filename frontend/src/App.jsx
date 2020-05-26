@@ -5,6 +5,7 @@ import theme from './theme';
 import './styles/globals';
 import Page from './layout/Page';
 import Section from './layout/Section';
+import Navigation from './layout/Navigation';
 
 import Main from './components/Main';
 import Topbanner from './components/Topbanner';
@@ -68,6 +69,7 @@ const App = () => (
       {/*
       TODO: Add <Navigation />
       */}
+      <Navigation />
       <Section backgroundColor="primaryColor">
         <Topbanner />
       </Section>
