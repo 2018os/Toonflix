@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // TODO: Remove important
 const StyledImg = styled.img`
   border-radius: 5px !important;
-  margin-bottom: 1px;
+  margin-bottom: ${props => props.theme.spacing[0]};
   margin-left: auto;
 `;
 
