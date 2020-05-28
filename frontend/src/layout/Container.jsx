@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Margin } from 'styled-components-spacing';
 
 const Page = styled.div`
-  max-width: 1000px;
+  width: 1024px; // for Desktop breakpoint
+  // width: 768px; // for Tablet breakpoint
   margin: auto;
 `;
 
 const Container = ({ children }) => (
   <Page>
-    {children}
+    <Margin horizontal={2}>
+      {children}
+    </Margin>
   </Page>
 );
 
