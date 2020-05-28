@@ -3,12 +3,11 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 import theme from './theme';
 import './styles/globals';
+
 import Page from './layout/Page';
-import Section from './layout/Section';
-import Navigation from './layout/Navigation';
+import Container from './layout/Container';
 
 import Main from './components/Main';
-import Topbanner from './components/Topbanner';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -66,16 +65,16 @@ const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
     <Page backgroundColor="gray">
-      {/*
-      TODO: Add <Navigation />
-      */}
-      <Navigation />
-      <Section backgroundColor="primaryColor">
-        <Topbanner />
-      </Section>
-      <Section>
+      <Container>
+
+        {/* TODO
+        <MainLogo />
+        <SearchBar />
+        <Menu />
+        <Divider /> */}
+
         <Main />
-      </Section>
+      </Container>
       {/*
       TODO: Add <Footer />
       */}
