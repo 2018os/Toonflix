@@ -8,7 +8,6 @@ import 'antd/dist/antd.css';
 import Error from './Error';
 import Loading from './Loading';
 import WebtoonCard from './WebtoonCard';
-import Container from '../layout/Container';
 import { Title, Paragraph } from '../styles/Typography';
 
 const settings = {
@@ -92,51 +91,47 @@ const WebtoonList = ({ fetchUrl }) => {
 	};
 
   return (
-    <Container>
-      {
-        isError
-        ? <Error />
-        : (
-          !isLoading && data
-          ? (
-						<Margin bottom={5}>
-							<Margin bottom={2}>
-								<ListHeader>
-									<Space align="baseline">
-										<Title size="h2">
-											{data.title}
-										</Title>
-										<Paragraph size="small">{data.description}</Paragraph>
-									</Space>
-									<div>
-										<StyledButton onClick={onClickPrev}>
-											←
-										</StyledButton>
-										<StyledButton onClick={onClickNext}>
-											→
-										</StyledButton>
-									</div>
-								</ListHeader>
-							</Margin>
-							<StyledCarousel
-								{...settings}
-								ref={ref => {
-									slider.current = ref
-								}}
-								// autoplay
-							>
-								{
-									data.webtoons.map(webtoon => (
-										<WebtoonCard webtoon={webtoon} key={webtoon.id} />
-									))
-								}
-							</StyledCarousel>
-						</Margin>
-					)
-          : <Loading />
-        )
-      }
-    </Container>
+		isError
+		? <Error />
+		: (
+			!isLoading && data
+			? (
+				<Margin bottom={5}>
+					<Margin bottom={2}>
+						<ListHeader>
+							<Space align="baseline">
+								<Title size="h2">
+									{data.title}
+								</Title>
+								<Paragraph size="small">{data.description}</Paragraph>
+							</Space>
+							<div>
+								<StyledButton onClick={onClickPrev}>
+									←
+								</StyledButton>
+								<StyledButton onClick={onClickNext}>
+									→
+								</StyledButton>
+							</div>
+						</ListHeader>
+					</Margin>
+					<StyledCarousel
+						{...settings}
+						ref={ref => {
+							slider.current = ref
+						}}
+						// autoplay
+					>
+						{
+							data.webtoons.map(webtoon => (
+								<WebtoonCard webtoon={webtoon} key={webtoon.id} />
+							))
+						}
+					</StyledCarousel>
+				</Margin>
+			)
+			: <Loading />
+		)
   );
 };
 
