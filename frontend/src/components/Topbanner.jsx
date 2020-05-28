@@ -1,11 +1,9 @@
 import React from 'react';
 
-import Container from '../layout/Container';
-
 const Topbanner = () => (
-  <Container>
+  <div>
     topbanner
-  </Container>
+  </div>
 );
 
 export default Topbanner;
