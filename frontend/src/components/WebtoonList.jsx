@@ -13,7 +13,6 @@ import { Title, Paragraph } from '../styles/Typography';
 const settings = {
 	dots: false,
 	infinite: true,
-	slidesToShow: 4,
 	draggable: true,
 	initialSlide: 0,
 	variableWidth: true,
