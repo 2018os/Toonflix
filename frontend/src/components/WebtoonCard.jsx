@@ -9,6 +9,7 @@ import { Text } from '../styles/Typography';
 
 // TODO: Remove CSS override
 const StyledCard = styled(Card)`
+  margin-right: ${props => props.theme.spacing[2]};
   & > .ant-card-cover img {
     border-radius: initial;
   }
@@ -39,7 +40,7 @@ const WebtoonCard = ({ webtoon }) => {
       cover={<Thumbnail src={thumbnail} widget={widget} />}
       key={id}
       style={{
-        maxWidth: 236,
+        width: 236,
         height: 360,
       }}
       hoverable

@@ -16,6 +16,7 @@ const settings = {
 	slidesToShow: 4,
 	draggable: true,
 	initialSlide: 0,
+	variableWidth: true,
 	responsive: [
 		{
 			breakpoint: 1024,
@@ -46,13 +47,6 @@ const settings = {
 
 const StyledButton = styled(Button)`
 	border-radius: 10px;
-`;
-
-const StyledCarousel = styled(Carousel)`
-	& > .slick-list > .slick-track > .slick-slide > div {
-		margin-right: ${props => props.theme.spacing[1]};
-		margin-left: ${props => props.theme.spacing[1]};
-	}
 `;
 
 const ListHeader = styled.div`
@@ -115,19 +109,19 @@ const WebtoonList = ({ fetchUrl }) => {
 							</div>
 						</ListHeader>
 					</Margin>
-					<StyledCarousel
+					<Carousel
 						{...settings}
 						ref={ref => {
 							slider.current = ref
 						}}
-						// autoplay
+						// TODO: autoplay true when production mode
 					>
 						{
 							data.webtoons.map(webtoon => (
 								<WebtoonCard webtoon={webtoon} key={webtoon.id} />
 							))
 						}
-					</StyledCarousel>
+					</Carousel>
 				</Margin>
 			)
 			: <Loading />
