@@ -9,6 +9,7 @@ import Container from './layout/Container';
 
 import MainLogo from './components/MainLogo';
 import Main from './components/Main';
+import Menu from './components/Menu';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -69,6 +70,9 @@ const App = () => (
       <Container>
         <Section>
           <MainLogo />
+        </Section>
+        <Section>
+          <Menu />
         </Section>
         <Section>
           <Main />
