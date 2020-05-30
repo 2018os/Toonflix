@@ -26,8 +26,13 @@ const PlatFormWidget = ({ platform }) => (
   <StyledImg src={`/icon/widgets/${platform}.svg`} />
 );
 
+const CompleteWidget = () => (
+  <StyledImg src="/icon/widgets/complete.svg" />
+);
+
 export {
   AdultWidget,
   PayWidget,
   PlatFormWidget,
+  CompleteWidget,
 };

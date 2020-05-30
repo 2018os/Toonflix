@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { AdultWidget, PayWidget, PlatFormWidget } from '../styles/Widget';
+import { AdultWidget, PayWidget, PlatFormWidget, CompleteWidget } from '../styles/Widget';
 
 const ThumbnailWrapper = styled.div`
 `;
@@ -20,7 +20,7 @@ const Cover = styled.img`
 `;
 
 const Thumbnail = ({ src, widget }) => {
-  const { pay, adult, platform } = widget;
+  const { pay, adult, platform, finish } = widget;
   return (
     <ThumbnailWrapper>
       <WidgetWrapper>
@@ -32,6 +32,9 @@ const Thumbnail = ({ src, widget }) => {
         }
         {
           pay && <PayWidget />
+        }
+        {
+          finish && <CompleteWidget />
         }
       </WidgetWrapper>
       <Cover src={src} alt="thumbnail" />
