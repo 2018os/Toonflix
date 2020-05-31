@@ -1,27 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 
+import withFetch from '../hocs/withFetch';
 import WebtoonList from './WebtoonList';
 
-const Main = () => {
-  const [themes, setThemes] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios('http://127.0.0.1:8000/api/themes');
-        setThemes(result.data.slice(0, 4));
-      } catch(err) {
-      }
-    };
-    fetchData();
-  }, []);
+const Main = ({ data, isError }) => { // TODO: Make error state
+  const themes = data && data.slice(0, 4);
   return (
-    themes && (
-      themes.map(theme => (
-        <WebtoonList fetchUrl={`http://127.0.0.1:8000/api/theme/${theme.id}`} key={`theme-${theme.id}`} />
-      ))
+    themes
+    ? (
+      themes.map(theme => {
+        const FetchedWebtoonList = withFetch(`http://127.0.0.1:8000/api/theme/${theme.id}`)(WebtoonList)
+        return <FetchedWebtoonList key={`theme-${theme.id}`} />
+      })
     )
+    : 'loading' // TODO: Make loading state
   )
 };
 
-export default Main;
+export default withFetch('http://127.0.0.1:8000/api/themes')(Main);
