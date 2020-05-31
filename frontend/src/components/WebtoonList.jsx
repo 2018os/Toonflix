@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Margin } from 'styled-components-spacing';
 import { Button, Carousel, Space } from 'antd';
 import 'antd/dist/antd.css';
 
-import Error from './Error';
 import Loading from './Loading';
 import WebtoonCard from './WebtoonCard';
 import { Title, Paragraph } from '../styles/Typography';
@@ -54,25 +52,7 @@ const ListHeader = styled.div`
 	justify-content: space-between;
 `;
 
-const WebtoonList = ({ fetchUrl }) => {
-	const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-				const result = await axios(fetchUrl);
-        setData(result.data);
-        setIsLoading(false);
-      } catch(err) {
-        setIsError(true);
-      }
-    };
-    fetchData();
-	}, [fetchUrl]);
-
+const WebtoonList = ({ data, isError }) => { // TODO: Make error state
 	const slider = useRef();
 
 	const onClickNext = () => {
@@ -84,48 +64,44 @@ const WebtoonList = ({ fetchUrl }) => {
 	};
 
   return (
-		isError
-		? <Error />
-		: (
-			!isLoading && data
-			? (
-				<Margin bottom={5}>
-					<Margin bottom={2}>
-						<ListHeader>
-							<Space align="baseline">
-								<Title size="h2">
-									{data.title}
-								</Title>
-								<Paragraph size="small">{data.description}</Paragraph>
-							</Space>
-							<div>
-								<StyledButton onClick={onClickPrev}>
-									←
-								</StyledButton>
-								<StyledButton onClick={onClickNext}>
-									→
-								</StyledButton>
-							</div>
-						</ListHeader>
-					</Margin>
-					<Carousel
-						{...settings}
-						ref={ref => {
-							slider.current = ref
-						}}
-						// TODO: autoplay true when production mode
-					>
-						{
-							data.webtoons.map(webtoon => (
-								<WebtoonCard webtoon={webtoon} key={webtoon.id} />
-							))
-						}
-					</Carousel>
+		data
+		? (
+			<Margin bottom={5}>
+				<Margin bottom={2}>
+					<ListHeader>
+						<Space align="baseline">
+							<Title size="h2">
+								{data.title}
+							</Title>
+							<Paragraph size="small">{data.description}</Paragraph>
+						</Space>
+						<div>
+							<StyledButton onClick={onClickPrev}>
+								←
+							</StyledButton>
+							<StyledButton onClick={onClickNext}>
+								→
+							</StyledButton>
+						</div>
+					</ListHeader>
 				</Margin>
-			)
-			: <Loading />
+				<Carousel
+					{...settings}
+					ref={ref => {
+						slider.current = ref
+					}}
+					// TODO: autoplay true when production mode
+				>
+					{
+						data.webtoons.map(webtoon => (
+							<WebtoonCard webtoon={webtoon} key={webtoon.id} />
+						))
+					}
+				</Carousel>
+			</Margin>
 		)
-  );
+		: <Loading /> // TODO: Make loading state
+	);
 };
 
 export default WebtoonList;
