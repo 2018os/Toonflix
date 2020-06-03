@@ -1,15 +1,14 @@
 import React from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
+// layout
+import Footer from './layout/Footer';
+
+// components
+import Main from './components/Main';
+
 import theme from './theme';
 import './styles/globals';
-
-import { Page, Section } from './layout/Layout';
-import Container from './layout/Container';
-
-import MainLogo from './components/MainLogo';
-import Main from './components/Main';
-import Menu from './components/Menu';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -66,27 +65,8 @@ table {
 const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
-    <Page backgroundColor="gray">
-      <Container>
-        <Section>
-          <MainLogo />
-        </Section>
-        <Section>
-          <Menu />
-        </Section>
-        <Section>
-          <Main />
-        </Section>
-
-        {/* TODO
-        <SearchBar />
-        <Menu />
-        <Divider /> */}
-      </Container>
-      {/*
-      TODO: Add <Footer />
-      */}
-    </Page>
+    <Main />
+    <Footer />
   </ThemeProvider>
 )
 
