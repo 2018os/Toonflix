@@ -10,9 +10,6 @@ import { Text } from '../styles/Typography';
 // TODO: Remove CSS override
 const StyledCard = styled(Card)`
   margin-right: ${props => props.theme.spacing[2]};
-  & > .ant-card-cover img {
-    border-radius: initial;
-  }
 `;
 
 const WebtoonCard = ({ webtoon }) => {
