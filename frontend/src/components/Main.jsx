@@ -1,6 +1,7 @@
 import React from 'react';
 
 import withFetch from '../hocs/withFetch';
+import { Group } from '../layout/Layout';
 import WebtoonList from './WebtoonList';
 
 const Main = ({ data, isError }) => { // TODO: Make error state
@@ -10,7 +11,11 @@ const Main = ({ data, isError }) => { // TODO: Make error state
     ? (
       themes.map(theme => {
         const FetchedWebtoonList = withFetch(`http://127.0.0.1:8000/api/theme/${theme.id}`)(WebtoonList)
-        return <FetchedWebtoonList key={`theme-${theme.id}`} />
+        return (
+          <Group key={`theme-${theme.id}`}>
+            <FetchedWebtoonList />
+          </Group>
+        )
       })
     )
     : 'loading' // TODO: Make loading state

@@ -66,7 +66,7 @@ const WebtoonList = ({ data, isError }) => { // TODO: Make error state
   return (
 		data
 		? (
-			<Margin bottom={5}>
+			<>
 				<Margin bottom={2}>
 					<ListHeader>
 						<Space align="baseline">
@@ -98,7 +98,7 @@ const WebtoonList = ({ data, isError }) => { // TODO: Make error state
 						))
 					}
 				</Carousel>
-			</Margin>
+			</>
 		)
 		: <Loading /> // TODO: Make loading state
 	);
