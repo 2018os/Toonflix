@@ -48,11 +48,11 @@ const Menu = () => {
         });
         setOptions([
           {
-            label: <Text>작품 검색 결과 {webtoonValues.length}</Text>,
+            label: <Text>"{searchText}" 이(가) 포함된 작품 검색 결과 {webtoonValues.length}</Text>,
             options: webtoonValues
           },
           {
-            label: <Text>컬렉션 검색 결과 {themeValues.length}</Text>,
+            label: <Text>"{searchText}" 작품이 포함된 컬렉션 검색 결과 {themeValues.length}</Text>,
             options: themeValues
           },
         ]);
