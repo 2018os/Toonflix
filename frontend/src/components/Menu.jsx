@@ -19,6 +19,12 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const StyledInput = styled(Input)`
+  height: 111px;
+  border-radius: 10px;
+  border: 4px solid ${props => props.theme.colors.primaryColor};
+`;
+
 const reg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|A-Z]/gi; // for checking space
 
 const Menu = () => {
@@ -80,7 +86,13 @@ const Menu = () => {
           onSelect={onSelect}
           onSearch={onSearch}
         >
-          <Input placeholder="Input here" />
+          <StyledInput
+            placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
+            prefix={(
+              <img src="/icon/search.svg" alt="search" />
+            )}
+            allowClear
+          />
         </AutoComplete>
       </Margin>
       <ButtonWrapper>
