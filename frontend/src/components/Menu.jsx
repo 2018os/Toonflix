@@ -101,7 +101,7 @@ const Menu = () => {
             placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요 :)"
             prefix={(
               <Margin horizontal={1}>
-                <img src="/icon/search.svg" alt="search" width="36" height="36" />
+                <img src="/icon/search-main.svg" alt="search" width="36" height="36" />
               </Margin>
             )}
             className="searchBar"
