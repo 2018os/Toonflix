@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Margin } from 'styled-components-spacing';
-import { AutoComplete, Button, Input } from 'antd';
-import styled from 'styled-components';
 import axios from 'axios';
+import { AutoComplete, Button, Input } from 'antd';
+import { Margin } from 'styled-components-spacing';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
+// styles
 import { Text } from '../styles/Typography';
 
 const ButtonWrapper = styled.div`
@@ -22,7 +23,17 @@ const StyledButton = styled(Button)`
 const StyledInput = styled(Input)`
   height: 111px;
   border-radius: 10px;
-  border: 4px solid ${props => props.theme.colors.primaryColor};
+  ${props => `
+  border-color: ${props.theme.colors.primaryColor};
+  box-shadow: 0px 0px 0px 3px ${props.theme.colors.primaryColor};
+  & > input {
+    font-size: ${props.theme.fontSizes.larger};
+    color: ${props.theme.colors.primaryColor};
+    &::placeholder {
+      color: ${props.theme.colors.primaryColor};
+    }
+  }
+  `}
 `;
 
 const reg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|A-Z]/gi; // for checking space
@@ -87,17 +98,19 @@ const Menu = () => {
           onSearch={onSearch}
         >
           <StyledInput
-            placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
+            placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요 :)"
             prefix={(
-              <img src="/icon/search.svg" alt="search" />
+              <Margin horizontal={1}>
+                <img src="/icon/search.svg" alt="search" width="36" height="36" />
+              </Margin>
             )}
-            allowClear
+            className="searchBar"
           />
         </AutoComplete>
       </Margin>
       <ButtonWrapper>
-        <StyledButton>컬렉션 바로가기</StyledButton>
-        <StyledButton>카테고리 바로가기</StyledButton>
+        <StyledButton type="primary">컬렉션 바로가기</StyledButton>
+        <StyledButton type="primary">카테고리 바로가기</StyledButton>
       </ButtonWrapper>
     </div>
   );
