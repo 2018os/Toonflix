@@ -1,11 +1,16 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 // layout
 import Footer from './layout/Footer';
 
 // components
+import Category from './components/Category';
 import Main from './components/Main';
+import ThemeDetail from './components/ThemeDetail';
+import ThemeList from './components/ThemeList';
+import WebtoonDetail from './components/WebtoonDetail';
 
 import theme from './theme';
 import './styles/globals';
@@ -65,8 +70,17 @@ table {
 const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
-    <Main />
-    <Footer />
+		<BrowserRouter>
+			<Switch>
+				<Route exact path="/" component={Main} />
+				<Route path="/webtoon/:id" component={WebtoonDetail} />
+				<Route path="/category" component={Category} />
+				<Route path="/collections" component={ThemeList} />
+				<Route path="/collection/:id" component={ThemeDetail} />
+				<Redirect path="*" to="/" />
+			</Switch>
+		</BrowserRouter>
+		<Footer />
   </ThemeProvider>
 )
 
