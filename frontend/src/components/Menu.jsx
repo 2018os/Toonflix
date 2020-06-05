@@ -109,8 +109,8 @@ const Menu = () => {
         </AutoComplete>
       </Margin>
       <ButtonWrapper>
-        <StyledButton type="primary">컬렉션 바로가기</StyledButton>
-        <StyledButton type="primary">카테고리 바로가기</StyledButton>
+        <StyledButton type="primary" href="/collections">컬렉션 바로가기</StyledButton>
+        <StyledButton type="primary" href="/category">카테고리 바로가기</StyledButton>
       </ButtonWrapper>
     </div>
   );
