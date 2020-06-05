@@ -1,11 +1,14 @@
+import { Card } from 'antd';
+import { Margin } from 'styled-components-spacing';
 import React from 'react';
 import styled from 'styled-components';
-import { Margin } from 'styled-components-spacing';
-import { Card } from 'antd';
 
-import Thumbnail from './Thumbnail';
+// styles
 import Tag from '../styles/Tag';
 import { Text } from '../styles/Typography';
+
+// components
+import Thumbnail from './Thumbnail';
 
 const StyledCard = styled(Card)`
   margin-right: ${props => props.theme.spacing[2]};
@@ -39,7 +42,6 @@ const WebtoonCard = ({ webtoon }) => {
         width: 236,
         height: 360,
       }}
-      hoverable
     >
       <Card.Meta
         title={(<Text bold>{title}</Text>)}

@@ -1,12 +1,14 @@
+import { Button, Carousel, Space } from 'antd';
+import { Margin } from 'styled-components-spacing';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { Margin } from 'styled-components-spacing';
-import { Button, Carousel, Space } from 'antd';
-import 'antd/dist/antd.css';
 
+// styles
+import { Title, Paragraph } from '../styles/Typography';
+
+// components
 import Loading from './Loading';
 import WebtoonCard from './WebtoonCard';
-import { Title, Paragraph } from '../styles/Typography';
 
 const settings = {
 	dots: false,
