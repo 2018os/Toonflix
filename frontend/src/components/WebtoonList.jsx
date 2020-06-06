@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 // styles
-import { Title, Paragraph } from '../styles/Typography';
+import { Paragraph, Title } from 'styles/Typography';
 
 // components
 import Loading from './Loading';

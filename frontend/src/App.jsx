@@ -1,19 +1,21 @@
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 // layout
-import Footer from './layout/Footer';
+import Footer from 'layout/Footer';
+
+// styles
+import 'styles/globals';
 
 // components
-import Category from './components/Category';
-import Main from './components/Main';
-import ThemeDetail from './components/ThemeDetail';
-import ThemeList from './components/ThemeList';
-import WebtoonDetail from './components/WebtoonDetail';
+import Category from 'components/Category';
+import Main from 'components/Main';
+import ThemeDetail from 'components/ThemeDetail';
+import ThemeList from 'components/ThemeList';
+import WebtoonDetail from 'components/WebtoonDetail';
 
 import theme from './theme';
-import './styles/globals';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 

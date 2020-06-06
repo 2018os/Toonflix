@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { AdultWidget, PayWidget, PlatFormWidget, CompleteWidget } from '../styles/Widget';
+// styles
+import { AdultWidget, CompleteWidget, PayWidget, PlatFormWidget } from 'styles/Widget';
 
 const ThumbnailWrapper = styled.div`
 `;

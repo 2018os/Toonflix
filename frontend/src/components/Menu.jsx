@@ -1,11 +1,11 @@
-import axios from 'axios';
 import { AutoComplete, Button, Input } from 'antd';
+import axios from 'axios';
 import { Margin } from 'styled-components-spacing';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 // styles
-import { Text } from '../styles/Typography';
+import { Text } from 'styles/Typography';
 
 const ButtonWrapper = styled.div`
   text-align: center;

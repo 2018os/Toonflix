@@ -1,11 +1,11 @@
 import React from 'react';
 
 // hocs
-import withFetch from '../hocs/withFetch';
+import withFetch from 'hocs/withFetch';
 
 // layout
-import Container from '../layout/Container';
-import { Group, Page, Section } from '../layout/Layout';
+import Container from 'layout/Container';
+import { Group, Page, Section } from 'layout/Layout';
 
 // components
 import MainLogo from './MainLogo';

@@ -4,8 +4,8 @@ import { Margin } from 'styled-components-spacing';
 import React from 'react';
 
 // styles
-import Tag from '../styles/Tag';
-import { Text } from '../styles/Typography';
+import Tag from 'styles/Tag';
+import { Text } from 'styles/Typography';
 
 // components
 import Thumbnail from './Thumbnail';

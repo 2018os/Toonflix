@@ -1,6 +1,6 @@
+import { Margin } from 'styled-components-spacing';
 import React from 'react';
 import styled from 'styled-components';
-import { Margin } from 'styled-components-spacing';
 
 const Page = styled.div`
   width: 1024px; // for Desktop breakpoint

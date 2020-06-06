@@ -6,7 +6,7 @@ import { Space } from 'antd';
 import Container from './Container';
 
 // styles
-import { Text } from '../styles/Typography';
+import { Text } from 'styles/Typography';
 
 const Footer = () => (
   <Container>
