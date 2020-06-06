@@ -51,18 +51,18 @@ const Menu = () => {
       .then(axios.spread((...res) => {
         const webtoonData = res[0].data;
         const themeData = res[1].data;
-        webtoonData.map(webtoon => {
+        webtoonData.map(webtoon => (
           !webtoonValues.some(element => element.value === webtoon.title) && webtoonValues.push({
             value: webtoon.title,
             label: <Text size="small" color="gray">{webtoon.title}</Text>
-          });
-        });
-        themeData.map(theme => {
+          })
+        ));
+        themeData.map(theme => (
           !themeValues.some(element => element.value === theme.title) && themeValues.push({
             value: theme.title,
             label: <Text size="small" color="gray">{theme.title}</Text>
-          });
-        });
+          })
+        ));
         setOptions([
           {
             label: <Text>"{searchText}" 이(가) 포함된 작품 검색 결과 {webtoonValues.length}</Text>,
