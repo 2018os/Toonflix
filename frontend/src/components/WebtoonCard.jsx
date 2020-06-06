@@ -1,4 +1,5 @@
 import { Card } from 'antd';
+import { Link } from 'react-router-dom';
 import { Margin } from 'styled-components-spacing';
 import React from 'react';
 
@@ -30,40 +31,42 @@ const WebtoonCard = ({ webtoon }) => {
   };
 
   return (
-    <Card
-      cover={<Thumbnail src={thumbnail} widget={widget} />}
-      key={id}
-      style={{
-        width: 236,
-        height: 360,
-      }}
-      hoverable
-    >
-      <Card.Meta
-        title={(<Text bold>{title}</Text>)}
+    <Link to={`/webtoon/${id}`}>
+      <Card
+        cover={<Thumbnail src={thumbnail} widget={widget} />}
+        key={id}
         style={{
-          textAlign: 'center',
+          width: 236,
+          height: 360,
         }}
-        description={(
-          <div>
-            {
-              <Text size="smallest" color="gray">
-                {authors.join(' / ')}
-              </Text>
-            }
-            <Margin top={1}>
+        hoverable
+      >
+        <Card.Meta
+          title={(<Text bold>{title}</Text>)}
+          style={{
+            textAlign: 'center',
+          }}
+          description={(
+            <div>
               {
-                genres.map((genre, j) => (
-                  <Tag key={`genre-${j}`}>
-                    #{genre}
-                  </Tag>
-                ))
+                <Text size="smallest" color="gray">
+                  {authors.join(' / ')}
+                </Text>
               }
-            </Margin>
-          </div>
-        )}
-      />
-    </Card>
+              <Margin top={1}>
+                {
+                  genres.map((genre, j) => (
+                    <Tag key={`genre-${j}`}>
+                      #{genre}
+                    </Tag>
+                  ))
+                }
+              </Margin>
+            </div>
+          )}
+        />
+      </Card>
+    </Link>
   );
 }
 
