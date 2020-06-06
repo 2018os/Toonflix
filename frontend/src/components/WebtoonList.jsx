@@ -16,6 +16,7 @@ const settings = {
 	draggable: true,
 	initialSlide: 0,
 	variableWidth: true,
+	slidesToShow: 4,
 	responsive: [
 		{
 			breakpoint: 1024,
@@ -54,6 +55,15 @@ const ListHeader = styled.div`
 	justify-content: space-between;
 `;
 
+const StyledCarousel = styled(Carousel)`
+	& > .slick-list > .slick-track > .slick-slide:not([data-index^="-"]) { // "data-index" 가 0 보다 큰 slick-slide 에게 margin-right
+		margin-right: ${props => props.theme.spacing[2]};
+	}
+	& > .slick-list > .slick-track > .slick-slide[data-index="-1"] { // Exception) "data-index" = -1
+		margin-right: ${props => props.theme.spacing[2]};
+	}
+`;
+
 const WebtoonList = ({ data, isError }) => { // TODO: Make error state
 	const slider = useRef();
 
@@ -87,7 +97,7 @@ const WebtoonList = ({ data, isError }) => { // TODO: Make error state
 						</div>
 					</ListHeader>
 				</Margin>
-				<Carousel
+				<StyledCarousel
 					{...settings}
 					ref={ref => {
 						slider.current = ref
@@ -99,7 +109,7 @@ const WebtoonList = ({ data, isError }) => { // TODO: Make error state
 							<WebtoonCard webtoon={webtoon} key={webtoon.id} />
 						))
 					}
-				</Carousel>
+				</StyledCarousel>
 			</>
 		)
 		: <Loading /> // TODO: Make loading state
