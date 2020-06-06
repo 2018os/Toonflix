@@ -9,11 +9,11 @@ import Footer from 'layout/Footer';
 import 'styles/globals';
 
 // components
-import Category from 'components/Category';
-import Main from 'components/Main';
-import ThemeDetail from 'components/ThemeDetail';
-import ThemeList from 'components/ThemeList';
-import WebtoonDetail from 'components/WebtoonDetail';
+import Category from 'pages/Category';
+import Main from 'pages/Main';
+import ThemeDetail from 'pages/ThemeDetail';
+import ThemeList from 'pages/ThemeList';
+import WebtoonDetail from 'pages/WebtoonDetail';
 
 import theme from './theme';
 
