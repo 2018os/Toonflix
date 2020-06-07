@@ -1,7 +1,9 @@
+import { compose } from 'recompose';
 import React from 'react';
 
 // hocs
 import withFetchParams from 'hocs/withFetchParams';
+import withFooter from 'hocs/withFooter';
 
 // layout
 import Container from 'layout/Container';
@@ -41,4 +43,7 @@ const WebtoonDetail = ({ data: webtoon }) => {
   )
 };
 
-export default withFetchParams('http://127.0.0.1:8000/api/webtoon')(WebtoonDetail);
+export default compose(
+  withFooter,
+  withFetchParams('http://127.0.0.1:8000/api/webtoon'),
+)(WebtoonDetail);

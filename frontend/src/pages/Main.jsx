@@ -1,7 +1,9 @@
+import { compose } from 'recompose';
 import React from 'react';
 
 // hocs
 import withFetch from 'hocs/withFetch';
+import withFooter from 'hocs/withFooter';
 
 // layout
 import Container from 'layout/Container';
@@ -44,4 +46,7 @@ const Main = ({ data, isError }) => { // TODO: Make error state
   )
 };
 
-export default withFetch('http://127.0.0.1:8000/api/themes')(Main);
+export default compose(
+  withFooter,
+  withFetch('http://127.0.0.1:8000/api/themes')
+)(Main);
