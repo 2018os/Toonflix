@@ -2,9 +2,6 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import React from 'react';
 
-// layout
-import Footer from 'layout/Footer';
-
 // styles
 import 'styles/globals';
 
@@ -82,7 +79,6 @@ const App = () => (
 				<Redirect path="*" to="/" />
 			</Switch>
 		</BrowserRouter>
-		<Footer />
   </ThemeProvider>
 )
 
