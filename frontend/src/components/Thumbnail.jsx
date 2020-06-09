@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { AdultWidget, CompleteWidget, PayWidget, PlatFormWidget } from 'styles/Widget';
 
 const ThumbnailWrapper = styled.div`
+  width: 236px;
+  height: 236px;
 `;
 
 const WidgetWrapper = styled.div`
