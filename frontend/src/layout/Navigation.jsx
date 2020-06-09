@@ -1,4 +1,4 @@
-import { Input, Space } from 'antd';
+import { Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { Margin, Padding } from 'styled-components-spacing';
 import React from 'react';
@@ -8,6 +8,9 @@ import Container from './Container';
 
 // styles
 import { Text } from 'styles/Typography';
+
+// components
+import SearchBar from 'components/SearchBar';
 
 const Logo = () => (
   <div style={{
@@ -19,31 +22,33 @@ const Logo = () => (
   </div>
 );
 
-const Menu = () => (
-  <Space size="large">
-    <Margin right={2}>
-      <Link to="/collections">
-        <Text size="large">
-          컬렉션
-        </Text>
-      </Link>
-    </Margin>
-    <Margin right={3}>
-      <Link to="/category">
-        <Text size="large">
-          카테고리
-        </Text>
-      </Link>
-    </Margin>
-    <Input placeholder="제목, 장르, 작가를 입력하세요." />
-  </Space>
-);
-
 const Navigation = () => (
   <Padding all={2}>
     <Logo />
     <Container>
-      <Menu />
+      <Row align="middle">
+        <Col>
+          <Margin right={2}>
+            <Link to="/collections">
+              <Text size="large">
+                컬렉션
+              </Text>
+            </Link>
+          </Margin>
+        </Col>
+        <Col>
+          <Margin right={5}>
+            <Link to="/category">
+              <Text size="large">
+                카테고리
+              </Text>
+            </Link>
+          </Margin>
+        </Col>
+        <Col span={12}>
+          <SearchBar />
+        </Col>
+      </Row>
     </Container>
   </Padding>
 );
