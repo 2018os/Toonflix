@@ -32,6 +32,14 @@ const spacing = {
   6: '60px',
 };
 
+const iconSizes = {
+  smaller: '16px',
+  small: '18px',
+  default: '24px',
+  large: '32px',
+  larger: '48px',
+};
+
 const theme = {
   // colors
   colors,
@@ -40,6 +48,8 @@ const theme = {
   fontSizes,
   // spaces
   spacing,
+  // iconSizes
+  iconSizes,
 };
 
 export default theme;
