@@ -1,13 +1,13 @@
 import { AutoComplete, Input } from 'antd';
 import axios from 'axios';
 import React, { useState } from 'react';
-import style from 'styled-components';
+import styled from 'styled-components';
 
 // styles
 import Icon from 'styles/Icon';
 import { Text } from 'styles/Typography';
 
-const StyledInput = style(Input)`
+const StyledInput = styled(Input)`
   border: 1px solid ${props => props.theme.colors.primaryColor};
 `;
 
