@@ -14,12 +14,14 @@ const colors = {
   primaryColor: '#5e74ff',
   gray: '#EAEDED',
   black: '#212121',
+  white: '#ffffff'
 };
 
 const textColors = {
   primaryColor: '#5e74ff',
   gray: '#7A7A7A',
   black: '#212121',
+  white: '#ffffff'
 };
 
 const spacing = {
