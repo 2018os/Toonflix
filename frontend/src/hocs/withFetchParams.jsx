@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 // hocs
@@ -11,6 +12,11 @@ const withFetchParams = baseUrl => WrappedComponent => {
     const FetchedComponent = withFetch(fetchUrl)(WrappedComponent);
     return <FetchedComponent {...props} />
   }
+};
+
+withFetchParams.propTypes = {
+  baseUrl: PropTypes.string.isRequired,
+  WrappedComponent: PropTypes.element.isRequired,
 };
 
 export default withFetchParams;
