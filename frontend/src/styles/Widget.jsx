@@ -6,23 +6,31 @@ const StyledImg = styled.img.attrs({
   className: 'thumbnail-widget'
 })`
   border-radius: 5px !important;
+  ${props => `
+    width: ${props.theme.iconSizes[props.size]};
+    height: ${props.theme.iconSizes[props.size]};
+  `}
 `;
 
-const AdultWidget = () => (
-  <StyledImg src="/icon/widgets/adult.svg" />
+const AdultWidget = ({ size }) => (
+  <StyledImg src="/icon/widgets/adult.svg" size={size} />
 );
 
-const PayWidget = () => (
-  <StyledImg src="/icon/widgets/pay.svg" />
+const PayWidget = ({ size }) => (
+  <StyledImg src="/icon/widgets/pay.svg" size={size} />
 );
 
-const PlatformWidget = ({ platform }) => (
-  <StyledImg src={`/icon/widgets/${platform}.svg`} />
+const PlatformWidget = ({ platform, size }) => (
+  <StyledImg src={`/icon/widgets/${platform}.svg`} size={size} />
 );
 
-const CompleteWidget = () => (
-  <StyledImg src="/icon/widgets/complete.svg" />
+const CompleteWidget = ({ size }) => (
+  <StyledImg src="/icon/widgets/complete.svg" size={size} />
 );
+
+StyledImg.defaultProps = {
+  size: 'default'
+};
 
 export {
   AdultWidget,
