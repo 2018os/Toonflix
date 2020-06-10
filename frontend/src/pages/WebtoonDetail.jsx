@@ -1,6 +1,7 @@
 import { Button, Col, Divider, Row } from 'antd';
 import { compose } from 'recompose';
 import { Margin, Padding } from 'styled-components-spacing';
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -156,6 +157,14 @@ const WebtoonDetail = ({ data: webtoon }) => {
       </Container>
     </Page>
   )
+};
+
+WebtoonDetail.propTypes = {
+  data: PropTypes.object,
+};
+
+WebtoonDetail.defaultProps = {
+  data: undefined,
 };
 
 export default compose(
