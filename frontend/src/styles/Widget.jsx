@@ -2,20 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 // TODO: Remove important
-const StyledImg = styled.img`
+const StyledImg = styled.img.attrs({
+  className: 'thumbnail-widget'
+})`
   border-radius: 5px !important;
-  margin-bottom: ${props => props.theme.spacing[0]};
-  margin-left: auto;
-`;
-
-const AdultWidgetWrapper = styled.div`
-  position: absolute;
 `;
 
 const AdultWidget = () => (
-  <AdultWidgetWrapper>
-    <StyledImg src="/icon/widgets/adult.svg" />
-  </AdultWidgetWrapper>
+  <StyledImg src="/icon/widgets/adult.svg" />
 );
 
 const PayWidget = () => (
