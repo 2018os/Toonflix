@@ -35,6 +35,7 @@ const spacing = {
 };
 
 const iconSizes = {
+  largest: '68px',
   larger: '48px',
   large: '32px',
   default: '24px',
