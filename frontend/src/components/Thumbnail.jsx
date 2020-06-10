@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // styles
-import { AdultWidget, CompleteWidget, PayWidget, PlatFormWidget } from 'styles/Widget';
+import { AdultWidget, CompleteWidget, PayWidget, PlatformWidget } from 'styles/Widget';
 
 const ThumbnailWrapper = styled.div`
   position: relative;
@@ -45,7 +45,7 @@ const Thumbnail = ({ src, isPay, isAdult, isFinish, platform }) => {
           )
         }
         {
-          platform && <PlatFormWidget platform={platform} />
+          platform && <PlatformWidget platform={platform} />
         }
         {
           isPay && <PayWidget />
