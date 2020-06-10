@@ -31,6 +31,7 @@ const AdultWidgetWrapper = styled.div`
 
 const Cover = styled.img`
   width: 100%;
+  height: 100%;
 `;
 
 const Thumbnail = ({ src, isPay, isAdult, isFinish, platform }) => {
