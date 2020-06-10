@@ -24,16 +24,16 @@ const WebtoonCard = ({ webtoon }) => {
   } = webtoon;
   
   const widget = {
-    pay: is_pay,
-    adult: is_adult,
-    finish: is_finish,
+    isPay: is_pay,
+    isAdult: is_adult,
+    isFinish: is_finish,
     platform,
   };
 
   return (
     <Link to={`/webtoon/${id}`}>
       <Card
-        cover={<Thumbnail src={thumbnail} widget={widget} />}
+        cover={<Thumbnail src={thumbnail} {...widget} />}
         key={id}
         style={{
           width: 236,
