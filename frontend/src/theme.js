@@ -1,13 +1,13 @@
 const fontSizes = {
-  smallest : '12px',
-  small : '16px',
-  default : '18px',
-  large : '24px',
-  larger : '36px',
-  largest : '48px',
   h1 : '48px',
   h2 : '36px',
   h3 : '24px',
+  largest : '48px',
+  larger : '36px',
+  large : '24px',
+  default : '18px',
+  small : '16px',
+  smallest : '12px',
 };
 
 const colors = {
@@ -35,11 +35,11 @@ const spacing = {
 };
 
 const iconSizes = {
-  smaller: '16px',
-  small: '18px',
-  default: '24px',
-  large: '32px',
   larger: '48px',
+  large: '32px',
+  default: '24px',
+  small: '18px',
+  smaller: '16px',
 };
 
 const theme = {
