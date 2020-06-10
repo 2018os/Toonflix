@@ -5,41 +5,55 @@ import styled from 'styled-components';
 import { AdultWidget, CompleteWidget, PayWidget, PlatFormWidget } from 'styles/Widget';
 
 const ThumbnailWrapper = styled.div`
+  position: relative;
   width: 236px;
   height: 236px;
 `;
 
-const WidgetWrapper = styled.div`
+const WidgetList = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: ${props => props.theme.spacing[1]};
   position: absolute;
   width: 100%;
-  & > img:last-child {
+  & > .thumbnail-widget {
+    margin-bottom: ${props => props.theme.spacing[0]};
+    margin-left: auto;
+  }
+  & > .thumbnail-widget:last-child {
     margin-bottom: 0;
   }
+`;
+
+const AdultWidgetWrapper = styled.div`
+  position: absolute;
 `;
 
 const Cover = styled.img`
   width: 100%;
 `;
 
-const Thumbnail = ({ src, widget }) => {
-  const { pay, adult, platform, finish } = widget;
+const Thumbnail = ({ src, isPay, isAdult, isFinish, platform }) => {
   return (
     <ThumbnailWrapper>
-      <WidgetWrapper>
+      <WidgetList>
         {
-          adult && <AdultWidget />
+          isAdult && (
+            <AdultWidgetWrapper>
+              <AdultWidget />
+            </AdultWidgetWrapper>
+          )
         }
         {
           platform && <PlatFormWidget platform={platform} />
         }
         {
-          pay && <PayWidget />
+          isPay && <PayWidget />
         }
         {
-          finish && <CompleteWidget />
+          isFinish && <CompleteWidget />
         }
-      </WidgetWrapper>
+      </WidgetList>
       <Cover src={src} alt="thumbnail" />
     </ThumbnailWrapper>
   )
