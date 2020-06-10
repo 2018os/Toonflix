@@ -1,3 +1,4 @@
+import { Button, Col, Row } from 'antd';
 import { compose } from 'recompose';
 import { Margin, Padding } from 'styled-components-spacing';
 import React from 'react';
@@ -13,8 +14,9 @@ import Container from 'layout/Container';
 import { Page, Section } from 'layout/Layout';
 
 // styles
+import { AdultWidget, CompleteWidget, PayWidget, PlatformWidget } from 'styles/Widget';
 import Tag from 'styles/Tag';
-import { Title } from 'styles/Typography';
+import { Title, Text } from 'styles/Typography';
 
 // components
 import Thumbnail from 'components/Thumbnail';
@@ -32,9 +34,39 @@ const StyledTag = styled(Tag)`
   // border-radius: 5px;
 `;
 
+const Description = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const TopPart = styled.div`
+`;
+
+const BottomPart = styled.div`
+`;
+
+const WidgetCol = styled(Col)`
+  & > .thumbnail-widget {
+    margin-right: ${props => props.theme.spacing[0]};
+  }
+  & > .thumbnail-widget:last-child {
+    margin-right: 0;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  width: 236px;
+  height: 68px;
+  & > span {
+    line-height: 68px; // same with Button height
+  }
+`;
+
 const WebtoonDetail = ({ data: webtoon }) => {
   const {
     title,
+    authors,
     thumbnail,
     is_pay,
     is_adult,
@@ -43,40 +75,65 @@ const WebtoonDetail = ({ data: webtoon }) => {
     genres,
   } = webtoon || '';
 
-  const widget = {
-    pay: is_pay,
-    adult: is_adult,
-    finish: is_finish,
-    platform,
-  };
-
   return (
     <Page backgroundColor="gray">
       <Container>
         <Section>
           <Profile>
             <Margin right={2}>
-              <Thumbnail src={thumbnail} widget={widget} />
+              <Thumbnail src={thumbnail} />
             </Margin>
-            <div style={{
-              display: 'flex',
-              alignItems: 'baseline',
-            }}>
-              <Title size="h2" color="black" bold>
-                {title}
-              </Title>
-              <Margin left={2}>
-                {
-                  genres && genres.map(genre => (
-                    <StyledTag>
-                      <Padding all={1}>
-                        #{genre}
-                      </Padding>
-                    </StyledTag>
-                  ))
-                }
-              </Margin>
-            </div>
+            <Description>
+              <TopPart>
+                <Row align="middle" gutter={16}>
+                  <Col>
+                    <Title size="h2" color="black" bold>
+                      {title}
+                    </Title>
+                  </Col>
+                  <Col>
+                    {
+                      genres && genres.map(genre => (
+                        <StyledTag key={`tag-${genre}`}>
+                          <Padding all={1}>
+                            #{genre}
+                          </Padding>
+                        </StyledTag>
+                      ))
+                    }
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Text color="gray">
+                      {authors && authors.join(' | ')}
+                    </Text>
+                  </Col>
+                </Row>
+              </TopPart>
+              <BottomPart>
+                <Row>
+                  <WidgetCol>
+                    { is_adult && <AdultWidget /> }
+                    { is_pay && <PayWidget /> }
+                    { is_finish && <CompleteWidget /> }
+                  </WidgetCol>
+                </Row>
+                <Row>
+                  <Margin right={2}>
+                    <StyledButton href="/source" type="primary">
+                      {/*
+                        TODO: Should be dynamic data
+                      */}
+                      <Text size="large" color="white" bold>
+                        보러가기!!
+                      </Text>
+                    </StyledButton>
+                  </Margin>
+                  <PlatformWidget platform={platform} size="largest" />
+                </Row>
+              </BottomPart>
+            </Description>
           </Profile>
         </Section>
       </Container>
