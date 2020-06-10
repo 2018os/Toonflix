@@ -1,5 +1,6 @@
 import { Button, Carousel, Space } from 'antd';
 import { Margin } from 'styled-components-spacing';
+import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
@@ -116,6 +117,19 @@ const Slider = ({ children, title, description, slidesToShow }) => {
       </StyledCarousel>
     </SliderWrapper>
   )
+};
+
+Slider.propTypes = {
+	title: PropTypes.string.isRequired,
+	children: PropTypes.node,
+	description: PropTypes.string,
+	slidesToShow: PropTypes.number,
+};
+
+Slider.defaultProps = {
+	children: undefined,
+	description: '',
+	slidesToShow: 4,
 };
 
 export default Slider;

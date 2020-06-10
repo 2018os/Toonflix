@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 const withFetch = fetchUrl => WrappedComponent => {
@@ -18,6 +19,11 @@ const withFetch = fetchUrl => WrappedComponent => {
     }, []);
     return <WrappedComponent {...props} data={data} isError={isError} />
   }
+};
+
+withFetch.propTypes = {
+  fetchUrl: PropTypes.string.isRequired,
+  WrappedComponent: PropTypes.element.isRequired,
 };
 
 export default withFetch;

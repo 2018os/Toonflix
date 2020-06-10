@@ -1,4 +1,5 @@
 import { compose } from 'recompose';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 // hocs
@@ -44,6 +45,16 @@ const Main = ({ data, isError }) => { // TODO: Make error state
     )
     : 'loading' // TODO: Make loading state
   )
+};
+
+Main.propTypes = {
+  data: PropTypes.array,
+  isError: PropTypes.bool,
+};
+
+Main.defaultProps = {
+  data: undefined,
+  isError: false,
 };
 
 export default compose(

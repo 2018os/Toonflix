@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 // components
 import Loading from './Loading';
-import WebtoonCard from './WebtoonCard';
 import Slider from './Slider';
+import WebtoonCard from './WebtoonCard';
 
 const WebtoonList = ({ data, isError }) => ( // TODO: Make error state
 	data
@@ -22,5 +23,13 @@ const WebtoonList = ({ data, isError }) => ( // TODO: Make error state
 	)
 	: <Loading /> // TODO: Make loading state
 );
+
+WebtoonList.propTypes = {
+	data: PropTypes.object,
+};
+
+WebtoonList.defaultProps = {
+	data: undefined,
+};
 
 export default WebtoonList;

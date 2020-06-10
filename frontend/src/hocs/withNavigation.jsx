@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 // layout
@@ -12,6 +13,10 @@ const withNavigation = WrappedComponents => {
       </>
     )
   }
+};
+
+withNavigation.propTypes = {
+  WrappedComponents: PropTypes.element.isRequired,
 };
 
 export default withNavigation;

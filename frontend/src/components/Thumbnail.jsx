@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -34,30 +35,38 @@ const Cover = styled.img`
   height: 100%;
 `;
 
-const Thumbnail = ({ src, isPay, isAdult, isFinish, platform }) => {
-  return (
-    <ThumbnailWrapper>
-      <WidgetList>
-        {
-          isAdult && (
-            <AdultWidgetWrapper>
-              <AdultWidget />
-            </AdultWidgetWrapper>
-          )
-        }
-        {
-          platform && <PlatformWidget platform={platform} />
-        }
-        {
-          isPay && <PayWidget />
-        }
-        {
-          isFinish && <CompleteWidget />
-        }
-      </WidgetList>
-      <Cover src={src} alt="thumbnail" />
-    </ThumbnailWrapper>
-  )
+const Thumbnail = ({ src, isPay, isAdult, isFinish, platform }) => (
+  <ThumbnailWrapper>
+    <WidgetList>
+      {
+        isAdult && (
+          <AdultWidgetWrapper>
+            <AdultWidget />
+          </AdultWidgetWrapper>
+        )
+      }
+      { platform && <PlatformWidget platform={platform} /> }
+      { isPay && <PayWidget /> }
+      { isFinish && <CompleteWidget /> }
+    </WidgetList>
+    <Cover src={src} alt="thumbnail" />
+  </ThumbnailWrapper>
+);
+
+Thumbnail.propTypes = {
+  src: PropTypes.string,
+  isPay: PropTypes.bool,
+  isAdult: PropTypes.bool,
+  isFinish: PropTypes.bool,
+  platform: PropTypes.string,
+};
+
+Thumbnail.defaultProps = {
+  src: '', // no thumbnail img
+  isPay: false,
+  isAdult: false,
+  isFinish: false,
+  platform: '',
 };
 
 export default Thumbnail;

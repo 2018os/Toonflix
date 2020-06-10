@@ -1,5 +1,6 @@
 import { AutoComplete, Input } from 'antd';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -76,11 +77,7 @@ const SearchBar = ({ placeholder, children }) => {
         ? children
         : (
           <StyledInput // TODO: Code Splitting
-            placeholder={
-              placeholder
-              ? placeholder
-              : "컬렉션 장르, 키워드, 작가 등을 검색해보세요 :)"
-            }
+            placeholder={placeholder}
             prefix={
               <Icon src="/icon/search.svg" alt="search" size="smaller" />
             }
@@ -92,4 +89,13 @@ const SearchBar = ({ placeholder, children }) => {
   );
 };
 
+SearchBar.propTypes = {
+  placeholder: PropTypes.string,
+  children: PropTypes.node,
+};
+
+SearchBar.defaultProps = {
+  placeholder: "컬렉션 장르, 키워드, 작가 등을 검색해보세요 :)",
+  children: undefined,
+}
 export default SearchBar;

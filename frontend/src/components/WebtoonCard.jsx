@@ -1,6 +1,7 @@
 import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { Margin } from 'styled-components-spacing';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 // styles
@@ -68,6 +69,10 @@ const WebtoonCard = ({ webtoon }) => {
       </Card>
     </Link>
   );
-}
+};
+
+WebtoonCard.propTypes = {
+  webtoon: PropTypes.object.isRequired,
+};
 
 export default WebtoonCard;
