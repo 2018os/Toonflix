@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // TODO: Remove important
 const StyledImg = styled.img.attrs({
-  className: 'thumbnail-widget'
+  className: 'widget'
 })`
   border-radius: 5px !important;
   ${props => `

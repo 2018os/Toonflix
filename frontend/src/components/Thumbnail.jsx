@@ -16,11 +16,11 @@ const WidgetList = styled.div`
   padding: ${props => props.theme.spacing[1]};
   position: absolute;
   width: 100%;
-  & > .thumbnail-widget {
+  & > .widget {
     margin-bottom: ${props => props.theme.spacing[0]};
     margin-left: auto;
   }
-  & > .thumbnail-widget:last-child {
+  & > .widget:last-child {
     margin-bottom: 0;
   }
 `;

@@ -47,10 +47,10 @@ const BottomPart = styled.div`
 `;
 
 const WidgetCol = styled(Col)`
-  & > .thumbnail-widget {
+  & > .widget {
     margin-right: ${props => props.theme.spacing[0]};
   }
-  & > .thumbnail-widget:last-child {
+  & > .widget:last-child {
     margin-right: 0;
   }
 `;
