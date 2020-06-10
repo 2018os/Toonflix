@@ -1,4 +1,4 @@
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Divider, Row } from 'antd';
 import { compose } from 'recompose';
 import { Margin, Padding } from 'styled-components-spacing';
 import React from 'react';
@@ -16,7 +16,7 @@ import { Page, Section } from 'layout/Layout';
 // styles
 import { AdultWidget, CompleteWidget, PayWidget, PlatformWidget } from 'styles/Widget';
 import Tag from 'styles/Tag';
-import { Title, Text } from 'styles/Typography';
+import { Paragraph, Title, Text } from 'styles/Typography';
 
 // components
 import Thumbnail from 'components/Thumbnail';
@@ -34,7 +34,7 @@ const StyledTag = styled(Tag)`
   // border-radius: 5px;
 `;
 
-const Description = styled.div`
+const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -44,6 +44,12 @@ const TopPart = styled.div`
 `;
 
 const BottomPart = styled.div`
+`;
+
+const Description = styled.div`
+  border: 1px solid #dbdbdb; // TODO: Add theme
+  border-radius: 10px;
+  background-color: ${props => props.theme.colors.white};
 `;
 
 const WidgetCol = styled(Col)`
@@ -67,6 +73,7 @@ const WebtoonDetail = ({ data: webtoon }) => {
   const {
     title,
     authors,
+    description,
     thumbnail,
     is_pay,
     is_adult,
@@ -83,7 +90,7 @@ const WebtoonDetail = ({ data: webtoon }) => {
             <Margin right={2}>
               <Thumbnail src={thumbnail} />
             </Margin>
-            <Description>
+            <Info>
               <TopPart>
                 <Row align="middle" gutter={16}>
                   <Col>
@@ -133,8 +140,18 @@ const WebtoonDetail = ({ data: webtoon }) => {
                   <PlatformWidget platform={platform} size="largest" />
                 </Row>
               </BottomPart>
-            </Description>
+            </Info>
           </Profile>
+          <Margin top={2}>
+            <Description>
+              <Padding all={3}>
+                <Paragraph>
+                  {description}
+                </Paragraph>
+                <Divider />
+              </Padding>
+            </Description>
+          </Margin>
         </Section>
       </Container>
     </Page>
