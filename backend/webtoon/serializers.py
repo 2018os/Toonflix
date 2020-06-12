@@ -19,6 +19,7 @@ class WebtoonSerializer(serializers.ModelSerializer):
 			'platform',
 			'thumbnail',
 			'description',
+			'themes',
 		)
 
 
