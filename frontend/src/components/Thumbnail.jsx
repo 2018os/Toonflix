@@ -7,8 +7,10 @@ import { AdultWidget, CompleteWidget, PayWidget, PlatformWidget } from 'styles/W
 
 const ThumbnailWrapper = styled.div`
   position: relative;
-  width: 236px;
-  height: 236px;
+  ${props => `
+    width: ${props.width}px;
+    height: ${props.height}px;
+  `}
 `;
 
 const WidgetList = styled.div`
@@ -35,8 +37,8 @@ const Cover = styled.img`
   height: 100%;
 `;
 
-const Thumbnail = ({ src, isPay, isAdult, isFinish, platform }) => (
-  <ThumbnailWrapper>
+const Thumbnail = ({ width, height, src, isPay, isAdult, isFinish, platform }) => (
+  <ThumbnailWrapper width={width} height={height}>
     <WidgetList>
       {
         isAdult && (
@@ -54,6 +56,8 @@ const Thumbnail = ({ src, isPay, isAdult, isFinish, platform }) => (
 );
 
 Thumbnail.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
   src: PropTypes.string,
   isPay: PropTypes.bool,
   isAdult: PropTypes.bool,
@@ -62,6 +66,8 @@ Thumbnail.propTypes = {
 };
 
 Thumbnail.defaultProps = {
+  width: 236,
+  height: 236,
   src: '', // no thumbnail img
   isPay: false,
   isAdult: false,
