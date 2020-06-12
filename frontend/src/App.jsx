@@ -7,9 +7,9 @@ import 'styles/globals';
 
 // components
 import Category from 'pages/Category';
+import Collection from 'pages/Collection';
 import Main from 'pages/Main';
 import ThemeDetail from 'pages/ThemeDetail';
-import ThemeList from 'pages/ThemeList';
 import WebtoonDetail from 'pages/WebtoonDetail';
 
 import theme from './theme';
@@ -74,7 +74,7 @@ const App = () => (
 				<Route exact path="/" component={Main} />
 				<Route path="/webtoon/:id" component={WebtoonDetail} />
 				<Route path="/category" component={Category} />
-				<Route path="/collections" component={ThemeList} />
+				<Route path="/collections" component={Collection} />
 				<Route path="/collection/:id" component={ThemeDetail} />
 				<Redirect path="*" to="/" />
 			</Switch>
