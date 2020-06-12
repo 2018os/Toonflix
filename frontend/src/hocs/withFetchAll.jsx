@@ -10,17 +10,23 @@ const withFetchAll = fetchUrls => WrappedComponent => {
     const [isError, setIsError] = useState(false);
     fetchUrls.map(url => requestList.push(axios.get(url)));
     useEffect(() => {
+      let mounted = true; // for prevent memory leak
       const fetch = async () => {
         try {
           const result = await axios.all(requestList);
           result.map(r => dataList.push(r.data));
-          setData(dataList);
+          if (mounted) {
+            setData(dataList);
+          }
         } catch(err) {
           setIsError(true);
         }
       };
       fetch();
-    }, [dataList, requestList]);
+      return () => {
+        mounted = false;
+      };
+    }, [requestList, dataList]);
     return <WrappedComponent {...props} data={data} isError={isError} />
   }
 };
