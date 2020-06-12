@@ -13,16 +13,14 @@ const withFetchAll = fetchUrls => WrappedComponent => {
       const fetch = async () => {
         try {
           const result = await axios.all(requestList);
-          result.map(r => {
-            dataList.push(r.data);
-          });
+          result.map(r => dataList.push(r.data));
           setData(dataList);
         } catch(err) {
           setIsError(true);
         }
       };
       fetch();
-    }, []);
+    }, [dataList, requestList]);
     return <WrappedComponent {...props} data={data} isError={isError} />
   }
 };
