@@ -12,7 +12,7 @@ import withNavigation from 'hocs/withNavigation';
 
 // layout
 import Container from 'layout/Container';
-import { Page, Section } from 'layout/Layout';
+import { Group, Page, Section } from 'layout/Layout';
 
 // styles
 import { AdultWidget, CompleteWidget, PayWidget, PlatformWidget } from 'styles/Widget';
@@ -20,6 +20,7 @@ import Tag from 'styles/Tag';
 import { Paragraph, Title, Text } from 'styles/Typography';
 
 // components
+import ThemeList from 'components/ThemeList';
 import Thumbnail from 'components/Thumbnail';
 
 const Profile = styled.div`
@@ -153,6 +154,11 @@ const WebtoonDetail = ({ data: webtoon }) => {
               </Padding>
             </Description>
           </Margin>
+        </Section>
+        <Section>
+          <Group>
+            <ThemeList />
+          </Group>
         </Section>
       </Container>
     </Page>
