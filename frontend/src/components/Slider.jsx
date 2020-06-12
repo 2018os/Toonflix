@@ -63,6 +63,9 @@ const StyledCarousel = styled(Carousel)`
 	& > .slick-list > .slick-track > .slick-slide[data-index="-1"] { // Exception) "data-index" = -1
 		margin-right: ${props => props.theme.spacing[2]};
 	}
+	& > .slick-list > .slick-track > .slick-slide:last-child {
+		margin-right: 0;
+	}
 `;
 
 const Header = ({ sliderRef, title, description }) => {
