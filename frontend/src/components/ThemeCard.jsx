@@ -46,20 +46,23 @@ const ThemeTitle = styled(Text).attrs({
 
 const ThemeCard = ({ theme }) => {
   const {
+    id,
     title,
+    webtoons,
   } = theme;
-
+  const slicedWebtoons = webtoons.slice(0, 4);
   return (
-    <Link to={`/theme/detail`}>
+    <Link to={`/theme/${id}`}>
       <ThemeThumbnailWrapper>
         <ThemeTitle size="large" bold>
           {title}
         </ThemeTitle>
         <ThemeThumbnail>
-          <Thumbnail src="https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg" width={160} height={160} />
-          <Thumbnail src="https://image-comic.pstatic.net/webtoon/651664/thumbnail/title_thumbnail_20150326153630_t220x202.jpg" width={160} height={160} />
-          <Thumbnail src="https://image-comic.pstatic.net/webtoon/26216/thumbnail/thumbnail_IMAG19_migrated_26216.jpg" width={160} height={160} />
-          <Thumbnail src="https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg" width={160} height={160} />
+          {
+            slicedWebtoons.map(webtoon => (
+              <Thumbnail key={`thumbnail-${webtoon.id}`} src={webtoon.thumbnail} width={160} height={160} />
+            ))
+          }
         </ThemeThumbnail>
       </ThemeThumbnailWrapper>
     </Link>

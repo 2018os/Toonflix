@@ -6,6 +6,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // hocs
+import withFetchAll from 'hocs/withFetchAll';
 import withFetchParams from 'hocs/withFetchParams';
 import withFooter from 'hocs/withFooter';
 import withNavigation from 'hocs/withNavigation';
@@ -82,7 +83,11 @@ const WebtoonDetail = ({ data: webtoon }) => {
     is_finish,
     platform,
     genres,
+    themes,
   } = webtoon || '';
+
+  const fetchUrls = themes && themes.map(theme => `http://127.0.0.1:8000/api/theme/${theme}`);
+  const FetchedThemeList = fetchUrls && withFetchAll(fetchUrls)(ThemeList);
 
   return (
     <Page backgroundColor="gray">
@@ -157,7 +162,9 @@ const WebtoonDetail = ({ data: webtoon }) => {
         </Section>
         <Section>
           <Group>
-            <ThemeList />
+            {
+              fetchUrls && <FetchedThemeList />
+            }
           </Group>
         </Section>
       </Container>

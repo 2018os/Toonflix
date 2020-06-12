@@ -4,15 +4,16 @@ import React from 'react';
 import Slider from './Slider';
 import ThemeCard from './ThemeCard';
 
-// 1. Search themes including webtoon
-// 2. Get collection name & webtoons
-
-const dummy = {
-  title: '킬링 타임 top 3'
-};
-
-const ThemeList = () => (
-  <ThemeCard theme={dummy} />
+const ThemeList = ({ data: themes }) => (
+  themes && (
+    <Slider title="비슷한 작품" slidesToShow={3}>
+      {
+        themes.map(theme => (
+          <ThemeCard theme={theme} key={`theme-card-${theme.id}`} />
+        ))
+      }
+    </Slider>
+  )
 );
 
 export default ThemeList;
