@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react';
 
 const withFetchAll = fetchUrls => WrappedComponent => {
   return props => {
-    const requestList = [];
-    const dataList = []; // result data list
     const [data, setData] = useState([]);
     const [isError, setIsError] = useState(false);
-    fetchUrls.map(url => requestList.push(axios.get(url)));
     useEffect(() => {
+      const requestList = [];
+      const dataList = []; // result data list
+      fetchUrls.map(url => requestList.push(axios.get(url)));
       let mounted = true; // for prevent memory leak
       const fetch = async () => {
         try {
@@ -23,10 +23,10 @@ const withFetchAll = fetchUrls => WrappedComponent => {
         }
       };
       fetch();
-      return () => {
+      return () => { // clean up
         mounted = false;
       };
-    }, [requestList, dataList]);
+    }, []);
     return <WrappedComponent {...props} data={data} isError={isError} />
   }
 };
