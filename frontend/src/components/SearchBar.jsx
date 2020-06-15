@@ -21,8 +21,8 @@ const SearchBar = ({ placeholder, children }) => {
 
   const onSearch = searchText => {
     if (reg.test(searchText)) {
-      const webtoonRequest = axios.get(`http://127.0.0.1:8000/api/webtoons/?search=${searchText}`);
-      const themeRequest = axios.get(`http://127.0.0.1:8000/api/themes/?search=${searchText}`);
+      const webtoonRequest = axios.get(`http://127.0.0.1:8000/api/webtoons/?title=${searchText}`);
+      const themeRequest = axios.get(`http://127.0.0.1:8000/api/themes/?webtoon=${searchText}`);
       axios.all([webtoonRequest, themeRequest])
       .then(axios.spread((...res) => {
         const webtoonData = res[0].data;
