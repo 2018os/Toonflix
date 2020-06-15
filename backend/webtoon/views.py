@@ -5,20 +5,22 @@ from .models import Theme, Webtoon, Genre, Author
 from .serializers import ThemeSerializer, WebtoonSerializer, GenreSerializer, AuthorSerializer
 
 class WebtoonFilter(filters.FilterSet):
-	title = filters.CharFilter(field_name="title")
-	genre = filters.CharFilter(field_name="genres__name")
+	title = filters.CharFilter(field_name="title", lookup_expr="contains")
+	genre = filters.CharFilter(field_name="genres__name", lookup_expr="contains")
 
 	class Meta:
 		model = Webtoon
 		fields = ['title', 'genre']
 
+
 class ThemeFilter(filters.FilterSet):
-	title = filters.CharFilter(field_name="title")
-	webtoon = filters.CharFilter(field_name="webtoons__title")
+	title = filters.CharFilter(field_name="title", lookup_expr="contains")
+	webtoon = filters.CharFilter(field_name="webtoons__title",lookup_expr="contains")
 
 	class Meta:
 		model = Theme
 		fields = ['title', 'webtoon']
+
 
 class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = Theme.objects.all()
