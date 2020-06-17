@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { pt, pb } from 'styled-components-spacing';
 
 const baseLayoutCss = css`
   background-color: ${props => props.theme.colors[props.backgroundColor]};
@@ -6,6 +7,8 @@ const baseLayoutCss = css`
 
 const Page = styled.div`
   ${baseLayoutCss}
+  ${pt(5)};
+  ${pb(6)};
 `;
 
 const Section = styled.div.attrs({
