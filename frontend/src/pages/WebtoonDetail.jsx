@@ -24,6 +24,7 @@ import { Paragraph, Title, Text } from 'styles/Typography';
 import WebtoonListContainer from 'containers/WebtoonListContainer';
 
 // components
+import Slider from 'components/Slider';
 import ThemeList from 'components/ThemeList';
 import Thumbnail from 'components/Thumbnail';
 
@@ -175,6 +176,20 @@ const WebtoonDetail = ({ data: webtoon }) => {
             {
               requestsForTheme && <FetchedThemeList />
             }
+          </Group>
+          <Group>
+            <Slider
+              title="썸네일만 보고 고르기!"
+              slidesToShow={6}
+            >
+              <Thumbnail src={'https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg'} width={152} height={152} />
+              <Thumbnail src={'https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg'} width={152} height={152} />
+              <Thumbnail src={'https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg'} width={152} height={152} />
+              <Thumbnail src={'https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg'} width={152} height={152} />
+              <Thumbnail src={'https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg'} width={152} height={152} />
+              <Thumbnail src={'https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg'} width={152} height={152} />
+              <Thumbnail src={'https://image-comic.pstatic.net/webtoon/400738/thumbnail/thumbnail_IMAG19_migrated_400738.jpg'} width={152} height={152} />
+            </Slider>
           </Group>
         </Section>
       </Container>
