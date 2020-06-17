@@ -10,13 +10,20 @@ import withFooter from 'hocs/withFooter';
 import Container from 'layout/Container';
 import { Group, Page, Section } from 'layout/Layout';
 
+// containers
+import WebtoonListContainer from 'containers/WebtoonListContainer';
+
 // components
 import MainLogo from 'components/MainLogo';
 import Menu from 'components/Menu';
-import WebtoonList from 'components/WebtoonList';
 
 const Main = ({ data, isError }) => { // TODO: Make error state
   const themes = data && data.slice(0, 4);
+  const EnhancedContainers = [];
+  themes && themes.map(theme => {
+    const FetchedWebtoonListContainer = withFetch(`http://127.0.0.1:8000/api/theme/${theme.id}`)(WebtoonListContainer);
+    return EnhancedContainers.push(FetchedWebtoonListContainer);
+  });
   return (
     themes
     ? (
@@ -30,14 +37,11 @@ const Main = ({ data, isError }) => { // TODO: Make error state
           </Section>
           <Section>
             {
-              themes.map(theme => {
-                const FetchedWebtoonList = withFetch(`http://127.0.0.1:8000/api/theme/${theme.id}`)(WebtoonList)
-                return (
-                  <Group key={`theme-${theme.id}`}>
-                    <FetchedWebtoonList />
-                  </Group>
-                )
-              })
+              EnhancedContainers.map((Component, i) => (
+                <Group key={`webtoon-list-${i}`}>
+                  <Component />
+                </Group>
+              ))
             }
           </Section>
         </Container>

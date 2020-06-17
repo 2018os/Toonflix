@@ -6,16 +6,16 @@ import Loading from './Loading';
 import Slider from './Slider';
 import WebtoonCard from './WebtoonCard';
 
-const WebtoonList = ({ data, isError }) => ( // TODO: Make error state
-	data
+const WebtoonList = ({ title, description, webtoons, isError }) => ( // TODO: Make error state
+	webtoons
 	? (
 		<Slider
-			title={data.title}
-			description={data.description}
+			title={title}
+			description={description}
 			slidesToShow={4}
 		>
 			{
-				data.webtoons.map(webtoon => (
+				webtoons.map(webtoon => (
 					<WebtoonCard webtoon={webtoon} key={webtoon.id} />
 				))
 			}

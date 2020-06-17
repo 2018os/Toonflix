@@ -20,6 +20,9 @@ import { AdultWidget, CompleteWidget, PayWidget, PlatformWidget } from 'styles/W
 import Tag from 'styles/Tag';
 import { Paragraph, Title, Text } from 'styles/Typography';
 
+// containers
+import WebtoonListContainer from 'containers/WebtoonListContainer';
+
 // components
 import ThemeList from 'components/ThemeList';
 import Thumbnail from 'components/Thumbnail';
@@ -86,8 +89,10 @@ const WebtoonDetail = ({ data: webtoon }) => {
     themes,
   } = webtoon || '';
 
-  const fetchUrls = themes && themes.map(theme => `http://127.0.0.1:8000/api/theme/${theme}`);
-  const FetchedThemeList = fetchUrls && withFetchAll(fetchUrls)(ThemeList);
+  const requestsForTheme = themes && themes.map(theme => `http://127.0.0.1:8000/api/theme/${theme}`);
+  const requestsForGenre = genres && genres.map(genre => `http://127.0.0.1:8000/api/webtoons/?genre=${genre}`);
+  const FetchedThemeList = requestsForTheme && withFetchAll(requestsForTheme)(ThemeList);
+  const FetchedWebtoonListContainer = requestsForGenre && withFetchAll(requestsForGenre)(WebtoonListContainer);
 
   return (
     <Page backgroundColor="gray">
@@ -163,7 +168,12 @@ const WebtoonDetail = ({ data: webtoon }) => {
         <Section>
           <Group>
             {
-              fetchUrls && <FetchedThemeList />
+              requestsForGenre && <FetchedWebtoonListContainer title="비슷한 작품들" />
+            }
+          </Group>
+          <Group>
+            {
+              requestsForTheme && <FetchedThemeList />
             }
           </Group>
         </Section>
