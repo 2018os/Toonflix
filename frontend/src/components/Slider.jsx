@@ -80,7 +80,7 @@ const Header = ({ sliderRef, title, description }) => {
   return (
     <HeaderWrapper>
       <Space align="baseline">
-        <Title size="h2">
+        <Title size="larger">
           {title}
         </Title>
         <Paragraph size="small">{description}</Paragraph>

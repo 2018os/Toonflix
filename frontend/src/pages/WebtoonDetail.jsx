@@ -107,7 +107,7 @@ const WebtoonDetail = ({ data: webtoon }) => {
               <TopPart>
                 <Row align="middle" gutter={16}>
                   <Col>
-                    <Title size="h2" color="black" bold>
+                    <Title size="larger" color="black" bold>
                       {title}
                     </Title>
                   </Col>
