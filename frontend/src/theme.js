@@ -12,6 +12,7 @@ const fontSizes = {
 
 const colors = {
   primaryColor: '#5e74ff',
+  skeletonColor: '#ECEFFF',
   gray: '#EAEDED',
   black: '#212121',
   white: '#ffffff'
