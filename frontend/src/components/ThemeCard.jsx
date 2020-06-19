@@ -16,8 +16,8 @@ const ThemeThumbnail = styled.div.attrs({
   flex-wrap: wrap;
 `;
 const ThemeThumbnailWrapper = styled.div`
-  width: 320px;
-  height: 320px;
+  width: ${props => props.theme.imgSizes.large};
+  height: ${props => props.theme.imgSizes.large};
   display: flex;
   border-radius: 10px;
   overflow: hidden;
@@ -60,7 +60,7 @@ const ThemeCard = ({ theme }) => {
         <ThemeThumbnail>
           {
             slicedWebtoons.map(webtoon => (
-              <Thumbnail key={`thumbnail-${webtoon.id}`} src={webtoon.thumbnail} width={160} height={160} />
+              <Thumbnail key={`thumbnail-${webtoon.id}`} src={webtoon.thumbnail} size={160} />
             ))
           }
         </ThemeThumbnail>

@@ -8,8 +8,8 @@ import { AdultWidget, CompleteWidget, PayWidget, PlatformWidget } from 'styles/W
 const ThumbnailWrapper = styled.div`
   position: relative;
   ${props => `
-    width: ${props.width}px;
-    height: ${props.height}px;
+    width: ${props.theme.imgSizes[props.size] || `${props.size}px`};
+    height: ${props.theme.imgSizes[props.size] || `${props.size}px`};
   `}
 `;
 
@@ -37,8 +37,8 @@ const Cover = styled.img`
   height: 100%;
 `;
 
-const Thumbnail = ({ width, height, src, isPay, isAdult, isFinish, platform }) => (
-  <ThumbnailWrapper width={width} height={height}>
+const Thumbnail = ({ src, isPay, isAdult, isFinish, platform, size }) => (
+  <ThumbnailWrapper size={size}>
     <WidgetList>
       {
         isAdult && (
@@ -56,23 +56,24 @@ const Thumbnail = ({ width, height, src, isPay, isAdult, isFinish, platform }) =
 );
 
 Thumbnail.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
   src: PropTypes.string,
   isPay: PropTypes.bool,
   isAdult: PropTypes.bool,
   isFinish: PropTypes.bool,
   platform: PropTypes.string,
+  size: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 };
 
 Thumbnail.defaultProps = {
-  width: 236,
-  height: 236,
   src: '', // no thumbnail img
   isPay: false,
   isAdult: false,
   isFinish: false,
   platform: '',
+  size: 'default'
 };
 
 export default Thumbnail;

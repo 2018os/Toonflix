@@ -44,6 +44,12 @@ const iconSizes = {
   smaller: '16px',
 };
 
+const imgSizes = { // square
+  large: '320px',
+  default: '236px',
+  small: '152px',
+};
+
 const theme = {
   // colors
   colors,
@@ -54,6 +60,8 @@ const theme = {
   spacing,
   // iconSizes
   iconSizes,
+  // imageSizes
+  imgSizes,
 };
 
 export default theme;
