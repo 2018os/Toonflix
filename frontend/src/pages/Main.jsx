@@ -1,67 +1,43 @@
-import { compose } from 'recompose';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 // hocs
-import withFetch from 'hocs/withFetch';
 import withFooter from 'hocs/withFooter';
 
 // layout
 import Container from 'layout/Container';
 import { Group, Page, Section } from 'layout/Layout';
 
-// containers
-import WebtoonListContainer from 'containers/WebtoonListContainer';
-
 // components
 import MainLogo from 'components/MainLogo';
 import Menu from 'components/Menu';
+import WebtoonList from 'components/WebtoonList';
 
-const Main = ({ data, isError }) => { // TODO: Make error state
-  const themes = data && data.slice(0, 4);
-  const EnhancedContainers = [];
-  themes && themes.map(theme => {
-    const FetchedWebtoonListContainer = withFetch(`http://127.0.0.1:8000/api/theme/${theme.id}`)(WebtoonListContainer);
-    return EnhancedContainers.push(FetchedWebtoonListContainer);
-  });
+// tools
+import { useFetch } from 'tools/hooks';
+
+const Main = () => {
+  const { data, isLoading, isError } = useFetch('http://127.0.0.1:8000/api/themes'); // TODO: Make error state
   return (
-    themes
-    ? (
-      <Page backgroundColor="gray">
-        <Container>
-          <Section>
-            <MainLogo />
-          </Section>
-          <Section>
-            <Menu />
-          </Section>
-          <Section>
-            {
-              EnhancedContainers.map((Component, i) => (
-                <Group key={`webtoon-list-${i}`}>
-                  <Component />
-                </Group>
-              ))
-            }
-          </Section>
-        </Container>
-      </Page>
-    )
-    : 'loading' // TODO: Make loading state
+    <Page backgroundColor="gray">
+      <Container>
+        <Section>
+          <MainLogo />
+        </Section>
+        <Section>
+          <Menu />
+        </Section>
+          {
+            [0, 1, 2, 3].map(index => ( // TODO: Make sense
+              <Group key={`webtoon-list-${index}`}>
+                <WebtoonList data={data && data[index]} isLoading={isLoading} />
+              </Group>
+            ))
+          }
+        <Section>
+        </Section>
+      </Container>
+    </Page>
   )
 };
 
-Main.propTypes = {
-  data: PropTypes.array,
-  isError: PropTypes.bool,
-};
-
-Main.defaultProps = {
-  data: undefined,
-  isError: false,
-};
-
-export default compose(
-  withFooter,
-  withFetch('http://127.0.0.1:8000/api/themes')
-)(Main);
+export default withFooter(Main);

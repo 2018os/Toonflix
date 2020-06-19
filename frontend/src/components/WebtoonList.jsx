@@ -2,29 +2,37 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 // components
-import Loading from './Loading';
 import Slider from './Slider';
 import WebtoonCard from './WebtoonCard';
 
-const WebtoonList = ({ title, description, webtoons, isError }) => ( // TODO: Make error state
-	webtoons
+const WebtoonList = ({ data, isLoading }) => ( // TODO: Make error state
+	isLoading || !data // TODO: Make loading state
 	? (
+		<Slider // TODO: No Slider
+			title='loading'
+			description='loading desc'
+			slidesToShow={4}
+		>
+			<div>Loading state</div>
+		</Slider>
+	)
+	: (
 		<Slider
-			title={title}
-			description={description}
+			title={data.title}
+			description={data.description}
 			slidesToShow={4}
 		>
 			{
-				webtoons.map(webtoon => (
+				data.webtoons.map(webtoon => (
 					<WebtoonCard webtoon={webtoon} key={webtoon.id} />
 				))
 			}
 		</Slider>
 	)
-	: <Loading /> // TODO: Make loading state
 );
 
 WebtoonList.propTypes = {
+	isLoading: PropTypes.bool.isRequired,
 	data: PropTypes.object,
 };
 
