@@ -1,13 +1,13 @@
 export enum FontSizes {
-  h1 = '48px',
-  h2 = '36px',
-  h3 = '24px',
-  largest = '48px',
-  larger = '36px',
-  large = '24px',
-  default = '18px',
-  small = '16px',
-  smallest = '12px'
+  H1 = '48px',
+  H2 = '36px',
+  H3 = '24px',
+  LARGEST = '48px',
+  LARGER = '36px',
+  LARGE = '24px',
+  DEFAULT = '18px',
+  SMALL = '16px',
+  SMALLEST = '12px'
 }
 
 export enum Colors {

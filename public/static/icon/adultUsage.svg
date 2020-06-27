@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <clipPath id="prefix__clip-path"/>
+        <clipPath id="prefix__clip-path-2">
+            <path id="prefix__사각형_921" d="M0 0H24V24H0z" data-name="사각형 921"/>
+        </clipPath>
+        <filter id="prefix__사각형_919" width="36" height="36" x="-6" y="-4" filterUnits="userSpaceOnUse">
+            <feOffset dy="2"/>
+            <feGaussianBlur result="blur" stdDeviation="2"/>
+            <feFlood flood-opacity=".161"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g id="prefix__마스크_그룹_44" data-name="마스크 그룹 44" transform="translate(-644 -128)">
+        <g id="prefix__성인_24x24" data-name="성인 24x24" transform="translate(644 128)">
+            <path id="prefix__사각형_920" d="M0 0H24V24H0z" data-name="사각형 920" style="fill:#ff7800"/>
+            <text id="prefix___19" data-name="19" transform="translate(3 19)" style="font-size:16px;font-family:NotoSansCJKkr-Medium,Noto Sans CJK KR;font-weight:500;fill:#fff">
+                <tspan x="0" y="0">19</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

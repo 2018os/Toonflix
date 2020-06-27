@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <clipPath id="prefix__clip-path"/>
+        <clipPath id="prefix__clip-path-2">
+            <path id="prefix__사각형_914" d="M0 0H24V24H0z" data-name="사각형 914"/>
+        </clipPath>
+        <filter id="prefix__사각형_398" width="36" height="36" x="-6" y="-4" filterUnits="userSpaceOnUse">
+            <feOffset dy="2"/>
+            <feGaussianBlur result="blur" stdDeviation="2"/>
+            <feFlood flood-opacity=".161"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <style>
+            .prefix__cls-1{fill:#5e74ff}
+        </style>
+    </defs>
+    <g id="prefix__마스크_그룹_42" data-name="마스크 그룹 42" transform="translate(-204 -36)">
+        <g id="prefix__유료_24x24" data-name="유료 24x24" transform="translate(204 36)">
+            <path id="prefix__사각형_913" d="M0 0H24V24H0z" class="prefix__cls-1" data-name="사각형 913"/>
+            <text id="prefix___" data-name="$" transform="translate(7 18)" style="fill:#fff;font-size:18px;font-family:NotoSansCJKkr-Medium,Noto Sans CJK KR;font-weight:500">
+                <tspan x="0" y="0">$</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
