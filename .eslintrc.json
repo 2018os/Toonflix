@@ -1,0 +1,68 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "plugin:react/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["react", "prettier", "@typescript-eslint", "react-hooks"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/prop-types": ["off"],
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".ts", "tsx"] }
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ],
+    "react/react-in-jsx-scope": 0,
+    "react/prefer-stateless-function": [2, { "ignorePureComponents": true }],
+    "space-before-function-paren": 0,
+    "no-useless-constructor": "off",
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-wrap-multilines": [
+      "error",
+      { "declaration": false, "assignment": false }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts", ".tsx"]
+      }
+    }
+  },
+  "env": {
+    "jest": true
+  }
+}
