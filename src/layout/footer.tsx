@@ -10,7 +10,9 @@ import { FontSizes, spacing } from '../util/theme';
 import { Text } from '../styles/Typography';
 
 const Container = styled(SharedContainerComponent)`
+  width: 100vw;
   height: 240px;
+  box-shadow: 0 -3px 0px 0 rgba(0, 0, 0, 0.16);
 `;
 
 const ContentWrapper = styled.div`

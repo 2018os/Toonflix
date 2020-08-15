@@ -1,13 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CardViewList from '../main/CardViewList/index';
-import {
-  Colors,
-  spacing,
-  IconSizes,
-  FontSizes,
-  TextColors
-} from '../../util/theme';
+import { spacing, IconSizes } from '../../util/theme';
 import ContentContainer from '../../layout/Container';
 
 const Container = styled.div`
@@ -30,7 +24,7 @@ const Button = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  padding-top: 60px;
+  padding-top: ${(props) => props.theme.spacing[6]};
   width: fit-content;
   margin: auto;
 `;
