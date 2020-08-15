@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import CardViewList from '../main/CardViewList/index';
-import { Colors, spacing, IconSizes, FontSizes } from '../../util/theme';
+import {
+  Colors,
+  spacing,
+  IconSizes,
+  FontSizes,
+  TextColors
+} from '../../util/theme';
 import ContentContainer from '../../layout/Container';
 
 const Container = styled.div`
@@ -39,7 +45,7 @@ const SearchBar = styled.input`
   border: none;
   outline: none;
   &::placeholder {
-    color: ${Colors.GRAY};
+    color: ${TextColors.PRIMARY_COLOR};
   }
 `;
 
