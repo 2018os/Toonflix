@@ -11,7 +11,7 @@ const Thumbnail = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const WebToonInfoWrapper = styled.div`
+const WebtoonInfoWrapper = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   width: 236px;
@@ -56,7 +56,8 @@ const Category = styled.div`
 
 const ImgWrapper = styled.div`
   position: relative;
-  padding: 0 ${(props) => props.theme.spacing[1]} 0;
+  padding: ${(props) => props.theme.spacing[1]}
+    ${(props) => props.theme.spacing[1]} 0;
 `;
 
 const AdultUsageImg = styled.img`
@@ -128,11 +129,11 @@ function CardView({
           </Wrapper>
         </ImgWrapper>
       </Thumbnail>
-      <WebToonInfoWrapper>
+      <WebtoonInfoWrapper>
         <Title>{title}</Title>
         <Writer>{writer}</Writer>
         <Category># {category}</Category>
-      </WebToonInfoWrapper>
+      </WebtoonInfoWrapper>
     </>
   );
 }

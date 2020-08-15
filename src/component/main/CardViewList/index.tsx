@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CardView, { Props as WebToon } from '../CardView/index';
+import CardView, { Props as Webtoon } from '../CardView/index';
 import { spacing } from '../../../util/theme';
 
 const ContentWrapper = styled.div`
@@ -34,7 +34,7 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #7a7a7a;
+  color: ${(props) => props.theme.TextColors.GRAY};
   font-size: ${(props) => props.theme.FontSizes.H3};
 `;
 
@@ -47,7 +47,7 @@ const CardViewWrapper = styled.div`
 interface Props {
   collectionTitle: string;
   desc: string;
-  webtoonList: WebToon[];
+  webtoonList: Webtoon[];
 }
 
 function CardViewList({ collectionTitle, desc, webtoonList }: Props) {
@@ -64,7 +64,7 @@ function CardViewList({ collectionTitle, desc, webtoonList }: Props) {
         </ContentWrapper>
       </ContentWrapper>
       <CardViewWrapper>
-        {webtoonList.map((webtoon: WebToon, index: number) => {
+        {webtoonList.map((webtoon: Webtoon, index: number) => {
           return (
             <div
               key={webtoon.title}
