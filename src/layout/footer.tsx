@@ -26,8 +26,8 @@ const MenuWrapper = styled.div`
 `;
 
 const MenuText = styled.div`
+  line-height: 1.5;
   font-size: 14px;
-  line-height: 1.71;
   color: #000000;
 `;
 
@@ -36,8 +36,8 @@ const DescriptionWrapper = styled.div`
 `;
 
 const Company = styled.div`
+  line-height: 1.5;
   font-size: 14px;
-  line-height: 1.71;
   margin-top: 21px;
 `;
 
@@ -47,7 +47,6 @@ const Description = styled.div`
   height: 38px;
   font-size: ${FontSizes.SMALLEST};
   font-weight: 300;
-  line-height: 1.67;
   color: #000000;
 `;
 

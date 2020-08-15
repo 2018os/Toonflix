@@ -13,20 +13,20 @@ import ContentContainer from '../../layout/Container';
 const Container = styled.div`
   min-width: 1024px;
   padding-bottom: 100px;
-  background: ${Colors.GRAY};
+  background: ${(props) => props.theme.Colors.GRAY};
 `;
 
 const Button = styled.div`
+  line-height: 1.5;
   width: 572px;
   height: 150px;
-  background-color: ${Colors.PRIMARY_COLOR};
+  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
   font-size: 66px;
   font-weight: 900;
-  line-height: 1.48;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${Colors.GRAY};
+  color: ${(props) => props.theme.Colors.GRAY};
 `;
 
 const ButtonWrapper = styled.div`
@@ -36,16 +36,15 @@ const ButtonWrapper = styled.div`
 `;
 
 const SearchBar = styled.input`
-  padding: 0 ${spacing[3]};
+  padding: 0 ${(props) => props.theme.spacing[3]};
   width: 100%;
   height: 116px;
-  font-size: ${FontSizes.H2};
+  font-size: ${(props) => props.theme.FontSizes.H2};
   font-weight: 500;
-  line-height: 1.5;
   border: none;
   outline: none;
   &::placeholder {
-    color: ${TextColors.PRIMARY_COLOR};
+    color: ${(props) => props.theme.TextColors.PRIMARY_COLOR};
   }
 `;
 
@@ -53,26 +52,27 @@ const SearchBarWrapper = styled.div`
   display: flex;
   align-items: center;
   margin: auto;
-  margin-top: ${spacing[5]};
+  margin-top: ${(props) => props.theme.spacing[5]};
   width: 992px;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  border: solid 4px ${Colors.PRIMARY_COLOR};
-  background-color: ${Colors.WHILE};
+  border: solid
+    ${(props) =>
+      ` ${props.theme.spacing[0]} ${props.theme.Colors.PRIMARY_COLOR}`};
+  background-color: ${(props) => props.theme.Colors.WHILE};
 `;
 
 const LinkButtonWrapper = styled.div`
   display: flex;
-  margin-top: ${spacing[3]};
+  margin-top: ${(props) => props.theme.spacing[3]};
   justify-content: center;
 `;
 
 const LinkButton = styled.div`
   cursor: pointer;
-  font-size: ${FontSizes.LARGE};
+  font-size: ${(props) => props.theme.FontSizes.LARGE};
   font-weight: bold;
-  line-height: 1.5;
-  color: ${Colors.WHILE};
+  color: ${(props) => props.theme.Colors.WHILE};
   width: 234px;
   height: 46px;
   border-radius: 10px;
@@ -80,7 +80,7 @@ const LinkButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${Colors.PRIMARY_COLOR};
+  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
 `;
 
 const CardViewContainer = styled.div`

@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Colors, FontSizes, TextColors } from '../../../util/theme';
 import CardView, { Props as WebToon } from '../CardView/index';
-
-// const Container = styled.div``;
+import { spacing } from '../../../util/theme';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -12,17 +10,17 @@ const ContentWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: ${FontSizes.LARGER};
+  font-size: ${(props) => props.theme.FontSizes.LARGER};
   font-weight: 500;
-  color: ${TextColors.PRIMARY_COLOR};
+  color: ${(props) => props.theme.TextColors.PRIMARY_COLOR};
 `;
 
 const Description = styled.div`
-  margin-left: 12px;
-  font-size: ${FontSizes.SMALL};
-  font-weight: 500;
   line-height: 1.5;
-  color: ${Colors.BLACK};
+  margin-left: 12px;
+  font-size: ${(props) => props.theme.FontSizes.SMALL};
+  font-weight: 500;
+  color: ${(props) => props.theme.Colors.BLACK};
 `;
 
 const Button = styled.div`
@@ -30,19 +28,20 @@ const Button = styled.div`
   width: 40px;
   height: 30px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: ${(props) =>
+    `0 2px ${props.theme.spacing[0]} 0 rgba(0, 0, 0, 0.16)`};
   background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #7a7a7a;
-  font-size: ${FontSizes.H3};
+  font-size: ${(props) => props.theme.FontSizes.H3};
 `;
 
 const CardViewWrapper = styled.div`
   display: flex;
   margin: auto;
-  margin-top: 24px;
+  margin-top: ${(props) => props.theme.spacing[0]};
 `;
 
 interface Props {
@@ -61,7 +60,7 @@ function CardViewList({ collectionTitle, desc, webtoonList }: Props) {
         </ContentWrapper>
         <ContentWrapper>
           <Button>{'<'}</Button>
-          <Button style={{ marginLeft: '4px' }}>{'>'}</Button>
+          <Button style={{ marginLeft: spacing[0] }}>{'>'}</Button>
         </ContentWrapper>
       </ContentWrapper>
       <CardViewWrapper>
@@ -69,7 +68,7 @@ function CardViewList({ collectionTitle, desc, webtoonList }: Props) {
           return (
             <div
               key={webtoon.title}
-              style={{ marginLeft: index === 0 ? '0px' : '16px' }}
+              style={{ marginLeft: index === 0 ? '0px' : spacing[2] }}
             >
               <CardView {...webtoon} />
             </div>

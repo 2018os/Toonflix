@@ -1,19 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  Colors,
-  TextColors,
-  FontSizes,
-  ImgSizes,
-  spacing
-} from '../../../util/theme';
+import { spacing } from '../../../util/theme';
 
 const Thumbnail = styled.div`
-  background-color: ${Colors.WHILE};
+  background-color: ${(props) => props.theme.Colors.WHILE};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  width: ${ImgSizes.DEFAULT};
-  height: ${ImgSizes.DEFAULT};
+  width: ${(props) => props.theme.ImgSizes.DEFAULT};
+  height: ${(props) => props.theme.ImgSizes.DEFAULT};
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
 `;
 
@@ -23,61 +17,61 @@ const WebToonInfoWrapper = styled.div`
   width: 236px;
   height: 124px;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
-  background-color: ${Colors.WHILE};
+  background-color: ${(props) => props.theme.Colors.WHILE};
   text-align: center;
 `;
 
 const Title = styled.div`
   padding-top: 10px;
-  font-size: ${FontSizes.DEFAULT};
+  font-size: ${(props) => props.theme.FontSizes.DEFAULT};
   font-weight: bold;
-  line-height: 1.33;
-  color: ${TextColors.BLACK};
+  line-height: 1.5;
+  color: ${(props) => props.theme.TextColors.BLACK};
 `;
 
 const Writer = styled.div`
-  margin-top: 4px;
-  font-size: ${FontSizes.SMALLEST};
+  margin-top: ${(props) => props.theme.spacing[0]};
+  font-size: ${(props) => props.theme.FontSizes.SMALLEST};
   font-weight: 500;
-  line-height: 1.5;
   text-align: center;
-  color: ${TextColors.GRAY};
+  line-height: 1.5;
+  color: ${(props) => props.theme.TextColors.GRAY};
 `;
 
 const Category = styled.div`
   width: fit-content;
-  padding: 0 ${spacing[0]};
-  height: 24px;
+  padding: 0 ${(props) => props.theme.spacing[0]};
+  height: ${(props) => props.theme.spacing[3]};
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
-  font-size: ${FontSizes.SMALL};
-  margin-top: 17px;
+  font-size: ${(props) => props.theme.FontSizes.SMALL};
+  margin-top: ${(props) => props.theme.spacing[2]};
   background-color: #f9f9f9;
   border-radius: 5px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: ${(props) =>
+    `0 2px ${props.theme.spacing[0]} 0 rgba(0, 0, 0, 0.2)`};
 `;
 
 const ImgWrapper = styled.div`
   position: relative;
-  padding: 0 ${spacing[1]};
-  padding-top: ${spacing[1]};
+  padding: 0 ${(props) => props.theme.spacing[1]} 0;
 `;
 
 const AdultUsageImg = styled.img`
-  width: 24px;
-  height: 24px;
+  width: ${(props) => props.theme.spacing[3]};
+  height: ${(props) => props.theme.spacing[3]};
   border-radius: 5px;
 `;
 
 const Wrapper = styled.div`
-  width: 24px;
-  height: 24px;
+  width: ${(props) => props.theme.spacing[3]};
+  height: ${(props) => props.theme.spacing[3]};
   position: absolute;
   display: flex;
   flex-direction: column;
-  right: 8px;
+  right: ${(props) => props.theme.spacing[1]};
 `;
 
 export interface Props {
