@@ -1,23 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
     <defs>
-        <clipPath id="prefix__clip-path"/>
-        <clipPath id="prefix__clip-path-2">
-            <path id="prefix__사각형_921" d="M0 0H24V24H0z" data-name="사각형 921"/>
+        <clipPath id="clip-path">
+            <path id="사각형_1172" d="M0 0H24V24H0z" data-name="사각형 1172"/>
         </clipPath>
-        <filter id="prefix__사각형_919" width="36" height="36" x="-6" y="-4" filterUnits="userSpaceOnUse">
-            <feOffset dy="2"/>
-            <feGaussianBlur result="blur" stdDeviation="2"/>
-            <feFlood flood-opacity=".161"/>
-            <feComposite in2="blur" operator="in"/>
-            <feComposite in="SourceGraphic"/>
-        </filter>
     </defs>
-    <g id="prefix__마스크_그룹_44" data-name="마스크 그룹 44" transform="translate(-644 -128)">
-        <g id="prefix__성인_24x24" data-name="성인 24x24" transform="translate(644 128)">
-            <path id="prefix__사각형_920" d="M0 0H24V24H0z" data-name="사각형 920" style="fill:#ff7800"/>
-            <text id="prefix___19" data-name="19" transform="translate(3 19)" style="font-size:16px;font-family:NotoSansCJKkr-Medium,Noto Sans CJK KR;font-weight:500;fill:#fff">
-                <tspan x="0" y="0">19</tspan>
-            </text>
+    <g id="Adult" clip-path="url(#clip-path)">
+        <g id="그룹_443" data-name="그룹 443" transform="translate(-10666 9695)">
+            <path id="사각형_1171" fill="#fff" d="M0 0H14V13H0z" data-name="사각형 1171" transform="translate(10671 -9691)"/>
+            <g id="shield-user-fill" transform="translate(10666 -9695)">
+                <path id="패스_501" fill="none" d="M0 0h24v24H0z" data-name="패스 501"/>
+                <path id="패스_502" fill="#ff7800" d="M3.783 2.826L12 1l8.217 1.826A1 1 0 0 1 21 3.8v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.8a1 1 0 0 1 .783-.976zM12 11a2.5 2.5 0 1 0-2.5-2.5A2.5 2.5 0 0 0 12 11zm-4.473 5h8.946a4.5 4.5 0 0 0-8.946 0z" data-name="패스 502"/>
+            </g>
         </g>
     </g>
 </svg>

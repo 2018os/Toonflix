@@ -86,7 +86,7 @@ export interface Props {
   writer: string;
   category: string;
   adultUsage: boolean;
-  a: boolean;
+  completion: boolean;
   paidService: boolean;
 }
 
@@ -95,7 +95,7 @@ function CardView({
   writer,
   category,
   adultUsage,
-  a,
+  completion,
   paidService
 }: Props) {
   return (
@@ -109,13 +109,27 @@ function CardView({
             />
           )}
           <Wrapper>
-            {(paidService || a) && (
-              <AdultUsageImg src={a ? 'b' : '/static/icon/paidService.svg'} />
+            {(paidService || completion) && (
+              <AdultUsageImg
+                src={
+                  completion
+                    ? '/static/icon/completion.svg'
+                    : '/static/icon/paidService.png'
+                }
+                srcSet={
+                  !completion
+                    ? `/static/icon/paidService@2x.png 2x,
+                /static/icon/paidService@3x.png 3x`
+                    : ''
+                }
+              />
             )}
-            {a && paidService && (
+            {completion && paidService && (
               <AdultUsageImg
                 style={{ marginTop: spacing[0] }}
-                src={'/static/icon/paidService.svg'}
+                src={'/static/icon/paidService.png'}
+                srcSet={`/static/icon/paidService@2x.png 2x,
+                /static/icon/paidService@3x.png 3x`}
               />
             )}
           </Wrapper>

@@ -92,7 +92,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: true,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -100,7 +100,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: false,
+        completion: false,
         paidService: true
       },
       {
@@ -108,7 +108,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -116,7 +116,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       }
     ]
@@ -130,7 +130,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -138,7 +138,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -146,7 +146,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -154,7 +154,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       }
     ]
@@ -168,7 +168,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -176,7 +176,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -184,7 +184,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -192,7 +192,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       }
     ]
@@ -206,7 +206,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -214,7 +214,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -222,7 +222,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       },
       {
@@ -230,7 +230,7 @@ const example = [
         writer: '김승엽',
         category: '액션',
         adultUsage: false,
-        a: true,
+        completion: true,
         paidService: true
       }
     ]
