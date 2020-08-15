@@ -8,7 +8,6 @@ import {
   spacing
 } from '../../../util/theme';
 
-// TODO
 const Thumbnail = styled.div`
   background-color: ${Colors.WHILE};
   border-top-left-radius: 10px;
