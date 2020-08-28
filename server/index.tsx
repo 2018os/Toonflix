@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import next from 'next';
+import { ParsedUrlQuery } from 'querystring';
 import cookiesMiddleware from 'universal-cookie-express';
 import dotenv from 'dotenv';
 
@@ -15,13 +16,18 @@ const app = next({
   dev
 });
 
-async function renderToHTML(req: any, res: any) {
+async function renderToHTML(req: Request, res: Response) {
   try {
-    const html = await app.renderToHTML(req, res, req.path, req.query);
+    const html = await app.renderToHTML(
+      req,
+      res,
+      req.path,
+      req.query as ParsedUrlQuery
+    );
 
     res.send(html);
   } catch (err) {
-    app.renderError(err, req, res, req.path, req.query);
+    app.renderError(err, req, res, req.path, req.query as ParsedUrlQuery);
   }
 }
 
