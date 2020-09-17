@@ -1,6 +1,5 @@
 import React from 'react';
 
-// layout
 import Footer from '../layout/footer';
 
 const withFooter = (WrappedComponents: React.ComponentType) => {

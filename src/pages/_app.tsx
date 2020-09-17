@@ -1,6 +1,7 @@
-import React from 'react';
 import { AppProps } from 'next/app';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import React from 'react';
+
 import theme from '../util/theme';
 
 const DefaultSetting = createGlobalStyle`

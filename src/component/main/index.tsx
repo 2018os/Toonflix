@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import CardViewList from '../shared/CardViewList/index';
-import { spacing, IconSizes } from '../../util/theme';
+
 import ContentContainer from '../../layout/Container';
+
+import CardViewList from '../shared/CardViewList/index';
+
+import { spacing, IconSizes } from '../../util/theme';
 
 const Container = styled.div`
   min-width: 1024px;

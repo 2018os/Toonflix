@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import CardView, { Props as Webtoon } from '../CardView/index';
+
 import { spacing } from '../../../util/theme';
 
 const ContentWrapper = styled.div`
