@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CardViewList from '../main/CardViewList/index';
+import CardViewList from '../shared/CardViewList/index';
 import { spacing, IconSizes } from '../../util/theme';
 import ContentContainer from '../../layout/Container';
 
