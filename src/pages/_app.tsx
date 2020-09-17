@@ -5,10 +5,10 @@ import React from 'react';
 import theme from '../util/theme';
 
 const DefaultSetting = createGlobalStyle`
-body {
-  margin: 0px;
-  padding: 0px;
-}
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
 `;
 
 const PageWrapper = ({ Component, pageProps }: AppProps) => {
