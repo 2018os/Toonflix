@@ -91,6 +91,7 @@ const example = [
     desc: '세상에서 제일 인기있는 웹툰들을 만나보세요',
     webtoonList: [
       {
+        id: 'helper',
         title: '헬퍼',
         writer: '김승엽',
         category: '액션',
@@ -99,6 +100,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼2',
         writer: '김승엽',
         category: '액션',
@@ -107,6 +109,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼3',
         writer: '김승엽',
         category: '액션',
@@ -115,6 +118,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼4',
         writer: '김승엽',
         category: '액션',
@@ -129,6 +133,7 @@ const example = [
     desc: '할거없으면 이거나 봐보세요',
     webtoonList: [
       {
+        id: 'helper',
         title: '헬퍼',
         writer: '김승엽',
         category: '액션',
@@ -137,6 +142,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼2',
         writer: '김승엽',
         category: '액션',
@@ -145,6 +151,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼3',
         writer: '김승엽',
         category: '액션',
@@ -153,6 +160,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼4',
         writer: '김승엽',
         category: '액션',
@@ -167,6 +175,7 @@ const example = [
     desc: '또 보세용',
     webtoonList: [
       {
+        id: 'helper',
         title: '헬퍼',
         writer: '김승엽',
         category: '액션',
@@ -175,6 +184,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼2',
         writer: '김승엽',
         category: '액션',
@@ -183,6 +193,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼3',
         writer: '김승엽',
         category: '액션',
@@ -191,6 +202,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼4',
         writer: '김승엽',
         category: '액션',
@@ -205,6 +217,7 @@ const example = [
     desc: '세상에서 제일 인기있었던 웹툰들을 만나보세요',
     webtoonList: [
       {
+        id: 'helper',
         title: '헬퍼',
         writer: '김승엽',
         category: '액션',
@@ -213,6 +226,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼2',
         writer: '김승엽',
         category: '액션',
@@ -221,6 +235,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼3',
         writer: '김승엽',
         category: '액션',
@@ -229,6 +244,7 @@ const example = [
         paidService: true
       },
       {
+        id: 'helper',
         title: '헬퍼4',
         writer: '김승엽',
         category: '액션',

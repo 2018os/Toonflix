@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -77,6 +78,7 @@ const Wrapper = styled.div`
 `;
 
 export interface Props {
+  id: string;
   title: string;
   writer: string;
   category: string;
@@ -86,6 +88,7 @@ export interface Props {
 }
 
 function CardView({
+  id,
   title,
   writer,
   category,
@@ -94,48 +97,50 @@ function CardView({
   paidService
 }: Props) {
   return (
-    <>
-      <Thumbnail>
-        <ImgWrapper>
-          {adultUsage && (
-            <AdultUsageImg
-              style={{ position: 'absolute' }}
-              src="/static/icon/adultUsage.svg"
-            />
-          )}
-          <Wrapper>
-            {(paidService || completion) && (
+    <Link href="/webtoon/[id]" as={`/webtoon/${id}`}>
+      <div>
+        <Thumbnail>
+          <ImgWrapper>
+            {adultUsage && (
               <AdultUsageImg
-                src={
-                  completion
-                    ? '/static/icon/completion.svg'
-                    : '/static/icon/paidService.png'
-                }
-                srcSet={
-                  !completion
-                    ? `/static/icon/paidService@2x.png 2x,
+                style={{ position: 'absolute' }}
+                src="/static/icon/adultUsage.svg"
+              />
+            )}
+            <Wrapper>
+              {(paidService || completion) && (
+                <AdultUsageImg
+                  src={
+                    completion
+                      ? '/static/icon/completion.svg'
+                      : '/static/icon/paidService.png'
+                  }
+                  srcSet={
+                    !completion
+                      ? `/static/icon/paidService@2x.png 2x,
                 /static/icon/paidService@3x.png 3x`
-                    : ''
-                }
-              />
-            )}
-            {completion && paidService && (
-              <AdultUsageImg
-                style={{ marginTop: spacing[0] }}
-                src={'/static/icon/paidService.png'}
-                srcSet={`/static/icon/paidService@2x.png 2x,
+                      : ''
+                  }
+                />
+              )}
+              {completion && paidService && (
+                <AdultUsageImg
+                  style={{ marginTop: spacing[0] }}
+                  src={'/static/icon/paidService.png'}
+                  srcSet={`/static/icon/paidService@2x.png 2x,
                 /static/icon/paidService@3x.png 3x`}
-              />
-            )}
-          </Wrapper>
-        </ImgWrapper>
-      </Thumbnail>
-      <WebtoonInfoWrapper>
-        <Title>{title}</Title>
-        <Writer>{writer}</Writer>
-        <Category># {category}</Category>
-      </WebtoonInfoWrapper>
-    </>
+                />
+              )}
+            </Wrapper>
+          </ImgWrapper>
+        </Thumbnail>
+        <WebtoonInfoWrapper>
+          <Title>{title}</Title>
+          <Writer>{writer}</Writer>
+          <Category># {category}</Category>
+        </WebtoonInfoWrapper>
+      </div>
+    </Link>
   );
 }
 
