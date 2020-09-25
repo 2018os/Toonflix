@@ -8,9 +8,9 @@ type ImgSize = 'SMALL' | 'DEFAULT' | 'LARGE';
 type Props = {
   src: string;
   size: ImgSize;
-  isAdult: boolean;
-  isPay: boolean;
-  isFinish: boolean;
+  isAdult?: boolean;
+  isPay?: boolean;
+  isFinish?: boolean;
 };
 
 const ThumbnailWrapper = styled.div.attrs({
