@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -55,6 +56,7 @@ const ThumbnailWrapper = styled.div`
 `;
 
 export interface Props {
+  id: string;
   title: string;
   writer: string;
   category: string;
@@ -65,6 +67,7 @@ export interface Props {
 }
 
 function CardView({
+  id,
   title,
   writer,
   category,
@@ -74,22 +77,24 @@ function CardView({
   thumbnail
 }: Props) {
   return (
-    <>
-      <ThumbnailWrapper>
-        <Thumbnail
-          src={thumbnail}
-          size="DEFAULT"
-          isAdult={adultUsage}
-          isFinish={completion}
-          isPay={paidService}
-        />
-      </ThumbnailWrapper>
-      <WebtoonInfoWrapper>
-        <Title>{title}</Title>
-        <Writer>{writer}</Writer>
-        <Category># {category}</Category>
-      </WebtoonInfoWrapper>
-    </>
+    <Link href="/webtoon/[id]" as={`/webtoon/${id}`}>
+      <div>
+        <ThumbnailWrapper>
+          <Thumbnail
+            src={thumbnail}
+            size="DEFAULT"
+            isAdult={adultUsage}
+            isFinish={completion}
+            isPay={paidService}
+          />
+        </ThumbnailWrapper>
+        <WebtoonInfoWrapper>
+          <Title>{title}</Title>
+          <Writer>{writer}</Writer>
+          <Category># {category}</Category>
+        </WebtoonInfoWrapper>
+      </div>
+    </Link>
   );
 }
 
