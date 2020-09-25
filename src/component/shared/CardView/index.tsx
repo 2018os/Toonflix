@@ -1,16 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { spacing } from '../../../util/theme';
-
-const Thumbnail = styled.div`
-  background-color: ${(props) => props.theme.Colors.WHILE};
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  width: ${(props) => props.theme.ImgSizes.DEFAULT};
-  height: ${(props) => props.theme.ImgSizes.DEFAULT};
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
-`;
+import Thumbnail from '../Thumbnail';
 
 const WebtoonInfoWrapper = styled.div`
   border-bottom-left-radius: 10px;
@@ -55,25 +46,12 @@ const Category = styled.div`
     `0 2px ${props.theme.spacing[0]} 0 rgba(0, 0, 0, 0.2)`};
 `;
 
-const ImgWrapper = styled.div`
-  position: relative;
-  padding: ${(props) => props.theme.spacing[1]}
-    ${(props) => props.theme.spacing[1]} 0;
-`;
-
-const AdultUsageImg = styled.img`
-  width: ${(props) => props.theme.spacing[3]};
-  height: ${(props) => props.theme.spacing[3]};
-  border-radius: 5px;
-`;
-
-const Wrapper = styled.div`
-  width: ${(props) => props.theme.spacing[3]};
-  height: ${(props) => props.theme.spacing[3]};
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  right: ${(props) => props.theme.spacing[1]};
+const ThumbnailWrapper = styled.div`
+  & > .thumbnail,
+  .cover-img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
 `;
 
 export interface Props {
@@ -83,6 +61,7 @@ export interface Props {
   adultUsage: boolean;
   completion: boolean;
   paidService: boolean;
+  thumbnail: string;
 }
 
 function CardView({
@@ -91,45 +70,20 @@ function CardView({
   category,
   adultUsage,
   completion,
-  paidService
+  paidService,
+  thumbnail
 }: Props) {
   return (
     <>
-      <Thumbnail>
-        <ImgWrapper>
-          {adultUsage && (
-            <AdultUsageImg
-              style={{ position: 'absolute' }}
-              src="/static/icon/adultUsage.svg"
-            />
-          )}
-          <Wrapper>
-            {(paidService || completion) && (
-              <AdultUsageImg
-                src={
-                  completion
-                    ? '/static/icon/completion.svg'
-                    : '/static/icon/paidService.png'
-                }
-                srcSet={
-                  !completion
-                    ? `/static/icon/paidService@2x.png 2x,
-                /static/icon/paidService@3x.png 3x`
-                    : ''
-                }
-              />
-            )}
-            {completion && paidService && (
-              <AdultUsageImg
-                style={{ marginTop: spacing[0] }}
-                src={'/static/icon/paidService.png'}
-                srcSet={`/static/icon/paidService@2x.png 2x,
-                /static/icon/paidService@3x.png 3x`}
-              />
-            )}
-          </Wrapper>
-        </ImgWrapper>
-      </Thumbnail>
+      <ThumbnailWrapper>
+        <Thumbnail
+          src={thumbnail}
+          size="DEFAULT"
+          isAdult={adultUsage}
+          isFinish={completion}
+          isPay={paidService}
+        />
+      </ThumbnailWrapper>
       <WebtoonInfoWrapper>
         <Title>{title}</Title>
         <Writer>{writer}</Writer>
