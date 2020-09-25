@@ -96,7 +96,9 @@ const example = [
         category: '액션',
         adultUsage: true,
         completion: true,
-        paidService: true
+        paidService: true,
+        thumbnail:
+          'http://i1.cartoon.daumcdn.net/svc/image/U03/cartoon/56B059D70251060001'
       },
       {
         title: '헬퍼2',
@@ -104,7 +106,9 @@ const example = [
         category: '액션',
         adultUsage: false,
         completion: false,
-        paidService: true
+        paidService: true,
+        thumbnail:
+          'https://image-comic.pstatic.net/webtoon/697535/thumbnail/thumbnail_IMAG19_32c2628b-ac61-4f3f-aaf6-8b7add219763.jpg'
       },
       {
         title: '헬퍼3',
