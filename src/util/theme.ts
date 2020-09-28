@@ -25,7 +25,16 @@ export enum TextColors {
   WHILE = '#ffffff'
 }
 
-export const spacing = ['4px', '8px', '16px', '24px', '32px', '40px', '60px'];
+// export const spacing = ['4px', '8px', '16px', '24px', '32px', '40px', '60px'];
+export const spacing = {
+  0: '4px',
+  1: '8px',
+  2: '16px',
+  3: '24px',
+  4: '32px',
+  5: '40px',
+  6: '60px'
+};
 
 export enum ConSizes {
   LARGEST = '68px',
