@@ -1,9 +1,7 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,6 +12,8 @@ export type Scalars = {
   Date: any;
   Url: any;
 };
+
+
 
 /** enum */
 export enum OrderBy {
@@ -65,6 +65,7 @@ export type Query = {
   search: SearchResultConnection;
 };
 
+
 /** types */
 export type QueryAuthorsArgs = {
   first?: Maybe<Scalars['Int']>;
@@ -72,6 +73,7 @@ export type QueryAuthorsArgs = {
   before?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
 };
+
 
 /** types */
 export type QueryWebtoonsArgs = {
@@ -81,6 +83,7 @@ export type QueryWebtoonsArgs = {
   after?: Maybe<Scalars['String']>;
 };
 
+
 /** types */
 export type QueryCollectionsArgs = {
   first?: Maybe<Scalars['Int']>;
@@ -88,6 +91,7 @@ export type QueryCollectionsArgs = {
   before?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
 };
+
 
 /** types */
 export type QueryUsersArgs = {
@@ -97,15 +101,18 @@ export type QueryUsersArgs = {
   after?: Maybe<Scalars['String']>;
 };
 
+
 /** types */
 export type QueryWebtoonArgs = {
   id: Scalars['ID'];
 };
 
+
 /** types */
 export type QueryRandomWebtoonsArgs = {
   take?: Maybe<Scalars['Int']>;
 };
+
 
 /** types */
 export type QuerySearchArgs = {
@@ -120,13 +127,16 @@ export type Mutation = {
   createCollection: Collection;
 };
 
+
 export type MutationLoginArgs = {
   input: LoginInput;
 };
 
+
 export type MutationSignupArgs = {
   input: SignupInput;
 };
+
 
 export type MutationCreateCollectionArgs = {
   input: CollectionInput;
@@ -164,6 +174,7 @@ export type Webtoon = Node & {
   comments?: Maybe<Array<Maybe<Comment>>>;
 };
 
+
 /** nodes */
 export type WebtoonAuthorsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
@@ -171,6 +182,7 @@ export type WebtoonAuthorsConnectionArgs = {
   before?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
 };
+
 
 /** nodes */
 export type WebtoonCollectionsConnectionArgs = {
@@ -187,6 +199,7 @@ export type Author = Node & {
   webtoonsConnection: AuthorWebtoonsConnection;
 };
 
+
 export type AuthorWebtoonsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
@@ -200,6 +213,7 @@ export type Genre = {
   name: Scalars['String'];
   webtoonsConnection: GenreWebtoonsConnection;
 };
+
 
 export type GenreWebtoonsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
@@ -219,6 +233,7 @@ export type Collection = Node & {
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
+
 export type CollectionWebtoonsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
@@ -235,6 +250,7 @@ export type User = Node & {
   collectionsConnection: UserCollectionsConnection;
   comments?: Maybe<Array<Maybe<Comment>>>;
 };
+
 
 export type UserCollectionsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
@@ -355,6 +371,7 @@ export type SearchResultConnection = {
   collectionResult?: Maybe<SearchResultCollectionConnection>;
 };
 
+
 /** other connections */
 export type SearchResultConnectionWebtoonResultArgs = {
   first?: Maybe<Scalars['Int']>;
@@ -362,6 +379,7 @@ export type SearchResultConnectionWebtoonResultArgs = {
   before?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
 };
+
 
 /** other connections */
 export type SearchResultConnectionCollectionResultArgs = {
@@ -470,59 +488,75 @@ export type SearchFiltering = {
   genres?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type MainQueryVariables = Exact<{ [key: string]: never }>;
+export type MainQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type MainQuery = { __typename?: 'Query' } & {
-  collections: { __typename?: 'CollectionConnection' } & {
-    edges?: Maybe<
-      Array<
-        Maybe<
-          { __typename?: 'CollectionEdge' } & {
-            node?: Maybe<
-              { __typename?: 'Collection' } & Pick<
-                Collection,
-                'id' | 'title' | 'description'
-              > & {
-                  webtoonsConnection: {
-                    __typename?: 'CollectionWebtoonsConnection';
-                  } & {
-                    edges?: Maybe<
-                      Array<
-                        Maybe<
-                          { __typename?: 'CollectionWebtoonsEdge' } & {
-                            node?: Maybe<
-                              { __typename?: 'Webtoon' } & Pick<
-                                Webtoon,
-                                'title' | 'description'
-                              >
-                            >;
-                          }
-                        >
-                      >
-                    >;
-                  };
-                }
-            >;
-          }
-        >
-      >
-    >;
-  };
-};
+
+export type MainQuery = (
+  { __typename?: 'Query' }
+  & { collections: (
+    { __typename?: 'CollectionConnection' }
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'CollectionEdge' }
+      & { node?: Maybe<(
+        { __typename?: 'Collection' }
+        & Pick<Collection, 'id' | 'title' | 'description'>
+        & { webtoonsConnection: (
+          { __typename?: 'CollectionWebtoonsConnection' }
+          & { edges?: Maybe<Array<Maybe<(
+            { __typename?: 'CollectionWebtoonsEdge' }
+            & { node?: Maybe<(
+              { __typename?: 'Webtoon' }
+              & Pick<Webtoon, 'title' | 'description' | 'thumbnail' | 'isPay' | 'isAdult' | 'isFinish'>
+              & { genres?: Maybe<Array<(
+                { __typename?: 'Genre' }
+                & Pick<Genre, 'code' | 'name'>
+              )>>, authorsConnection: (
+                { __typename?: 'WebtoonAuthorsConnection' }
+                & { edges?: Maybe<Array<Maybe<(
+                  { __typename?: 'WebtoonAuthorsEdge' }
+                  & { node?: Maybe<(
+                    { __typename?: 'Author' }
+                    & Pick<Author, 'id' | 'name'>
+                  )> }
+                )>>> }
+              ) }
+            )> }
+          )>>> }
+        ) }
+      )> }
+    )>>> }
+  ) }
+);
+
 
 export const MainDocument = gql`
-  query main {
-    collections(first: 4) {
-      edges {
-        node {
-          id
-          title
-          description
-          webtoonsConnection(first: 4) {
-            edges {
-              node {
-                title
-                description
+    query main {
+  collections(first: 4) {
+    edges {
+      node {
+        id
+        title
+        description
+        webtoonsConnection(first: 4) {
+          edges {
+            node {
+              title
+              description
+              thumbnail
+              isPay
+              isAdult
+              isFinish
+              genres {
+                code
+                name
+              }
+              authorsConnection(first: 3) {
+                edges {
+                  node {
+                    id
+                    name
+                  }
+                }
               }
             }
           }
@@ -530,7 +564,8 @@ export const MainDocument = gql`
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useMainQuery__
@@ -547,22 +582,12 @@ export const MainDocument = gql`
  *   },
  * });
  */
-export function useMainQuery(
-  baseOptions?: Apollo.QueryHookOptions<MainQuery, MainQueryVariables>
-) {
-  return Apollo.useQuery<MainQuery, MainQueryVariables>(
-    MainDocument,
-    baseOptions
-  );
-}
-export function useMainLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<MainQuery, MainQueryVariables>
-) {
-  return Apollo.useLazyQuery<MainQuery, MainQueryVariables>(
-    MainDocument,
-    baseOptions
-  );
-}
+export function useMainQuery(baseOptions?: Apollo.QueryHookOptions<MainQuery, MainQueryVariables>) {
+        return Apollo.useQuery<MainQuery, MainQueryVariables>(MainDocument, baseOptions);
+      }
+export function useMainLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MainQuery, MainQueryVariables>) {
+          return Apollo.useLazyQuery<MainQuery, MainQueryVariables>(MainDocument, baseOptions);
+        }
 export type MainQueryHookResult = ReturnType<typeof useMainQuery>;
 export type MainLazyQueryHookResult = ReturnType<typeof useMainLazyQuery>;
 export type MainQueryResult = Apollo.QueryResult<MainQuery, MainQueryVariables>;
