@@ -1,0 +1,19 @@
+query main {
+  collections(first: 4) {
+    edges {
+      node {
+        id
+        title
+        description
+        webtoonsConnection(first: 4) {
+          edges {
+            node {
+              title
+              description
+            }
+          }
+        }
+      }
+    }
+  }
+}

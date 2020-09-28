@@ -7,6 +7,8 @@ import CardViewList from '../shared/CardViewList/index';
 
 import { spacing, IconSizes } from '../../util/theme';
 
+import { useMainQuery } from '../../generated/graphql';
+
 const Container = styled.div`
   min-width: 1024px;
   padding-bottom: 100px;
@@ -261,37 +263,44 @@ const example = [
 ];
 
 function MainContainer() {
+  const { data, loading } = useMainQuery();
   return (
     <Container>
       <ContentContainer>
-        <div>
-          <ButtonWrapper>
-            <Button>로고</Button>
-          </ButtonWrapper>
-          <SearchBarWrapper>
-            <img
-              width={IconSizes.LARGER}
-              height={IconSizes.LARGER}
-              src="/static/icon/search.svg"
-              style={{ marginLeft: spacing[5] }}
-            />
-            <SearchBar placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요" />
-          </SearchBarWrapper>
-          <LinkButtonWrapper>
-            <LinkButton>컬렉션 바로가기</LinkButton>
-            <LinkButton style={{ marginLeft: '18px' }}>
-              컬렉션 바로가기
-            </LinkButton>
-          </LinkButtonWrapper>
-          {example.map((webtoonCollection: any, index: number) => (
+        <ButtonWrapper>
+          <Button>로고</Button>
+        </ButtonWrapper>
+        <SearchBarWrapper>
+          <img
+            width={IconSizes.LARGER}
+            height={IconSizes.LARGER}
+            src="/static/icon/search.svg"
+            style={{ marginLeft: spacing[5] }}
+          />
+          <SearchBar placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요" />
+        </SearchBarWrapper>
+        <LinkButtonWrapper>
+          <LinkButton>컬렉션 바로가기</LinkButton>
+          <LinkButton style={{ marginLeft: '18px' }}>
+            컬렉션 바로가기
+          </LinkButton>
+        </LinkButtonWrapper>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          data?.collections?.edges?.map((collection, index) => (
             <CardViewContainer
-              key={webtoonCollection.collectionTitle}
+              key={collection?.node?.id}
               style={{ marginTop: index === 0 ? spacing[6] : spacing[5] }}
             >
-              <CardViewList {...webtoonCollection} />
+              <CardViewList
+                collectionTitle={collection?.node?.title || ''}
+                desc={collection?.node?.description || ''}
+                webtoonList={collection?.node?.webtoonsConnection}
+              />
             </CardViewContainer>
-          ))}
-        </div>
+          ))
+        )}
       </ContentContainer>
     </Container>
   );

@@ -1,3 +1,4 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { AppProps } from 'next/app';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import React from 'react';
@@ -16,12 +17,19 @@ const DefaultSetting = createGlobalStyle`
   }
 `;
 
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache()
+});
+
 const PageWrapper = ({ Component, pageProps }: AppProps) => {
   return (
-    <ThemeProvider theme={{ ...theme }}>
-      <Component {...pageProps} />
-      <DefaultSetting />
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={{ ...theme }}>
+        <Component {...pageProps} />
+        <DefaultSetting />
+      </ThemeProvider>
+    </ApolloProvider>
   );
 };
 
