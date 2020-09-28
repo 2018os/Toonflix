@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// layout
 import SharedContainerComponent from './Container';
 
-import { FontSizes, spacing } from '../util/theme';
-
-// styles
 import { Text } from '../styles/Typography';
+
+import { FontSizes, spacing } from '../util/theme';
 
 const Container = styled(SharedContainerComponent)`
   width: 100vw;

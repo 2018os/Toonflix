@@ -1,5 +1,6 @@
-import React from 'react';
 import Error from 'next/error';
+import React from 'react';
+
 import withFooter from '../hocs/withFooter';
 
 function Error404() {

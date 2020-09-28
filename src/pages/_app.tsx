@@ -1,13 +1,19 @@
-import React from 'react';
 import { AppProps } from 'next/app';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import React from 'react';
+
 import theme from '../util/theme';
 
 const DefaultSetting = createGlobalStyle`
-body {
-  margin: 0px;
-  padding: 0px;
-}
+  @font-face {
+    font-family: NotoSansCJKkr;
+    src: url(/static/font/NotoSansCJKkr.otf) format("opentype");
+  }
+  body {
+    margin: 0px;
+    padding: 0px;
+    font-family: NotoSansCJKkr;
+  }
 `;
 
 const PageWrapper = ({ Component, pageProps }: AppProps) => {

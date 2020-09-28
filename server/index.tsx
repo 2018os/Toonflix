@@ -1,8 +1,8 @@
+import cookiesMiddleware from 'universal-cookie-express';
+import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import next from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import cookiesMiddleware from 'universal-cookie-express';
-import dotenv from 'dotenv';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: '.env' });
