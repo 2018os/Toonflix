@@ -58,7 +58,8 @@ export enum ImgSizes {
   // square
   LARGE = '320px',
   DEFAULT = '236px',
-  SMALL = '152px'
+  SMALL = '160px',
+  SMALLER = '152px'
 }
 
 const theme = {

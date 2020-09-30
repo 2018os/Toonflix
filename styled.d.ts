@@ -47,6 +47,7 @@ declare module 'styled-components' {
       LARGE: string;
       DEFAULT: string;
       SMALL: string;
+      SMALLER: string;
     };
   }
 }
