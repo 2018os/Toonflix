@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import CardView, { Props as Webtoon } from '../CardView/index';
-
-import { spacing } from '../../../util/theme';
+import { spacing } from '../../util/theme';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -25,7 +23,8 @@ const Description = styled.div`
   color: ${(props) => props.theme.Colors.BLACK};
 `;
 
-const Button = styled.div`
+const Button = styled.button`
+  border: none;
   cursor: pointer;
   width: 40px;
   height: 30px;
@@ -47,36 +46,31 @@ const CardViewWrapper = styled.div`
 `;
 
 interface Props {
-  collectionTitle: string;
-  desc: string;
-  webtoonList: Webtoon[];
+  title: string;
+  description?: string;
+  pageInfo: any;
+  children: React.ReactNode;
 }
 
-function CardViewList({ collectionTitle, desc, webtoonList }: Props) {
+function CardViewList({ title, description, pageInfo, children }: Props) {
   return (
     <>
       <ContentWrapper>
         <ContentWrapper>
-          <Title>{collectionTitle}</Title>
-          <Description>{desc}</Description>
+          <Title>{title}</Title>
+          <Description>{description}</Description>
         </ContentWrapper>
         <ContentWrapper>
-          <Button>{'<'}</Button>
-          <Button style={{ marginLeft: spacing[0] }}>{'>'}</Button>
+          <Button disabled={!pageInfo.hasPreviousPage}>{'<'}</Button>
+          <Button
+            style={{ marginLeft: spacing[0] }}
+            disabled={!pageInfo.hasNextPage}
+          >
+            {'>'}
+          </Button>
         </ContentWrapper>
       </ContentWrapper>
-      <CardViewWrapper>
-        {webtoonList.map((webtoon: Webtoon, index: number) => {
-          return (
-            <div
-              key={webtoon.title}
-              style={{ marginLeft: index === 0 ? '0px' : spacing[2] }}
-            >
-              <CardView {...webtoon} />
-            </div>
-          );
-        })}
-      </CardViewWrapper>
+      <CardViewWrapper>{children}</CardViewWrapper>
     </>
   );
 }
