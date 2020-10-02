@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import ContentContainer from '../../layout/Container';
 
-import CardViewList from '../shared/CardViewList/index';
+import WebtoonCardViewList from './WebtoonCardViewList';
 
 import { spacing, IconSizes } from '../../util/theme';
 
@@ -82,186 +82,6 @@ const LinkButton = styled.div`
   background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
 `;
 
-const CardViewContainer = styled.div`
-  margin: auto;
-  width: fit-content;
-`;
-
-const example = [
-  {
-    collectionTitle: '최강 인기 컬렉션',
-    desc: '세상에서 제일 인기있는 웹툰들을 만나보세요',
-    webtoonList: [
-      {
-        id: 'helper',
-        title: '헬퍼',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: true,
-        completion: true,
-        paidService: true,
-        thumbnail:
-          'http://i1.cartoon.daumcdn.net/svc/image/U03/cartoon/56B059D70251060001'
-      },
-      {
-        id: 'helper',
-        title: '헬퍼2',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: false,
-        paidService: true,
-        thumbnail:
-          'https://image-comic.pstatic.net/webtoon/697535/thumbnail/thumbnail_IMAG19_32c2628b-ac61-4f3f-aaf6-8b7add219763.jpg'
-      },
-      {
-        id: 'helper',
-        title: '헬퍼3',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼4',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      }
-    ]
-  },
-  {
-    collectionTitle: '킬링타임 컬렉션',
-    desc: '할거없으면 이거나 봐보세요',
-    webtoonList: [
-      {
-        id: 'helper',
-        title: '헬퍼',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼2',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼3',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼4',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      }
-    ]
-  },
-  {
-    collectionTitle: '킬링타임 컬렉션2',
-    desc: '또 보세용',
-    webtoonList: [
-      {
-        id: 'helper',
-        title: '헬퍼',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼2',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼3',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼4',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      }
-    ]
-  },
-  {
-    collectionTitle: '최강 인기였던 컬렉션',
-    desc: '세상에서 제일 인기있었던 웹툰들을 만나보세요',
-    webtoonList: [
-      {
-        id: 'helper',
-        title: '헬퍼',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼2',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼3',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      },
-      {
-        id: 'helper',
-        title: '헬퍼4',
-        writer: '김승엽',
-        category: '액션',
-        adultUsage: false,
-        completion: true,
-        paidService: true
-      }
-    ]
-  }
-];
-
 function MainContainer() {
   const { data, loading } = useMainQuery();
   return (
@@ -285,21 +105,17 @@ function MainContainer() {
             컬렉션 바로가기
           </LinkButton>
         </LinkButtonWrapper>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          data?.collections?.edges?.map((collection, index) => (
-            <CardViewContainer
-              key={collection?.node?.id}
-              style={{ marginTop: index === 0 ? spacing[6] : spacing[5] }}
-            >
-              <CardViewList
-                collectionTitle={collection?.node?.title || ''}
-                desc={collection?.node?.description || ''}
-                webtoonList={collection?.node?.webtoonsConnection}
+        {data && !loading ? (
+          data.collections.edges?.map((collection, index) => {
+            return (
+              <WebtoonCardViewList
+                key={`webtoon-card-list-${index}`}
+                webtoonConnection={collection && collection.node}
               />
-            </CardViewContainer>
-          ))
+            );
+          })
+        ) : (
+          <div>Loading...</div>
         )}
       </ContentContainer>
     </Container>
