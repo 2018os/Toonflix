@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { AdultWidget, PayWidget, CompleteWidget } from '../../../styles/Widget';
+import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
 
-type ImgSize = 'SMALL' | 'DEFAULT' | 'LARGE';
+type ImgSize = 'SMALLER' | 'SMALL' | 'DEFAULT' | 'LARGE';
 
 type Props = {
   src: string;
