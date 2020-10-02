@@ -43,6 +43,7 @@ const CardViewWrapper = styled.div`
   display: flex;
   margin: auto;
   margin-top: ${(props) => props.theme.spacing[0]};
+  justify-content: space-between;
 `;
 
 interface Props {
