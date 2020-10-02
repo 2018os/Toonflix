@@ -19,7 +19,6 @@ const ThumbnailWrapper = styled.div.attrs({
   position: relative;
   width: ${(props) => props.theme.ImgSizes[props.size]};
   height: ${(props) => props.theme.ImgSizes[props.size]};
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
 `;
 
 // TODO: Enhance box-sizing

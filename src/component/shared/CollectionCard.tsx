@@ -13,17 +13,15 @@ const CollectionThumbnail = styled.div.attrs({
 })`
   display: flex;
   flex-wrap: wrap;
-  & > .thumbnail {
-    box-shadow: none;
-  }
 `;
 
-const ThumbnailWrapper = styled.div`
+const Card = styled.div`
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
   width: ${(props) => props.theme.ImgSizes.LARGE};
   height: ${(props) => props.theme.ImgSizes.LARGE};
   display: flex;
-  border-radius: 10px;
-  overflow: hidden;
   position: relative;
   align-items: center;
   text-align: center;
@@ -62,7 +60,7 @@ const CollectionCard: FunctionComponent<Props> = ({ id, title, webtoons }) => {
   const slicedWebtoons = webtoons.slice(0, 4);
   return (
     <Link href="/collection/[id]" as={`/collection/${id}`}>
-      <ThumbnailWrapper>
+      <Card>
         <CollectionTitle size={FontSizes.LARGE} bold>
           {title}
         </CollectionTitle>
@@ -75,7 +73,7 @@ const CollectionCard: FunctionComponent<Props> = ({ id, title, webtoons }) => {
             />
           ))}
         </CollectionThumbnail>
-      </ThumbnailWrapper>
+      </Card>
     </Link>
   );
 };

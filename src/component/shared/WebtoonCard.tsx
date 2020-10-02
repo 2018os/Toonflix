@@ -4,12 +4,15 @@ import styled from 'styled-components';
 
 import Thumbnail from '../shared/Thumbnail';
 
+const Card = styled.div`
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
 const WebtoonInfoWrapper = styled.div`
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   width: 236px;
   height: 124px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   background-color: ${(props) => props.theme.Colors.WHILE};
   text-align: center;
 `;
@@ -44,13 +47,7 @@ const Tag = styled.div`
     `0 2px ${props.theme.spacing[0]} 0 rgba(0, 0, 0, 0.2)`};
 `;
 
-const ThumbnailWrapper = styled.div`
-  & > .thumbnail,
-  .cover-img {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-`;
+const ThumbnailWrapper = styled.div``;
 
 type Genre = {
   name: string;
@@ -80,7 +77,7 @@ function WebtoonCard({
 }: Props) {
   return (
     <Link href="/webtoon/[id]" as={`/webtoon/${id}`}>
-      <div>
+      <Card>
         <ThumbnailWrapper>
           <Thumbnail
             src={thumbnail}
@@ -102,7 +99,7 @@ function WebtoonCard({
               return <Tag key={genre.code}># {genre.name}</Tag>;
             })}
         </WebtoonInfoWrapper>
-      </div>
+      </Card>
     </Link>
   );
 }
