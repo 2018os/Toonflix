@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
-import { Props as Webtoon } from '../shared/WebtoonCard';
 import CardViewList from '../shared/CardViewList';
-import WebtoonCard from '../shared/WebtoonCard';
+import WebtoonCard, { Props as Webtoon } from '../shared/WebtoonCard';
 
 interface Props {
   webtoonConnection?: any;
