@@ -516,6 +516,9 @@ export type WebtoonDetailQueryVariables = Exact<{
 }>;
 
 export type WebtoonDetailQuery = { __typename?: 'Query' } & {
+  randomWebtoons?: Maybe<
+    Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
+  >;
   webtoon: { __typename?: 'Webtoon' } & Pick<
     Webtoon,
     | 'id'
@@ -723,6 +726,10 @@ export type MainLazyQueryHookResult = ReturnType<typeof useMainLazyQuery>;
 export type MainQueryResult = Apollo.QueryResult<MainQuery, MainQueryVariables>;
 export const WebtoonDetailDocument = gql`
   query webtoonDetail($id: ID!) {
+    randomWebtoons(take: 6) {
+      id
+      thumbnail
+    }
     webtoon(id: $id) {
       id
       title

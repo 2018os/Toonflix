@@ -22,6 +22,10 @@ query main {
 }
 
 query webtoonDetail($id: ID!) {
+  randomWebtoons(take: 6) {
+    id
+    thumbnail
+  }
   webtoon(id: $id) {
     id
     title
