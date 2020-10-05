@@ -5,6 +5,9 @@ import React from 'react';
 
 import theme from '../util/theme';
 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 const DefaultSetting = createGlobalStyle`
   @font-face {
     font-family: NotoSansCJKkr;
