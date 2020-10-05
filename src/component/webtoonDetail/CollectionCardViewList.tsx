@@ -12,10 +12,7 @@ const CollectionCardViewList: FunctionComponent<Props> = ({
 }) => {
   if (collectionConnection) {
     return (
-      <CardViewList
-        title="작품이 포함된 컬렉션"
-        pageInfo={collectionConnection.pageInfo}
-      >
+      <CardViewList title="작품이 포함된 컬렉션" type="pagination">
         {collectionConnection.edges.map((collectionEdge: any) => {
           const { id, title, webtoonsConnection } = collectionEdge.node;
           const webtoons = webtoonsConnection.edges.map((edge: any) => {

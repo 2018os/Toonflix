@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FunctionComponent, useRef } from 'react';
+import Slider from 'react-slick';
 import styled from 'styled-components';
 
 import { spacing } from '../../util/theme';
@@ -39,40 +40,101 @@ const Button = styled.button`
   font-size: ${(props) => props.theme.FontSizes.H3};
 `;
 
-const CardViewWrapper = styled.div`
-  display: flex;
-  margin: auto;
-  margin-top: ${(props) => props.theme.spacing[0]};
-  justify-content: space-between;
-`;
+type Action = 'refresh' | 'pagination';
 
 interface Props {
   title: string;
   description?: string;
-  pageInfo: any;
-  // TODO: Enhance for random
+  type: Action;
   children: React.ReactNode;
+  refetch?: () => any;
 }
 
-function CardViewList({ title, description, pageInfo, children }: Props) {
-  return (
-    <>
-      <ContentWrapper>
-        <ContentWrapper>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
-        </ContentWrapper>
-        <ContentWrapper>
-          <Button disabled={!pageInfo.hasPreviousPage}>{'<'}</Button>
+interface HeaderProps {
+  title: string;
+  description?: string;
+  sliderRef: React.RefObject<Slider>;
+  type: Action;
+  refetch?: () => any;
+}
+
+const settings = {
+  className: 'slider',
+  dots: false,
+  infinite: true,
+  draggable: true,
+  initialSlide: 0,
+  variableWidth: true,
+  slidesToShow: 4,
+  arrows: false
+};
+
+const Header: FunctionComponent<HeaderProps> = ({
+  title,
+  description,
+  sliderRef,
+  type,
+  refetch
+}) => (
+  <ContentWrapper>
+    <ContentWrapper>
+      <Title>{title}</Title>
+      <Description>{description}</Description>
+    </ContentWrapper>
+    <ContentWrapper>
+      {type === 'refresh' && refetch ? (
+        <Button onClick={refetch}>R</Button>
+      ) : (
+        <>
+          <Button
+            onClick={() => {
+              sliderRef.current && sliderRef.current.slickPrev();
+            }}
+          >
+            {'<'}
+          </Button>
           <Button
             style={{ marginLeft: spacing[0] }}
-            disabled={!pageInfo.hasNextPage}
+            onClick={() => {
+              sliderRef.current && sliderRef.current.slickNext();
+            }}
           >
             {'>'}
           </Button>
-        </ContentWrapper>
-      </ContentWrapper>
-      <CardViewWrapper>{children}</CardViewWrapper>
+        </>
+      )}
+    </ContentWrapper>
+  </ContentWrapper>
+);
+
+const StyledSlider = styled(Slider)`
+  & > .slick-list > .slick-track > .slick-slide:not([data-index^='-']) {
+    // "data-index" 가 0 보다 큰 slick-slide 에게 margin-right
+    margin-right: ${(props) => props.theme.spacing[2]};
+  }
+  & > .slick-list > .slick-track > .slick-slide[data-index='-1'] {
+    // Exception) "data-index" = -1
+    margin-right: ${(props) => props.theme.spacing[2]};
+  }
+  & > .slick-list > .slick-track > .slick-slide:last-child {
+    margin-right: 0;
+  }
+`;
+
+function CardViewList({ title, description, type, children, refetch }: Props) {
+  const slider = useRef<Slider>(null);
+  return (
+    <>
+      <Header
+        title={title}
+        description={description}
+        sliderRef={slider}
+        type={type}
+        refetch={refetch}
+      />
+      <StyledSlider {...settings} ref={slider}>
+        {children}
+      </StyledSlider>
     </>
   );
 }
