@@ -470,9 +470,9 @@ export type SearchFiltering = {
   genres?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type MainQueryVariables = Exact<{ [key: string]: never }>;
+export type CollectionsForMainQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MainQuery = { __typename?: 'Query' } & {
+export type CollectionsForMainQuery = { __typename?: 'Query' } & {
   collections: { __typename?: 'CollectionConnection' } & {
     edges?: Maybe<
       Array<
@@ -511,14 +511,11 @@ export type MainQuery = { __typename?: 'Query' } & {
   };
 };
 
-export type WebtoonDetailQueryVariables = Exact<{
+export type WebtoonForWebtoonDetailQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type WebtoonDetailQuery = { __typename?: 'Query' } & {
-  randomWebtoons?: Maybe<
-    Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
-  >;
+export type WebtoonForWebtoonDetailQuery = { __typename?: 'Query' } & {
   webtoon: { __typename?: 'Webtoon' } & Pick<
     Webtoon,
     | 'id'
@@ -585,6 +582,16 @@ export type WebtoonDetailQuery = { __typename?: 'Query' } & {
         >
       >;
     };
+};
+
+export type RandomWebtoonsForWebtoonDetailQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type RandomWebtoonsForWebtoonDetailQuery = { __typename?: 'Query' } & {
+  randomWebtoons?: Maybe<
+    Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
+  >;
 };
 
 export type WebtoonCardFragment = { __typename?: 'Webtoon' } & Pick<
@@ -664,8 +671,8 @@ export const CollectionCardFragmentDoc = gql`
     }
   }
 `;
-export const MainDocument = gql`
-  query main {
+export const CollectionsForMainDocument = gql`
+  query collectionsForMain {
     collections(first: 4) {
       edges {
         node {
@@ -691,45 +698,54 @@ export const MainDocument = gql`
 `;
 
 /**
- * __useMainQuery__
+ * __useCollectionsForMainQuery__
  *
- * To run a query within a React component, call `useMainQuery` and pass it any options that fit your needs.
- * When your component renders, `useMainQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useCollectionsForMainQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionsForMainQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMainQuery({
+ * const { data, loading, error } = useCollectionsForMainQuery({
  *   variables: {
  *   },
  * });
  */
-export function useMainQuery(
-  baseOptions?: Apollo.QueryHookOptions<MainQuery, MainQueryVariables>
+export function useCollectionsForMainQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CollectionsForMainQuery,
+    CollectionsForMainQueryVariables
+  >
 ) {
-  return Apollo.useQuery<MainQuery, MainQueryVariables>(
-    MainDocument,
-    baseOptions
-  );
+  return Apollo.useQuery<
+    CollectionsForMainQuery,
+    CollectionsForMainQueryVariables
+  >(CollectionsForMainDocument, baseOptions);
 }
-export function useMainLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<MainQuery, MainQueryVariables>
+export function useCollectionsForMainLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CollectionsForMainQuery,
+    CollectionsForMainQueryVariables
+  >
 ) {
-  return Apollo.useLazyQuery<MainQuery, MainQueryVariables>(
-    MainDocument,
-    baseOptions
-  );
+  return Apollo.useLazyQuery<
+    CollectionsForMainQuery,
+    CollectionsForMainQueryVariables
+  >(CollectionsForMainDocument, baseOptions);
 }
-export type MainQueryHookResult = ReturnType<typeof useMainQuery>;
-export type MainLazyQueryHookResult = ReturnType<typeof useMainLazyQuery>;
-export type MainQueryResult = Apollo.QueryResult<MainQuery, MainQueryVariables>;
-export const WebtoonDetailDocument = gql`
-  query webtoonDetail($id: ID!) {
-    randomWebtoons(take: 6) {
-      id
-      thumbnail
-    }
+export type CollectionsForMainQueryHookResult = ReturnType<
+  typeof useCollectionsForMainQuery
+>;
+export type CollectionsForMainLazyQueryHookResult = ReturnType<
+  typeof useCollectionsForMainLazyQuery
+>;
+export type CollectionsForMainQueryResult = Apollo.QueryResult<
+  CollectionsForMainQuery,
+  CollectionsForMainQueryVariables
+>;
+export const WebtoonForWebtoonDetailDocument = gql`
+  query webtoonForWebtoonDetail($id: ID!) {
     webtoon(id: $id) {
       id
       title
@@ -781,50 +797,106 @@ export const WebtoonDetailDocument = gql`
 `;
 
 /**
- * __useWebtoonDetailQuery__
+ * __useWebtoonForWebtoonDetailQuery__
  *
- * To run a query within a React component, call `useWebtoonDetailQuery` and pass it any options that fit your needs.
- * When your component renders, `useWebtoonDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useWebtoonForWebtoonDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWebtoonForWebtoonDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useWebtoonDetailQuery({
+ * const { data, loading, error } = useWebtoonForWebtoonDetailQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useWebtoonDetailQuery(
+export function useWebtoonForWebtoonDetailQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    WebtoonDetailQuery,
-    WebtoonDetailQueryVariables
+    WebtoonForWebtoonDetailQuery,
+    WebtoonForWebtoonDetailQueryVariables
   >
 ) {
-  return Apollo.useQuery<WebtoonDetailQuery, WebtoonDetailQueryVariables>(
-    WebtoonDetailDocument,
-    baseOptions
-  );
+  return Apollo.useQuery<
+    WebtoonForWebtoonDetailQuery,
+    WebtoonForWebtoonDetailQueryVariables
+  >(WebtoonForWebtoonDetailDocument, baseOptions);
 }
-export function useWebtoonDetailLazyQuery(
+export function useWebtoonForWebtoonDetailLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    WebtoonDetailQuery,
-    WebtoonDetailQueryVariables
+    WebtoonForWebtoonDetailQuery,
+    WebtoonForWebtoonDetailQueryVariables
   >
 ) {
-  return Apollo.useLazyQuery<WebtoonDetailQuery, WebtoonDetailQueryVariables>(
-    WebtoonDetailDocument,
-    baseOptions
-  );
+  return Apollo.useLazyQuery<
+    WebtoonForWebtoonDetailQuery,
+    WebtoonForWebtoonDetailQueryVariables
+  >(WebtoonForWebtoonDetailDocument, baseOptions);
 }
-export type WebtoonDetailQueryHookResult = ReturnType<
-  typeof useWebtoonDetailQuery
+export type WebtoonForWebtoonDetailQueryHookResult = ReturnType<
+  typeof useWebtoonForWebtoonDetailQuery
 >;
-export type WebtoonDetailLazyQueryHookResult = ReturnType<
-  typeof useWebtoonDetailLazyQuery
+export type WebtoonForWebtoonDetailLazyQueryHookResult = ReturnType<
+  typeof useWebtoonForWebtoonDetailLazyQuery
 >;
-export type WebtoonDetailQueryResult = Apollo.QueryResult<
-  WebtoonDetailQuery,
-  WebtoonDetailQueryVariables
+export type WebtoonForWebtoonDetailQueryResult = Apollo.QueryResult<
+  WebtoonForWebtoonDetailQuery,
+  WebtoonForWebtoonDetailQueryVariables
+>;
+export const RandomWebtoonsForWebtoonDetailDocument = gql`
+  query randomWebtoonsForWebtoonDetail {
+    randomWebtoons(take: 6) {
+      id
+      thumbnail
+    }
+  }
+`;
+
+/**
+ * __useRandomWebtoonsForWebtoonDetailQuery__
+ *
+ * To run a query within a React component, call `useRandomWebtoonsForWebtoonDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRandomWebtoonsForWebtoonDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRandomWebtoonsForWebtoonDetailQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRandomWebtoonsForWebtoonDetailQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    RandomWebtoonsForWebtoonDetailQuery,
+    RandomWebtoonsForWebtoonDetailQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    RandomWebtoonsForWebtoonDetailQuery,
+    RandomWebtoonsForWebtoonDetailQueryVariables
+  >(RandomWebtoonsForWebtoonDetailDocument, baseOptions);
+}
+export function useRandomWebtoonsForWebtoonDetailLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    RandomWebtoonsForWebtoonDetailQuery,
+    RandomWebtoonsForWebtoonDetailQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    RandomWebtoonsForWebtoonDetailQuery,
+    RandomWebtoonsForWebtoonDetailQueryVariables
+  >(RandomWebtoonsForWebtoonDetailDocument, baseOptions);
+}
+export type RandomWebtoonsForWebtoonDetailQueryHookResult = ReturnType<
+  typeof useRandomWebtoonsForWebtoonDetailQuery
+>;
+export type RandomWebtoonsForWebtoonDetailLazyQueryHookResult = ReturnType<
+  typeof useRandomWebtoonsForWebtoonDetailLazyQuery
+>;
+export type RandomWebtoonsForWebtoonDetailQueryResult = Apollo.QueryResult<
+  RandomWebtoonsForWebtoonDetailQuery,
+  RandomWebtoonsForWebtoonDetailQueryVariables
 >;

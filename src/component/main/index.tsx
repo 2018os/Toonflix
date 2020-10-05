@@ -7,7 +7,7 @@ import WebtoonCardViewList from './WebtoonCardViewList';
 
 import { spacing, IconSizes } from '../../util/theme';
 
-import { useMainQuery } from '../../generated/graphql';
+import { useCollectionsForMainQuery } from '../../generated/graphql';
 
 const Container = styled.div`
   min-width: 1024px;
@@ -83,7 +83,7 @@ const LinkButton = styled.div`
 `;
 
 function MainContainer() {
-  const { data, loading } = useMainQuery();
+  const { data, loading } = useCollectionsForMainQuery();
   return (
     <Container>
       <ContentContainer>

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { useWebtoonDetailQuery } from '../../generated/graphql';
+import { useWebtoonForWebtoonDetailQuery } from '../../generated/graphql';
 
 import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
 import { SubTitle, Text } from '../../styles/Typography';
@@ -76,7 +76,7 @@ const Badges = styled.div`
 `;
 
 const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
-  const { data, loading } = useWebtoonDetailQuery({
+  const { data, loading } = useWebtoonForWebtoonDetailQuery({
     variables: { id }
   });
   return (
@@ -127,7 +127,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       <CollectionCardViewList
         collectionConnection={data && data.webtoon.collectionsConnection}
       />
-      <RandomCardViewList data={data?.randomWebtoons} />
+      <RandomCardViewList />
     </>
   );
 };

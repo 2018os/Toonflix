@@ -1,4 +1,4 @@
-query main {
+query collectionsForMain {
   collections(first: 4) {
     edges {
       node {
@@ -21,11 +21,7 @@ query main {
   }
 }
 
-query webtoonDetail($id: ID!) {
-  randomWebtoons(take: 6) {
-    id
-    thumbnail
-  }
+query webtoonForWebtoonDetail($id: ID!) {
   webtoon(id: $id) {
     id
     title
@@ -70,6 +66,13 @@ query webtoonDetail($id: ID!) {
         }
       }
     }
+  }
+}
+
+query randomWebtoonsForWebtoonDetail {
+  randomWebtoons(take: 6) {
+    id
+    thumbnail
   }
 }
 
