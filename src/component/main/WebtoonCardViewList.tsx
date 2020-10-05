@@ -11,16 +11,12 @@ const WebtoonCardViewList: FunctionComponent<Props> = ({
   webtoonConnection
 }) => {
   if (webtoonConnection) {
-    const pageInfo = {
-      hasNextPage: true,
-      hasPreviousPage: false
-    };
     const webtoons = webtoonConnection.webtoonsConnection.edges;
     return (
       <CardViewList
         title={webtoonConnection.title}
         description={webtoonConnection.description}
-        pageInfo={pageInfo}
+        type="pagination"
       >
         {webtoons.map(({ node }: { node: Webtoon }) => (
           <WebtoonCard key={`webtoon-card-${node.id}`} {...node} />

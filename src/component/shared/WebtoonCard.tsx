@@ -8,6 +8,8 @@ const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: hidden;
+  width: 236px;
+  height: 360px;
 `;
 
 const WebtoonInfoWrapper = styled.div`
