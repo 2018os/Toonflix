@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
 import CardViewList from '../shared/CardViewList';
+import { EmptyWebtoonCard } from '../shared/Empty';
 import WebtoonCard, { Props as Webtoon } from '../shared/WebtoonCard';
 
 interface Props {
@@ -12,15 +13,19 @@ const WebtoonCardViewList: FunctionComponent<Props> = ({
 }) => {
   if (webtoonConnection) {
     const webtoons = webtoonConnection.webtoonsConnection.edges;
+    const webtoonCards = webtoons.map(({ node }: { node: Webtoon }) => (
+      <WebtoonCard key={`webtoon-card-${node.id}`} {...node} />
+    ));
+    if (webtoonCards.length < 4) {
+      webtoonCards.push(<EmptyWebtoonCard />);
+    }
     return (
       <CardViewList
         title={webtoonConnection.title}
         description={webtoonConnection.description}
         type="pagination"
       >
-        {webtoons.map(({ node }: { node: Webtoon }) => (
-          <WebtoonCard key={`webtoon-card-${node.id}`} {...node} />
-        ))}
+        {webtoonCards}
       </CardViewList>
     );
   } else {
