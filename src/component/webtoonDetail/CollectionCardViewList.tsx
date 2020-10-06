@@ -31,8 +31,7 @@ const CollectionCardViewList: FunctionComponent<Props> = ({
         );
       }
     );
-    collectionCards.push(<EmptyCollectionCard />);
-    collectionCards.push(<EmptyCollectionCard />);
+    collectionCards.push(<EmptyCollectionCard key={`empty-collection-card`} />);
     return (
       <CardViewList title="작품이 포함된 컬렉션" type="pagination">
         {collectionCards}
