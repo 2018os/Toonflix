@@ -6,8 +6,9 @@ import { useWebtoonForWebtoonDetailQuery } from '../../generated/graphql';
 import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
 import { SubTitle, Text } from '../../styles/Typography';
 
-import CollectionCardViewList from './CollectionCardViewList';
 import Thumbnail from '../shared/Thumbnail';
+
+import CollectionCardViewList from './CollectionCardViewList';
 import WebtoonCardViewList from './WebtoonCardViewList';
 import RandomCardViewList from './RandomCardViewList';
 
@@ -39,8 +40,8 @@ const Part = styled.div``;
 const Description = styled.div`
   min-height: 50px;
   border-radius: 10px;
-  border: solid 1px #dbdbdb;
-  background-color: #ffffff;
+  border: solid 1px ${(props) => props.theme.Colors.BORDER_COLOR};
+  background-color: ${(props) => props.theme.Colors.WHITE};
   padding: ${(props) => props.theme.spacing[4]};
 `;
 
@@ -48,7 +49,17 @@ const Tags = styled.div`
   display: flex;
 `;
 
-const Tag = styled.div``;
+const Tag = styled.div`
+  background-color: ${(props) => props.theme.Colors.WHITE};
+  padding: 1px;
+  margin-right: ${(props) => props.theme.spacing[0]};
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+`;
+
+const Authors = styled.div`
+  display: flex;
+`;
 
 const Bookmark = styled.div`
   width: 25px;
@@ -73,6 +84,7 @@ const StyledButton = styled.button`
 
 const Badges = styled.div`
   display: flex;
+  margin-bottom: ${(props) => props.theme.spacing[2]};
 `;
 
 const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
@@ -90,14 +102,18 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
             <SubTitle>{data?.webtoon.title}</SubTitle>
             <Tags>
               {data?.webtoon.genres?.map((genre) => {
-                return <Tag key={genre.code}>{genre.name}</Tag>;
+                return <Tag key={genre.code}>#{genre.name}</Tag>;
               })}
             </Tags>
-            {data?.webtoon.authorsConnection.edges?.map((authorEdge) => {
-              return (
-                <div key={authorEdge?.node?.id}>{authorEdge?.node?.name}</div>
-              );
-            })}
+            <Authors>
+              {data?.webtoon.authorsConnection.edges?.map((authorEdge) => {
+                return (
+                  <Text key={authorEdge?.node?.id}>
+                    {authorEdge?.node?.name}
+                  </Text>
+                );
+              })}
+            </Authors>
           </Part>
           <Part>
             <Badges>
