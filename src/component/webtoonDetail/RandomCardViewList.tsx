@@ -1,11 +1,11 @@
-import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
 import CardViewList from '../shared/CardViewList';
+import { EmptyThumbnail } from '../shared/Empty';
+import Link from '../shared/Link';
 import Thumbnail from '../shared/Thumbnail';
 import { useRandomWebtoonsForWebtoonDetailQuery } from '../../generated/graphql';
-import { EmptyThumbnail } from '../shared/Empty';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -13,7 +13,7 @@ const Card = styled.div`
   overflow: hidden;
 `;
 
-const CollectionCardViewList = () => {
+const RandomCardViewList = () => {
   const { data, loading, refetch } = useRandomWebtoonsForWebtoonDetailQuery({
     notifyOnNetworkStatusChange: true
   });
@@ -27,8 +27,10 @@ const CollectionCardViewList = () => {
         ? data.randomWebtoons.map(({ id, thumbnail }) => {
             return (
               <Link
-                href="/webtoon/[id]"
-                as={`/webtoon/${id}`}
+                linkProps={{
+                  href: '/webtoon/[id]',
+                  as: `/webtoon/${id}`
+                }}
                 key={`random-thumbnail-${id}`}
               >
                 <Card>
@@ -44,4 +46,4 @@ const CollectionCardViewList = () => {
   );
 };
 
-export default CollectionCardViewList;
+export default RandomCardViewList;

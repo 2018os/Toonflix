@@ -1,6 +1,7 @@
-import Link from 'next/link';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
+
+import Link from './Link';
 
 type ImgSize = 'SMALLER' | 'SMALL' | 'DEFAULT' | 'LARGE';
 interface ThumbnailProps {
@@ -26,7 +27,7 @@ const EmptyWebtoonCard = () => {
     background-color: ${(props) => props.theme.Colors.WHILE};
   `;
   return (
-    <Link href="/category">
+    <Link linkProps={{ href: '/category' }}>
       <Card>더 보기</Card>
     </Link>
   );
@@ -40,7 +41,7 @@ const EmptyCollectionCard = () => {
     background-color: ${(props) => props.theme.Colors.WHILE};
   `;
   return (
-    <Link href="/collection">
+    <Link linkProps={{ href: '/collection' }}>
       <CollectionCard>더 보기</CollectionCard>
     </Link>
   );

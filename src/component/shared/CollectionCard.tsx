@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
@@ -6,6 +5,7 @@ import { Text } from '../../styles/Typography';
 
 import { FontSizes } from '../../util/theme';
 
+import Link from '../shared/Link';
 import Thumbnail from './Thumbnail';
 
 const CollectionThumbnail = styled.div.attrs({
@@ -59,7 +59,12 @@ export interface Props {
 const CollectionCard: FunctionComponent<Props> = ({ id, title, webtoons }) => {
   const slicedWebtoons = webtoons.slice(0, 4);
   return (
-    <Link href="/collection/[id]" as={`/collection/${id}`}>
+    <Link
+      linkProps={{
+        href: '/collection/[id]',
+        as: `/collection/${id}`
+      }}
+    >
       <Card>
         <CollectionTitle size={FontSizes.LARGE} bold>
           {title}

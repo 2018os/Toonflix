@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
 import Thumbnail from '../shared/Thumbnail';
+import Link from '../shared/Link';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -78,7 +78,12 @@ function WebtoonCard({
   thumbnail
 }: Props) {
   return (
-    <Link href="/webtoon/[id]" as={`/webtoon/${id}`}>
+    <Link
+      linkProps={{
+        href: '/webtoon/[id]',
+        as: `/webtoon/${id}`
+      }}
+    >
       <Card>
         <ThumbnailWrapper>
           <Thumbnail
