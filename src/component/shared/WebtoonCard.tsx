@@ -15,7 +15,7 @@ const Card = styled.div`
 const WebtoonInfoWrapper = styled.div`
   width: 236px;
   height: 124px;
-  background-color: ${(props) => props.theme.Colors.WHILE};
+  background-color: ${(props) => props.theme.Colors.WHITE};
   text-align: center;
 `;
 

@@ -13,16 +13,17 @@ export enum FontSizes {
 export enum Colors {
   PRIMARY_COLOR = '#076EFF',
   SKELETON_COLOR = '#86B8FF',
+  BORDER_COLOR = '#DBDBDB',
   GRAY = '#EAEDED',
   BLACK = '#212121',
-  WHILE = '#ffffff'
+  WHITE = '#ffffff'
 }
 
 export enum TextColors {
   PRIMARY_COLOR = '#076EFF',
   GRAY = '#7A7A7A',
   BLACK = '#212121',
-  WHILE = '#ffffff'
+  WHITE = '#ffffff'
 }
 
 // export const spacing = ['4px', '8px', '16px', '24px', '32px', '40px', '60px'];

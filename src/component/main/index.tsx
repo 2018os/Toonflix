@@ -58,7 +58,7 @@ const SearchBarWrapper = styled.div`
   border: solid
     ${(props) =>
       ` ${props.theme.spacing[0]} ${props.theme.Colors.PRIMARY_COLOR}`};
-  background-color: ${(props) => props.theme.Colors.WHILE};
+  background-color: ${(props) => props.theme.Colors.WHITE};
 `;
 
 const LinkButtonWrapper = styled.div`
@@ -71,7 +71,7 @@ const LinkButton = styled.div`
   cursor: pointer;
   font-size: ${(props) => props.theme.FontSizes.LARGE};
   font-weight: bold;
-  color: ${(props) => props.theme.Colors.WHILE};
+  color: ${(props) => props.theme.Colors.WHITE};
   width: 234px;
   height: 46px;
   border-radius: 10px;

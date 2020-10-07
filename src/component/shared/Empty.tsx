@@ -14,7 +14,7 @@ const EmptyThumbnail: FunctionComponent<ThumbnailProps> = ({ size }) => {
   })<{ size: ImgSize }>`
     width: ${(props) => props.theme.ImgSizes[props.size]};
     height: ${(props) => props.theme.ImgSizes[props.size]};
-    background-color: ${(props) => props.theme.Colors.WHILE};
+    background-color: ${(props) => props.theme.Colors.WHITE};
   `;
   return <Thumbnail size={size} />;
 };
@@ -24,7 +24,7 @@ const EmptyWebtoonCard = () => {
     width: 236px;
     height: 360px;
     border-radius: 10px;
-    background-color: ${(props) => props.theme.Colors.WHILE};
+    background-color: ${(props) => props.theme.Colors.WHITE};
   `;
   return (
     <Link linkProps={{ href: '/category' }}>
@@ -38,7 +38,7 @@ const EmptyCollectionCard = () => {
     width: ${(props) => props.theme.ImgSizes.LARGE};
     height: ${(props) => props.theme.ImgSizes.LARGE};
     border-radius: 10px;
-    background-color: ${(props) => props.theme.Colors.WHILE};
+    background-color: ${(props) => props.theme.Colors.WHITE};
   `;
   return (
     <Link linkProps={{ href: '/collection' }}>

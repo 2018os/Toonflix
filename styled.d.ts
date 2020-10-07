@@ -11,15 +11,16 @@ declare module 'styled-components' {
     Colors: {
       PRIMARY_COLOR: string;
       SKELETON_COLOR: string;
+      BORDER_COLOR: string;
       GRAY: string;
       BLACK: string;
-      WHILE: string;
+      WHITE: string;
     };
     TextColors: {
       PRIMARY_COLOR: string;
       GRAY: string;
       BLACK: string;
-      WHILE: string;
+      WHITE: string;
     };
     FontSizes: {
       H1: string;
