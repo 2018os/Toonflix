@@ -65,7 +65,6 @@ const settings = {
   draggable: true,
   initialSlide: 0,
   variableWidth: true,
-  slidesToShow: 4,
   arrows: false
 };
 
