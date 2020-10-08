@@ -107,6 +107,7 @@ const Header: FunctionComponent<HeaderProps> = ({
 );
 
 const StyledSlider = styled(Slider)`
+  margin-top: ${(props) => props.theme.spacing[3]};
   & > .slick-list > .slick-track > .slick-slide:not([data-index^='-']) {
     // "data-index" 가 0 보다 큰 slick-slide 에게 margin-right
     margin-right: ${(props) => props.theme.spacing[2]};
