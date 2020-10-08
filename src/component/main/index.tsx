@@ -5,7 +5,7 @@ import ContentContainer from '../../layout/Container';
 
 import WebtoonCardViewList from './WebtoonCardViewList';
 
-import { spacing, IconSizes } from '../../util/theme';
+import SearchBar from '../shared/SearchBar';
 
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
@@ -34,31 +34,9 @@ const ButtonWrapper = styled.div`
   margin: auto;
 `;
 
-const SearchBar = styled.input`
-  padding: 0 ${(props) => props.theme.spacing[3]};
-  width: 100%;
-  height: 116px;
-  font-size: ${(props) => props.theme.FontSizes.H2};
-  font-weight: 500;
-  border: none;
-  outline: none;
-  &::placeholder {
-    color: ${(props) => props.theme.TextColors.PRIMARY_COLOR};
-  }
-`;
-
 const SearchBarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin: auto;
-  margin-top: ${(props) => props.theme.spacing[5]};
   width: 992px;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  border: solid
-    ${(props) =>
-      ` ${props.theme.spacing[0]} ${props.theme.Colors.PRIMARY_COLOR}`};
-  background-color: ${(props) => props.theme.Colors.WHITE};
+  margin-top: ${(props) => props.theme.spacing[5]};
 `;
 
 const LinkButtonWrapper = styled.div`
@@ -91,13 +69,7 @@ function MainContainer() {
           <Button>로고</Button>
         </ButtonWrapper>
         <SearchBarWrapper>
-          <img
-            width={IconSizes.LARGER}
-            height={IconSizes.LARGER}
-            src="/static/icon/search.svg"
-            style={{ marginLeft: spacing[5] }}
-          />
-          <SearchBar placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요" />
+          <SearchBar isMain={true} />
         </SearchBarWrapper>
         <LinkButtonWrapper>
           <LinkButton>컬렉션 바로가기</LinkButton>
