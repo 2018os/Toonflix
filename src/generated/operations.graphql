@@ -54,7 +54,7 @@ query webtoonForWebtoonDetail($id: ID!) {
     genres {
       code
       name
-      webtoonsConnection(first: 4) {
+      webtoonsConnection(first: 6, after: $id) {
         pageInfo {
           hasNextPage
           hasPreviousPage

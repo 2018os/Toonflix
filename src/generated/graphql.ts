@@ -69,32 +69,32 @@ export type Query = {
 export type QueryAuthorsArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** types */
 export type QueryWebtoonsArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** types */
 export type QueryCollectionsArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** types */
 export type QueryUsersArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** types */
@@ -168,16 +168,16 @@ export type Webtoon = Node & {
 export type WebtoonAuthorsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** nodes */
 export type WebtoonCollectionsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 export type Author = Node & {
@@ -190,8 +190,8 @@ export type Author = Node & {
 export type AuthorWebtoonsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 export type Genre = {
@@ -204,8 +204,8 @@ export type Genre = {
 export type GenreWebtoonsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 export type Collection = Node & {
@@ -222,8 +222,8 @@ export type Collection = Node & {
 export type CollectionWebtoonsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 export type User = Node & {
@@ -239,8 +239,8 @@ export type User = Node & {
 export type UserCollectionsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 export type Comment = {
@@ -359,16 +359,16 @@ export type SearchResultConnection = {
 export type SearchResultConnectionWebtoonResultArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** other connections */
 export type SearchResultConnectionCollectionResultArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** edges */
@@ -778,7 +778,7 @@ export const WebtoonForWebtoonDetailDocument = gql`
       genres {
         code
         name
-        webtoonsConnection(first: 4) {
+        webtoonsConnection(first: 6, after: $id) {
           pageInfo {
             hasNextPage
             hasPreviousPage
