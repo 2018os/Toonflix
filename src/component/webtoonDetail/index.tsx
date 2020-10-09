@@ -121,7 +121,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
               {data?.webtoon.isPay && <PayWidget />}
               {data?.webtoon.isFinish && <CompleteWidget />}
             </Badges>
-            <a href={data?.webtoon.url}>
+            <a href={data?.webtoon.url} target="_blank">
               <StyledButton>
                 <Text>바로가기</Text>
               </StyledButton>
