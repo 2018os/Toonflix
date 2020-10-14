@@ -1,10 +1,15 @@
-import Link from 'next/link';
-import React from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import { Text } from '../styles/Typography';
 
+import withAuth, { AuthState } from '../hocs/withAuth';
+
+import Link from '../component/shared/Link';
 import SearchBar from '../component/shared/SearchBar';
+
+import { useLoginMutation } from '../generated/graphql';
 
 const NavigationWrapper = styled.div`
   display: flex;
@@ -40,38 +45,59 @@ const SearchWrapper = styled.div`
   width: 320px;
 `;
 
-const Navigation = () => (
-  <NavigationWrapper>
-    <Logo>
-      <Link href="/">
-        <a>메인</a>
-      </Link>
-    </Logo>
-    <ItemWrapper>
-      <Item>
-        <Link href="/collection">
-          <a style={{ textDecoration: 'none' }}>
-            <Text>컬렉션</Text>
-          </a>
-        </Link>
-      </Item>
-      <Item>
-        <Link href="/category">
-          <a style={{ textDecoration: 'none' }}>
-            <Text>카테고리</Text>
-          </a>
-        </Link>
-      </Item>
-      <Item>
-        <SearchWrapper>
-          <SearchBar isMain={false} />
-        </SearchWrapper>
-      </Item>
-    </ItemWrapper>
-    <ProfileWrapper>
-      <Profile>로그인</Profile>
-    </ProfileWrapper>
-  </NavigationWrapper>
-);
+const Tab = styled(Text)<{ isCurrentPath: boolean }>`
+  color: ${(props) =>
+    props.isCurrentPath
+      ? props.theme.TextColors.PRIMARY_COLOR
+      : props.theme.TextColors.BLACK};
+`;
 
-export default Navigation;
+export interface Props {
+  authState: AuthState;
+}
+
+const Navigation: FunctionComponent<Props> = ({ authState }) => {
+  const [login] = useLoginMutation();
+  const router = useRouter();
+  const pathname = router.pathname;
+  return (
+    <NavigationWrapper>
+      <Logo>
+        <Link linkProps={{ href: '/' }}>메인</Link>
+      </Logo>
+      <ItemWrapper>
+        <Item>
+          <Link linkProps={{ href: '/collections' }}>
+            <Tab isCurrentPath={pathname === '/collections'}>컬렉션</Tab>
+          </Link>
+        </Item>
+        <Item>
+          <Link linkProps={{ href: '/category' }}>
+            <Tab isCurrentPath={pathname === '/category'}>카테고리</Tab>
+          </Link>
+        </Item>
+        <Item>
+          <SearchWrapper>
+            <SearchBar isMain={false} />
+          </SearchWrapper>
+        </Item>
+      </ItemWrapper>
+      <ProfileWrapper>
+        {authState.userId ? (
+          <div>
+            <div>{authState.userId}</div>
+            <button onClick={() => authState.signOut()}>로그아웃</button>
+          </div>
+        ) : (
+          <Profile>
+            <Link linkProps={{ href: '/login' }}>
+              <Text>로그인</Text>
+            </Link>
+          </Profile>
+        )}
+      </ProfileWrapper>
+    </NavigationWrapper>
+  );
+};
+
+export default withAuth(Navigation);
