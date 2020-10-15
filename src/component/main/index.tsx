@@ -5,7 +5,10 @@ import ContentContainer from '../../layout/Container';
 
 import WebtoonCardViewList from './WebtoonCardViewList';
 
+import Link from '../shared/Link';
 import SearchBar from '../shared/SearchBar';
+
+import { Text } from '../../styles/Typography';
 
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
@@ -47,9 +50,6 @@ const LinkButtonWrapper = styled.div`
 
 const LinkButton = styled.div`
   cursor: pointer;
-  font-size: ${(props) => props.theme.FontSizes.LARGE};
-  font-weight: bold;
-  color: ${(props) => props.theme.Colors.WHITE};
   width: 234px;
   height: 46px;
   border-radius: 10px;
@@ -303,9 +303,15 @@ function MainContainer() {
           <SearchBar isMain={true} />
         </SearchBarWrapper>
         <LinkButtonWrapper>
-          <LinkButton>컬렉션 바로가기</LinkButton>
+          <LinkButton>
+            <Link linkProps={{ href: '/collections' }}>
+              <Text bold>컬렉션 바로가기</Text>
+            </Link>
+          </LinkButton>
           <LinkButton style={{ marginLeft: '18px' }}>
-            컬렉션 바로가기
+            <Link linkProps={{ href: '/category' }}>
+              <Text bold>카테고리 바로가기</Text>
+            </Link>
           </LinkButton>
         </LinkButtonWrapper>
         {data && !loading ? (
