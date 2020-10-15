@@ -1,4 +1,10 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { AppProps } from 'next/app';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import React from 'react';
@@ -20,9 +26,23 @@ const DefaultSetting = createGlobalStyle`
   }
 `;
 
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000/graphql'
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  };
+});
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  link: authLink.concat(httpLink)
 });
 
 const PageWrapper = ({ Component, pageProps }: AppProps) => {
