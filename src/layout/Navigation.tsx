@@ -32,13 +32,6 @@ const Item = styled.div`
   }
 `;
 
-const ProfileWrapper = styled.div`
-  display: flex;
-  jusitfy-content: flex-end;
-`;
-
-const Profile = styled.div``;
-
 const SearchWrapper = styled.div`
   width: 320px;
 `;
@@ -54,10 +47,45 @@ export interface Props {
   authState: AuthState;
 }
 
+export interface ProfileProps {
+  authState: AuthState;
+  isMain: boolean;
+}
+
+const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
+  const ProfileWrapper = styled.div<{ isMain: boolean }>`
+    display: flex;
+    jusitfy-content: flex-end;
+    ${(props) =>
+      props.isMain &&
+      `
+    position: absolute;
+    right: 0;
+    padding: ${props.theme.spacing[3]} ${props.theme.spacing[5]};
+    `}
+  `;
+  return (
+    <ProfileWrapper isMain={isMain}>
+      {authState.user && authState.userId ? (
+        <div>
+          <div>{authState.user.name}</div>
+          <button onClick={() => authState.signOut()}>로그아웃</button>
+        </div>
+      ) : (
+        <Link linkProps={{ href: '/login' }}>
+          <Text>로그인</Text>
+        </Link>
+      )}
+    </ProfileWrapper>
+  );
+};
+
 const Navigation: FunctionComponent<Props> = ({ authState }) => {
   const router = useRouter();
   const pathname = router.pathname;
-  return (
+  return pathname === '/' ? (
+    <Profile authState={authState} isMain={true} />
+  ) : (
     <NavigationWrapper>
       <Logo>
         <Link linkProps={{ href: '/' }}>메인</Link>
@@ -79,20 +107,7 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
           </SearchWrapper>
         </Item>
       </ItemWrapper>
-      <ProfileWrapper>
-        {authState.user && authState.userId ? (
-          <div>
-            <div>{authState.user.name}</div>
-            <button onClick={() => authState.signOut()}>로그아웃</button>
-          </div>
-        ) : (
-          <Profile>
-            <Link linkProps={{ href: '/login' }}>
-              <Text>로그인</Text>
-            </Link>
-          </Profile>
-        )}
-      </ProfileWrapper>
+      <Profile authState={authState} isMain={false} />
     </NavigationWrapper>
   );
 };
