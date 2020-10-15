@@ -12,8 +12,10 @@ interface Props {
   size?: FontSizes | IconSizes | ImgSizes;
   bold?: boolean;
 }
+// TODO: Enhance Props
 
 const baseTypoCss = css`
+  margin: 0;
   color: ${(props: Props) => props.color};
   font-size: ${(props: Props) => props.size};
   font-weight: ${(props: Props) => props.bold && 'bold'};
