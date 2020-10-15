@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { User, useUserForNavigationLazyQuery } from '../generated/graphql';
+import { User, useUserForWithAuthLazyQuery } from '../generated/graphql';
 
 export interface AuthState {
   userId: string | null;
@@ -18,7 +18,7 @@ const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
   };
   return (props: any) => {
     const [authState, setAuthState] = useState(initialAuthState as AuthState);
-    const [userQuery, { data }] = useUserForNavigationLazyQuery();
+    const [userQuery, { data }] = useUserForWithAuthLazyQuery();
 
     useEffect(() => {
       const id = localStorage.getItem('userId');
