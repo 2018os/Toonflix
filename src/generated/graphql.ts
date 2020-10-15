@@ -60,6 +60,8 @@ export type Query = {
   collections: CollectionConnection;
   genres?: Maybe<Array<Maybe<Genre>>>;
   users: UserConnection;
+  user: User;
+  /** myProfile(id: ID!): User! */
   webtoon: Webtoon;
   randomWebtoons?: Maybe<Array<Webtoon>>;
   search: SearchResultConnection;
@@ -87,6 +89,7 @@ export type QueryCollectionsArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  keyword?: Maybe<Scalars['String']>;
 };
 
 /** types */
@@ -95,6 +98,11 @@ export type QueryUsersArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+};
+
+/** types */
+export type QueryUserArgs = {
+  id: Scalars['ID'];
 };
 
 /** types */
@@ -161,7 +169,7 @@ export type Webtoon = Node & {
   authorsConnection: WebtoonAuthorsConnection;
   collectionsConnection: WebtoonCollectionsConnection;
   genres?: Maybe<Array<Genre>>;
-  comments?: Maybe<Array<Maybe<Comment>>>;
+  commentsConnection: WebtoonCommentsConnection;
 };
 
 /** nodes */
@@ -174,6 +182,14 @@ export type WebtoonAuthorsConnectionArgs = {
 
 /** nodes */
 export type WebtoonCollectionsConnectionArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+/** nodes */
+export type WebtoonCommentsConnectionArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
@@ -214,6 +230,7 @@ export type Collection = Node & {
   title: Scalars['String'];
   description: Scalars['String'];
   webtoonsConnection: CollectionWebtoonsConnection;
+  commentsConnection: CollectionCommentsConnection;
   writer: User;
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
@@ -226,14 +243,22 @@ export type CollectionWebtoonsConnectionArgs = {
   after?: Maybe<Scalars['ID']>;
 };
 
+export type CollectionCommentsConnectionArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
 export type User = Node & {
   __typename?: 'User';
   id: Scalars['ID'];
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+  /** likedWebtoon */
   collectionsConnection: UserCollectionsConnection;
-  comments?: Maybe<Array<Maybe<Comment>>>;
+  commentsConnection: UserCommentsConnection;
 };
 
 export type UserCollectionsConnectionArgs = {
@@ -243,12 +268,26 @@ export type UserCollectionsConnectionArgs = {
   after?: Maybe<Scalars['ID']>;
 };
 
-export type Comment = {
+export type UserCommentsConnectionArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+export type Comment = Node & {
   __typename?: 'Comment';
+  id: Scalars['ID'];
   message: Scalars['String'];
   writer: User;
-  writtenWebtoon: Webtoon;
-  subComments?: Maybe<Array<Maybe<Comment>>>;
+  commentsConnection: CommentCommentsConnection;
+};
+
+export type CommentCommentsConnectionArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** query connections */
@@ -300,6 +339,14 @@ export type WebtoonCollectionsConnection = Connection & {
   counts: Scalars['Int'];
 };
 
+export type WebtoonCommentsConnection = Connection & {
+  __typename?: 'WebtoonCommentsConnection';
+  edges?: Maybe<Array<Maybe<WebtoonCommentsEdge>>>;
+  pageInfo: PageInfo;
+  totalCounts: Scalars['Int'];
+  counts: Scalars['Int'];
+};
+
 export type AuthorWebtoonsConnection = Connection & {
   __typename?: 'AuthorWebtoonsConnection';
   edges?: Maybe<Array<Maybe<AuthorWebtoonsEdge>>>;
@@ -311,6 +358,14 @@ export type AuthorWebtoonsConnection = Connection & {
 export type CollectionWebtoonsConnection = Connection & {
   __typename?: 'CollectionWebtoonsConnection';
   edges?: Maybe<Array<Maybe<CollectionWebtoonsEdge>>>;
+  pageInfo: PageInfo;
+  totalCounts: Scalars['Int'];
+  counts: Scalars['Int'];
+};
+
+export type CollectionCommentsConnection = Connection & {
+  __typename?: 'CollectionCommentsConnection';
+  edges?: Maybe<Array<Maybe<CollectionCommentsEdge>>>;
   pageInfo: PageInfo;
   totalCounts: Scalars['Int'];
   counts: Scalars['Int'];
@@ -343,6 +398,22 @@ export type SearchResultCollectionConnection = Connection & {
 export type UserCollectionsConnection = Connection & {
   __typename?: 'UserCollectionsConnection';
   edges?: Maybe<Array<Maybe<UserCollectionsEdge>>>;
+  pageInfo: PageInfo;
+  totalCounts: Scalars['Int'];
+  counts: Scalars['Int'];
+};
+
+export type UserCommentsConnection = Connection & {
+  __typename?: 'UserCommentsConnection';
+  edges?: Maybe<Array<Maybe<UserCommentsEdge>>>;
+  pageInfo: PageInfo;
+  totalCounts: Scalars['Int'];
+  counts: Scalars['Int'];
+};
+
+export type CommentCommentsConnection = Connection & {
+  __typename?: 'CommentCommentsConnection';
+  edges?: Maybe<Array<Maybe<CommentCommentsEdge>>>;
   pageInfo: PageInfo;
   totalCounts: Scalars['Int'];
   counts: Scalars['Int'];
@@ -402,6 +473,12 @@ export type WebtoonCollectionsEdge = Edge & {
   node?: Maybe<Collection>;
 };
 
+export type WebtoonCommentsEdge = Edge & {
+  __typename?: 'WebtoonCommentsEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Comment>;
+};
+
 export type AuthorWebtoonsEdge = Edge & {
   __typename?: 'AuthorWebtoonsEdge';
   cursor: Scalars['String'];
@@ -412,6 +489,12 @@ export type CollectionWebtoonsEdge = Edge & {
   __typename?: 'CollectionWebtoonsEdge';
   cursor: Scalars['String'];
   node?: Maybe<Webtoon>;
+};
+
+export type CollectionCommentsEdge = Edge & {
+  __typename?: 'CollectionCommentsEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Comment>;
 };
 
 export type GenreWebtoonsEdge = Edge & {
@@ -442,6 +525,18 @@ export type UserCollectionsEdge = Edge & {
   __typename?: 'UserCollectionsEdge';
   cursor: Scalars['String'];
   node?: Maybe<Collection>;
+};
+
+export type UserCommentsEdge = Edge & {
+  __typename?: 'UserCommentsEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Comment>;
+};
+
+export type CommentCommentsEdge = Edge & {
+  __typename?: 'CommentCommentsEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Comment>;
 };
 
 /** input */
@@ -592,6 +687,25 @@ export type RandomWebtoonsForWebtoonDetailQuery = { __typename?: 'Query' } & {
   randomWebtoons?: Maybe<
     Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
   >;
+};
+
+export type UserForWithAuthQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type UserForWithAuthQuery = { __typename?: 'Query' } & {
+  user: { __typename?: 'User' } & Pick<User, 'id' | 'name'>;
+};
+
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+export type LoginMutation = { __typename?: 'Mutation' } & {
+  login: { __typename?: 'AuthPayload' } & Pick<AuthPayload, 'token'> & {
+      user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
+    };
 };
 
 export type WebtoonCardFragment = { __typename?: 'Webtoon' } & Pick<
@@ -899,4 +1013,111 @@ export type RandomWebtoonsForWebtoonDetailLazyQueryHookResult = ReturnType<
 export type RandomWebtoonsForWebtoonDetailQueryResult = Apollo.QueryResult<
   RandomWebtoonsForWebtoonDetailQuery,
   RandomWebtoonsForWebtoonDetailQueryVariables
+>;
+export const UserForWithAuthDocument = gql`
+  query userForWithAuth($id: ID!) {
+    user(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
+/**
+ * __useUserForWithAuthQuery__
+ *
+ * To run a query within a React component, call `useUserForWithAuthQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserForWithAuthQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserForWithAuthQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserForWithAuthQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    UserForWithAuthQuery,
+    UserForWithAuthQueryVariables
+  >
+) {
+  return Apollo.useQuery<UserForWithAuthQuery, UserForWithAuthQueryVariables>(
+    UserForWithAuthDocument,
+    baseOptions
+  );
+}
+export function useUserForWithAuthLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserForWithAuthQuery,
+    UserForWithAuthQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    UserForWithAuthQuery,
+    UserForWithAuthQueryVariables
+  >(UserForWithAuthDocument, baseOptions);
+}
+export type UserForWithAuthQueryHookResult = ReturnType<
+  typeof useUserForWithAuthQuery
+>;
+export type UserForWithAuthLazyQueryHookResult = ReturnType<
+  typeof useUserForWithAuthLazyQuery
+>;
+export type UserForWithAuthQueryResult = Apollo.QueryResult<
+  UserForWithAuthQuery,
+  UserForWithAuthQueryVariables
+>;
+export const LoginDocument = gql`
+  mutation login($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      token
+      user {
+        id
+      }
+    }
+  }
+`;
+export type LoginMutationFn = Apollo.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useLoginMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >
+) {
+  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    baseOptions
+  );
+}
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
 >;

@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from 'react';
 
+import { User, useUserForNavigationLazyQuery } from '../generated/graphql';
+
 export interface AuthState {
-  isLoggedIn: boolean;
-  userId?: string | null;
-  token?: string;
+  userId: string | null;
   signIn: (token: string, userId: string) => void;
   signOut: () => void;
+  token?: string;
+  user?: Pick<User, 'id' | 'name'> | null;
 }
 
 const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
   const initialAuthState = {
-    isLoggedIn: false,
     userId: null,
-    token: undefined
+    token: undefined,
+    user: null
   };
   return (props: any) => {
     const [authState, setAuthState] = useState(initialAuthState as AuthState);
+    const [userQuery, { data }] = useUserForNavigationLazyQuery();
 
     useEffect(() => {
-      if (localStorage.getItem('userId') !== authState.userId) {
-        setAuthState({
-          ...authState,
-          userId: localStorage.getItem('userId'),
-          isLoggedIn: !!localStorage.getItem('userId')
-        });
+      const id = localStorage.getItem('userId');
+      if (id !== authState.userId) {
+        if (id) {
+          userQuery({ variables: { id } });
+          setAuthState({
+            ...authState,
+            userId: id,
+            user: data?.user
+          });
+        } else {
+          setAuthState(initialAuthState as AuthState);
+        }
       }
     }, [authState]);
 
@@ -47,7 +56,7 @@ const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
     return (
       <WrappedComponents
         {...props}
-        authState={{ ...authState, signIn, signOut }}
+        authState={{ ...authState, signIn, signOut, user: data?.user }}
       />
     );
   };

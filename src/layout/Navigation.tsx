@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -8,8 +8,6 @@ import withAuth, { AuthState } from '../hocs/withAuth';
 
 import Link from '../component/shared/Link';
 import SearchBar from '../component/shared/SearchBar';
-
-import { useLoginMutation } from '../generated/graphql';
 
 const NavigationWrapper = styled.div`
   display: flex;
@@ -57,7 +55,6 @@ export interface Props {
 }
 
 const Navigation: FunctionComponent<Props> = ({ authState }) => {
-  const [login] = useLoginMutation();
   const router = useRouter();
   const pathname = router.pathname;
   return (
@@ -83,9 +80,9 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
         </Item>
       </ItemWrapper>
       <ProfileWrapper>
-        {authState.userId ? (
+        {authState.user && authState.userId ? (
           <div>
-            <div>{authState.userId}</div>
+            <div>{authState.user.name}</div>
             <button onClick={() => authState.signOut()}>로그아웃</button>
           </div>
         ) : (

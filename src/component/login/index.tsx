@@ -86,8 +86,8 @@ const LoginContainer: FunctionComponent<Props> = ({ authState }) => {
             // };
             const { data } = await login({ variables: { ...value } });
             if (data?.login.token && data?.login?.user) {
-              const userId = data.login.user.id;
               const token = data.login.token;
+              const userId = data.login.user.id;
               authState.signIn(token, userId);
               router.back();
             } else {
