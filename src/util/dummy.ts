@@ -221,4 +221,17 @@ export const dataForRandomCardView = {
   ]
 };
 
+export const dataForCollectionList = {
+  collections: {
+    edges: [
+      {
+        node: dummyCollectionCard
+      },
+      {
+        node: dummyCollectionCard
+      }
+    ]
+  }
+};
+
 export const refetch = () => console.log('refetch');

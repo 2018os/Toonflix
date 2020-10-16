@@ -92,6 +92,16 @@ mutation login($email: String!, $password: String!) {
   }
 }
 
+query collectionsForCollectionList($keyword: String) {
+  collections(first: 4, keyword: $keyword) {
+    edges {
+      node {
+        ...collectionCard
+      }
+    }
+  }
+}
+
 fragment webtoonCard on Webtoon {
   id
   title

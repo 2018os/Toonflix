@@ -708,6 +708,26 @@ export type LoginMutation = { __typename?: 'Mutation' } & {
     };
 };
 
+export type CollectionsForCollectionListQueryVariables = Exact<{
+  keyword?: Maybe<Scalars['String']>;
+}>;
+
+export type CollectionsForCollectionListQuery = { __typename?: 'Query' } & {
+  collections: { __typename?: 'CollectionConnection' } & {
+    edges?: Maybe<
+      Array<
+        Maybe<
+          { __typename?: 'CollectionEdge' } & {
+            node?: Maybe<
+              { __typename?: 'Collection' } & CollectionCardFragment
+            >;
+          }
+        >
+      >
+    >;
+  };
+};
+
 export type WebtoonCardFragment = { __typename?: 'Webtoon' } & Pick<
   Webtoon,
   'id' | 'title' | 'isAdult' | 'isFinish' | 'isPay' | 'thumbnail'
@@ -1120,4 +1140,65 @@ export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<
   LoginMutation,
   LoginMutationVariables
+>;
+export const CollectionsForCollectionListDocument = gql`
+  query collectionsForCollectionList($keyword: String) {
+    collections(first: 4, keyword: $keyword) {
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+  }
+  ${CollectionCardFragmentDoc}
+`;
+
+/**
+ * __useCollectionsForCollectionListQuery__
+ *
+ * To run a query within a React component, call `useCollectionsForCollectionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionsForCollectionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionsForCollectionListQuery({
+ *   variables: {
+ *      keyword: // value for 'keyword'
+ *   },
+ * });
+ */
+export function useCollectionsForCollectionListQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >(CollectionsForCollectionListDocument, baseOptions);
+}
+export function useCollectionsForCollectionListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >(CollectionsForCollectionListDocument, baseOptions);
+}
+export type CollectionsForCollectionListQueryHookResult = ReturnType<
+  typeof useCollectionsForCollectionListQuery
+>;
+export type CollectionsForCollectionListLazyQueryHookResult = ReturnType<
+  typeof useCollectionsForCollectionListLazyQuery
+>;
+export type CollectionsForCollectionListQueryResult = Apollo.QueryResult<
+  CollectionsForCollectionListQuery,
+  CollectionsForCollectionListQueryVariables
 >;
