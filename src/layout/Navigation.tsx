@@ -103,7 +103,7 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
         </Item>
         <Item>
           <SearchWrapper>
-            <SearchBar isMain={false} />
+            <SearchBar />
           </SearchWrapper>
         </Item>
       </ItemWrapper>

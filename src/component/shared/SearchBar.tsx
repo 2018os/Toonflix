@@ -4,10 +4,10 @@ import styled from 'styled-components';
 type IconSize = 'SMALLER' | 'LARGER';
 
 export interface Props {
-  isMain: boolean;
+  isMain?: boolean;
 }
 
-const SearchBarWrapper = styled.div<{ isMain: boolean }>`
+const SearchBarWrapper = styled.div<{ isMain?: boolean }>`
   display: flex;
   width: 100%;
   border-style: solid;
@@ -35,7 +35,7 @@ const Icon = styled.img.attrs({
   `}
 `;
 
-const StyledInput = styled.input<{ isMain: boolean }>`
+const StyledInput = styled.input<{ isMain?: boolean }>`
   ${(props) => `
     width: 80%;
     border: none;

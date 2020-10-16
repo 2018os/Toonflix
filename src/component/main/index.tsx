@@ -71,7 +71,7 @@ function MainContainer() {
           <Button>로고</Button>
         </ButtonWrapper>
         <SearchBarWrapper>
-          <SearchBar isMain={true} />
+          <SearchBar isMain />
         </SearchBarWrapper>
         <LinkButtonWrapper>
           <LinkButton>
