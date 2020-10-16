@@ -4,11 +4,12 @@ import React, { FunctionComponent } from 'react';
 export interface Props {
   linkProps: LinkProps;
   children: React.ReactNode;
+  isNewTab?: boolean;
 }
 
-const Link: FunctionComponent<Props> = ({ linkProps, children }) => (
+const Link: FunctionComponent<Props> = ({ linkProps, children, isNewTab }) => (
   <BaseLink {...linkProps}>
-    <a target="_blank" style={{ textDecoration: 'none' }}>
+    <a target={isNewTab ? '_blank' : ''} style={{ textDecoration: 'none' }}>
       {children}
     </a>
   </BaseLink>
