@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ContentContainer from '../../layout/Container';
-
 import WebtoonCardViewList from './WebtoonCardViewList';
 
 import Link from '../shared/Link';
@@ -13,12 +11,6 @@ import { Text } from '../../styles/Typography';
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
 import { dataForMain as data, loading } from '../../util/dummy';
-
-const Container = styled.div`
-  min-width: 1024px;
-  padding-bottom: 100px;
-  background: ${(props) => props.theme.Colors.GRAY};
-`;
 
 const Button = styled.div`
   line-height: 1.5;
@@ -65,40 +57,38 @@ const LinkButton = styled.div`
 function MainContainer() {
   // const { data, loading } = useCollectionsForMainQuery();
   return (
-    <Container>
-      <ContentContainer>
-        <ButtonWrapper>
-          <Button>로고</Button>
-        </ButtonWrapper>
-        <SearchBarWrapper>
-          <SearchBar isMain />
-        </SearchBarWrapper>
-        <LinkButtonWrapper>
-          <LinkButton>
-            <Link linkProps={{ href: '/collections' }}>
-              <Text bold>컬렉션 바로가기</Text>
-            </Link>
-          </LinkButton>
-          <LinkButton style={{ marginLeft: '18px' }}>
-            <Link linkProps={{ href: '/category' }}>
-              <Text bold>카테고리 바로가기</Text>
-            </Link>
-          </LinkButton>
-        </LinkButtonWrapper>
-        {data && !loading ? (
-          data.collections.edges?.map((collection, index) => {
-            return (
-              <WebtoonCardViewList
-                key={`webtoon-card-list-${index}`}
-                webtoonConnection={collection && collection.node}
-              />
-            );
-          })
-        ) : (
-          <div>Loading...</div>
-        )}
-      </ContentContainer>
-    </Container>
+    <>
+      <ButtonWrapper>
+        <Button>로고</Button>
+      </ButtonWrapper>
+      <SearchBarWrapper>
+        <SearchBar isMain />
+      </SearchBarWrapper>
+      <LinkButtonWrapper>
+        <LinkButton>
+          <Link linkProps={{ href: '/collections' }}>
+            <Text bold>컬렉션 바로가기</Text>
+          </Link>
+        </LinkButton>
+        <LinkButton style={{ marginLeft: '18px' }}>
+          <Link linkProps={{ href: '/category' }}>
+            <Text bold>카테고리 바로가기</Text>
+          </Link>
+        </LinkButton>
+      </LinkButtonWrapper>
+      {data && !loading ? (
+        data.collections.edges?.map((collection, index) => {
+          return (
+            <WebtoonCardViewList
+              key={`webtoon-card-list-${index}`}
+              webtoonConnection={collection && collection.node}
+            />
+          );
+        })
+      ) : (
+        <div>Loading...</div>
+      )}
+    </>
   );
 }
 

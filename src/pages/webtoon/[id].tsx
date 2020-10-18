@@ -1,18 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import withFooter from '../../hocs/withFooter';
 import withNavigation from '../../hocs/withNavigation';
 
-import WebtoonDetailContainer from '../../component/webtoonDetail';
 import Container from '../../layout/Container';
+import Page from '../../layout/Page';
 
-const Page = styled.div`
-  background-color: ${(props) => props.theme.Colors.GRAY};
-  padding-top: ${(props) => props.theme.spacing[5]};
-  padding-bottom: ${(props) => props.theme.spacing[6]};
-`;
+import WebtoonDetailContainer from '../../component/webtoonDetail';
 
 const Webtoon = () => {
   const router = useRouter();
