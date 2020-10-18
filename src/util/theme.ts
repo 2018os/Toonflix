@@ -34,17 +34,10 @@ export const spacing = {
   3: '24px',
   4: '32px',
   5: '40px',
-  6: '60px'
+  6: '60px',
+  7: '80px',
+  8: '100px'
 };
-
-export enum ConSizes {
-  LARGEST = '68px',
-  LARGER = '48px',
-  LARGE = '32px',
-  DEFAULT = '24px',
-  SMALL = '18px',
-  SMALLER = '16px'
-}
 
 export enum IconSizes {
   LARGEST = '68px',
