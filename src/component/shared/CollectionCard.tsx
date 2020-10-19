@@ -45,7 +45,7 @@ const CollectionTitle = styled(Text).attrs({
   right: 0;
 `;
 
-interface CollectionWebtoon {
+export interface CollectionWebtoon {
   id: string;
   thumbnail: string;
 }
