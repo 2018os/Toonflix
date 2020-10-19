@@ -12,7 +12,7 @@ export enum FontSizes {
 
 export enum Colors {
   PRIMARY_COLOR = '#076EFF',
-  SKELETON_COLOR = '#86B8FF',
+  SKELETON_COLOR = '#ecefff',
   BORDER_COLOR = '#DBDBDB',
   GRAY = '#EAEDED',
   BLACK = '#212121',
