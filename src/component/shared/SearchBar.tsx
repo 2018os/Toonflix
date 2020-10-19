@@ -5,6 +5,7 @@ type IconSize = 'SMALLER' | 'LARGER';
 
 export interface Props {
   isMain?: boolean;
+  handleChange: (value: string) => any;
 }
 
 const SearchBarWrapper = styled.div<{ isMain?: boolean }>`
@@ -50,7 +51,7 @@ const StyledInput = styled.input<{ isMain?: boolean }>`
   `}
 `;
 
-const SearchBar: FunctionComponent<Props> = ({ isMain }) => {
+const SearchBar: FunctionComponent<Props> = ({ isMain, handleChange }) => {
   const iconSize = isMain ? 'LARGER' : 'SMALLER';
   return (
     <SearchBarWrapper isMain={isMain}>
@@ -58,6 +59,9 @@ const SearchBar: FunctionComponent<Props> = ({ isMain }) => {
       <StyledInput
         placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
         isMain={isMain}
+        onChange={(e) => {
+          handleChange(e.target.value);
+        }}
       />
     </SearchBarWrapper>
   );
