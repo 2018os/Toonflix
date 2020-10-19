@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import CollectionCard, { CollectionWebtoon } from '../shared/CollectionCard';
-import LoadingCollectionCard from '../shared/loading/CollectionCard';
+import LoadingCollectionCard from '../shared/Loading';
 import SearchBar from '../shared/SearchBar';
 
-import { useCollectionsForCollectionListQuery } from '../../generated/graphql';
+import { useCollectionsForCollectionListLazyQuery } from '../../generated/graphql';
 
-import { dataForCollectionList as data, loading } from '../../util/dummy';
+// import { dataForCollectionList as data, loading } from '../../util/dummy';
 
 const SearchBarWrapper = styled.div`
   padding: ${(props) => props.theme.spacing[2]};
@@ -31,15 +31,30 @@ const Item = styled.div`
 `;
 
 const CollectionListContainer = () => {
-  // const { data, loading } = useCollectionsForCollectionListQuery();
+  const [
+    getCollection,
+    { data, loading }
+  ] = useCollectionsForCollectionListLazyQuery();
+  const [keyword, setKeyword] = useState('');
+  const onChange = (value: string) => {
+    setKeyword(value);
+  };
+
+  useEffect(() => {
+    getCollection({ variables: { keyword } });
+  }, [keyword]);
+
   return (
     <>
       <SearchBarWrapper>
-        <SearchBar />
+        <SearchBar handleChange={onChange} />
       </SearchBarWrapper>
       <CollectionCardContainer>
-        {data && !loading
-          ? data?.collections.edges?.map((collection) => {
+        {!loading ? (
+          data &&
+          data.collections.edges &&
+          data.collections.edges?.length > 0 ? (
+            data.collections.edges?.map((collection) => {
               let collectionWebtoon: CollectionWebtoon[] = [];
               if (collection?.node) {
                 const webtoons = collection.node.webtoonsConnection.edges;
@@ -63,13 +78,17 @@ const CollectionListContainer = () => {
                   </Item>
                 );
               }
-              return null;
             })
-          : [0, 1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
-              <Item key={`loading-item-${key}`}>
-                <LoadingCollectionCard />
-              </Item>
-            ))}
+          ) : (
+            <div>notdata, Create your collection</div>
+          )
+        ) : (
+          [0, 1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
+            <Item key={`loading-item-${key}`}>
+              <LoadingCollectionCard />
+            </Item>
+          ))
+        )}
       </CollectionCardContainer>
     </>
   );
