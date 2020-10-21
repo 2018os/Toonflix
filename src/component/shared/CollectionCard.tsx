@@ -8,6 +8,8 @@ import { FontSizes } from '../../util/theme';
 import Link from '../shared/Link';
 import Thumbnail from './Thumbnail';
 
+import { CollectionCardFragment } from '../../generated/graphql';
+
 const CollectionThumbnail = styled.div.attrs({
   className: 'collection-thumbnail'
 })`
@@ -45,38 +47,42 @@ const CollectionTitle = styled(Text).attrs({
   right: 0;
 `;
 
-export interface CollectionWebtoon {
-  id: string;
-  thumbnail: string;
-}
-
 export interface Props {
-  id: string;
-  title: string;
-  webtoons: CollectionWebtoon[];
+  collection: CollectionCardFragment;
 }
 
-const CollectionCard: FunctionComponent<Props> = ({ id, title, webtoons }) => {
-  const slicedWebtoons = webtoons.slice(0, 4);
+const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
+  const slicedWebtoons =
+    collection.webtoonsConnection.edges &&
+    collection.webtoonsConnection.edges.slice(0, 4);
   return (
     <Link
       linkProps={{
         href: '/collection/[id]',
-        as: `/collection/${id}`
+        as: `/collection/${collection.id}`
       }}
     >
       <Card>
         <CollectionTitle size={FontSizes.LARGE} bold>
-          {title}
+          {collection.title}
         </CollectionTitle>
         <CollectionThumbnail>
-          {slicedWebtoons.map((webtoon: CollectionWebtoon) => (
-            <Thumbnail
-              key={`collection-thumbnail-${webtoon.id}`}
-              src={webtoon.thumbnail}
-              size="SMALL"
-            />
-          ))}
+          {slicedWebtoons ? (
+            slicedWebtoons.map((webtoon) => {
+              if (webtoon?.node) {
+                const { id, thumbnail } = webtoon.node;
+                return (
+                  <Thumbnail
+                    key={`collection-thumbnail-${id}`}
+                    src={thumbnail}
+                    size="SMALL"
+                  />
+                );
+              }
+            })
+          ) : (
+            <div>collection card thumbnail loading</div>
+          )}
         </CollectionThumbnail>
       </Card>
     </Link>

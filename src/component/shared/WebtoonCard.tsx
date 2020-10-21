@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import Thumbnail from '../shared/Thumbnail';
 import Link from '../shared/Link';
+
+import { WebtoonCardFragment } from '../../generated/graphql';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -51,32 +53,21 @@ const Tag = styled.div`
 
 const ThumbnailWrapper = styled.div``;
 
-type Genre = {
-  name: string;
-  code: string;
-};
-
 export interface Props {
-  id: string;
-  title: string;
-  authorsConnection: any;
-  genres: Genre[];
-  isAdult: boolean;
-  isFinish: boolean;
-  isPay: boolean;
-  thumbnail: string;
+  webtoon: WebtoonCardFragment;
 }
 
-function WebtoonCard({
-  id,
-  title,
-  authorsConnection,
-  genres,
-  isAdult,
-  isFinish,
-  isPay,
-  thumbnail
-}: Props) {
+const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
+  const {
+    id,
+    thumbnail,
+    isAdult,
+    isFinish,
+    isPay,
+    title,
+    authorsConnection,
+    genres
+  } = webtoon;
   return (
     <Link
       linkProps={{
@@ -96,19 +87,21 @@ function WebtoonCard({
         </ThumbnailWrapper>
         <WebtoonInfoWrapper>
           <Title>{title}</Title>
-          {authorsConnection?.edges?.map((authorEdge: any) => {
-            return (
-              <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
-            );
+          {authorsConnection?.edges?.map((authorEdge) => {
+            if (authorEdge?.node) {
+              return (
+                <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
+              );
+            } else return <div>Author data Loading</div>;
           })}
           {genres &&
-            genres.map((genre: Genre) => {
+            genres.map((genre) => {
               return <Tag key={genre.code}># {genre.name}</Tag>;
             })}
         </WebtoonInfoWrapper>
       </Card>
     </Link>
   );
-}
+};
 
 export default WebtoonCard;
