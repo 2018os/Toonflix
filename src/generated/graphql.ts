@@ -64,7 +64,7 @@ export type Query = {
   /** myProfile(id: ID!): User! */
   webtoon: Webtoon;
   randomWebtoons?: Maybe<Array<Webtoon>>;
-  search: SearchResultConnection;
+  search: SearchResult;
 };
 
 /** types */
@@ -119,6 +119,8 @@ export type QueryRandomWebtoonsArgs = {
 export type QuerySearchArgs = {
   keyword?: Maybe<Scalars['String']>;
   where?: Maybe<SearchFiltering>;
+  webtoonPaging?: Maybe<Paging>;
+  collectionPaging?: Maybe<Paging>;
 };
 
 export type Mutation = {
@@ -126,6 +128,7 @@ export type Mutation = {
   login: AuthPayload;
   signup: AuthPayload;
   createCollection: Collection;
+  postComment: Comment;
 };
 
 export type MutationLoginArgs = {
@@ -138,6 +141,10 @@ export type MutationSignupArgs = {
 
 export type MutationCreateCollectionArgs = {
   input: CollectionInput;
+};
+
+export type MutationPostCommentArgs = {
+  input: CommentInput;
 };
 
 export type AuthPayload = {
@@ -280,6 +287,7 @@ export type Comment = Node & {
   id: Scalars['ID'];
   message: Scalars['String'];
   writer: User;
+  createdAt: Scalars['Date'];
   commentsConnection: CommentCommentsConnection;
 };
 
@@ -379,17 +387,17 @@ export type GenreWebtoonsConnection = Connection & {
   counts: Scalars['Int'];
 };
 
-export type SearchResultWebtoonConnection = Connection & {
-  __typename?: 'SearchResultWebtoonConnection';
-  edges?: Maybe<Array<Maybe<SearchResultWebtoonEdge>>>;
+export type SearchResultWebtoonsConnection = Connection & {
+  __typename?: 'SearchResultWebtoonsConnection';
+  edges?: Maybe<Array<Maybe<SearchResultWebtoonsEdge>>>;
   pageInfo: PageInfo;
   totalCounts: Scalars['Int'];
   counts: Scalars['Int'];
 };
 
-export type SearchResultCollectionConnection = Connection & {
-  __typename?: 'SearchResultCollectionConnection';
-  edges?: Maybe<Array<Maybe<SearchResultCollectionEdge>>>;
+export type SearchResultCollectionsConnection = Connection & {
+  __typename?: 'SearchResultCollectionsConnection';
+  edges?: Maybe<Array<Maybe<SearchResultCollectionsEdge>>>;
   pageInfo: PageInfo;
   totalCounts: Scalars['Int'];
   counts: Scalars['Int'];
@@ -419,23 +427,23 @@ export type CommentCommentsConnection = Connection & {
   counts: Scalars['Int'];
 };
 
-/** other connections */
-export type SearchResultConnection = {
-  __typename?: 'SearchResultConnection';
-  webtoonResult?: Maybe<SearchResultWebtoonConnection>;
-  collectionResult?: Maybe<SearchResultCollectionConnection>;
+/** searchResult */
+export type SearchResult = {
+  __typename?: 'SearchResult';
+  webtoonResult?: Maybe<SearchResultWebtoonsConnection>;
+  collectionResult?: Maybe<SearchResultCollectionsConnection>;
 };
 
-/** other connections */
-export type SearchResultConnectionWebtoonResultArgs = {
+/** searchResult */
+export type SearchResultWebtoonResultArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
 };
 
-/** other connections */
-export type SearchResultConnectionCollectionResultArgs = {
+/** searchResult */
+export type SearchResultCollectionResultArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
@@ -503,14 +511,14 @@ export type GenreWebtoonsEdge = Edge & {
   node?: Maybe<Webtoon>;
 };
 
-export type SearchResultWebtoonEdge = Edge & {
-  __typename?: 'SearchResultWebtoonEdge';
+export type SearchResultWebtoonsEdge = Edge & {
+  __typename?: 'SearchResultWebtoonsEdge';
   cursor: Scalars['String'];
   node?: Maybe<Webtoon>;
 };
 
-export type SearchResultCollectionEdge = Edge & {
-  __typename?: 'SearchResultCollectionEdge';
+export type SearchResultCollectionsEdge = Edge & {
+  __typename?: 'SearchResultCollectionsEdge';
   cursor: Scalars['String'];
   node?: Maybe<Collection>;
 };
@@ -557,12 +565,26 @@ export type CollectionInput = {
   webtoons: Array<Scalars['String']>;
 };
 
+export type CommentInput = {
+  message: Scalars['String'];
+  webtoonId?: Maybe<Scalars['ID']>;
+  collectionId?: Maybe<Scalars['ID']>;
+  commentId?: Maybe<Scalars['ID']>;
+};
+
 export type SearchFiltering = {
   isPay?: Maybe<Scalars['Boolean']>;
   isAdult?: Maybe<Scalars['Boolean']>;
   isFinish?: Maybe<Scalars['Boolean']>;
   platforms?: Maybe<Array<Maybe<Platform>>>;
   genres?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type Paging = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 export type CollectionsForMainQueryVariables = Exact<{ [key: string]: never }>;
@@ -636,6 +658,25 @@ export type WebtoonForWebtoonDetailQuery = { __typename?: 'Query' } & {
           >
         >;
       };
+      commentsConnection: { __typename?: 'WebtoonCommentsConnection' } & Pick<
+        WebtoonCommentsConnection,
+        'counts'
+      > & {
+          edges?: Maybe<
+            Array<
+              Maybe<
+                { __typename?: 'WebtoonCommentsEdge' } & {
+                  node?: Maybe<
+                    { __typename?: 'Comment' } & Pick<
+                      Comment,
+                      'message' | 'createdAt'
+                    > & { writer: { __typename?: 'User' } & Pick<User, 'name'> }
+                  >;
+                }
+              >
+            >
+          >;
+        };
       collectionsConnection: { __typename?: 'WebtoonCollectionsConnection' } & {
         pageInfo: { __typename?: 'PageInfo' } & Pick<
           PageInfo,
@@ -895,6 +936,18 @@ export const WebtoonForWebtoonDetailDocument = gql`
           node {
             id
             name
+          }
+        }
+      }
+      commentsConnection(first: 4) {
+        counts
+        edges {
+          node {
+            message
+            createdAt
+            writer {
+              name
+            }
           }
         }
       }

@@ -40,6 +40,18 @@ query webtoonForWebtoonDetail($id: ID!) {
         }
       }
     }
+    commentsConnection(first: 4) {
+      counts
+      edges {
+        node {
+          message
+          createdAt
+          writer {
+            name
+          }
+        }
+      }
+    }
     collectionsConnection(first: 4) {
       pageInfo {
         hasPreviousPage
