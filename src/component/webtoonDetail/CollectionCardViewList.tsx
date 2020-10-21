@@ -4,6 +4,8 @@ import CardViewList from '../shared/CardViewList';
 import CollectionCard from '../shared/CollectionCard';
 import { EmptyCollectionCard } from '../shared/Empty';
 
+// legacy
+
 type Props = {
   collectionConnection?: any;
 };

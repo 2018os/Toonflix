@@ -4,6 +4,8 @@ import CardViewList from '../shared/CardViewList';
 import { EmptyWebtoonCard } from '../shared/Empty';
 import WebtoonCard, { Props as Webtoon } from '../shared/WebtoonCard';
 
+// legacy
+
 interface Props {
   webtoonConnection?: any;
 }

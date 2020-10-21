@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import WebtoonCardViewList from './WebtoonCardViewList';
-
+import CardViewList from '../shared/CardViewList';
 import Link from '../shared/Link';
 import SearchBar from '../shared/SearchBar';
+import WebtoonCard from '../shared/WebtoonCard';
 
 import { Text } from '../../styles/Typography';
 
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
-import { dataForMain as data, loading } from '../../util/dummy';
+// import { dataForMain as data, loading } from '../../util/dummy';
 
 const Button = styled.div`
   line-height: 1.5;
@@ -55,7 +55,7 @@ const LinkButton = styled.div`
 `;
 
 function MainContainer() {
-  // const { data, loading } = useCollectionsForMainQuery();
+  const { data, loading } = useCollectionsForMainQuery();
   return (
     <>
       <ButtonWrapper>
@@ -78,12 +78,26 @@ function MainContainer() {
       </LinkButtonWrapper>
       {data && !loading ? (
         data.collections.edges?.map((collection, index) => {
-          return (
-            <WebtoonCardViewList
-              key={`webtoon-card-list-${index}`}
-              webtoonConnection={collection && collection.node}
-            />
-          );
+          if (collection?.node?.webtoonsConnection) {
+            return (
+              <CardViewList
+                title={collection.node.title}
+                description={collection.node.description}
+                type="pagination"
+              >
+                {collection.node.webtoonsConnection.edges?.map((edge) => {
+                  if (edge?.node) {
+                    const webtoon = edge.node;
+                    return <WebtoonCard webtoon={webtoon} />;
+                  } else {
+                    return <div>webtoon data loading</div>;
+                  }
+                })}
+              </CardViewList>
+            );
+          } else {
+            return <div>WebtoonCardViewList loading</div>;
+          }
         })
       ) : (
         <div>Loading...</div>
