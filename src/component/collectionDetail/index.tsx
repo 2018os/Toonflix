@@ -1,9 +1,9 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import { Title, Text } from '../../styles/Typography';
 
-import WebtoonCard from '../../component/shared/WebtoonCard';
+import WebtoonCardViewList from './WebtoonCardViewList';
 
 import { useCollectionForCollectionDetailQuery } from '../../generated/graphql';
 
@@ -23,20 +23,11 @@ const CollectionProfileItem = styled.div`
   margin-bottom: ${(props) => props.theme.spacing[1]};
 `;
 
-const WebtoonCardList = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-flow: row wrap;
-  ::after {
-    content: '';
-    flex: 0 0 ${(props) => props.theme.ImgSizes.DEFAULT};
-  }
-`;
-
 const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
   const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
     variables: { id, after: '' }
   });
+  const afterId = data?.collection.webtoonsConnection.pageInfo.endCursor;
   return !loading && data ? (
     <div>
       작성자 {data.collection.writer.name}
@@ -49,24 +40,42 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
         </CollectionProfileItem>
       </CollectionProfile>
       <Text>컬렉션에 포함된 작품들</Text>
-      <WebtoonCardList>
-        {data.collection.webtoonsConnection.edges &&
-          data.collection.webtoonsConnection.edges.map((edge) => {
-            if (edge?.node) {
-              const webtoon = edge.node;
-              return <WebtoonCard webtoon={webtoon} />;
-            } else {
-              return <div>webtoon data loading</div>;
+      <WebtoonCardViewList
+        data={data}
+        onLoadMore={() => {
+          fetchMore({
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+              if (!fetchMoreResult) {
+                return previousResult;
+              }
+              const prevCollection = previousResult.collection;
+              const nextCollection = fetchMoreResult.collection;
+              const prevEdges = prevCollection.webtoonsConnection.edges;
+              const newEdges = nextCollection.webtoonsConnection.edges;
+              const pageInfo = nextCollection.webtoonsConnection.pageInfo;
+              return {
+                collection: {
+                  ...prevCollection,
+                  webtoonsConnection: {
+                    ...prevCollection.webtoonsConnection,
+                    edges: [
+                      ...(prevEdges && prevEdges.length > 0
+                        ? [...prevEdges]
+                        : []),
+                      ...(newEdges && newEdges.length > 0 ? [...newEdges] : [])
+                    ],
+                    pageInfo
+                  }
+                }
+              };
+            },
+            variables: {
+              id,
+              after: afterId
             }
-          })}
-      </WebtoonCardList>
-      {data.collection.webtoonsConnection.pageInfo.hasNextPage ? (
-        <button
-          onClick={() => fetchMore({ variables: { id, after: 'MTA5ODc=' } })}
-        >
-          더 보기
-        </button>
-      ) : null}
+          });
+        }}
+      />
     </div>
   ) : (
     <div>Loading</div>
