@@ -114,6 +114,28 @@ query collectionsForCollectionList($keyword: String) {
   }
 }
 
+query collectionForCollectionDetail($id: ID!, $after: ID!) {
+  collection(id: $id) {
+    id
+    title
+    description
+    writer {
+      name
+    }
+    webtoonsConnection(first: 4, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          ...webtoonCard
+        }
+      }
+    }
+  }
+}
+
 fragment webtoonCard on Webtoon {
   id
   title
