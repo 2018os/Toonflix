@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import { Text } from '../styles/Typography';
-
 import withAuth, { AuthState } from '../hocs/withAuth';
+
+import { Text } from '../styles/Typography';
 
 import Link from '../component/shared/Link';
 import SearchBar from '../component/shared/SearchBar';
@@ -43,6 +43,18 @@ const Tab = styled(Text)<{ isCurrentPath: boolean }>`
       : props.theme.TextColors.BLACK};
 `;
 
+const ProfileWrapper = styled.div<{ isMain: boolean }>`
+  display: flex;
+  jusitfy-content: flex-end;
+  ${(props) =>
+    props.isMain &&
+    `
+    position: absolute;
+    right: 0;
+    padding: ${props.theme.spacing[3]} ${props.theme.spacing[5]};
+    `}
+`;
+
 export interface Props {
   authState: AuthState;
 }
@@ -53,17 +65,6 @@ export interface ProfileProps {
 }
 
 const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
-  const ProfileWrapper = styled.div<{ isMain: boolean }>`
-    display: flex;
-    jusitfy-content: flex-end;
-    ${(props) =>
-      props.isMain &&
-      `
-    position: absolute;
-    right: 0;
-    padding: ${props.theme.spacing[3]} ${props.theme.spacing[5]};
-    `}
-  `;
   return (
     <ProfileWrapper isMain={isMain}>
       {authState.user && authState.userId ? (
