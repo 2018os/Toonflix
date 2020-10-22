@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Title, Text } from '../../styles/Typography';
 
-import WebtoonCardViewList from './WebtoonCardViewList';
+import WebtoonCardList from './WebtoonCardList';
 
 import { useCollectionForCollectionDetailQuery } from '../../generated/graphql';
 
@@ -40,7 +40,7 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
         </CollectionProfileItem>
       </CollectionProfile>
       <Text>컬렉션에 포함된 작품들</Text>
-      <WebtoonCardViewList
+      <WebtoonCardList
         data={data}
         onLoadMore={() => {
           fetchMore({

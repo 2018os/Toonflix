@@ -14,7 +14,7 @@ export interface Props {
   onLoadMore: () => any;
 }
 
-const WebtoonCardList = styled.div`
+const WebtoonCardListWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
@@ -37,14 +37,11 @@ const MoreButton = styled.button`
   height: 60px;
 `;
 
-const WebtoonCardViewList: FunctionComponent<Props> = ({
-  data,
-  onLoadMore
-}) => {
+const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
   return (
     <>
       <Section>
-        <WebtoonCardList>
+        <WebtoonCardListWrapper>
           {data.collection.webtoonsConnection.edges &&
             data.collection.webtoonsConnection.edges.map((edge) => {
               if (edge?.node) {
@@ -58,7 +55,7 @@ const WebtoonCardViewList: FunctionComponent<Props> = ({
                 return <div>webtoon data loading</div>;
               }
             })}
-        </WebtoonCardList>
+        </WebtoonCardListWrapper>
       </Section>
       {data.collection.webtoonsConnection.pageInfo.hasNextPage ? (
         <Section>
@@ -71,4 +68,4 @@ const WebtoonCardViewList: FunctionComponent<Props> = ({
   );
 };
 
-export default WebtoonCardViewList;
+export default WebtoonCardList;
