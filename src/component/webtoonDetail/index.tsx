@@ -10,6 +10,7 @@ import Thumbnail from '../shared/Thumbnail';
 
 import CardViewList from '../shared/CardViewList';
 import CollectionCard from '../shared/CollectionCard';
+import Comments from '../shared/Comments';
 import RandomCardViewList from './RandomCardViewList';
 import WebtoonCard from '../shared/WebtoonCard';
 
@@ -136,6 +137,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
         </Option>
       </Profile>
       <Description>{data?.webtoon.description}</Description>
+      <Comments comment={data?.webtoon.commentsConnection} />
       {data && !loading ? (
         data.webtoon.genres?.map((genre) => {
           if (genre.webtoonsConnection) {
