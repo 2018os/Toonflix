@@ -1,18 +1,20 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { useWebtoonForWebtoonDetailQuery } from '../../generated/graphql';
+import Section from '../../layout/Section';
 
 import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
 import { SubTitle, Text } from '../../styles/Typography';
 
-import Thumbnail from '../shared/Thumbnail';
+import RandomCardViewList from './RandomCardViewList';
 
 import CardViewList from '../shared/CardViewList';
 import CollectionCard from '../shared/CollectionCard';
 import Comments from '../shared/Comments';
-import RandomCardViewList from './RandomCardViewList';
+import Thumbnail from '../shared/Thumbnail';
 import WebtoonCard from '../shared/WebtoonCard';
+
+import { useWebtoonForWebtoonDetailQuery } from '../../generated/graphql';
 
 // import { dataForWebtoonDetail as data } from '../../util/dummy';
 
@@ -97,64 +99,77 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
   });
   return (
     <>
-      <Profile>
-        <ThumbnailWrapper>
-          <Thumbnail size="DEFAULT" src={data?.webtoon.thumbnail} />
-        </ThumbnailWrapper>
-        <Info>
-          <Part>
-            <SubTitle>{data?.webtoon.title}</SubTitle>
-            <Tags>
-              {data?.webtoon.genres?.map((genre) => {
-                return <Tag key={genre.code}>#{genre.name}</Tag>;
-              })}
-            </Tags>
-            <Authors>
-              {data?.webtoon.authorsConnection.edges?.map((authorEdge) => {
-                return (
-                  <Text key={authorEdge?.node?.id}>
-                    {authorEdge?.node?.name}
-                  </Text>
-                );
-              })}
-            </Authors>
-          </Part>
-          <Part>
-            <Badges>
-              {data?.webtoon.isAdult && <AdultWidget />}
-              {data?.webtoon.isPay && <PayWidget />}
-              {data?.webtoon.isFinish && <CompleteWidget />}
-            </Badges>
-            <a href={data?.webtoon.url} target="_blank">
-              <StyledButton>
-                <Text>바로가기</Text>
-              </StyledButton>
-            </a>
-          </Part>
-        </Info>
-        <Option>
-          <Bookmark />
-        </Option>
-      </Profile>
-      <Description>{data?.webtoon.description}</Description>
-      <Comments comment={data?.webtoon.commentsConnection} />
+      <Section>
+        <Profile>
+          <ThumbnailWrapper>
+            <Thumbnail size="DEFAULT" src={data?.webtoon.thumbnail} />
+          </ThumbnailWrapper>
+          <Info>
+            <Part>
+              <SubTitle>{data?.webtoon.title}</SubTitle>
+              <Tags>
+                {data?.webtoon.genres?.map((genre) => {
+                  return <Tag key={genre.code}>#{genre.name}</Tag>;
+                })}
+              </Tags>
+              <Authors>
+                {data?.webtoon.authorsConnection.edges?.map((authorEdge) => {
+                  return (
+                    <Text key={authorEdge?.node?.id}>
+                      {authorEdge?.node?.name}
+                    </Text>
+                  );
+                })}
+              </Authors>
+            </Part>
+            <Part>
+              <Badges>
+                {data?.webtoon.isAdult && <AdultWidget />}
+                {data?.webtoon.isPay && <PayWidget />}
+                {data?.webtoon.isFinish && <CompleteWidget />}
+              </Badges>
+              <a href={data?.webtoon.url} target="_blank">
+                <StyledButton>
+                  <Text>바로가기</Text>
+                </StyledButton>
+              </a>
+            </Part>
+          </Info>
+          <Option>
+            <Bookmark />
+          </Option>
+        </Profile>
+        <Description>{data?.webtoon.description}</Description>
+      </Section>
+      <Section>
+        <Comments comment={data?.webtoon.commentsConnection} />
+      </Section>
       {data && !loading ? (
         data.webtoon.genres?.map((genre) => {
           if (genre.webtoonsConnection) {
             return (
-              <CardViewList
-                title={`"${genre.name}" 비슷한 작품`}
-                type="pagination"
+              <Section
+                key={`webtoon-detail-webtoon-card-view-list-section-${genre.code}`}
               >
-                {genre.webtoonsConnection.edges?.map((edge) => {
-                  if (edge?.node) {
-                    const webtoon = edge.node;
-                    return <WebtoonCard webtoon={webtoon} />;
-                  } else {
-                    return <div>webtoon data laoding</div>;
-                  }
-                })}
-              </CardViewList>
+                <CardViewList
+                  title={`"${genre.name}" 비슷한 작품`}
+                  type="pagination"
+                >
+                  {genre.webtoonsConnection.edges?.map((edge) => {
+                    if (edge?.node) {
+                      const webtoon = edge.node;
+                      return (
+                        <WebtoonCard
+                          webtoon={webtoon}
+                          key={`webtoon-detail-webtoon-card-${webtoon.id}`}
+                        />
+                      );
+                    } else {
+                      return <div>webtoon data laoding</div>;
+                    }
+                  })}
+                </CardViewList>
+              </Section>
             );
           }
         })
@@ -162,21 +177,30 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
         <div>Loading...</div>
       )}
       {data && !loading ? (
-        <CardViewList title="작품이 포함된 컬렉션" type="pagination">
-          {data.webtoon.collectionsConnection.edges &&
-            data.webtoon.collectionsConnection.edges.map((edge) => {
-              if (edge?.node) {
-                const collection = edge.node;
-                return <CollectionCard collection={collection} />;
-              } else {
-                return <div>collection card loading</div>;
-              }
-            })}
-        </CardViewList>
+        <Section>
+          <CardViewList title="작품이 포함된 컬렉션" type="pagination">
+            {data.webtoon.collectionsConnection.edges &&
+              data.webtoon.collectionsConnection.edges.map((edge) => {
+                if (edge?.node) {
+                  const collection = edge.node;
+                  return (
+                    <CollectionCard
+                      collection={collection}
+                      key={`webtoon-detail-collection-card-${collection.id}`}
+                    />
+                  );
+                } else {
+                  return <div>collection card loading</div>;
+                }
+              })}
+          </CardViewList>
+        </Section>
       ) : (
         <div>collectionCard Loading</div>
       )}
-      <RandomCardViewList />
+      <Section>
+        <RandomCardViewList />
+      </Section>
     </>
   );
 };

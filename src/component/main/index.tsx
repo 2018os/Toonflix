@@ -8,6 +8,8 @@ import WebtoonCard from '../shared/WebtoonCard';
 
 import { Text } from '../../styles/Typography';
 
+import Section from '../../layout/Section';
+
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
 // import { dataForMain as data, loading } from '../../util/dummy';
@@ -26,14 +28,12 @@ const Button = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  padding-top: ${(props) => props.theme.spacing[6]};
   width: fit-content;
   margin: auto;
 `;
 
 const SearchBarWrapper = styled.div`
   width: 992px;
-  margin-top: ${(props) => props.theme.spacing[5]};
 `;
 
 const LinkButtonWrapper = styled.div`
@@ -58,42 +58,55 @@ function MainContainer() {
   const { data, loading } = useCollectionsForMainQuery();
   return (
     <>
-      <ButtonWrapper>
-        <Button>로고</Button>
-      </ButtonWrapper>
-      <SearchBarWrapper>
-        <SearchBar isMain />
-      </SearchBarWrapper>
-      <LinkButtonWrapper>
-        <LinkButton>
-          <Link linkProps={{ href: '/collections' }}>
-            <Text bold>컬렉션 바로가기</Text>
-          </Link>
-        </LinkButton>
-        <LinkButton style={{ marginLeft: '18px' }}>
-          <Link linkProps={{ href: '/category' }}>
-            <Text bold>카테고리 바로가기</Text>
-          </Link>
-        </LinkButton>
-      </LinkButtonWrapper>
+      <Section>
+        <ButtonWrapper>
+          <Button>로고</Button>
+        </ButtonWrapper>
+      </Section>
+      <Section>
+        <SearchBarWrapper>
+          <SearchBar isMain />
+        </SearchBarWrapper>
+        <LinkButtonWrapper>
+          <LinkButton>
+            <Link linkProps={{ href: '/collections' }}>
+              <Text bold>컬렉션 바로가기</Text>
+            </Link>
+          </LinkButton>
+          <LinkButton style={{ marginLeft: '18px' }}>
+            <Link linkProps={{ href: '/category' }}>
+              <Text bold>카테고리 바로가기</Text>
+            </Link>
+          </LinkButton>
+        </LinkButtonWrapper>
+      </Section>
       {data && !loading ? (
-        data.collections.edges?.map((collection, index) => {
+        data.collections.edges?.map((collection) => {
           if (collection?.node?.webtoonsConnection) {
             return (
-              <CardViewList
-                title={collection.node.title}
-                description={collection.node.description}
-                type="pagination"
+              <Section
+                key={`main-webtoon-card-view-list-section-${collection.node.id}`}
               >
-                {collection.node.webtoonsConnection.edges?.map((edge) => {
-                  if (edge?.node) {
-                    const webtoon = edge.node;
-                    return <WebtoonCard webtoon={webtoon} />;
-                  } else {
-                    return <div>webtoon data loading</div>;
-                  }
-                })}
-              </CardViewList>
+                <CardViewList
+                  title={collection.node.title}
+                  description={collection.node.description}
+                  type="pagination"
+                >
+                  {collection.node.webtoonsConnection.edges?.map((edge) => {
+                    if (edge?.node) {
+                      const webtoon = edge.node;
+                      return (
+                        <WebtoonCard
+                          webtoon={webtoon}
+                          key={`main-webtoon-card-${webtoon.id}`}
+                        />
+                      );
+                    } else {
+                      return <div>webtoon data loading</div>;
+                    }
+                  })}
+                </CardViewList>
+              </Section>
             );
           } else {
             return <div>WebtoonCardViewList loading</div>;

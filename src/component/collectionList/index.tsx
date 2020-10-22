@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import CollectionCard, { CollectionWebtoon } from '../shared/CollectionCard';
+import Section from '../../layout/Section';
+
+import CollectionCard from '../shared/CollectionCard';
 import LoadingCollectionCard from '../shared/Loading';
 import SearchBar from '../shared/SearchBar';
 
@@ -46,50 +48,38 @@ const CollectionListContainer = () => {
 
   return (
     <>
-      <SearchBarWrapper>
-        <SearchBar handleChange={onChange} />
-      </SearchBarWrapper>
-      <CollectionCardContainer>
-        {!loading ? (
-          data &&
-          data.collections.edges &&
-          data.collections.edges?.length > 0 ? (
-            data.collections.edges?.map((collection) => {
-              let collectionWebtoon: CollectionWebtoon[] = [];
-              if (collection?.node) {
-                const webtoons = collection.node.webtoonsConnection.edges;
-                const collectionId = collection.node.id;
-                const collectionTitle = collection.node.title;
-                webtoons?.map((webtoon) => {
-                  if (webtoon?.node) {
-                    collectionWebtoon.push({
-                      id: webtoon.node.id,
-                      thumbnail: webtoon.node.thumbnail
-                    });
-                  }
-                });
-                return (
-                  <Item key={`item-${collectionId}`}>
-                    <CollectionCard
-                      id={collectionId}
-                      title={collectionTitle}
-                      webtoons={collectionWebtoon}
-                    />
-                  </Item>
-                );
-              }
-            })
+      <Section>
+        <SearchBarWrapper>
+          <SearchBar handleChange={onChange} />
+        </SearchBarWrapper>
+      </Section>
+      <Section>
+        <CollectionCardContainer>
+          {!loading ? (
+            data &&
+            data.collections.edges &&
+            data.collections.edges?.length > 0 ? (
+              data.collections.edges?.map((collection) => {
+                if (collection?.node) {
+                  return (
+                    <Item key={`collection-list-item-${collection.node.id}`}>
+                      <CollectionCard collection={collection.node} />
+                    </Item>
+                  );
+                }
+              })
+            ) : (
+              <div>notdata, Create your collection</div>
+            )
           ) : (
-            <div>notdata, Create your collection</div>
-          )
-        ) : (
-          [0, 1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
-            <Item key={`loading-item-${key}`}>
-              <LoadingCollectionCard />
-            </Item>
-          ))
-        )}
-      </CollectionCardContainer>
+            [0, 1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
+              <Item key={`loading-item-${key}`}>
+                <LoadingCollectionCard />
+              </Item>
+            ))
+          )}
+        </CollectionCardContainer>
+      </Section>
     </>
   );
 };
