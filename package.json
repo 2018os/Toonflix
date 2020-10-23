@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production node build/server/index.jsx",
     "build": "next build && tsc -p tsconfig.server.json",
     "lint": "eslint '**/*.{ts,tsx}'",
-    "generate": "graphql-codegen"
+    "codegen": "graphql-codegen"
   },
   "repository": {
     "type": "git",
