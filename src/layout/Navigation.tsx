@@ -61,12 +61,12 @@ export interface Props {
 
 export interface ProfileProps {
   authState: AuthState;
-  isMain: boolean;
+  isMain?: boolean;
 }
 
 const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
   return (
-    <ProfileWrapper isMain={isMain}>
+    <ProfileWrapper isMain={!!isMain}>
       {authState.user && authState.userId ? (
         <div>
           <div>{authState.user.name}</div>
@@ -85,7 +85,7 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
   const router = useRouter();
   const pathname = router.pathname;
   return pathname === '/' ? (
-    <Profile authState={authState} isMain={true} />
+    <Profile authState={authState} isMain />
   ) : (
     <NavigationWrapper>
       <Logo>
@@ -108,7 +108,7 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
           </SearchWrapper>
         </Item>
       </ItemWrapper>
-      <Profile authState={authState} isMain={false} />
+      <Profile authState={authState} />
     </NavigationWrapper>
   );
 };
