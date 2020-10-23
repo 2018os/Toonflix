@@ -33,7 +33,7 @@ const Item = styled.div`
 `;
 
 const SearchWrapper = styled.div`
-  width: 320px;
+  width: 500px;
 `;
 
 const Tab = styled(Text)<{ isCurrentPath: boolean }>`
@@ -104,7 +104,7 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
         </Item>
         <Item>
           <SearchWrapper>
-            <SearchBar />
+            <SearchBar autoComplete />
           </SearchWrapper>
         </Item>
       </ItemWrapper>

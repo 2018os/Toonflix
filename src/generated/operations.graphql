@@ -114,6 +114,31 @@ query collectionsForCollectionList($keyword: String) {
   }
 }
 
+query searchForAutoComplete($keyword: String) {
+  search(
+    keyword: $keyword
+    webtoonPaging: { first: 3 }
+    collectionPaging: { first: 3 }
+  ) {
+    webtoonResult {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+    collectionResult {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+  }
+}
+
 query collectionForCollectionDetail($id: ID!, $after: ID) {
   collection(id: $id) {
     id

@@ -65,7 +65,7 @@ function MainContainer() {
       </Section>
       <Section>
         <SearchBarWrapper>
-          <SearchBar isMain />
+          <SearchBar isMain autoComplete />
         </SearchBarWrapper>
         <LinkButtonWrapper>
           <LinkButton>

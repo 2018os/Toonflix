@@ -1,24 +1,43 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
+
+import AutoComplete from './AutoComplete';
 
 type IconSize = 'SMALLER' | 'LARGER';
 
 export interface Props {
   isMain?: boolean;
   handleChange?: (value: string) => any;
+  autoComplete?: boolean;
 }
 
-const SearchBarWrapper = styled.div<{ isMain?: boolean }>`
-  display: flex;
-  width: 100%;
+const SearchBarWrapper = styled.div<{
+  isMain?: boolean;
+  autoCompleteOpen: boolean;
+}>`
+  position: relative;
   border-style: solid;
   ${(props) => `
-    border-color: ${props.theme.Colors.PRIMARY_COLOR};
-    border-width: ${props.isMain ? '4px' : '1px'};
     background-color: ${props.theme.Colors.WHITE};
-    border-radius: ${props.isMain ? '10px' : '5px'};
+    ${
+      props.isMain
+        ? `
+          border-color: ${props.theme.Colors.PRIMARY_COLOR};
+          border-width: 4px;
+          border-radius: ${props.autoCompleteOpen ? '10px 10px 0 0' : '10px'};
+      `
+        : `
+          border-color: ${props.theme.Colors.GRAY};
+          border-width: 1px;
+          border-radius: ${props.autoCompleteOpen ? '5px 5px 0 0' : '5px'};
+      `
+    }
   `}
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+`;
+
+const SearchInputWrapper = styled.div`
+  display: flex;
 };
 `;
 
@@ -51,18 +70,35 @@ const StyledInput = styled.input<{ isMain?: boolean }>`
   `}
 `;
 
-const SearchBar: FunctionComponent<Props> = ({ isMain, handleChange }) => {
+const SearchBar: FunctionComponent<Props> = ({
+  isMain,
+  handleChange,
+  autoComplete
+}) => {
+  const [value, setValue] = useState('');
+  const [autoCompleteOpen, setAutoCompleteOpen] = useState(false);
   const iconSize = isMain ? 'LARGER' : 'SMALLER';
   return (
-    <SearchBarWrapper isMain={isMain}>
-      <Icon iconSize={iconSize} />
-      <StyledInput
-        placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
-        isMain={isMain}
-        onChange={(e) => {
-          handleChange && handleChange(e.target.value);
-        }}
-      />
+    <SearchBarWrapper isMain={isMain} autoCompleteOpen={autoCompleteOpen}>
+      <SearchInputWrapper>
+        <Icon iconSize={iconSize} />
+        <StyledInput
+          placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
+          isMain={isMain}
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+            handleChange && handleChange(value);
+          }}
+          onFocus={() => {
+            setAutoCompleteOpen(true);
+          }}
+          onBlur={() => {
+            setAutoCompleteOpen(false);
+          }}
+        />
+      </SearchInputWrapper>
+      {autoComplete && autoCompleteOpen && <AutoComplete keyword={value} />}
     </SearchBarWrapper>
   );
 };
