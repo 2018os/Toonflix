@@ -756,6 +756,57 @@ export type CollectionsForCollectionListQuery = (
   ) }
 );
 
+export type SearchForCategoryQueryVariables = Exact<{
+  keyword?: Maybe<Scalars['String']>;
+  where?: Maybe<SearchFiltering>;
+  webtoonId?: Maybe<Scalars['ID']>;
+  collectionId?: Maybe<Scalars['ID']>;
+}>;
+
+
+export type SearchForCategoryQuery = (
+  { __typename?: 'Query' }
+  & { search: (
+    { __typename?: 'SearchResult' }
+    & { webtoonResult?: Maybe<(
+      { __typename?: 'SearchResultWebtoonsConnection' }
+      & { pageInfo: (
+        { __typename?: 'PageInfo' }
+        & Pick<PageInfo, 'endCursor' | 'hasNextPage'>
+      ), edges?: Maybe<Array<Maybe<(
+        { __typename?: 'SearchResultWebtoonsEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Webtoon' }
+          & WebtoonCardFragment
+        )> }
+      )>>> }
+    )>, collectionResult?: Maybe<(
+      { __typename?: 'SearchResultCollectionsConnection' }
+      & { pageInfo: (
+        { __typename?: 'PageInfo' }
+        & Pick<PageInfo, 'endCursor' | 'hasNextPage'>
+      ), edges?: Maybe<Array<Maybe<(
+        { __typename?: 'SearchResultCollectionsEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Collection' }
+          & CollectionCardFragment
+        )> }
+      )>>> }
+    )> }
+  ) }
+);
+
+export type GenresForCategoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GenresForCategoryQuery = (
+  { __typename?: 'Query' }
+  & { genres?: Maybe<Array<Maybe<(
+    { __typename?: 'Genre' }
+    & Pick<Genre, 'code' | 'name'>
+  )>>> }
+);
+
 export type SearchForAutoCompleteQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
 }>;
@@ -1163,6 +1214,97 @@ export function useCollectionsForCollectionListLazyQuery(baseOptions?: Apollo.La
 export type CollectionsForCollectionListQueryHookResult = ReturnType<typeof useCollectionsForCollectionListQuery>;
 export type CollectionsForCollectionListLazyQueryHookResult = ReturnType<typeof useCollectionsForCollectionListLazyQuery>;
 export type CollectionsForCollectionListQueryResult = Apollo.QueryResult<CollectionsForCollectionListQuery, CollectionsForCollectionListQueryVariables>;
+export const SearchForCategoryDocument = gql`
+    query searchForCategory($keyword: String, $where: SearchFiltering, $webtoonId: ID, $collectionId: ID) {
+  search(keyword: $keyword, where: $where, webtoonPaging: {first: 10, after: $webtoonId}, collectionPaging: {first: 10, after: $collectionId}) {
+    webtoonResult {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ...webtoonCard
+        }
+      }
+    }
+    collectionResult {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+  }
+}
+    ${WebtoonCardFragmentDoc}
+${CollectionCardFragmentDoc}`;
+
+/**
+ * __useSearchForCategoryQuery__
+ *
+ * To run a query within a React component, call `useSearchForCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchForCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchForCategoryQuery({
+ *   variables: {
+ *      keyword: // value for 'keyword'
+ *      where: // value for 'where'
+ *      webtoonId: // value for 'webtoonId'
+ *      collectionId: // value for 'collectionId'
+ *   },
+ * });
+ */
+export function useSearchForCategoryQuery(baseOptions?: Apollo.QueryHookOptions<SearchForCategoryQuery, SearchForCategoryQueryVariables>) {
+        return Apollo.useQuery<SearchForCategoryQuery, SearchForCategoryQueryVariables>(SearchForCategoryDocument, baseOptions);
+      }
+export function useSearchForCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchForCategoryQuery, SearchForCategoryQueryVariables>) {
+          return Apollo.useLazyQuery<SearchForCategoryQuery, SearchForCategoryQueryVariables>(SearchForCategoryDocument, baseOptions);
+        }
+export type SearchForCategoryQueryHookResult = ReturnType<typeof useSearchForCategoryQuery>;
+export type SearchForCategoryLazyQueryHookResult = ReturnType<typeof useSearchForCategoryLazyQuery>;
+export type SearchForCategoryQueryResult = Apollo.QueryResult<SearchForCategoryQuery, SearchForCategoryQueryVariables>;
+export const GenresForCategoryDocument = gql`
+    query genresForCategory {
+  genres {
+    code
+    name
+  }
+}
+    `;
+
+/**
+ * __useGenresForCategoryQuery__
+ *
+ * To run a query within a React component, call `useGenresForCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGenresForCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGenresForCategoryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGenresForCategoryQuery(baseOptions?: Apollo.QueryHookOptions<GenresForCategoryQuery, GenresForCategoryQueryVariables>) {
+        return Apollo.useQuery<GenresForCategoryQuery, GenresForCategoryQueryVariables>(GenresForCategoryDocument, baseOptions);
+      }
+export function useGenresForCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GenresForCategoryQuery, GenresForCategoryQueryVariables>) {
+          return Apollo.useLazyQuery<GenresForCategoryQuery, GenresForCategoryQueryVariables>(GenresForCategoryDocument, baseOptions);
+        }
+export type GenresForCategoryQueryHookResult = ReturnType<typeof useGenresForCategoryQuery>;
+export type GenresForCategoryLazyQueryHookResult = ReturnType<typeof useGenresForCategoryLazyQuery>;
+export type GenresForCategoryQueryResult = Apollo.QueryResult<GenresForCategoryQuery, GenresForCategoryQueryVariables>;
 export const SearchForAutoCompleteDocument = gql`
     query searchForAutoComplete($keyword: String) {
   search(keyword: $keyword, webtoonPaging: {first: 3}, collectionPaging: {first: 3}) {
