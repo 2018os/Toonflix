@@ -88,7 +88,7 @@ const SearchBar: FunctionComponent<Props> = ({
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
-            handleChange && handleChange(value);
+            handleChange && handleChange(e.target.value);
           }}
           onFocus={() => {
             setAutoCompleteOpen(true);

@@ -739,6 +739,7 @@ export type LoginMutation = (
 
 export type CollectionsForCollectionListQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['ID']>;
 }>;
 
 
@@ -746,7 +747,10 @@ export type CollectionsForCollectionListQuery = (
   { __typename?: 'Query' }
   & { collections: (
     { __typename?: 'CollectionConnection' }
-    & { edges?: Maybe<Array<Maybe<(
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ), edges?: Maybe<Array<Maybe<(
       { __typename?: 'CollectionEdge' }
       & { node?: Maybe<(
         { __typename?: 'Collection' }
@@ -1178,8 +1182,12 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const CollectionsForCollectionListDocument = gql`
-    query collectionsForCollectionList($keyword: String) {
-  collections(first: 4, keyword: $keyword) {
+    query collectionsForCollectionList($keyword: String, $after: ID) {
+  collections(first: 3, keyword: $keyword, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
     edges {
       node {
         ...collectionCard
@@ -1202,6 +1210,7 @@ export const CollectionsForCollectionListDocument = gql`
  * const { data, loading, error } = useCollectionsForCollectionListQuery({
  *   variables: {
  *      keyword: // value for 'keyword'
+ *      after: // value for 'after'
  *   },
  * });
  */

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 import Section from '../../layout/Section';
 
-import CollectionCard from '../shared/CollectionCard';
+import CollectionCardList from './CollectionCardList';
+
 import LoadingCollectionCard from '../shared/Loading';
 import SearchBar from '../shared/SearchBar';
 
@@ -35,9 +36,11 @@ const Item = styled.div`
 const CollectionListContainer = () => {
   const [
     getCollection,
-    { data, loading }
+    { data, loading, fetchMore }
   ] = useCollectionsForCollectionListLazyQuery();
   const [keyword, setKeyword] = useState('');
+  const afterId = data?.collections.pageInfo.endCursor;
+
   const onChange = (value: string) => {
     setKeyword(value);
   };
@@ -54,31 +57,51 @@ const CollectionListContainer = () => {
         </SearchBarWrapper>
       </Section>
       <Section>
-        <CollectionCardContainer>
-          {!loading ? (
-            data &&
-            data.collections.edges &&
-            data.collections.edges?.length > 0 ? (
-              data.collections.edges?.map((collection) => {
-                if (collection?.node) {
-                  return (
-                    <Item key={`collection-list-item-${collection.node.id}`}>
-                      <CollectionCard collection={collection.node} />
-                    </Item>
-                  );
-                }
-              })
-            ) : (
-              <div>notdata, Create your collection</div>
-            )
-          ) : (
-            [0, 1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
+        {data ? (
+          <CollectionCardList
+            data={data}
+            onLoadMore={() => {
+              fetchMore &&
+                fetchMore({
+                  updateQuery: (previousResult, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) {
+                      return previousResult;
+                    }
+                    const prevCollection = previousResult.collections;
+                    const nextCollection = fetchMoreResult.collections;
+                    const prevEdges = prevCollection.edges;
+                    const newEdges = nextCollection.edges;
+                    const pageInfo = nextCollection.pageInfo;
+                    return {
+                      collections: {
+                        ...prevCollection,
+                        pageInfo,
+                        edges: [
+                          ...(prevEdges && prevEdges.length > 0
+                            ? [...prevEdges]
+                            : []),
+                          ...(newEdges && newEdges.length > 0
+                            ? [...newEdges]
+                            : [])
+                        ]
+                      }
+                    };
+                  },
+                  variables: {
+                    after: afterId
+                  }
+                });
+            }}
+          />
+        ) : (
+          <CollectionCardContainer>
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
               <Item key={`loading-item-${key}`}>
                 <LoadingCollectionCard />
               </Item>
-            ))
-          )}
-        </CollectionCardContainer>
+            ))}
+          </CollectionCardContainer>
+        )}
       </Section>
     </>
   );
