@@ -104,6 +104,15 @@ mutation login($email: String!, $password: String!) {
   }
 }
 
+mutation signup($name: String!, $email: String!, $password: String!) {
+  signup(input: { name: $name, email: $email, password: $password }) {
+    token
+    user {
+      id
+    }
+  }
+}
+
 query collectionsForCollectionList($keyword: String, $after: ID) {
   collections(first: 3, keyword: $keyword, after: $after) {
     pageInfo {

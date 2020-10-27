@@ -7,15 +7,14 @@ import withAuth, { AuthState } from '../../hocs/withAuth';
 
 import { Text } from '../../styles/Typography';
 
-import Link from '../shared/Link';
-
-import { useLoginMutation } from '../../generated/graphql';
+import { useSignupMutation } from '../../generated/graphql';
 
 export interface Props {
   authState: AuthState;
 }
 
-interface LoginFormValues {
+interface SignupFormValues {
+  name: string;
   email: string;
   password: string;
 }
@@ -53,7 +52,7 @@ const TextWrapper = styled.div`
   }
 `;
 
-const Button = styled.button<{ action: 'signup' | 'login' }>`
+const Button = styled.button`
   width: 360px;
   height: 48px;
   border-radius: 5px;
@@ -62,34 +61,29 @@ const Button = styled.button<{ action: 'signup' | 'login' }>`
   font-weight: bold;
   font-size: ${(props) => props.theme.FontSizes.LARGE};
   margin-top: ${(props) => props.theme.spacing[4]};
-  ${(props) =>
-    props.action === 'signup'
-      ? `
-    background-color: ${props.theme.Colors.WHITE};
-    color: ${props.theme.Colors.BLACK};
-  `
-      : `
-    background-color: ${props.theme.Colors.PRIMARY_COLOR};
-    color: ${props.theme.Colors.WHITE};
-  `}
+  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
+  color: ${(props) => props.theme.Colors.WHITE};
+  }
 `;
 
 const ErrorMessageBox = styled.div`
   color: red; // TODO: Use theme
 `;
 
-const LoginContainer: FunctionComponent<Props> = ({ authState }) => {
+const SignupContainer: FunctionComponent<Props> = ({ authState }) => {
   const router = useRouter();
-  const [login] = useLoginMutation();
-  const initialValues: LoginFormValues = { email: '', password: '' };
+  const [signup] = useSignupMutation();
+  const initialValues: SignupFormValues = { name: '', email: '', password: '' };
   return (
     <Content>
       <Logo>Logo</Logo>
       <Formik
         initialValues={initialValues}
         validate={(values) => {
-          const errors: FormikErrors<LoginFormValues> = {};
-          if (!values.email) {
+          const errors: FormikErrors<SignupFormValues> = {};
+          if (!values.name) {
+            errors.name = 'Required';
+          } else if (!values.email) {
             errors.email = 'Required';
           } else if (
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
@@ -100,19 +94,26 @@ const LoginContainer: FunctionComponent<Props> = ({ authState }) => {
         }}
         onSubmit={async (value) => {
           try {
-            const { data } = await login({ variables: { ...value } });
-            if (data?.login.token && data?.login?.user) {
-              const token = data.login.token;
-              const userId = data.login.user.id;
+            const { data } = await signup({ variables: { ...value } });
+            if (data?.signup.token && data?.signup?.user) {
+              const token = data.signup.token;
+              const userId = data.signup.user.id;
               authState.signIn(token, userId);
-              router.back();
+              router.push('/');
             }
           } catch (err) {
-            alert('이메일 혹은 비밀번호가 틀립니다.');
+            alert('중복된 이메일 입니다.');
           }
         }}
       >
         <Form>
+          <Label>
+            <TextWrapper>
+              <Text>NAME</Text>
+            </TextWrapper>
+            <Input id="name" name="name" type="name" placeholder="이름" />
+            <ErrorMessage name="name" component={ErrorMessageBox} />
+          </Label>
           <Label>
             <TextWrapper>
               <Text>E-MAIL</Text>
@@ -131,20 +132,11 @@ const LoginContainer: FunctionComponent<Props> = ({ authState }) => {
               type="password"
             />
           </Label>
-          <Button type="submit" action="login">
-            로그인
-          </Button>
+          <Button type="submit">회원가입</Button>
         </Form>
       </Formik>
-      <Link
-        linkProps={{
-          href: '/signup'
-        }}
-      >
-        <Button action="signup">회원가입</Button>
-      </Link>
     </Content>
   );
 };
 
-export default withAuth(LoginContainer);
+export default withAuth(SignupContainer);
