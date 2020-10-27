@@ -1,4 +1,4 @@
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikErrors, ErrorMessage } from 'formik';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
@@ -11,6 +11,11 @@ import { useLoginMutation } from '../../generated/graphql';
 
 export interface Props {
   authState: AuthState;
+}
+
+interface LoginFormValues {
+  email: string;
+  password: string;
 }
 
 const Content = styled.div`
@@ -67,34 +72,41 @@ const Button = styled.button<{ action: 'signup' | 'login' }>`
   `}
 `;
 
+const ErrorMessageBox = styled.div`
+  color: red; // TODO: Use theme
+`;
+
 const LoginContainer: FunctionComponent<Props> = ({ authState }) => {
   const router = useRouter();
   const [login] = useLoginMutation();
+  const initialValues: LoginFormValues = { email: '', password: '' };
   return (
     <Content>
       <Logo>Logo</Logo>
       <Formik
-        initialValues={{
-          email: '',
-          password: ''
+        initialValues={initialValues}
+        validate={(values) => {
+          const errors: FormikErrors<LoginFormValues> = {};
+          if (!values.email) {
+            errors.email = 'Required';
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = 'Invalid email address';
+          }
+          return errors;
         }}
         onSubmit={async (value) => {
           try {
-            // const value = {
-            //   email: 'test@test.com',
-            //   password: '1234'
-            // };
             const { data } = await login({ variables: { ...value } });
             if (data?.login.token && data?.login?.user) {
               const token = data.login.token;
               const userId = data.login.user.id;
               authState.signIn(token, userId);
               router.back();
-            } else {
-              // TODO: LOGIN FAIL CASE
             }
           } catch (err) {
-            console.error('something wrong');
+            alert('이메일 혹은 비밀번호가 틀립니다.');
           }
         }}
       >
@@ -103,7 +115,8 @@ const LoginContainer: FunctionComponent<Props> = ({ authState }) => {
             <TextWrapper>
               <Text>E-MAIL</Text>
             </TextWrapper>
-            <Input id="email" name="email" placeholder="이메일" />
+            <Input id="email" name="email" type="email" placeholder="이메일" />
+            <ErrorMessage name="email" component={ErrorMessageBox} />
           </Label>
           <Label>
             <TextWrapper>
