@@ -16,7 +16,7 @@ const Title = styled.div`
   color: ${(props) => props.theme.TextColors.PRIMARY_COLOR};
 `;
 
-const Description = styled.div`
+const SubTitle = styled.div`
   line-height: 1.5;
   margin-left: 12px;
   font-size: ${(props) => props.theme.FontSizes.SMALL};
@@ -44,7 +44,7 @@ type Action = 'refresh' | 'pagination';
 
 interface Props {
   title: string;
-  description?: string;
+  subTitle?: string;
   type: Action;
   children: React.ReactNode;
   refetch?: () => any;
@@ -52,7 +52,7 @@ interface Props {
 
 interface HeaderProps {
   title: string;
-  description?: string;
+  subTitle?: string;
   sliderRef: React.RefObject<Slider>;
   type: Action;
   refetch?: () => any;
@@ -61,7 +61,7 @@ interface HeaderProps {
 const settings = {
   className: 'slider',
   dots: false,
-  infinite: true,
+  infinite: false,
   draggable: true,
   initialSlide: 0,
   variableWidth: true,
@@ -70,7 +70,7 @@ const settings = {
 
 const Header: FunctionComponent<HeaderProps> = ({
   title,
-  description,
+  subTitle,
   sliderRef,
   type,
   refetch
@@ -78,7 +78,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   <ContentWrapper>
     <ContentWrapper>
       <Title>{title}</Title>
-      <Description>{description}</Description>
+      <SubTitle>{subTitle}</SubTitle>
     </ContentWrapper>
     <ContentWrapper>
       {type === 'refresh' && refetch ? (
@@ -121,13 +121,13 @@ const StyledSlider = styled(Slider)`
   }
 `;
 
-function CardViewList({ title, description, type, children, refetch }: Props) {
+function CardViewList({ title, subTitle, type, children, refetch }: Props) {
   const slider = useRef<Slider>(null);
   return (
     <>
       <Header
         title={title}
-        description={description}
+        subTitle={subTitle}
         sliderRef={slider}
         type={type}
         refetch={refetch}
