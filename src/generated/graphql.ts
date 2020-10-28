@@ -35,6 +35,11 @@ export enum Platform {
   Daum = 'DAUM'
 }
 
+export enum CollectionType {
+  Private = 'Private',
+  Public = 'Public'
+}
+
 /** interface */
 export type Node = {
   id: Scalars['ID'];
@@ -260,6 +265,7 @@ export type Collection = Node & {
   id: Scalars['ID'];
   title: Scalars['String'];
   description: Scalars['String'];
+  type: CollectionType;
   webtoonsConnection: CollectionWebtoonsConnection;
   commentsConnection: CollectionCommentsConnection;
   writer: User;
@@ -611,8 +617,11 @@ export type CollectionsForMainQuery = (
       { __typename?: 'CollectionEdge' }
       & { node?: Maybe<(
         { __typename?: 'Collection' }
-        & Pick<Collection, 'id' | 'title' | 'description'>
-        & { webtoonsConnection: (
+        & Pick<Collection, 'id' | 'title'>
+        & { writer: (
+          { __typename?: 'User' }
+          & Pick<User, 'name'>
+        ), webtoonsConnection: (
           { __typename?: 'CollectionWebtoonsConnection' }
           & { pageInfo: (
             { __typename?: 'PageInfo' }
@@ -967,7 +976,9 @@ export const CollectionsForMainDocument = gql`
       node {
         id
         title
-        description
+        writer {
+          name
+        }
         webtoonsConnection(first: 4) {
           pageInfo {
             hasNextPage

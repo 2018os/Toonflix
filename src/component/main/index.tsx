@@ -89,7 +89,7 @@ function MainContainer() {
               >
                 <CardViewList
                   title={collection.node.title}
-                  description={collection.node.description}
+                  subTitle={`by ${collection.node.writer.name}`}
                   type="pagination"
                 >
                   {collection.node.webtoonsConnection.edges?.map((edge) => {

@@ -4,7 +4,9 @@ query collectionsForMain {
       node {
         id
         title
-        description
+        writer {
+          name
+        }
         webtoonsConnection(first: 4) {
           pageInfo {
             hasNextPage
