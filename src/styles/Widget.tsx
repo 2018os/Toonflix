@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IconSizes } from '../util/theme';
 
 const StyledImg = styled.img.attrs({
   className: 'widget'
 })`
   border-radius: 5px;
-  ${(props) => `
-    width: ${props.theme.IconSizes.DEFAULT};
-    height: ${props.theme.IconSizes.DEFAULT};
-  `}
+  width: ${IconSizes.DEFAULT};
+  height: ${IconSizes.DEFAULT};
 `;
 
 const AdultWidget = () => <StyledImg src="/static/icon/adultUsage.svg" />;

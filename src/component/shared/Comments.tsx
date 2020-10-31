@@ -10,39 +10,35 @@ import {
   User
 } from '../../generated/graphql';
 
+import { Colors, spacing } from '../../util/theme'
+
 const CommentsWrapper = styled.div`
-  border: solid 1px ${(props) => props.theme.Colors.BORDER_COLOR};
-  background-color: ${(props) => props.theme.Colors.WHITE};
+  border: solid 1px ${Colors.BORDER_COLOR};
+  background-color: ${Colors.WHITE};
   border-radius: 10px;
 `;
 
 const CommentsHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: ${(props) => props.theme.spacing[3]};
-  border-bottom: 1px solid ${(props) => props.theme.Colors.BORDER_COLOR};
+  padding: ${spacing[3]};
+  border-bottom: 1px solid ${Colors.BORDER_COLOR};
 `;
 
 const Button = styled.button`
   border: 0;
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: ${(props) => props.theme.Colors.WHITE};
+  background-color: ${Colors.WHITE};
 `;
 
 // TODO: Enhance name
 const CommentBox = styled.div`
   display: flex;
   justify-content: space-between;
-  ${(props) => `
-  padding: ${props.theme.spacing[1]} ${props.theme.spacing[3]};
-  border-bottom: 1px solid ${props.theme.Colors.BORDER_COLOR};
-  `}
+  padding: ${`${spacing[1]} ${spacing[3]}`};
+  border-bottom: 1px solid ${Colors.BORDER_COLOR};
 `;
-
-const More = styled.button``;
-
-const Title = styled.div``;
 
 export interface Props {
   comment?: { __typename?: 'WebtoonCommentsConnection' } & Pick<
@@ -70,10 +66,10 @@ const Comments: FunctionComponent<Props> = ({ comment }) => {
   return comment ? (
     <CommentsWrapper>
       <CommentsHeader>
-        <Title>
+        <div>
           <Text>댓글</Text>
-          <Text color="GRAY">{comment.counts}</Text>
-        </Title>
+          <Text color={Colors.GRAY}>{comment.counts}</Text>
+        </div>
         <Button>전체보기</Button>
       </CommentsHeader>
       {comment?.edges?.map((edge) => {
@@ -84,7 +80,7 @@ const Comments: FunctionComponent<Props> = ({ comment }) => {
           </CommentBox>
         );
       })}
-      <More>더 보기</More>
+      <button>더 보기</button>
     </CommentsWrapper>
   ) : (
     <div>Loaiding</div>

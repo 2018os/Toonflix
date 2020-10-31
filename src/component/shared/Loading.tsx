@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
+import { ImgSizes, Colors } from '../../util/theme'
+
 const LoadingCollectionCard = styled.div`
-  width: ${(props) => props.theme.ImgSizes.LARGE};
-  height: ${(props) => props.theme.ImgSizes.LARGE};
+  width: ${ImgSizes.LARGE};
+  height: ${ImgSizes.LARGE};
   border-radius: 10px;
-  background-color: ${(props) => props.theme.Colors.SKELETON_COLOR};
+  background-color: ${Colors.SKELETON_COLOR};
 `;
 
 export default LoadingCollectionCard;

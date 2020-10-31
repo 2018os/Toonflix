@@ -10,19 +10,20 @@ import Page from '../layout/Page';
 import CategoryContainer from '../component/category/index';
 
 import { Platform, useGenresForCategoryQuery } from '../generated/graphql';
+import { Colors, spacing } from '../util/theme';
 
 const Filter = styled.div`
-  background-color: ${(props) => props.theme.Colors.WHITE};
+  background-color: ${Colors.WHITE};
 `;
 
 const Tag = styled.div<{ isSelect: boolean }>`
   display: inline;
-  border: 1px solid ${(props) => props.theme.Colors.GRAY};
-  margin: ${(props) => props.theme.spacing[1]};
+  border: 1px solid ${Colors.GRAY};
+  margin: ${spacing[1]};
   background: ${(props) =>
     props.isSelect
-      ? props.theme.Colors.PRIMARY_COLOR
-      : props.theme.Colors.WHITE};
+      ? Colors.PRIMARY_COLOR
+      : Colors.WHITE};
 `;
 
 const GenreFilter = styled(Filter)``;

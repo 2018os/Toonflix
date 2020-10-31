@@ -10,11 +10,13 @@ import SearchBar from '../shared/SearchBar';
 
 import { useCollectionsForCollectionListLazyQuery } from '../../generated/graphql';
 
+import { ImgSizes, spacing } from '../../util/theme'
+
 // import { dataForCollectionList as data, loading } from '../../util/dummy';
 
 const SearchBarWrapper = styled.div`
-  padding: ${(props) => props.theme.spacing[2]};
-  margin-bottom: ${(props) => props.theme.spacing[3]};
+  padding: ${spacing[2]};
+  margin-bottom: ${spacing[3]};
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
 `;
@@ -25,12 +27,12 @@ const CollectionCardContainer = styled.div`
   flex-flow: row wrap;
   ::after {
     content: '';
-    flex: 0 0 ${(props) => props.theme.ImgSizes.LARGE};
+    flex: 0 0 ${ImgSizes.LARGE};
   }
 `;
 
 const Item = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing[3]};
+  margin-bottom: ${spacing[3]};
 `;
 
 const CollectionListContainer = () => {

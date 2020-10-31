@@ -15,6 +15,7 @@ import Thumbnail from '../shared/Thumbnail';
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { useWebtoonForWebtoonDetailQuery } from '../../generated/graphql';
+import { Colors, ImgSizes, spacing } from '../../util/theme';
 
 // import { dataForWebtoonDetail as data } from '../../util/dummy';
 
@@ -23,7 +24,7 @@ type Props = {
 };
 
 const ThumbnailWrapper = styled.div`
-  margin-right: ${(props) => props.theme.spacing[2]};
+  margin-right: ${spacing[2]};
   & > .thumbnail,
   .cover-img {
     border-radius: 5px;
@@ -33,7 +34,7 @@ const ThumbnailWrapper = styled.div`
 const Profile = styled.div`
   display: flex;
   position: relative;
-  margin-bottom: ${(props) => props.theme.spacing[2]};
+  margin-bottom: ${spacing[2]};
 `;
 
 const Info = styled.div`
@@ -46,9 +47,9 @@ const Part = styled.div``;
 const Description = styled.div`
   min-height: 50px;
   border-radius: 10px;
-  border: solid 1px ${(props) => props.theme.Colors.BORDER_COLOR};
-  background-color: ${(props) => props.theme.Colors.WHITE};
-  padding: ${(props) => props.theme.spacing[4]};
+  border: solid 1px ${Colors.BORDER_COLOR};
+  background-color: ${Colors.WHITE};
+  padding: ${spacing[4]};
 `;
 
 const Tags = styled.div`
@@ -56,9 +57,9 @@ const Tags = styled.div`
 `;
 
 const Tag = styled.div`
-  background-color: ${(props) => props.theme.Colors.WHITE};
+  background-color: ${Colors.WHITE};
   padding: 1px;
-  margin-right: ${(props) => props.theme.spacing[0]};
+  margin-right: ${spacing[0]};
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 `;
@@ -85,12 +86,12 @@ const StyledButton = styled.button`
   border-radius: 5px;
   border: none;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
+  background-color: ${Colors.PRIMARY_COLOR};
 `;
 
 const Badges = styled.div`
   display: flex;
-  margin-bottom: ${(props) => props.theme.spacing[2]};
+  margin-bottom: ${spacing[2]};
 `;
 
 const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
@@ -102,7 +103,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       <Section>
         <Profile>
           <ThumbnailWrapper>
-            <Thumbnail size="DEFAULT" src={data?.webtoon.thumbnail} />
+            <Thumbnail size={ImgSizes.DEFAULT} src={data?.webtoon.thumbnail} />
           </ThumbnailWrapper>
           <Info>
             <Part>

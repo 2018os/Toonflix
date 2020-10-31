@@ -6,6 +6,7 @@ import { Title, Text } from '../../styles/Typography';
 import WebtoonCardList from './WebtoonCardList';
 
 import { useCollectionForCollectionDetailQuery } from '../../generated/graphql';
+import { spacing } from '../../util/theme';
 
 export interface Props {
   id: string;
@@ -20,7 +21,7 @@ const CollectionProfile = styled.div`
 `;
 
 const CollectionProfileItem = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing[1]};
+  margin-bottom: ${spacing[1]};
 `;
 
 const CollectionDetail: FunctionComponent<Props> = ({ id }) => {

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import AutoComplete from './AutoComplete';
 
+import {Colors, FontSizes, IconSizes, spacing, TextColors } from '../../util/theme'
+
 type IconSize = 'SMALLER' | 'LARGER';
 
 export interface Props {
@@ -17,40 +19,37 @@ const SearchBarWrapper = styled.div<{
 }>`
   position: relative;
   border-style: solid;
-  ${(props) => `
-    background-color: ${props.theme.Colors.WHITE};
-    ${
+  background-color: ${Colors.WHITE};
+    ${(props) => 
       props.isMain
         ? `
-          border-color: ${props.theme.Colors.PRIMARY_COLOR};
+          border-color: ${Colors.PRIMARY_COLOR};
           border-width: 4px;
           border-radius: ${props.autoCompleteOpen ? '10px 10px 0 0' : '10px'};
       `
         : `
-          border-color: ${props.theme.Colors.GRAY};
+          border-color: ${Colors.GRAY};
           border-width: 1px;
           border-radius: ${props.autoCompleteOpen ? '5px 5px 0 0' : '5px'};
       `
     }
-  `}
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
 const SearchInputWrapper = styled.div`
   display: flex;
-};
 `;
 
 const Icon = styled.img.attrs({
   src: '/static/icon/search.svg'
 })<{ iconSize: IconSize }>`
   ${(props) => `
-    width:${props.theme.IconSizes[props.iconSize]};
-    height:${props.theme.IconSizes[props.iconSize]};
+    width:${IconSizes[props.iconSize]};
+    height:${IconSizes[props.iconSize]};
     margin: ${
       props.iconSize === 'SMALLER'
-        ? `auto 0 auto ${props.theme.spacing[1]}`
-        : `auto 0 auto ${props.theme.spacing[5]}`
+        ? `auto 0 auto ${spacing[1]}`
+        : `auto 0 auto ${spacing[5]}`
     };
   `}
 `;
@@ -61,11 +60,11 @@ const StyledInput = styled.input<{ isMain?: boolean }>`
     border: none;
     outline: none;
     font-size: ${
-      props.isMain ? props.theme.FontSizes.H2 : props.theme.FontSizes.SMALLEST
+      props.isMain ? FontSizes.H2 : FontSizes.SMALLEST
     };
-    padding: ${props.isMain ? props.theme.spacing[4] : props.theme.spacing[1]};
+    padding: ${props.isMain ? spacing[4] : spacing[1]};
     &::placeholder {
-      color: ${props.isMain && props.theme.TextColors.PRIMARY_COLOR};
+      color: ${props.isMain && TextColors.PRIMARY_COLOR};
     }
   `}
 `;

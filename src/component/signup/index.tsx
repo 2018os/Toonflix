@@ -8,6 +8,7 @@ import withAuth, { AuthState } from '../../hocs/withAuth';
 import { Text } from '../../styles/Typography';
 
 import { useSignupMutation } from '../../generated/graphql';
+import { Colors, FontSizes, spacing } from '../../util/theme';
 
 export interface Props {
   authState: AuthState;
@@ -23,7 +24,7 @@ const Content = styled.div`
   width: 488px;
   height: 430px;
   text-align: center;
-  padding: ${(props) => props.theme.spacing[2]};
+  padding: ${spacing[2]};
   border: 1px solid black;
   // change to box-shadow
   margin: auto;
@@ -42,11 +43,11 @@ const Label = styled.label`
   display: flex;
   margin: auto;
   flex-direction: column;
-  margin-bottom: ${(props) => props.theme.spacing[1]};
+  margin-bottom: ${spacing[1]};
 `;
 
 const TextWrapper = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing[0]};
+  margin-bottom: ${spacing[0]};
   & > span {
     float: left;
   }
@@ -59,10 +60,10 @@ const Button = styled.button`
   border: none;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   font-weight: bold;
-  font-size: ${(props) => props.theme.FontSizes.LARGE};
-  margin-top: ${(props) => props.theme.spacing[4]};
-  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
-  color: ${(props) => props.theme.Colors.WHITE};
+  font-size: ${FontSizes.LARGE};
+  margin-top: ${spacing[4]};
+  background-color: ${Colors.PRIMARY_COLOR};
+  color: ${Colors.WHITE};
   }
 `;
 

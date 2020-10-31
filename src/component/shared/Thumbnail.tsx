@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
 
-type ImgSize = 'SMALLER' | 'SMALL' | 'DEFAULT' | 'LARGE';
+import { ImgSizes, spacing } from '../../util/theme'
 
 type Props = {
   src: string;
-  size: ImgSize;
+  size: ImgSizes;
   isAdult?: boolean;
   isPay?: boolean;
   isFinish?: boolean;
@@ -15,10 +15,10 @@ type Props = {
 
 const ThumbnailWrapper = styled.div.attrs({
   className: 'thumbnail'
-})<{ size: ImgSize }>`
+})<{ size: ImgSizes }>`
   position: relative;
-  width: ${(props) => props.theme.ImgSizes[props.size]};
-  height: ${(props) => props.theme.ImgSizes[props.size]};
+  width: ${(props) => props.size};
+  height: ${(props) => props.size};
 `;
 
 // TODO: Enhance box-sizing
@@ -26,11 +26,11 @@ const WidgetList = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: ${(props) => props.theme.spacing[1]};
+  padding: ${spacing[1]};
   position: absolute;
   width: 100%;
   & > .widget {
-    margin-bottom: ${(props) => props.theme.spacing[0]};
+    margin-bottom: ${spacing[0]};
     margin-left: auto;
   }
   & > .widget:last-child {

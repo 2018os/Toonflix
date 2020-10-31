@@ -37,24 +37,4 @@ const Paragraph = styled.p<Props>`
   ${baseTypoCss}
 `;
 
-Title.defaultProps = {
-  color: TextColors.PRIMARY_COLOR,
-  size: FontSizes.H1
-};
-
-SubTitle.defaultProps = {
-  color: TextColors.BLACK,
-  size: FontSizes.H2
-};
-
-Text.defaultProps = {
-  color: TextColors.BLACK,
-  size: FontSizes.DEFAULT
-};
-
-Paragraph.defaultProps = {
-  color: TextColors.BLACK,
-  size: FontSizes.DEFAULT
-};
-
 export { Title, SubTitle, Text, Paragraph };
