@@ -97,7 +97,7 @@ const SignupContainer: FunctionComponent<Props> = ({ authState }) => {
           try {
             const { data } = await signup({ variables: { ...value } });
             if (data?.signup.token && data?.signup?.user) {
-              const token = data.signup.token;
+              const { token } = data.signup;
               const userId = data.signup.user.id;
               authState.signIn(token, userId);
               router.push('/');

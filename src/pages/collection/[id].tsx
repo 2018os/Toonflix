@@ -20,9 +20,8 @@ const Collection = () => {
         </Container>
       </Page>
     ); // TODO: Enhance type
-  } else {
-    return null;
   }
+  return null;
 };
 
 export default withNavigation(withFooter(Collection));

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Container from '../layout/Container';
 
-import SignupContainer from '../component/signup';
+import SignupContainer from '../component/signup/index';
 
 const Signup = () => {
   return (

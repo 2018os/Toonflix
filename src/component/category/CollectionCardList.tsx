@@ -53,9 +53,8 @@ const CollectionCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
                     <CollectionCard collection={collection} />
                   </Item>
                 );
-              } else {
-                return <div>collection data loading</div>;
               }
+              return <div key={edge?.__typename}>collection data loading</div>;
             })}
         </CollectionCardListWrapper>
       </Section>

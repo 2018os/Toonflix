@@ -6,7 +6,7 @@ import { Text } from '../../styles/Typography';
 
 import { useSearchForAutoCompleteLazyQuery } from '../../generated/graphql';
 
-import { Colors, spacing} from '../../util/theme'
+import { Colors, spacing } from '../../util/theme';
 
 interface Props {
   keyword: string;
@@ -22,7 +22,7 @@ const ItemWrapper = styled.div`
 `;
 
 const ItemHeader = styled.div`
-  padding: 4px ${spacing[1]}
+  padding: 4px ${spacing[1]};
 `;
 
 const Item = styled.div`
@@ -55,7 +55,7 @@ const AutoComplete: FunctionComponent<Props> = ({ keyword }) => {
   const [getAutoComplete, { data }] = useSearchForAutoCompleteLazyQuery();
   useEffect(() => {
     getAutoComplete({ variables: { keyword } });
-  }, [keyword]);
+  }, [keyword, getAutoComplete]);
   return (
     <div
       style={{

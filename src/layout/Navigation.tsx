@@ -13,7 +13,7 @@ import { spacing, TextColors } from '../util/theme';
 const NavigationWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-    padding: ${spacing[3]} ${spacing[5]};
+  padding: ${spacing[3]} ${spacing[5]};
 `;
 
 const Logo = styled.div``;
@@ -36,9 +36,7 @@ const SearchWrapper = styled.div`
 
 const Tab = styled(Text)<{ isCurrentPath: boolean }>`
   color: ${(props) =>
-    props.isCurrentPath
-      ? TextColors.PRIMARY_COLOR
-      : TextColors.BLACK};
+    props.isCurrentPath ? TextColors.PRIMARY_COLOR : TextColors.BLACK};
 `;
 
 const ProfileWrapper = styled.div<{ isMain: boolean }>`
@@ -68,7 +66,9 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
       {authState.user && authState.userId ? (
         <div>
           <div>{authState.user.name}</div>
-          <button onClick={() => authState.signOut()}>로그아웃</button>
+          <button type="button" onClick={() => authState.signOut()}>
+            로그아웃
+          </button>
         </div>
       ) : (
         <Link linkProps={{ href: '/login' }}>
@@ -81,7 +81,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
 
 const Navigation: FunctionComponent<Props> = ({ authState }) => {
   const router = useRouter();
-  const pathname = router.pathname;
+  const { pathname } = router;
   return pathname === '/' ? (
     <Profile authState={authState} isMain />
   ) : (

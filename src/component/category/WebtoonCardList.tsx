@@ -10,7 +10,6 @@ import WebtoonCard from '../shared/WebtoonCard';
 import { SearchForCategoryQuery } from '../../generated/graphql';
 import { ImgSizes, spacing, Colors } from '../../util/theme';
 
-
 export interface Props {
   data: SearchForCategoryQuery;
   onLoadMore: () => any;
@@ -53,9 +52,8 @@ const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
                     <WebtoonCard webtoon={webtoon} />
                   </Item>
                 );
-              } else {
-                return <div>webtoon data loading</div>;
               }
+              return <div key={edge?.__typename}>webtoon data loading</div>;
             })}
         </WebtoonCardListWrapper>
       </Section>

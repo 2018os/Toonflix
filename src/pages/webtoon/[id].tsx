@@ -14,15 +14,14 @@ const Webtoon = () => {
   const { id } = router.query;
   if (!id) {
     return null;
-  } else {
-    return (
-      <Page>
-        <Container>
-          <WebtoonDetailContainer id={typeof id === 'string' ? id : id[0]} />
-        </Container>
-      </Page>
-    ); // TODO: Enhance type
   }
+  return (
+    <Page>
+      <Container>
+        <WebtoonDetailContainer id={typeof id === 'string' ? id : id[0]} />
+      </Container>
+    </Page>
+  ); // TODO: Enhance type
 };
 
 export default withNavigation(withFooter(Webtoon));
