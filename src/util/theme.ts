@@ -26,18 +26,18 @@ export enum TextColors {
   WHITE = '#ffffff'
 }
 
-// export const spacing = ['4px', '8px', '16px', '24px', '32px', '40px', '60px'];
-export const spacing = {
-  0: '4px',
-  1: '8px',
-  2: '16px',
-  3: '24px',
-  4: '32px',
-  5: '40px',
-  6: '60px',
-  7: '80px',
-  8: '100px'
-};
+export const spacing = ['4px', '8px', '16px', '24px', '32px', '40px', '60px'];
+// export const spacing = {
+//   0: '4px',
+//   1: '8px',
+//   2: '16px',
+//   3: '24px',
+//   4: '32px',
+//   5: '40px',
+//   6: '60px',
+//   7: '80px',
+//   8: '100px'
+// };
 
 export enum IconSizes {
   LARGEST = '68px',
