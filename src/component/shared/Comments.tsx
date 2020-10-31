@@ -3,6 +3,13 @@ import styled from 'styled-components';
 
 import { Text } from '../../styles/Typography';
 
+import {
+  WebtoonCommentsConnection,
+  Maybe,
+  Comment,
+  User
+} from '../../generated/graphql';
+
 const CommentsWrapper = styled.div`
   border: solid 1px ${(props) => props.theme.Colors.BORDER_COLOR};
   background-color: ${(props) => props.theme.Colors.WHITE};
@@ -23,7 +30,8 @@ const Button = styled.button`
   background-color: ${(props) => props.theme.Colors.WHITE};
 `;
 
-const Comment = styled.div`
+// TODO: Enhance name
+const CommentBox = styled.div`
   display: flex;
   justify-content: space-between;
   ${(props) => `
@@ -37,7 +45,25 @@ const More = styled.button``;
 const Title = styled.div``;
 
 export interface Props {
-  comment?: any;
+  comment?: { __typename?: 'WebtoonCommentsConnection' } & Pick<
+    WebtoonCommentsConnection,
+    'counts'
+  > & {
+      edges?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'WebtoonCommentsEdge' } & {
+              node?: Maybe<
+                { __typename?: 'Comment' } & Pick<
+                  Comment,
+                  'message' | 'createdAt'
+                > & { writer: { __typename?: 'User' } & Pick<User, 'name'> }
+              >;
+            }
+          >
+        >
+      >;
+    };
 }
 
 const Comments: FunctionComponent<Props> = ({ comment }) => {
@@ -50,12 +76,12 @@ const Comments: FunctionComponent<Props> = ({ comment }) => {
         </Title>
         <Button>전체보기</Button>
       </CommentsHeader>
-      {comment.edges.map((edge: any) => {
+      {comment?.edges?.map((edge) => {
         return (
-          <Comment>
-            {edge.node.writer.name} - {edge.node.createdAt} |{' '}
-            {edge.node.message}
-          </Comment>
+          <CommentBox>
+            {edge?.node?.writer.name} - {edge?.node?.createdAt} |{' '}
+            {edge?.node?.message}
+          </CommentBox>
         );
       })}
       <More>더 보기</More>
