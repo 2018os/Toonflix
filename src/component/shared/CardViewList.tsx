@@ -30,7 +30,7 @@ const Button = styled.button`
   width: 40px;
   height: 30px;
   border-radius: 10px;
-  box-shadow: 0 2px ${spacing[0]} 0 rgba(0, 0, 0, 0.16;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   display: flex;
   justify-content: center;
