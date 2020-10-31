@@ -6,13 +6,15 @@ import { Text } from '../../styles/Typography';
 
 import { useSearchForAutoCompleteLazyQuery } from '../../generated/graphql';
 
+import { Colors, spacing} from '../../util/theme'
+
 interface Props {
   keyword: string;
 }
 
 const AutoCompleteWrapper = styled.div`
   display: flex;
-  background-color: ${(props) => props.theme.Colors.WHITE};
+  background-color: ${Colors.WHITE};
 `;
 
 const ItemWrapper = styled.div`
@@ -20,31 +22,31 @@ const ItemWrapper = styled.div`
 `;
 
 const ItemHeader = styled.div`
-  padding: ${(props) => `4px ${props.theme.spacing[1]}`};
+  padding: 4px ${spacing[1]}
 `;
 
 const Item = styled.div`
-  padding: ${(props) => props.theme.spacing[1]};
+  padding: ${spacing[1]};
   cursor: pointer;
   :hover {
-    background-color: ${(props) => props.theme.Colors.GRAY};
+    background-color: ${Colors.GRAY};
   }
 `;
 
 const Divider = styled.div`
-  margin-top: ${(props) => props.theme.spacing[1]};
-  margin-bottom: ${(props) => props.theme.spacing[1]};
-  border: solid 1px ${(props) => props.theme.Colors.GRAY}; // TODO: Enhance
+  margin-top: ${spacing[1]};
+  margin-bottom: ${spacing[1]};
+  border: solid 1px ${Colors.GRAY}; // TODO: Enhance
 `;
 
 const Button = styled.button`
   position: absolute;
   border: none;
-  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
-  color: ${(props) => props.theme.Colors.WHITE};
+  background-color: ${Colors.PRIMARY_COLOR};
+  color: ${Colors.WHITE};
   width: 100%;
   border-radius: 0 0 5px 5px;
-  padding: ${(props) => props.theme.spacing[1]};
+  padding: ${spacing[1]};
   cursor: pointer;
 `;
 

@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 
-import { spacing } from '../../util/theme';
+import { FontSizes, TextColors, spacing, Colors } from '../../util/theme';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -11,17 +11,17 @@ const ContentWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: ${(props) => props.theme.FontSizes.LARGER};
+  font-size: ${FontSizes.LARGER};
   font-weight: 500;
-  color: ${(props) => props.theme.TextColors.PRIMARY_COLOR};
+  color: ${TextColors.PRIMARY_COLOR};
 `;
 
 const SubTitle = styled.div`
   line-height: 1.5;
   margin-left: 12px;
-  font-size: ${(props) => props.theme.FontSizes.SMALL};
+  font-size: ${FontSizes.SMALL};
   font-weight: 500;
-  color: ${(props) => props.theme.Colors.BLACK};
+  color: ${Colors.BLACK};
 `;
 
 const Button = styled.button`
@@ -30,14 +30,13 @@ const Button = styled.button`
   width: 40px;
   height: 30px;
   border-radius: 10px;
-  box-shadow: ${(props) =>
-    `0 2px ${props.theme.spacing[0]} 0 rgba(0, 0, 0, 0.16)`};
+  box-shadow: 0 2px ${spacing[0]} 0 rgba(0, 0, 0, 0.16;
   background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.TextColors.GRAY};
-  font-size: ${(props) => props.theme.FontSizes.H3};
+  color: ${TextColors.GRAY};
+  font-size: ${FontSizes.H3};
 `;
 
 type Action = 'refresh' | 'pagination';
@@ -107,14 +106,14 @@ const Header: FunctionComponent<HeaderProps> = ({
 );
 
 const StyledSlider = styled(Slider)`
-  margin-top: ${(props) => props.theme.spacing[3]};
+  margin-top: ${spacing[3]};
   & > .slick-list > .slick-track > .slick-slide:not([data-index^='-']) {
     // "data-index" 가 0 보다 큰 slick-slide 에게 margin-right
-    margin-right: ${(props) => props.theme.spacing[2]};
+    margin-right: ${spacing[2]};
   }
   & > .slick-list > .slick-track > .slick-slide[data-index='-1'] {
     // Exception) "data-index" = -1
-    margin-right: ${(props) => props.theme.spacing[2]};
+    margin-right: ${spacing[2]};
   }
   & > .slick-list > .slick-track > .slick-slide:last-child {
     margin-right: 0;

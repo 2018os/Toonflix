@@ -10,6 +10,8 @@ import Thumbnail from './Thumbnail';
 
 import { CollectionCardFragment } from '../../generated/graphql';
 
+import { ImgSizes } from '../../util/theme'
+
 const CollectionThumbnail = styled.div.attrs({
   className: 'collection-thumbnail'
 })`
@@ -21,8 +23,8 @@ const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: hidden;
-  width: ${(props) => props.theme.ImgSizes.LARGE};
-  height: ${(props) => props.theme.ImgSizes.LARGE};
+  width: ${ImgSizes.LARGE};
+  height: ${ImgSizes.LARGE};
   display: flex;
   position: relative;
   align-items: center;
@@ -75,7 +77,7 @@ const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
                   <Thumbnail
                     key={`collection-thumbnail-${id}`}
                     src={thumbnail}
-                    size="SMALL"
+                    size={ImgSizes.SMALL}
                   />
                 );
               }

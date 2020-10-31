@@ -8,13 +8,12 @@ import { Text } from '../styles/Typography';
 
 import Link from '../component/shared/Link';
 import SearchBar from '../component/shared/SearchBar';
+import { spacing, TextColors } from '../util/theme';
 
 const NavigationWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  ${(props) => `
-    padding: ${props.theme.spacing[3]} ${props.theme.spacing[5]};
-  `}
+    padding: ${spacing[3]} ${spacing[5]};
 `;
 
 const Logo = styled.div``;
@@ -25,8 +24,7 @@ const ItemWrapper = styled.div`
 `;
 
 const Item = styled.div`
-  margin: ${(props) =>
-    `auto ${props.theme.spacing[2]} auto ${props.theme.spacing[0]}`};
+  margin: auto ${spacing[2]} auto ${spacing[0]};
   &:last-child {
     margin: 0;
   }
@@ -39,8 +37,8 @@ const SearchWrapper = styled.div`
 const Tab = styled(Text)<{ isCurrentPath: boolean }>`
   color: ${(props) =>
     props.isCurrentPath
-      ? props.theme.TextColors.PRIMARY_COLOR
-      : props.theme.TextColors.BLACK};
+      ? TextColors.PRIMARY_COLOR
+      : TextColors.BLACK};
 `;
 
 const ProfileWrapper = styled.div<{ isMain: boolean }>`
@@ -51,7 +49,7 @@ const ProfileWrapper = styled.div<{ isMain: boolean }>`
     `
     position: absolute;
     right: 0;
-    padding: ${props.theme.spacing[3]} ${props.theme.spacing[5]};
+    padding: ${spacing[3]} ${spacing[5]};
     `}
 `;
 

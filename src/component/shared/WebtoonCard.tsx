@@ -6,6 +6,8 @@ import Link from '../shared/Link';
 
 import { WebtoonCardFragment } from '../../generated/graphql';
 
+import { Colors, FontSizes, TextColors, spacing, ImgSizes } from '../../util/theme'
+
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -17,38 +19,37 @@ const Card = styled.div`
 const WebtoonInfoWrapper = styled.div`
   width: 236px;
   height: 124px;
-  background-color: ${(props) => props.theme.Colors.WHITE};
+  background-color: ${Colors.WHITE};
   text-align: center;
 `;
 
 const Title = styled.div`
   padding-top: 10px;
-  font-size: ${(props) => props.theme.FontSizes.DEFAULT};
+  font-size: ${FontSizes.DEFAULT};
   font-weight: bold;
   line-height: 1.5;
-  color: ${(props) => props.theme.TextColors.BLACK};
+  color: ${TextColors.BLACK};
 `;
 
 const Author = styled.div`
-  margin-top: ${(props) => props.theme.spacing[0]};
-  font-size: ${(props) => props.theme.FontSizes.SMALLEST};
+  margin-top: ${spacing[0]};
+  font-size: ${FontSizes.SMALLEST};
   font-weight: 500;
   text-align: center;
-  color: ${(props) => props.theme.TextColors.GRAY};
+  color: ${TextColors.GRAY};
 `;
 
 const Tag = styled.div`
-  padding: 0 ${(props) => props.theme.spacing[0]};
-  height: ${(props) => props.theme.spacing[3]};
+  padding: 0 ${spacing[0]};
+  height: ${spacing[3]};
   display: inline;
   align-items: center;
-  margin-top: ${(props) => props.theme.spacing[2]};
-  margin-right: ${(props) => props.theme.spacing[1]};
-  font-size: ${(props) => props.theme.FontSizes.SMALL};
+  margin-top: ${spacing[2]};
+  margin-right: ${spacing[1]};
+  font-size: ${FontSizes.SMALL};
   background-color: #f9f9f9;
   border-radius: 5px;
-  box-shadow: ${(props) =>
-    `0 2px ${props.theme.spacing[0]} 0 rgba(0, 0, 0, 0.2)`};
+  box-shadow: 0 2px ${spacing[0]} 0 rgba(0, 0, 0, 0.2);
 `;
 
 const ThumbnailWrapper = styled.div``;
@@ -79,7 +80,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
         <ThumbnailWrapper>
           <Thumbnail
             src={thumbnail}
-            size="DEFAULT"
+            size={ImgSizes.DEFAULT}
             isAdult={isAdult}
             isFinish={isFinish}
             isPay={isPay}

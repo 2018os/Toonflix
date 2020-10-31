@@ -8,6 +8,7 @@ import { Text } from '../../styles/Typography';
 import CollectionCard from '../shared/CollectionCard';
 
 import { SearchForCategoryQuery } from '../../generated/graphql';
+import { ImgSizes, spacing, Colors } from '../../util/theme';
 
 export interface Props {
   data: SearchForCategoryQuery;
@@ -20,18 +21,18 @@ const CollectionCardListWrapper = styled.div`
   flex-flow: row wrap;
   ::after {
     content: '';
-    flex: 0 0 ${(props) => props.theme.ImgSizes.DEFAULT};
+    flex: 0 0 ${ImgSizes.DEFAULT};
   }
 `;
 
 const Item = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing[2]};
+  margin-bottom: ${spacing[2]};
 `;
 
 const MoreButton = styled.button`
   width: 100%;
-  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
-  padding: ${(props) => props.theme.spacing[1]};
+  background-color: ${Colors.PRIMARY_COLOR};
+  padding: ${spacing[1]};
   border-radius: 10px;
   border: none;
   height: 60px;

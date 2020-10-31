@@ -11,6 +11,7 @@ import {
   loading,
   refetch
 } from '../../util/dummy';
+import { ImgSizes } from '../../util/theme';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -40,14 +41,14 @@ const RandomCardViewList = () => {
                 isNewTab={true}
               >
                 <Card>
-                  <Thumbnail size="SMALLER" src={thumbnail} />
+                  <Thumbnail size={ImgSizes.SMALLER} src={thumbnail} />
                 </Card>
               </Link>
             );
           })
         : [0, 1, 2, 3, 4, 5].map((index) => (
             <EmptyThumbnail
-              size="SMALLER"
+              size={ImgSizes.SMALLER}
               key={`empty-random-thumbnail-${index}`}
             />
           ))}

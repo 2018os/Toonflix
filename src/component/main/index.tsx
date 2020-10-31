@@ -12,19 +12,21 @@ import Section from '../../layout/Section';
 
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
+import { Colors, spacing }from '../../util/theme'
+
 // import { dataForMain as data, loading } from '../../util/dummy';
 
 const Button = styled.div`
   line-height: 1.5;
   width: 572px;
   height: 150px;
-  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
+  background-color: ${Colors.PRIMARY_COLOR};
   font-size: 66px;
   font-weight: 900;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(props) => props.theme.Colors.GRAY};
+  color: ${Colors.GRAY};
 `;
 
 const ButtonWrapper = styled.div`
@@ -38,7 +40,7 @@ const SearchBarWrapper = styled.div`
 
 const LinkButtonWrapper = styled.div`
   display: flex;
-  margin-top: ${(props) => props.theme.spacing[3]};
+  margin-top: ${spacing[3]};
   justify-content: center;
 `;
 
@@ -51,7 +53,7 @@ const LinkButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.Colors.PRIMARY_COLOR};
+  background-color: ${Colors.PRIMARY_COLOR};
 `;
 
 function MainContainer() {
