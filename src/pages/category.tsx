@@ -9,17 +9,16 @@ import Page from '../layout/Page';
 
 import CategoryContainer from '../component/category/index';
 
+import BaseTag from '../component/shared/Tag';
+
 import { Platform, useGenresForCategoryQuery } from '../generated/graphql';
-import { Colors, spacing } from '../util/theme';
+import { Colors } from '../util/theme';
 
 const Filter = styled.div`
   background-color: ${Colors.WHITE};
 `;
 
-const Tag = styled.div<{ isSelect: boolean }>`
-  display: inline;
-  border: 1px solid ${Colors.GRAY};
-  margin: ${spacing[1]};
+const Tag = styled(BaseTag)<{ isSelect: boolean }>`
   background: ${(props) =>
     props.isSelect ? Colors.PRIMARY_COLOR : Colors.WHITE};
 `;

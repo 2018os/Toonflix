@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
+import Tag from './Tag';
 import Thumbnail from './Thumbnail';
 import Link from './Link';
 
@@ -43,19 +44,6 @@ const Author = styled.div`
   font-weight: 500;
   text-align: center;
   color: ${TextColors.GRAY};
-`;
-
-const Tag = styled.div`
-  padding: 0 ${spacing[0]};
-  height: ${spacing[3]};
-  display: inline;
-  align-items: center;
-  margin-top: ${spacing[2]};
-  margin-right: ${spacing[1]};
-  font-size: ${FontSizes.SMALL};
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  box-shadow: 0 2px ${spacing[0]} 0 rgba(0, 0, 0, 0.2);
 `;
 
 const ThumbnailWrapper = styled.div``;

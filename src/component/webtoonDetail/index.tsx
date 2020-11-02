@@ -11,6 +11,7 @@ import RandomCardViewList from './RandomCardViewList';
 import CardViewList from '../shared/CardViewList';
 import CollectionCard from '../shared/CollectionCard';
 import Comments from '../shared/Comments';
+import Tag from '../shared/Tag';
 import Thumbnail from '../shared/Thumbnail';
 import WebtoonCard from '../shared/WebtoonCard';
 
@@ -54,14 +55,6 @@ const Description = styled.div`
 
 const Tags = styled.div`
   display: flex;
-`;
-
-const Tag = styled.div`
-  background-color: ${Colors.WHITE};
-  padding: 1px;
-  margin-right: ${spacing[0]};
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
 `;
 
 const Authors = styled.div`
