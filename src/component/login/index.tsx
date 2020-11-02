@@ -11,7 +11,7 @@ import Link from '../shared/Link';
 
 import { useLoginMutation } from '../../generated/graphql';
 
-import { Colors, FontSizes, spacing } from '../../util/theme'
+import { Colors, FontSizes, spacing } from '../../util/theme';
 
 export interface Props {
   authState: AuthState;
@@ -104,7 +104,7 @@ const LoginContainer: FunctionComponent<Props> = ({ authState }) => {
           try {
             const { data } = await login({ variables: { ...value } });
             if (data?.login.token && data?.login?.user) {
-              const token = data.login.token;
+              const { token } = data.login;
               const userId = data.login.user.id;
               authState.signIn(token, userId);
               router.back();

@@ -129,7 +129,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                 {data?.webtoon.isPay && <PayWidget />}
                 {data?.webtoon.isFinish && <CompleteWidget />}
               </Badges>
-              <a href={data?.webtoon.url} target="_blank">
+              <a target="_blank" rel="noreferrer" href={data?.webtoon.url}>
                 <StyledButton>
                   <Text>바로가기</Text>
                 </StyledButton>
@@ -165,14 +165,16 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                           key={`webtoon-detail-webtoon-card-${webtoon.id}`}
                         />
                       );
-                    } else {
-                      return <div>webtoon data laoding</div>;
                     }
+                    return (
+                      <div key={edge?.__typename}>webtoon data laoding</div>
+                    );
                   })}
                 </CardViewList>
               </Section>
             );
           }
+          return null;
         })
       ) : (
         <div>Loading...</div>
@@ -190,9 +192,10 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                       key={`webtoon-detail-collection-card-${collection.id}`}
                     />
                   );
-                } else {
-                  return <div>collection card loading</div>;
                 }
+                return (
+                  <div key={edge?.__typename}>collection card loading</div>
+                );
               })}
           </CardViewList>
         </Section>

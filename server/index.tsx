@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import cookiesMiddleware from 'universal-cookie-express';
 import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';

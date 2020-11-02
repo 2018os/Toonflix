@@ -34,7 +34,7 @@ const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
           setAuthState(initialAuthState as AuthState);
         }
       }
-    }, [authState]);
+    }, [authState, userQuery, data?.user]);
 
     const signIn = (token: string, userId: string) => {
       setAuthState({

@@ -6,7 +6,6 @@
     "prettier/react",
     "plugin:react/recommended",
     "prettier/@typescript-eslint",
-    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
@@ -18,11 +17,14 @@
   },
   "plugins": ["react", "prettier", "@typescript-eslint", "react-hooks"],
   "rules": {
+    "import/extensions": ["always"],
     "prettier/prettier": "error",
     "react/prop-types": ["off"],
+    "react/display-name": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": [
       1,
-      { "extensions": [".js", ".ts", "tsx"] }
+      { "extensions": [".js", ".ts", ".tsx"] }
     ],
     "jsx-a11y/anchor-is-valid": [
       "error",
@@ -32,6 +34,7 @@
         "aspects": ["invalidHref", "preferButton"]
       }
     ],
+    "no-alert": "off",
     "react/react-in-jsx-scope": 0,
     "react/prefer-stateless-function": [2, { "ignorePureComponents": true }],
     "space-before-function-paren": 0,
@@ -51,6 +54,10 @@
       "error",
       { "declaration": false, "assignment": false }
     ]
+  },
+  "globals": {
+    "alert": true,
+    "localStorage": true
   },
   "settings": {
     "react": {

@@ -10,7 +10,7 @@ import SearchBar from '../shared/SearchBar';
 
 import { useCollectionsForCollectionListLazyQuery } from '../../generated/graphql';
 
-import { ImgSizes, spacing } from '../../util/theme'
+import { ImgSizes, spacing } from '../../util/theme';
 
 // import { dataForCollectionList as data, loading } from '../../util/dummy';
 
@@ -38,7 +38,7 @@ const Item = styled.div`
 const CollectionListContainer = () => {
   const [
     getCollection,
-    { data, loading, fetchMore }
+    { data, fetchMore }
   ] = useCollectionsForCollectionListLazyQuery();
   const [keyword, setKeyword] = useState('');
   const afterId = data?.collections.pageInfo.endCursor;
@@ -49,7 +49,7 @@ const CollectionListContainer = () => {
 
   useEffect(() => {
     getCollection({ variables: { keyword } });
-  }, [keyword]);
+  }, [keyword, getCollection]);
 
   return (
     <>
@@ -63,7 +63,7 @@ const CollectionListContainer = () => {
           <CollectionCardList
             data={data}
             onLoadMore={() => {
-              fetchMore &&
+              if (fetchMore)
                 fetchMore({
                   updateQuery: (previousResult, { fetchMoreResult }) => {
                     if (!fetchMoreResult) {
@@ -73,7 +73,7 @@ const CollectionListContainer = () => {
                     const nextCollection = fetchMoreResult.collections;
                     const prevEdges = prevCollection.edges;
                     const newEdges = nextCollection.edges;
-                    const pageInfo = nextCollection.pageInfo;
+                    const { pageInfo } = nextCollection;
                     return {
                       collections: {
                         ...prevCollection,

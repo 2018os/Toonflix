@@ -21,9 +21,7 @@ const Tag = styled.div<{ isSelect: boolean }>`
   border: 1px solid ${Colors.GRAY};
   margin: ${spacing[1]};
   background: ${(props) =>
-    props.isSelect
-      ? Colors.PRIMARY_COLOR
-      : Colors.WHITE};
+    props.isSelect ? Colors.PRIMARY_COLOR : Colors.WHITE};
 `;
 
 const GenreFilter = styled(Filter)``;

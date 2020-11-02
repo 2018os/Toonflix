@@ -12,7 +12,7 @@ import Section from '../../layout/Section';
 
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
-import { Colors, spacing }from '../../util/theme'
+import { Colors, spacing } from '../../util/theme';
 
 // import { dataForMain as data, loading } from '../../util/dummy';
 
@@ -103,16 +103,18 @@ function MainContainer() {
                           key={`main-webtoon-card-${webtoon.id}`}
                         />
                       );
-                    } else {
-                      return <div>webtoon data loading</div>;
                     }
+                    return (
+                      <div key={edge?.__typename}>webtoon data loading</div>
+                    );
                   })}
                 </CardViewList>
               </Section>
             );
-          } else {
-            return <div>WebtoonCardViewList loading</div>;
           }
+          return (
+            <div key={collection?.__typename}>WebtoonCardViewList loading</div>
+          );
         })
       ) : (
         <div>Loading...</div>

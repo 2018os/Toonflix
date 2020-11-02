@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
 
-import { ImgSizes, spacing } from '../../util/theme'
+import { ImgSizes, spacing } from '../../util/theme';
 
 type Props = {
   src: string;

@@ -25,23 +25,20 @@ const CollectionCardViewList: FunctionComponent<Props> = ({
         });
         return (
           <CollectionCard
-            id={id}
-            title={title}
-            webtoons={webtoons}
+            collection={{ id, title, webtoonsConnection: webtoons }}
             key={`collection-card-${id}`}
           />
         );
       }
     );
-    collectionCards.push(<EmptyCollectionCard key={`empty-collection-card`} />);
+    collectionCards.push(<EmptyCollectionCard key="empty-collection-card" />);
     return (
       <CardViewList title="작품이 포함된 컬렉션" type="pagination">
         {collectionCards}
       </CardViewList>
     );
-  } else {
-    return <div>Loading</div>;
   }
+  return <div>Loading</div>;
 };
 
 export default CollectionCardViewList;

@@ -4,7 +4,6 @@ import { ImgSizes, Colors } from '../../util/theme';
 
 import Link from './Link';
 
-
 interface ThumbnailProps {
   size: ImgSizes;
 }

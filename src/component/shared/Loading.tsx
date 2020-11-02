@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { ImgSizes, Colors } from '../../util/theme'
+import { ImgSizes, Colors } from '../../util/theme';
 
 const LoadingCollectionCard = styled.div`
   width: ${ImgSizes.LARGE};

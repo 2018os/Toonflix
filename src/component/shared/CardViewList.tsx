@@ -86,7 +86,7 @@ const Header: FunctionComponent<HeaderProps> = ({
         <>
           <Button
             onClick={() => {
-              sliderRef.current && sliderRef.current.slickPrev();
+              if (sliderRef.current) sliderRef.current.slickPrev();
             }}
           >
             {'<'}
@@ -94,7 +94,7 @@ const Header: FunctionComponent<HeaderProps> = ({
           <Button
             style={{ marginLeft: spacing[0] }}
             onClick={() => {
-              sliderRef.current && sliderRef.current.slickNext();
+              if (sliderRef.current) sliderRef.current.slickNext();
             }}
           >
             {'>'}

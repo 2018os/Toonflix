@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import CardViewList from '../shared/CardViewList';
 import { EmptyWebtoonCard } from '../shared/Empty';
-import WebtoonCard, { Props as Webtoon } from '../shared/WebtoonCard';
+import WebtoonCard from '../shared/WebtoonCard';
 
 // legacy
 
@@ -15,24 +15,23 @@ const WebtoonCardViewList: FunctionComponent<Props> = ({
 }) => {
   if (webtoonConnection) {
     const webtoons = webtoonConnection.webtoonsConnection.edges;
-    const webtoonCards = webtoons.map(({ node }: { node: Webtoon }) => (
+    const webtoonCards = webtoons.map(({ node }: { node: any }) => (
       <WebtoonCard key={`webtoon-card-${node.id}`} {...node} />
     ));
     if (webtoonCards.length < 4) {
-      webtoonCards.push(<EmptyWebtoonCard key={`empty-webtoon-card`} />);
+      webtoonCards.push(<EmptyWebtoonCard key="empty-webtoon-card" />);
     }
     return (
       <CardViewList
         title={webtoonConnection.title}
-        description={webtoonConnection.description}
+        subTitle={webtoonConnection.description}
         type="pagination"
       >
         {webtoonCards}
       </CardViewList>
     );
-  } else {
-    return <div>Loading</div>;
   }
+  return <div>Loading</div>;
 };
 
 export default WebtoonCardViewList;

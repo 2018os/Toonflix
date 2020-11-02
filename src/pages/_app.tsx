@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import {
   ApolloClient,
   ApolloProvider,
@@ -8,7 +9,6 @@ import { setContext } from '@apollo/client/link/context';
 import { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
 import React from 'react';
-
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -47,8 +47,8 @@ const client = new ApolloClient({
 const PageWrapper = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={client}>
-        <Component {...pageProps} />
-        <DefaultSetting />
+      <Component {...pageProps} />
+      <DefaultSetting />
     </ApolloProvider>
   );
 };

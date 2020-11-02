@@ -3,14 +3,12 @@ import styled from 'styled-components';
 
 import { Text } from '../../styles/Typography';
 
-import { FontSizes } from '../../util/theme';
+import { FontSizes, ImgSizes } from '../../util/theme';
 
-import Link from '../shared/Link';
+import Link from './Link';
 import Thumbnail from './Thumbnail';
 
 import { CollectionCardFragment } from '../../generated/graphql';
-
-import { ImgSizes } from '../../util/theme'
 
 const CollectionThumbnail = styled.div.attrs({
   className: 'collection-thumbnail'
@@ -81,6 +79,7 @@ const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
                   />
                 );
               }
+              return null;
             })
           ) : (
             <div>collection card thumbnail loading</div>

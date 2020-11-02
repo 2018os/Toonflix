@@ -1,12 +1,18 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import Thumbnail from '../shared/Thumbnail';
-import Link from '../shared/Link';
+import Thumbnail from './Thumbnail';
+import Link from './Link';
 
 import { WebtoonCardFragment } from '../../generated/graphql';
 
-import { Colors, FontSizes, TextColors, spacing, ImgSizes } from '../../util/theme'
+import {
+  Colors,
+  FontSizes,
+  TextColors,
+  spacing,
+  ImgSizes
+} from '../../util/theme';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -93,7 +99,8 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
               return (
                 <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
               );
-            } else return <div>Author data Loading</div>;
+            }
+            return <div key={authorEdge?.__typename}>Author data Loading</div>;
           })}
           {genres &&
             genres.map((genre) => {

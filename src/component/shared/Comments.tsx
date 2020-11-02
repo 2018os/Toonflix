@@ -10,7 +10,7 @@ import {
   User
 } from '../../generated/graphql';
 
-import { Colors, spacing } from '../../util/theme'
+import { Colors, spacing } from '../../util/theme';
 
 const CommentsWrapper = styled.div`
   border: solid 1px ${Colors.BORDER_COLOR};
@@ -74,13 +74,13 @@ const Comments: FunctionComponent<Props> = ({ comment }) => {
       </CommentsHeader>
       {comment?.edges?.map((edge) => {
         return (
-          <CommentBox>
+          <CommentBox key={edge?.__typename}>
             {edge?.node?.writer.name} - {edge?.node?.createdAt} |{' '}
             {edge?.node?.message}
           </CommentBox>
         );
       })}
-      <button>더 보기</button>
+      <button type="button">더 보기</button>
     </CommentsWrapper>
   ) : (
     <div>Loaiding</div>

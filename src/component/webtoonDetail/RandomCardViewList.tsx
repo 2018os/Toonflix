@@ -5,7 +5,6 @@ import CardViewList from '../shared/CardViewList';
 import { EmptyThumbnail } from '../shared/Empty';
 import Link from '../shared/Link';
 import Thumbnail from '../shared/Thumbnail';
-import { useRandomWebtoonsForWebtoonDetailQuery } from '../../generated/graphql';
 import {
   dataForRandomCardView as data,
   loading,
@@ -38,7 +37,7 @@ const RandomCardViewList = () => {
                   as: `/webtoon/${id}`
                 }}
                 key={`random-thumbnail-${id}`}
-                isNewTab={true}
+                isNewTab
               >
                 <Card>
                   <Thumbnail size={ImgSizes.SMALLER} src={thumbnail} />

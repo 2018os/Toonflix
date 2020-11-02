@@ -53,7 +53,7 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
               const nextCollection = fetchMoreResult.collection;
               const prevEdges = prevCollection.webtoonsConnection.edges;
               const newEdges = nextCollection.webtoonsConnection.edges;
-              const pageInfo = nextCollection.webtoonsConnection.pageInfo;
+              const { pageInfo } = nextCollection.webtoonsConnection;
               return {
                 collection: {
                   ...prevCollection,
