@@ -166,7 +166,7 @@ query searchForCategory(
   }
 }
 
-query genresForCategory {
+query genresForFilter {
   genres {
     code
     name
