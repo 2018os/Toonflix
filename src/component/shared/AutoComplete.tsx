@@ -105,7 +105,18 @@ const AutoComplete: FunctionComponent<Props> = ({ keyword }) => {
         </ItemWrapper>
       </AutoCompleteWrapper>
       {keyword !== '' && (
-        <Button onMouseDown={() => router.push(`/category`)}>전체보기</Button>
+        <Button
+          onMouseDown={() =>
+            router.push({
+              pathname: '/category',
+              query: {
+                keyword
+              }
+            })
+          }
+        >
+          전체보기
+        </Button>
       )}
     </div>
   );

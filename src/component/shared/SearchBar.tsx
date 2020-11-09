@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import AutoComplete from './AutoComplete';
 
@@ -79,28 +80,41 @@ const SearchBar: FunctionComponent<Props> = ({
   value,
   autoComplete
 }) => {
+  const router = useRouter();
   const [autoCompleteOpen, setAutoCompleteOpen] = useState(false);
   const iconSize = isMain ? 'LARGER' : 'SMALLER';
   return (
     <SearchBarWrapper isMain={isMain} autoCompleteOpen={autoCompleteOpen}>
-      <SearchInputWrapper>
-        <Icon iconSize={iconSize} />
-        <StyledInput
-          placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
-          isMain={isMain}
-          value={value}
-          onChange={(e) => {
-            handleChange(e.target.value);
-          }}
-          onFocus={() => {
-            setAutoCompleteOpen(true);
-          }}
-          onBlur={() => {
-            setAutoCompleteOpen(false);
-          }}
-        />
-      </SearchInputWrapper>
-      {autoComplete && autoCompleteOpen && <AutoComplete keyword={value} />}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          router.push({
+            pathname: '/category',
+            query: {
+              keyword: value
+            }
+          });
+        }}
+      >
+        <SearchInputWrapper>
+          <Icon iconSize={iconSize} />
+          <StyledInput
+            placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
+            isMain={isMain}
+            value={value}
+            onChange={(e) => {
+              handleChange(e.target.value);
+            }}
+            onFocus={() => {
+              setAutoCompleteOpen(true);
+            }}
+            onBlur={() => {
+              setAutoCompleteOpen(false);
+            }}
+          />
+        </SearchInputWrapper>
+        {autoComplete && autoCompleteOpen && <AutoComplete keyword={value} />}
+      </form>
     </SearchBarWrapper>
   );
 };

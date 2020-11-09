@@ -63,6 +63,8 @@ const CollectionListContainer = () => {
     getCollection({ variables: { keyword } });
   }, [keyword, getCollection]);
 
+  // No SearchBar component
+
   return (
     <>
       <Section>
