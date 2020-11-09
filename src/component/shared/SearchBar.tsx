@@ -15,8 +15,9 @@ type IconSize = 'SMALLER' | 'LARGER';
 
 export interface Props {
   isMain?: boolean;
-  handleChange?: (value: string) => any;
+  handleChange: (value: string) => any;
   autoComplete?: boolean;
+  value: string;
 }
 
 const SearchBarWrapper = styled.div<{
@@ -75,9 +76,9 @@ const StyledInput = styled.input<{ isMain?: boolean }>`
 const SearchBar: FunctionComponent<Props> = ({
   isMain,
   handleChange,
+  value,
   autoComplete
 }) => {
-  const [value, setValue] = useState('');
   const [autoCompleteOpen, setAutoCompleteOpen] = useState(false);
   const iconSize = isMain ? 'LARGER' : 'SMALLER';
   return (
@@ -89,8 +90,7 @@ const SearchBar: FunctionComponent<Props> = ({
           isMain={isMain}
           value={value}
           onChange={(e) => {
-            setValue(e.target.value);
-            if (handleChange) handleChange(e.target.value);
+            handleChange(e.target.value);
           }}
           onFocus={() => {
             setAutoCompleteOpen(true);

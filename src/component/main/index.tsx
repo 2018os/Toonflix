@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import CardViewList from '../shared/CardViewList';
 import Link from '../shared/Link';
+import { EmptyWebtoonCard } from '../shared/Empty';
+import { LoadingCardViewList, LoadingWebtoonCard } from '../shared/Loading';
 import SearchBar from '../shared/SearchBar';
 import WebtoonCard from '../shared/WebtoonCard';
 
@@ -58,6 +60,12 @@ const LinkButton = styled.div`
 
 function MainContainer() {
   const { data, loading } = useCollectionsForMainQuery();
+  const [keyword, setKeyword] = useState('');
+
+  const onChange = (value: string) => {
+    setKeyword(value);
+  };
+
   return (
     <>
       <Section>
@@ -67,7 +75,12 @@ function MainContainer() {
       </Section>
       <Section>
         <SearchBarWrapper>
-          <SearchBar isMain autoComplete />
+          <SearchBar
+            isMain
+            autoComplete
+            value={keyword}
+            handleChange={onChange}
+          />
         </SearchBarWrapper>
         <LinkButtonWrapper>
           <LinkButton>
@@ -82,43 +95,50 @@ function MainContainer() {
           </LinkButton>
         </LinkButtonWrapper>
       </Section>
-      {data && !loading ? (
-        data.collections.edges?.map((collection) => {
-          if (collection?.node?.webtoonsConnection) {
-            return (
-              <Section
-                key={`main-webtoon-card-view-list-section-${collection.node.id}`}
-              >
-                <CardViewList
-                  title={collection.node.title}
-                  subTitle={`by ${collection.node.writer.name}`}
-                  type="pagination"
+      {data && !loading
+        ? data.collections.edges?.map((collection, index) => {
+            if (collection?.node?.webtoonsConnection) {
+              return (
+                <Section
+                  key={`main-webtoon-card-view-list-section-${collection.node.id}`}
                 >
-                  {collection.node.webtoonsConnection.edges?.map((edge) => {
-                    if (edge?.node) {
-                      const webtoon = edge.node;
-                      return (
-                        <WebtoonCard
-                          webtoon={webtoon}
-                          key={`main-webtoon-card-${webtoon.id}`}
-                        />
-                      );
-                    }
-                    return (
-                      <div key={edge?.__typename}>webtoon data loading</div>
-                    );
-                  })}
-                </CardViewList>
-              </Section>
+                  <CardViewList
+                    title={collection.node.title}
+                    subTitle={`by ${collection.node.writer.name}`}
+                    type="pagination"
+                  >
+                    {collection.node.webtoonsConnection.edges?.map(
+                      (edge, edgeIndex) => {
+                        if (edge?.node) {
+                          const webtoon = edge.node;
+                          return (
+                            <WebtoonCard
+                              webtoon={webtoon}
+                              key={`main-webtoon-card-${webtoon.id}`}
+                            />
+                          );
+                        }
+                        return (
+                          <LoadingWebtoonCard
+                            key={`loading-${edge?.__typename}-${edgeIndex}`}
+                          />
+                        );
+                      }
+                    )}
+                    <EmptyWebtoonCard
+                      src={`/collection/${collection.node.id}`}
+                    />
+                  </CardViewList>
+                </Section>
+              );
+            }
+            return (
+              <LoadingCardViewList
+                key={`loading-card-view-list-${collection?.__typename}-${index}`}
+              />
             );
-          }
-          return (
-            <div key={collection?.__typename}>WebtoonCardViewList loading</div>
-          );
-        })
-      ) : (
-        <div>Loading...</div>
-      )}
+          })
+        : null}
     </>
   );
 }

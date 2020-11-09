@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -81,7 +81,15 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
 
 const Navigation: FunctionComponent<Props> = ({ authState }) => {
   const router = useRouter();
+  const [keyword, setKeyword] = useState('');
   const { pathname } = router;
+
+  const onChange = (value: string) => {
+    setKeyword(value);
+  };
+
+  // TODO: Improve SearchBar structure
+
   return pathname === '/' ? (
     <Profile authState={authState} isMain />
   ) : (
@@ -102,7 +110,7 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
         </Item>
         <Item>
           <SearchWrapper>
-            <SearchBar autoComplete />
+            <SearchBar autoComplete value={keyword} handleChange={onChange} />
           </SearchWrapper>
         </Item>
       </ItemWrapper>
