@@ -20,7 +20,7 @@ const WebtoonCardViewList: FunctionComponent<Props> = ({
     const webtoonCards = webtoons.map(({ node }: { node: any }) => (
       <WebtoonCard key={`webtoon-card-${node.id}`} {...node} />
     ));
-    webtoonCards.push(<EmptyWebtoonCard key="empty-webtoon-card" />);
+    webtoonCards.push(<EmptyWebtoonCard key="empty-webtoon-card" src="/" />);
     return (
       <CardViewList title="비슷한 작품" type="pagination">
         {webtoonCards}

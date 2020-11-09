@@ -19,7 +19,7 @@ const WebtoonCardViewList: FunctionComponent<Props> = ({
       <WebtoonCard key={`webtoon-card-${node.id}`} {...node} />
     ));
     if (webtoonCards.length < 4) {
-      webtoonCards.push(<EmptyWebtoonCard key="empty-webtoon-card" />);
+      webtoonCards.push(<EmptyWebtoonCard key="empty-webtoon-card" src="/" />);
     }
     return (
       <CardViewList
