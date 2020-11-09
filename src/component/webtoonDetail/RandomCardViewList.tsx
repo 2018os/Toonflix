@@ -5,12 +5,13 @@ import CardViewList from '../shared/CardViewList';
 import { EmptyThumbnail } from '../shared/Empty';
 import Link from '../shared/Link';
 import Thumbnail from '../shared/Thumbnail';
-import {
-  dataForRandomCardView as data,
-  loading,
-  refetch
-} from '../../util/dummy';
+// import {
+//   dataForRandomCardView as data,
+//   loading,
+//   refetch
+// } from '../../util/dummy';
 import { ImgSizes } from '../../util/theme';
+import { useRandomWebtoonsForWebtoonDetailQuery } from '../../generated/graphql';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -19,9 +20,9 @@ const Card = styled.div`
 `;
 
 const RandomCardViewList = () => {
-  // const { data, loading, refetch } = useRandomWebtoonsForWebtoonDetailQuery({
-  //   notifyOnNetworkStatusChange: true
-  // });
+  const { data, loading, refetch } = useRandomWebtoonsForWebtoonDetailQuery({
+    notifyOnNetworkStatusChange: true
+  });
   return (
     <CardViewList
       title="썸네일만 보고 고르기"

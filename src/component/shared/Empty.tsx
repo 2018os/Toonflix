@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { FunctionComponent } from 'react';
+import styled, { css } from 'styled-components';
 import { ImgSizes, Colors } from '../../util/theme';
 
 import Link from './Link';
@@ -8,39 +8,47 @@ interface ThumbnailProps {
   size: ImgSizes;
 }
 
-const EmptyThumbnail = styled.div.attrs({
-  className: 'loading-thumbnail'
-})<ThumbnailProps>`
-  width: ${(props) => props.size};
-  height: ${(props) => props.size};
-  background-color: ${Colors.WHITE};
+interface Props {
+  src: string;
+  keyword?: string;
+}
+
+const baseCss = css`
+  background-color: ${Colors.PRIMARY_COLOR};
+  color: ${Colors.WHITE};
+  border-radius: 10px;
 `;
 
+const EmptyThumbnail = styled.div<ThumbnailProps>`
+  width: ${(props) => props.size};
+  height: ${(props) => props.size};
+  ${baseCss}
+`;
+
+// TODO: Enhance size
 const Card = styled.div`
   width: 236px;
   height: 360px;
-  border-radius: 10px;
-  background-color: ${Colors.WHITE};
+  ${baseCss}
 `;
 
 const CollectionCard = styled.div`
   width: ${ImgSizes.LARGE};
   height: ${ImgSizes.LARGE};
-  border-radius: 10px;
-  background-color: ${Colors.WHITE};
+  ${baseCss}
 `;
 
-const EmptyWebtoonCard = () => {
+const EmptyWebtoonCard: FunctionComponent<Props> = ({ src, keyword }) => {
   return (
-    <Link linkProps={{ href: '/category' }}>
-      <Card>더 보기</Card>
+    <Link linkProps={{ href: { pathname: src, query: { keyword } } }}>
+      <Card>자세히 보기</Card>
     </Link>
   );
 };
 
-const EmptyCollectionCard = () => {
+const EmptyCollectionCard: FunctionComponent<Props> = ({ src, keyword }) => {
   return (
-    <Link linkProps={{ href: '/collection' }}>
+    <Link linkProps={{ href: { pathname: src, query: { keyword } } }}>
       <CollectionCard>더 보기</CollectionCard>
     </Link>
   );
