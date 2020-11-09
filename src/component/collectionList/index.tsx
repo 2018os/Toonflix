@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import Section from '../../layout/Section';
 
 import CollectionCardList from './CollectionCardList';
 
-import LoadingCollectionCard from '../shared/Loading';
+import { LoadingCollectionCard } from '../shared/Loading';
 import SearchBar from '../shared/SearchBar';
 
 import { useCollectionsForCollectionListLazyQuery } from '../../generated/graphql';
@@ -13,6 +14,10 @@ import { useCollectionsForCollectionListLazyQuery } from '../../generated/graphq
 import { ImgSizes, spacing } from '../../util/theme';
 
 // import { dataForCollectionList as data, loading } from '../../util/dummy';
+
+interface SearchQueryString {
+  keyword?: string;
+}
 
 const SearchBarWrapper = styled.div`
   padding: ${spacing[2]};
@@ -36,6 +41,8 @@ const Item = styled.div`
 `;
 
 const CollectionListContainer = () => {
+  const router = useRouter();
+  const { keyword: searchKeyword }: SearchQueryString = router.query;
   const [
     getCollection,
     { data, fetchMore }
@@ -48,6 +55,11 @@ const CollectionListContainer = () => {
   };
 
   useEffect(() => {
+    if (searchKeyword) {
+      setKeyword(searchKeyword);
+    }
+  }, [searchKeyword]);
+  useEffect(() => {
     getCollection({ variables: { keyword } });
   }, [keyword, getCollection]);
 
@@ -55,7 +67,7 @@ const CollectionListContainer = () => {
     <>
       <Section>
         <SearchBarWrapper>
-          <SearchBar handleChange={onChange} />
+          <SearchBar handleChange={onChange} value={keyword} />
         </SearchBarWrapper>
       </Section>
       <Section>

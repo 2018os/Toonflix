@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { useRouter } from 'next/router';
 
 import CollectionCardList from './CollectionCardList';
 import WebtoonCardList from './WebtoonCardList';
@@ -12,9 +13,16 @@ export interface Props {
   filter: SearchFiltering;
 }
 
+interface SearchQueryString {
+  keyword?: string;
+}
+
 const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
+  const router = useRouter();
+  const { keyword }: SearchQueryString = router.query;
   const { data, fetchMore } = useSearchForCategoryQuery({
     variables: {
+      keyword,
       where: {
         ...filter
       }
