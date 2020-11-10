@@ -9,7 +9,10 @@ export interface Props {
 
 const Link: FunctionComponent<Props> = ({ linkProps, children, isNewTab }) => (
   <BaseLink {...linkProps}>
-    <a target={isNewTab ? '_blank' : ''} style={{ textDecoration: 'none' }}>
+    <a
+      target={isNewTab ? '_blank' : ''}
+      style={{ textDecoration: 'none', color: 'initial' }}
+    >
       {children}
     </a>
   </BaseLink>
