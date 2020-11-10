@@ -40,7 +40,16 @@ const CollectionCard = styled.div`
 
 const EmptyWebtoonCard: FunctionComponent<Props> = ({ src, keyword }) => {
   return (
-    <Link linkProps={{ href: { pathname: src, query: { keyword } } }}>
+    <Link
+      linkProps={{
+        href: {
+          pathname: src,
+          query: keyword && {
+            keyword
+          }
+        }
+      }}
+    >
       <Card>자세히 보기</Card>
     </Link>
   );
@@ -48,7 +57,16 @@ const EmptyWebtoonCard: FunctionComponent<Props> = ({ src, keyword }) => {
 
 const EmptyCollectionCard: FunctionComponent<Props> = ({ src, keyword }) => {
   return (
-    <Link linkProps={{ href: { pathname: src, query: { keyword } } }}>
+    <Link
+      linkProps={{
+        href: {
+          pathname: src,
+          query: keyword && {
+            keyword
+          }
+        }
+      }}
+    >
       <CollectionCard>더 보기</CollectionCard>
     </Link>
   );
