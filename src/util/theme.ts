@@ -16,7 +16,8 @@ export enum Colors {
   BORDER_COLOR = '#DBDBDB',
   GRAY = '#EAEDED',
   BLACK = '#212121',
-  WHITE = '#ffffff'
+  WHITE = '#ffffff',
+  ADULT = '#ff7800'
 }
 
 export enum TextColors {
