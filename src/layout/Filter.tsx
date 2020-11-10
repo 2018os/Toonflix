@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Container from './Container';
 
 import BaseTag from '../component/shared/Tag';
+import Tags from '../component/shared/Tags';
 
 import { Colors, spacing } from '../util/theme';
 
@@ -17,14 +18,14 @@ const Field = styled.div`
 
 const Tag = styled(BaseTag)<{ isSelect: boolean }>`
   ${(props) => `
+    cursor: pointer;
     background: ${props.isSelect ? Colors.PRIMARY_COLOR : Colors.WHITE};
     color: ${props.isSelect ? Colors.WHITE : Colors.BLACK};
   `}
 `;
 
 const AdultTag = styled(Tag)`
-  background: ${(props) =>
-    props.isSelect ? Colors.SKELETON_COLOR : Colors.WHITE};
+  background: ${(props) => (props.isSelect ? Colors.ADULT : Colors.WHITE)};
 `;
 
 export interface FilterType {
@@ -45,84 +46,88 @@ const Filter: FunctionComponent<Props> = ({ filter, setFilter }) => {
   return (
     <Container>
       <Field>
-        <Tag
-          isSelect={!!filter.platforms.includes(Platform.Naver)}
-          onClick={() => {
-            setFilter({
-              ...filter,
-              platforms: filter.platforms.includes(Platform.Naver)
-                ? filter.platforms.filter(
-                    (platform) => platform !== Platform.Naver
-                  )
-                : [...filter.platforms, Platform.Naver]
-            });
-          }}
-        >
-          네이버
-        </Tag>
-        <Tag
-          isSelect={!!filter.platforms.includes(Platform.Daum)}
-          onClick={() => {
-            setFilter({
-              ...filter,
-              platforms: filter.platforms.includes(Platform.Daum)
-                ? filter.platforms.filter(
-                    (platform) => platform !== Platform.Daum
-                  )
-                : [...filter.platforms, Platform.Daum]
-            });
-          }}
-        >
-          다음
-        </Tag>
-        <Tag
-          isSelect={!!filter.isFinish}
-          onClick={() => {
-            setFilter({ ...filter, isFinish: !filter.isFinish });
-          }}
-        >
-          완결
-        </Tag>
-        <AdultTag
-          isSelect={!!filter.isAdult}
-          onClick={() => {
-            setFilter({ ...filter, isAdult: !filter.isAdult });
-          }}
-        >
-          성인
-        </AdultTag>
-        <Tag
-          isSelect={!!filter.isPay}
-          onClick={() => {
-            setFilter({ ...filter, isPay: !filter.isPay });
-          }}
-        >
-          유료
-        </Tag>
+        <Tags>
+          <Tag
+            isSelect={!!filter.platforms.includes(Platform.Naver)}
+            onClick={() => {
+              setFilter({
+                ...filter,
+                platforms: filter.platforms.includes(Platform.Naver)
+                  ? filter.platforms.filter(
+                      (platform) => platform !== Platform.Naver
+                    )
+                  : [...filter.platforms, Platform.Naver]
+              });
+            }}
+          >
+            네이버
+          </Tag>
+          <Tag
+            isSelect={!!filter.platforms.includes(Platform.Daum)}
+            onClick={() => {
+              setFilter({
+                ...filter,
+                platforms: filter.platforms.includes(Platform.Daum)
+                  ? filter.platforms.filter(
+                      (platform) => platform !== Platform.Daum
+                    )
+                  : [...filter.platforms, Platform.Daum]
+              });
+            }}
+          >
+            다음
+          </Tag>
+          <Tag
+            isSelect={!!filter.isFinish}
+            onClick={() => {
+              setFilter({ ...filter, isFinish: !filter.isFinish });
+            }}
+          >
+            완결
+          </Tag>
+          <AdultTag
+            isSelect={!!filter.isAdult}
+            onClick={() => {
+              setFilter({ ...filter, isAdult: !filter.isAdult });
+            }}
+          >
+            성인
+          </AdultTag>
+          <Tag
+            isSelect={!!filter.isPay}
+            onClick={() => {
+              setFilter({ ...filter, isPay: !filter.isPay });
+            }}
+          >
+            유료
+          </Tag>
+        </Tags>
       </Field>
       <Field>
-        {data?.genres?.map(
-          (genre) =>
-            genre && (
-              <Tag
-                isSelect={filter.genres.includes(genre.code)}
-                key={`genre-tag-${genre.code}`}
-                onClick={() => {
-                  const newGenres = filter.genres.includes(genre.code)
-                    ? filter.genres.filter(
-                        (existGenre) => existGenre !== genre.code
-                      )
-                    : [...filter.genres, genre.code];
-                  setFilter({
-                    ...filter,
-                    genres: newGenres
-                  });
-                }}
-              >
-                # {genre.name}
-              </Tag>
-            )
-        )}
+        <Tags>
+          {data?.genres?.map(
+            (genre) =>
+              genre && (
+                <Tag
+                  isSelect={filter.genres.includes(genre.code)}
+                  key={`genre-tag-${genre.code}`}
+                  onClick={() => {
+                    const newGenres = filter.genres.includes(genre.code)
+                      ? filter.genres.filter(
+                          (existGenre) => existGenre !== genre.code
+                        )
+                      : [...filter.genres, genre.code];
+                    setFilter({
+                      ...filter,
+                      genres: newGenres
+                    });
+                  }}
+                >
+                  # {genre.name}
+                </Tag>
+              )
+          )}
+        </Tags>
       </Field>
     </Container>
   );

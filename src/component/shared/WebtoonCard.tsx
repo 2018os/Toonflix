@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import Tag from './Tag';
+import Tags from './Tags';
 import Thumbnail from './Thumbnail';
 import Link from './Link';
 
@@ -90,10 +91,12 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
             }
             return <div key={authorEdge?.__typename}>Author data Loading</div>;
           })}
-          {genres &&
-            genres.map((genre) => {
-              return <Tag key={genre.code}># {genre.name}</Tag>;
-            })}
+          <Tags>
+            {genres &&
+              genres.map((genre) => {
+                return <Tag key={genre.code}># {genre.name}</Tag>;
+              })}
+          </Tags>
         </WebtoonInfoWrapper>
       </Card>
     </Link>

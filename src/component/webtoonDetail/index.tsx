@@ -12,12 +12,14 @@ import CardViewList from '../shared/CardViewList';
 import CollectionCard from '../shared/CollectionCard';
 import Comments from '../shared/Comments';
 import { EmptyWebtoonCard, EmptyCollectionCard } from '../shared/Empty';
+import Link from '../shared/Link';
 import {
   LoadingCardViewList,
   LoadingCollectionCard,
   LoadingWebtoonCard
 } from '../shared/Loading';
 import Tag from '../shared/Tag';
+import Tags from '../shared/Tags';
 import Thumbnail from '../shared/Thumbnail';
 import WebtoonCard from '../shared/WebtoonCard';
 
@@ -57,10 +59,6 @@ const Description = styled.div`
   border: solid 1px ${Colors.BORDER_COLOR};
   background-color: ${Colors.WHITE};
   padding: ${spacing[4]};
-`;
-
-const Tags = styled.div`
-  display: flex;
 `;
 
 const Authors = styled.div`
@@ -109,7 +107,21 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
               <SubTitle>{data?.webtoon.title}</SubTitle>
               <Tags>
                 {data?.webtoon.genres?.map((genre) => {
-                  return <Tag key={genre.code}>#{genre.name}</Tag>;
+                  return (
+                    <Link
+                      key={genre.code}
+                      linkProps={{
+                        href: {
+                          pathname: '/category',
+                          query: {
+                            keyword: genre.name
+                          }
+                        }
+                      }}
+                    >
+                      <Tag>#{genre.name}</Tag>
+                    </Link>
+                  );
                 })}
               </Tags>
               <Authors>
