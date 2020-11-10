@@ -12,6 +12,7 @@ const Link: FunctionComponent<Props> = ({ linkProps, children, isNewTab }) => (
     <a
       target={isNewTab ? '_blank' : ''}
       style={{ textDecoration: 'none', color: 'initial' }}
+      className="link"
     >
       {children}
     </a>
