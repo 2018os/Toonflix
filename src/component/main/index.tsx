@@ -44,6 +44,12 @@ const LinkButtonWrapper = styled.div`
   display: flex;
   margin-top: ${spacing[3]};
   justify-content: center;
+  & > .link {
+    margin-right: ${spacing[2]};
+  }
+  & > .link:last-child {
+    margin-right: 0;
+  }
 `;
 
 const LinkButton = styled.div`
@@ -83,16 +89,20 @@ function MainContainer() {
           />
         </SearchBarWrapper>
         <LinkButtonWrapper>
-          <LinkButton>
-            <Link linkProps={{ href: '/collections' }}>
-              <Text bold>컬렉션 바로가기</Text>
-            </Link>
-          </LinkButton>
-          <LinkButton style={{ marginLeft: '18px' }}>
-            <Link linkProps={{ href: '/category' }}>
-              <Text bold>카테고리 바로가기</Text>
-            </Link>
-          </LinkButton>
+          <Link linkProps={{ href: '/collections' }}>
+            <LinkButton>
+              <Text bold color={Colors.WHITE}>
+                컬렉션 바로가기
+              </Text>
+            </LinkButton>
+          </Link>
+          <Link linkProps={{ href: '/category' }}>
+            <LinkButton>
+              <Text bold color={Colors.WHITE}>
+                카테고리 바로가기
+              </Text>
+            </LinkButton>
+          </Link>
         </LinkButtonWrapper>
       </Section>
       {data && !loading
