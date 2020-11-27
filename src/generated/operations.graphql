@@ -220,6 +220,13 @@ query collectionForCollectionDetail($id: ID!, $after: ID) {
   }
 }
 
+query randomWebtoonsForRandom {
+  randomWebtoons(take: 8) {
+    id
+    thumbnail
+  }
+}
+
 fragment webtoonCard on Webtoon {
   id
   title
