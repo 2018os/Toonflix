@@ -4,8 +4,13 @@ import styled from 'styled-components';
 import { EmptyThumbnail } from '../shared/Empty';
 import Link from '../shared/Link';
 import Thumbnail from '../shared/Thumbnail';
-import { ImgSizes } from '../../util/theme';
+import { ImgSizes, spacing } from '../../util/theme';
 import { useRandomWebtoonsForRandomQuery } from '../../generated/graphql';
+
+const ButtonWrapper = styled.div`
+  text-align: right;
+  margin-bottom: ${spacing[2]};
+`;
 
 const Button = styled.button`
   width: 40px;
@@ -24,9 +29,8 @@ const CardList = styled.div`
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
-  ::after {
-    content: '';
-    flex: 0 0 ${ImgSizes.DEFAULT};
+  & > div {
+    margin-bottom: ${spacing[4]};
   }
 `;
 
@@ -36,28 +40,29 @@ const RandomCardViewList = () => {
   });
   return (
     <>
-      <Button type="button" onClick={() => refetch()}>
-        R
-      </Button>
+      <ButtonWrapper>
+        <Button type="button" onClick={() => refetch()}>
+          R
+        </Button>
+      </ButtonWrapper>
       <CardList>
         {!loading && data?.randomWebtoons
           ? data.randomWebtoons.map(({ id, thumbnail }) => {
               return (
-                <Link
-                  linkProps={{
-                    href: '/webtoon/[id]',
-                    as: `/webtoon/${id}`
-                  }}
-                  key={`random-thumbnail-${id}`}
-                  isNewTab
-                >
-                  <Card>
+                <Card key={`random-thumbnail-${id}`}>
+                  <Link
+                    linkProps={{
+                      href: '/webtoon/[id]',
+                      as: `/webtoon/${id}`
+                    }}
+                    isNewTab
+                  >
                     <Thumbnail size={ImgSizes.DEFAULT} src={thumbnail} />
-                  </Card>
-                </Link>
+                  </Link>
+                </Card>
               );
             })
-          : [0, 1, 2, 3].map((index) => (
+          : [0, 1, 2, 3, 4, 5, 6, 7].map((index) => (
               <EmptyThumbnail
                 size={ImgSizes.DEFAULT}
                 key={`empty-random-thumbnail-${index}`}
