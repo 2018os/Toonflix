@@ -1,13 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import Section from '../../layout/Section';
-
 import { Text } from '../../styles/Typography';
 
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { SearchForCategoryQuery } from '../../generated/graphql';
+
 import { ImgSizes, spacing, Colors } from '../../util/theme';
 
 export interface Props {
@@ -41,28 +40,24 @@ const MoreButton = styled.button`
 const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
   return (
     <>
-      <Section>
-        <WebtoonCardListWrapper>
-          {data.search.webtoonResult?.edges &&
-            data.search.webtoonResult.edges.map((edge) => {
-              if (edge?.node) {
-                const webtoon = edge.node;
-                return (
-                  <Item key={`category-item-${webtoon.id}`}>
-                    <WebtoonCard webtoon={webtoon} />
-                  </Item>
-                );
-              }
-              return <div key={edge?.__typename}>webtoon data loading</div>;
-            })}
-        </WebtoonCardListWrapper>
-      </Section>
+      <WebtoonCardListWrapper>
+        {data.search.webtoonResult?.edges &&
+          data.search.webtoonResult.edges.map((edge) => {
+            if (edge?.node) {
+              const webtoon = edge.node;
+              return (
+                <Item key={`category-item-${webtoon.id}`}>
+                  <WebtoonCard webtoon={webtoon} />
+                </Item>
+              );
+            }
+            return <div key={edge?.__typename}>webtoon data loading</div>;
+          })}
+      </WebtoonCardListWrapper>
       {data.search.webtoonResult?.pageInfo.hasNextPage ? (
-        <Section>
-          <MoreButton onClick={() => onLoadMore()}>
-            <Text>더 보기</Text>
-          </MoreButton>
-        </Section>
+        <MoreButton onClick={() => onLoadMore()}>
+          <Text>더 보기</Text>
+        </MoreButton>
       ) : null}
     </>
   );

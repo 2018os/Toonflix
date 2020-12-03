@@ -1,8 +1,15 @@
 import React, { FunctionComponent } from 'react';
+import styled from 'styled-components';
 import { useRouter } from 'next/router';
+
+import Section from '../../layout/Section';
 
 import CollectionCardList from './CollectionCardList';
 import WebtoonCardList from './WebtoonCardList';
+
+import { Title } from '../../styles/Typography';
+
+import { FontSizes, TextColors, spacing } from '../../util/theme';
 
 import {
   useSearchForCategoryQuery,
@@ -17,10 +24,14 @@ interface SearchQueryString {
   keyword?: string;
 }
 
+const CardListWrapper = styled.div`
+  margin-top: ${spacing[1]};
+`;
+
 const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
   const router = useRouter();
   const { keyword }: SearchQueryString = router.query;
-  const { data, fetchMore } = useSearchForCategoryQuery({
+  const { data, loading, fetchMore } = useSearchForCategoryQuery({
     variables: {
       keyword,
       where: {
@@ -32,98 +43,108 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
   const collectionId = data?.search.collectionResult?.pageInfo.endCursor;
   return (
     <>
-      <div>
-        작품 검색 결과
-        {data && (
-          <WebtoonCardList
-            data={data}
-            onLoadMore={() => {
-              fetchMore({
-                updateQuery: (previousResult, { fetchMoreResult }) => {
-                  if (!fetchMoreResult) {
-                    return previousResult;
-                  }
-                  const prevSearch = previousResult.search;
-                  const nextSearch = fetchMoreResult.search;
-                  return {
-                    search: {
-                      ...prevSearch,
-                      webtoonResult: prevSearch.webtoonResult &&
-                        nextSearch.webtoonResult && {
-                          ...prevSearch.webtoonResult,
-                          pageInfo: nextSearch.webtoonResult.pageInfo,
-                          edges: [
-                            ...(prevSearch.webtoonResult.edges &&
-                            prevSearch.webtoonResult.edges.length > 0
-                              ? [...prevSearch.webtoonResult.edges]
-                              : []),
-                            ...(nextSearch.webtoonResult.edges &&
-                            nextSearch.webtoonResult.edges.length > 0
-                              ? [...nextSearch.webtoonResult.edges]
-                              : [])
-                          ]
-                        }
+      <Section>
+        <Title size={FontSizes.LARGER} color={TextColors.PRIMARY_COLOR}>
+          작품 검색 결과
+        </Title>
+        <CardListWrapper>
+          {!loading && data ? (
+            <WebtoonCardList
+              data={data}
+              onLoadMore={() => {
+                fetchMore({
+                  updateQuery: (previousResult, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) {
+                      return previousResult;
                     }
-                  };
-                },
-                variables: {
-                  keyword: '',
-                  where: {
-                    ...filter
+                    const prevSearch = previousResult.search;
+                    const nextSearch = fetchMoreResult.search;
+                    return {
+                      search: {
+                        ...prevSearch,
+                        webtoonResult: prevSearch.webtoonResult &&
+                          nextSearch.webtoonResult && {
+                            ...prevSearch.webtoonResult,
+                            pageInfo: nextSearch.webtoonResult.pageInfo,
+                            edges: [
+                              ...(prevSearch.webtoonResult.edges &&
+                              prevSearch.webtoonResult.edges.length > 0
+                                ? [...prevSearch.webtoonResult.edges]
+                                : []),
+                              ...(nextSearch.webtoonResult.edges &&
+                              nextSearch.webtoonResult.edges.length > 0
+                                ? [...nextSearch.webtoonResult.edges]
+                                : [])
+                            ]
+                          }
+                      }
+                    };
                   },
-                  webtoonId
-                }
-              });
-            }}
-          />
-        )}
-      </div>
-      <div>
-        컬렉션 검색 결과
-        {data && (
-          <CollectionCardList
-            data={data}
-            onLoadMore={() => {
-              fetchMore({
-                updateQuery: (previousResult, { fetchMoreResult }) => {
-                  if (!fetchMoreResult) {
-                    return previousResult;
+                  variables: {
+                    keyword,
+                    where: {
+                      ...filter
+                    },
+                    webtoonId
                   }
-                  const prevSearch = previousResult.search;
-                  const nextSearch = fetchMoreResult.search;
-                  return {
-                    search: {
-                      ...prevSearch,
-                      collectionResult: prevSearch.collectionResult &&
-                        nextSearch.collectionResult && {
-                          ...prevSearch.collectionResult,
-                          pageInfo: nextSearch.collectionResult.pageInfo,
-                          edges: [
-                            ...(prevSearch.collectionResult.edges &&
-                            prevSearch.collectionResult.edges.length > 0
-                              ? [...prevSearch.collectionResult.edges]
-                              : []),
-                            ...(nextSearch.collectionResult.edges &&
-                            nextSearch.collectionResult.edges.length > 0
-                              ? [...nextSearch.collectionResult.edges]
-                              : [])
-                          ]
-                        }
+                });
+              }}
+            />
+          ) : (
+            <div>LOADING</div>
+          )}
+        </CardListWrapper>
+      </Section>
+      <Section>
+        <Title size={FontSizes.LARGER} color={TextColors.PRIMARY_COLOR}>
+          컬렉션 검색 결과
+        </Title>
+        <CardListWrapper>
+          {data && (
+            <CollectionCardList
+              data={data}
+              onLoadMore={() => {
+                fetchMore({
+                  updateQuery: (previousResult, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) {
+                      return previousResult;
                     }
-                  };
-                },
-                variables: {
-                  keyword: '',
-                  where: {
-                    ...filter
+                    const prevSearch = previousResult.search;
+                    const nextSearch = fetchMoreResult.search;
+                    return {
+                      search: {
+                        ...prevSearch,
+                        collectionResult: prevSearch.collectionResult &&
+                          nextSearch.collectionResult && {
+                            ...prevSearch.collectionResult,
+                            pageInfo: nextSearch.collectionResult.pageInfo,
+                            edges: [
+                              ...(prevSearch.collectionResult.edges &&
+                              prevSearch.collectionResult.edges.length > 0
+                                ? [...prevSearch.collectionResult.edges]
+                                : []),
+                              ...(nextSearch.collectionResult.edges &&
+                              nextSearch.collectionResult.edges.length > 0
+                                ? [...nextSearch.collectionResult.edges]
+                                : [])
+                            ]
+                          }
+                      }
+                    };
                   },
-                  collectionId
-                }
-              });
-            }}
-          />
-        )}
-      </div>
+                  variables: {
+                    keyword,
+                    where: {
+                      ...filter
+                    },
+                    collectionId
+                  }
+                });
+              }}
+            />
+          )}
+        </CardListWrapper>
+      </Section>
     </>
   );
 };
