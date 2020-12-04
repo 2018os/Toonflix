@@ -2,26 +2,14 @@ import React, { FunctionComponent, useRef } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 
-import { FontSizes, TextColors, spacing, Colors } from '../../util/theme';
+import { Title, SubTitle } from '../../styles/Typography';
+
+import { FontSizes, TextColors, spacing } from '../../util/theme';
 
 const ContentWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-`;
-
-const Title = styled.div`
-  font-size: ${FontSizes.LARGER};
-  font-weight: 500;
-  color: ${TextColors.PRIMARY_COLOR};
-`;
-
-const SubTitle = styled.div`
-  line-height: 1.5;
-  margin-left: 12px;
-  font-size: ${FontSizes.SMALL};
-  font-weight: 500;
-  color: ${Colors.BLACK};
 `;
 
 const Button = styled.button`
@@ -76,8 +64,10 @@ const Header: FunctionComponent<HeaderProps> = ({
 }) => (
   <ContentWrapper>
     <ContentWrapper>
-      <Title>{title}</Title>
-      <SubTitle>{subTitle}</SubTitle>
+      <Title size={FontSizes.LARGER} color={TextColors.PRIMARY_COLOR}>
+        {title}
+      </Title>
+      <SubTitle size={FontSizes.SMALL}>{subTitle}</SubTitle>
     </ContentWrapper>
     <ContentWrapper>
       {type === 'refresh' && refetch ? (
