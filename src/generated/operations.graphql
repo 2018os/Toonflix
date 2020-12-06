@@ -230,17 +230,20 @@ fragment myProfile on User {
   id
   name
   myCollections(first: 8) {
-    edges {
-      node {
-        ...collectionCard
-      }
-    }
+    ...userCollectionCardList
   }
   likedCollections(first: 8) {
-    edges {
-      node {
-        ...collectionCard
-      }
+    ...userCollectionCardList
+  }
+}
+
+fragment userCollectionCardList on UserCollectionsConnection {
+  pageInfo {
+    hasNextPage
+  }
+  edges {
+    node {
+      ...collectionCard
     }
   }
 }

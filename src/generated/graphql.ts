@@ -954,33 +954,28 @@ export type MyProfileFragment = { __typename?: 'User' } & Pick<
   User,
   'id' | 'name'
 > & {
-    myCollections: { __typename?: 'UserCollectionsConnection' } & {
-      edges?: Maybe<
-        Array<
-          Maybe<
-            { __typename?: 'UserCollectionsEdge' } & {
-              node?: Maybe<
-                { __typename?: 'Collection' } & CollectionCardFragment
-              >;
-            }
-          >
-        >
-      >;
-    };
-    likedCollections: { __typename?: 'UserCollectionsConnection' } & {
-      edges?: Maybe<
-        Array<
-          Maybe<
-            { __typename?: 'UserCollectionsEdge' } & {
-              node?: Maybe<
-                { __typename?: 'Collection' } & CollectionCardFragment
-              >;
-            }
-          >
-        >
-      >;
-    };
+    myCollections: {
+      __typename?: 'UserCollectionsConnection';
+    } & UserCollectionCardListFragment;
+    likedCollections: {
+      __typename?: 'UserCollectionsConnection';
+    } & UserCollectionCardListFragment;
   };
+
+export type UserCollectionCardListFragment = {
+  __typename?: 'UserCollectionsConnection';
+} & {
+  pageInfo: { __typename?: 'PageInfo' } & Pick<PageInfo, 'hasNextPage'>;
+  edges?: Maybe<
+    Array<
+      Maybe<
+        { __typename?: 'UserCollectionsEdge' } & {
+          node?: Maybe<{ __typename?: 'Collection' } & CollectionCardFragment>;
+        }
+      >
+    >
+  >;
+};
 
 export type WebtoonCardFragment = { __typename?: 'Webtoon' } & Pick<
   Webtoon,
@@ -1037,26 +1032,31 @@ export const CollectionCardFragmentDoc = gql`
     }
   }
 `;
+export const UserCollectionCardListFragmentDoc = gql`
+  fragment userCollectionCardList on UserCollectionsConnection {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      node {
+        ...collectionCard
+      }
+    }
+  }
+  ${CollectionCardFragmentDoc}
+`;
 export const MyProfileFragmentDoc = gql`
   fragment myProfile on User {
     id
     name
     myCollections(first: 8) {
-      edges {
-        node {
-          ...collectionCard
-        }
-      }
+      ...userCollectionCardList
     }
     likedCollections(first: 8) {
-      edges {
-        node {
-          ...collectionCard
-        }
-      }
+      ...userCollectionCardList
     }
   }
-  ${CollectionCardFragmentDoc}
+  ${UserCollectionCardListFragmentDoc}
 `;
 export const WebtoonCardFragmentDoc = gql`
   fragment webtoonCard on Webtoon {
