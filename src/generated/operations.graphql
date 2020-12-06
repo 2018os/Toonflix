@@ -90,10 +90,24 @@ query randomWebtoonsForWebtoonDetail {
   }
 }
 
-query userForWithAuth($id: ID!) {
-  user(id: $id) {
+query meForWithAuth {
+  me {
     id
     name
+    myCollections(first: 8) {
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+    likedCollections(first: 8) {
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
   }
 }
 

@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from 'react';
 
-import { User, useUserForWithAuthLazyQuery } from '../generated/graphql';
+import { User, useMeForWithAuthLazyQuery } from '../generated/graphql';
 
 export interface AuthState {
   userId: string | null;
   signIn: (token: string, userId: string) => void;
   signOut: () => void;
   token?: string;
-  user?: Pick<User, 'id' | 'name'> | null;
+  me?: Pick<User, 'id' | 'name'> | null;
 }
 
 const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
   const initialAuthState = {
     userId: null,
     token: undefined,
-    user: null
+    me: null
   };
   return (props: any) => {
     const [authState, setAuthState] = useState(initialAuthState as AuthState);
-    const [userQuery, { data }] = useUserForWithAuthLazyQuery();
+    const [meQuery, { data }] = useMeForWithAuthLazyQuery();
 
     useEffect(() => {
       const id = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
       if (id !== authState.userId) {
         if (id) {
-          userQuery({ variables: { id } });
+          meQuery();
           setAuthState({
             ...authState,
             userId: id,
-            user: data?.user
+            token: token || undefined
           });
         } else {
           setAuthState(initialAuthState as AuthState);
         }
       }
-    }, [authState, userQuery, data?.user]);
+    }, [authState, meQuery, data?.me]);
 
     const signIn = (token: string, userId: string) => {
       setAuthState({
@@ -43,6 +44,7 @@ const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
       });
       if (typeof window !== 'undefined') {
         localStorage.setItem('userId', userId);
+        localStorage.setItem('token', token);
       }
     };
 
@@ -50,13 +52,14 @@ const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
       setAuthState(initialAuthState as AuthState);
       if (typeof window !== 'undefined') {
         localStorage.removeItem('userId');
+        localStorage.removeItem('token');
       }
     };
 
     return (
       <WrappedComponents
         {...props}
-        authState={{ ...authState, signIn, signOut, user: data?.user }}
+        authState={{ ...authState, signIn, signOut, me: data?.me }}
       />
     );
   };

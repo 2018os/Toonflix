@@ -67,7 +67,7 @@ export type Query = {
   genres?: Maybe<Array<Maybe<Genre>>>;
   users: UserConnection;
   user: User;
-  /** myProfile(id: ID!): User! */
+  me: User;
   webtoon: Webtoon;
   randomWebtoons?: Maybe<Array<Webtoon>>;
   search: SearchResult;
@@ -140,6 +140,9 @@ export type Mutation = {
   login: AuthPayload;
   signup: AuthPayload;
   createCollection: Collection;
+  updateCollection: Collection;
+  likeCollection: User;
+  dislikeCollection: User;
   postComment: Comment;
 };
 
@@ -152,7 +155,19 @@ export type MutationSignupArgs = {
 };
 
 export type MutationCreateCollectionArgs = {
-  input: CollectionInput;
+  input: CreateCollectionInput;
+};
+
+export type MutationUpdateCollectionArgs = {
+  input: UpdateCollectionInput;
+};
+
+export type MutationLikeCollectionArgs = {
+  collectionId: Scalars['ID'];
+};
+
+export type MutationDislikeCollectionArgs = {
+  collectionId: Scalars['ID'];
 };
 
 export type MutationPostCommentArgs = {
@@ -278,15 +293,19 @@ export type User = Node & {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
-  /**
-   * likedWebtoon
-   * TODO: Fix Naming, related collection (liked collection, except my collection)
-   */
-  collectionsConnection: UserCollectionsConnection;
+  likedCollections: UserCollectionsConnection;
+  myCollections: UserCollectionsConnection;
   commentsConnection: UserCommentsConnection;
 };
 
-export type UserCollectionsConnectionArgs = {
+export type UserLikedCollectionsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+export type UserMyCollectionsArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
@@ -561,10 +580,17 @@ export type LoginInput = {
   password: Scalars['String'];
 };
 
-export type CollectionInput = {
+export type CreateCollectionInput = {
   title: Scalars['String'];
   description: Scalars['String'];
-  webtoons: Array<Scalars['String']>;
+  webtoonIds: Array<Scalars['ID']>;
+};
+
+export type UpdateCollectionInput = {
+  collectionId: Scalars['ID'];
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  webtoonIds?: Maybe<Array<Scalars['ID']>>;
 };
 
 export type CommentInput = {
@@ -733,12 +759,37 @@ export type RandomWebtoonsForWebtoonDetailQuery = { __typename?: 'Query' } & {
   >;
 };
 
-export type UserForWithAuthQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
+export type MeForWithAuthQueryVariables = Exact<{ [key: string]: never }>;
 
-export type UserForWithAuthQuery = { __typename?: 'Query' } & {
-  user: { __typename?: 'User' } & Pick<User, 'id' | 'name'>;
+export type MeForWithAuthQuery = { __typename?: 'Query' } & {
+  me: { __typename?: 'User' } & Pick<User, 'id' | 'name'> & {
+      myCollections: { __typename?: 'UserCollectionsConnection' } & {
+        edges?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'UserCollectionsEdge' } & {
+                node?: Maybe<
+                  { __typename?: 'Collection' } & CollectionCardFragment
+                >;
+              }
+            >
+          >
+        >;
+      };
+      likedCollections: { __typename?: 'UserCollectionsConnection' } & {
+        edges?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'UserCollectionsEdge' } & {
+                node?: Maybe<
+                  { __typename?: 'Collection' } & CollectionCardFragment
+                >;
+              }
+            >
+          >
+        >;
+      };
+    };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -1246,62 +1297,76 @@ export type RandomWebtoonsForWebtoonDetailQueryResult = Apollo.QueryResult<
   RandomWebtoonsForWebtoonDetailQuery,
   RandomWebtoonsForWebtoonDetailQueryVariables
 >;
-export const UserForWithAuthDocument = gql`
-  query userForWithAuth($id: ID!) {
-    user(id: $id) {
+export const MeForWithAuthDocument = gql`
+  query meForWithAuth {
+    me {
       id
       name
+      myCollections(first: 8) {
+        edges {
+          node {
+            ...collectionCard
+          }
+        }
+      }
+      likedCollections(first: 8) {
+        edges {
+          node {
+            ...collectionCard
+          }
+        }
+      }
     }
   }
+  ${CollectionCardFragmentDoc}
 `;
 
 /**
- * __useUserForWithAuthQuery__
+ * __useMeForWithAuthQuery__
  *
- * To run a query within a React component, call `useUserForWithAuthQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserForWithAuthQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMeForWithAuthQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeForWithAuthQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUserForWithAuthQuery({
+ * const { data, loading, error } = useMeForWithAuthQuery({
  *   variables: {
- *      id: // value for 'id'
  *   },
  * });
  */
-export function useUserForWithAuthQuery(
+export function useMeForWithAuthQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    UserForWithAuthQuery,
-    UserForWithAuthQueryVariables
+    MeForWithAuthQuery,
+    MeForWithAuthQueryVariables
   >
 ) {
-  return Apollo.useQuery<UserForWithAuthQuery, UserForWithAuthQueryVariables>(
-    UserForWithAuthDocument,
+  return Apollo.useQuery<MeForWithAuthQuery, MeForWithAuthQueryVariables>(
+    MeForWithAuthDocument,
     baseOptions
   );
 }
-export function useUserForWithAuthLazyQuery(
+export function useMeForWithAuthLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    UserForWithAuthQuery,
-    UserForWithAuthQueryVariables
+    MeForWithAuthQuery,
+    MeForWithAuthQueryVariables
   >
 ) {
-  return Apollo.useLazyQuery<
-    UserForWithAuthQuery,
-    UserForWithAuthQueryVariables
-  >(UserForWithAuthDocument, baseOptions);
+  return Apollo.useLazyQuery<MeForWithAuthQuery, MeForWithAuthQueryVariables>(
+    MeForWithAuthDocument,
+    baseOptions
+  );
 }
-export type UserForWithAuthQueryHookResult = ReturnType<
-  typeof useUserForWithAuthQuery
+export type MeForWithAuthQueryHookResult = ReturnType<
+  typeof useMeForWithAuthQuery
 >;
-export type UserForWithAuthLazyQueryHookResult = ReturnType<
-  typeof useUserForWithAuthLazyQuery
+export type MeForWithAuthLazyQueryHookResult = ReturnType<
+  typeof useMeForWithAuthLazyQuery
 >;
-export type UserForWithAuthQueryResult = Apollo.QueryResult<
-  UserForWithAuthQuery,
-  UserForWithAuthQueryVariables
+export type MeForWithAuthQueryResult = Apollo.QueryResult<
+  MeForWithAuthQuery,
+  MeForWithAuthQueryVariables
 >;
 export const LoginDocument = gql`
   mutation login($email: String!, $password: String!) {
