@@ -9,7 +9,7 @@ import WebtoonCardList from './WebtoonCardList';
 
 import { Title } from '../../styles/Typography';
 
-import { FontSizes, TextColors, spacing } from '../../util/theme';
+import { Colors, FontSizes, spacing } from '../../util/theme';
 
 import {
   useSearchForCategoryQuery,
@@ -44,7 +44,7 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
   return (
     <>
       <Section>
-        <Title size={FontSizes.LARGER} color={TextColors.PRIMARY_COLOR}>
+        <Title size={FontSizes.LARGER} color={Colors.PRIMARY_COLOR}>
           작품 검색 결과
         </Title>
         <CardListWrapper>
@@ -96,7 +96,7 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
         </CardListWrapper>
       </Section>
       <Section>
-        <Title size={FontSizes.LARGER} color={TextColors.PRIMARY_COLOR}>
+        <Title size={FontSizes.LARGER} color={Colors.PRIMARY_COLOR}>
           컬렉션 검색 결과
         </Title>
         <CardListWrapper>

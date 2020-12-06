@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Title, SubTitle } from '../../styles/Typography';
 
-import { FontSizes, TextColors, spacing } from '../../util/theme';
+import { FontSizes, Colors, spacing } from '../../util/theme';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${TextColors.GRAY};
+  color: ${Colors.GRAY};
   font-size: ${FontSizes.H3};
 `;
 
@@ -64,7 +64,7 @@ const Header: FunctionComponent<HeaderProps> = ({
 }) => (
   <ContentWrapper>
     <ContentWrapper>
-      <Title size={FontSizes.LARGER} color={TextColors.PRIMARY_COLOR}>
+      <Title size={FontSizes.LARGER} color={Colors.PRIMARY_COLOR}>
         {title}
       </Title>
       <SubTitle size={FontSizes.SMALL}>{subTitle}</SubTitle>

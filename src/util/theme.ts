@@ -20,13 +20,6 @@ export enum Colors {
   ADULT = '#ff7800'
 }
 
-export enum TextColors {
-  PRIMARY_COLOR = '#076EFF',
-  GRAY = '#7A7A7A',
-  BLACK = '#212121',
-  WHITE = '#ffffff'
-}
-
 export const spacing = ['4px', '8px', '16px', '24px', '32px', '40px', '60px'];
 
 export enum IconSizes {
@@ -48,7 +41,6 @@ export enum ImgSizes {
 
 const theme = {
   Colors,
-  TextColors,
   FontSizes,
   spacing,
   IconSizes,

@@ -1,14 +1,8 @@
 import styled, { css } from 'styled-components';
-import {
-  Colors,
-  TextColors,
-  FontSizes,
-  IconSizes,
-  ImgSizes
-} from '../util/theme';
+import { Colors, FontSizes, IconSizes, ImgSizes } from '../util/theme';
 
 interface Props {
-  color?: Colors | TextColors;
+  color?: Colors;
   size?: FontSizes | IconSizes | ImgSizes;
   bold?: boolean;
 }

@@ -8,13 +8,7 @@ import Link from './Link';
 
 import { WebtoonCardFragment } from '../../generated/graphql';
 
-import {
-  Colors,
-  FontSizes,
-  TextColors,
-  spacing,
-  ImgSizes
-} from '../../util/theme';
+import { Colors, FontSizes, spacing, ImgSizes } from '../../util/theme';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -36,7 +30,7 @@ const Title = styled.div`
   font-size: ${FontSizes.DEFAULT};
   font-weight: bold;
   line-height: 1.5;
-  color: ${TextColors.BLACK};
+  color: ${Colors.BLACK};
 `;
 
 const Author = styled.div`
@@ -44,7 +38,7 @@ const Author = styled.div`
   font-size: ${FontSizes.SMALLEST};
   font-weight: 500;
   text-align: center;
-  color: ${TextColors.GRAY};
+  color: ${Colors.GRAY};
 `;
 
 const ThumbnailWrapper = styled.div``;

@@ -4,13 +4,7 @@ import { useRouter } from 'next/router';
 
 import AutoComplete from './AutoComplete';
 
-import {
-  Colors,
-  FontSizes,
-  IconSizes,
-  spacing,
-  TextColors
-} from '../../util/theme';
+import { Colors, FontSizes, IconSizes, spacing } from '../../util/theme';
 
 type IconSize = 'SMALLER' | 'LARGER';
 
@@ -69,7 +63,7 @@ const StyledInput = styled.input<{ isMain?: boolean }>`
     font-size: ${props.isMain ? FontSizes.H2 : FontSizes.SMALLEST};
     padding: ${props.isMain ? spacing[4] : spacing[1]};
     &::placeholder {
-      color: ${props.isMain && TextColors.PRIMARY_COLOR};
+      color: ${props.isMain && Colors.PRIMARY_COLOR};
     }
   `}
 `;
