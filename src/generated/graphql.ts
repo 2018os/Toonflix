@@ -762,34 +762,7 @@ export type RandomWebtoonsForWebtoonDetailQuery = { __typename?: 'Query' } & {
 export type MeForWithAuthQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeForWithAuthQuery = { __typename?: 'Query' } & {
-  me: { __typename?: 'User' } & Pick<User, 'id' | 'name'> & {
-      myCollections: { __typename?: 'UserCollectionsConnection' } & {
-        edges?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: 'UserCollectionsEdge' } & {
-                node?: Maybe<
-                  { __typename?: 'Collection' } & CollectionCardFragment
-                >;
-              }
-            >
-          >
-        >;
-      };
-      likedCollections: { __typename?: 'UserCollectionsConnection' } & {
-        edges?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: 'UserCollectionsEdge' } & {
-                node?: Maybe<
-                  { __typename?: 'Collection' } & CollectionCardFragment
-                >;
-              }
-            >
-          >
-        >;
-      };
-    };
+  me: { __typename?: 'User' } & MyProfileFragment;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -977,6 +950,38 @@ export type RandomWebtoonsForRandomQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export type MyProfileFragment = { __typename?: 'User' } & Pick<
+  User,
+  'id' | 'name'
+> & {
+    myCollections: { __typename?: 'UserCollectionsConnection' } & {
+      edges?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'UserCollectionsEdge' } & {
+              node?: Maybe<
+                { __typename?: 'Collection' } & CollectionCardFragment
+              >;
+            }
+          >
+        >
+      >;
+    };
+    likedCollections: { __typename?: 'UserCollectionsConnection' } & {
+      edges?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'UserCollectionsEdge' } & {
+              node?: Maybe<
+                { __typename?: 'Collection' } & CollectionCardFragment
+              >;
+            }
+          >
+        >
+      >;
+    };
+  };
+
 export type WebtoonCardFragment = { __typename?: 'Webtoon' } & Pick<
   Webtoon,
   'id' | 'title' | 'isAdult' | 'isFinish' | 'isPay' | 'thumbnail'
@@ -1018,6 +1023,41 @@ export type CollectionCardFragment = { __typename?: 'Collection' } & Pick<
     };
   };
 
+export const CollectionCardFragmentDoc = gql`
+  fragment collectionCard on Collection {
+    id
+    title
+    webtoonsConnection(first: 4) {
+      edges {
+        node {
+          id
+          thumbnail
+        }
+      }
+    }
+  }
+`;
+export const MyProfileFragmentDoc = gql`
+  fragment myProfile on User {
+    id
+    name
+    myCollections(first: 8) {
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+    likedCollections(first: 8) {
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+  }
+  ${CollectionCardFragmentDoc}
+`;
 export const WebtoonCardFragmentDoc = gql`
   fragment webtoonCard on Webtoon {
     id
@@ -1038,20 +1078,6 @@ export const WebtoonCardFragmentDoc = gql`
     isFinish
     isPay
     thumbnail
-  }
-`;
-export const CollectionCardFragmentDoc = gql`
-  fragment collectionCard on Collection {
-    id
-    title
-    webtoonsConnection(first: 4) {
-      edges {
-        node {
-          id
-          thumbnail
-        }
-      }
-    }
   }
 `;
 export const CollectionsForMainDocument = gql`
@@ -1300,25 +1326,10 @@ export type RandomWebtoonsForWebtoonDetailQueryResult = Apollo.QueryResult<
 export const MeForWithAuthDocument = gql`
   query meForWithAuth {
     me {
-      id
-      name
-      myCollections(first: 8) {
-        edges {
-          node {
-            ...collectionCard
-          }
-        }
-      }
-      likedCollections(first: 8) {
-        edges {
-          node {
-            ...collectionCard
-          }
-        }
-      }
+      ...myProfile
     }
   }
-  ${CollectionCardFragmentDoc}
+  ${MyProfileFragmentDoc}
 `;
 
 /**

@@ -92,22 +92,7 @@ query randomWebtoonsForWebtoonDetail {
 
 query meForWithAuth {
   me {
-    id
-    name
-    myCollections(first: 8) {
-      edges {
-        node {
-          ...collectionCard
-        }
-      }
-    }
-    likedCollections(first: 8) {
-      edges {
-        node {
-          ...collectionCard
-        }
-      }
-    }
+    ...myProfile
   }
 }
 
@@ -238,6 +223,25 @@ query randomWebtoonsForRandom {
   randomWebtoons(take: 8) {
     id
     thumbnail
+  }
+}
+
+fragment myProfile on User {
+  id
+  name
+  myCollections(first: 8) {
+    edges {
+      node {
+        ...collectionCard
+      }
+    }
+  }
+  likedCollections(first: 8) {
+    edges {
+      node {
+        ...collectionCard
+      }
+    }
   }
 }
 

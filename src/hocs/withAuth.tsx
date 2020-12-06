@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-import { User, useMeForWithAuthLazyQuery } from '../generated/graphql';
+import {
+  useMeForWithAuthLazyQuery,
+  MyProfileFragment
+} from '../generated/graphql';
 
 export interface AuthState {
   userId: string | null;
   signIn: (token: string, userId: string) => void;
   signOut: () => void;
   token?: string;
-  me?: Pick<User, 'id' | 'name'> | null;
+  me?: MyProfileFragment | null;
 }
 
 const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
