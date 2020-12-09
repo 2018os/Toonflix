@@ -43,7 +43,7 @@ query webtoonForWebtoonDetail($id: ID!) {
       }
     }
     commentsConnection(first: 4) {
-      counts
+      count
       edges {
         node {
           message
@@ -93,6 +93,20 @@ query randomWebtoonsForWebtoonDetail {
 query meForWithAuth {
   me {
     ...myProfile
+  }
+}
+
+query meForProfile {
+  me {
+    name
+    email
+    level
+    exp
+    status {
+      commentsCount
+      collectionsCount
+      likedCollectionsCount
+    }
   }
 }
 

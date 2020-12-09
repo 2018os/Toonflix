@@ -16,29 +16,14 @@ export type Scalars = {
   Url: any;
 };
 
-/** enum */
-export enum OrderBy {
-  Asc = 'asc',
-  Desc = 'desc'
-}
-
-export enum WebtoonOrderByField {
-  Title = 'title'
-}
-
-export enum CollectionOrderByField {
-  Title = 'title',
-  UpdatedAt = 'updatedAt'
-}
-
 export enum Platform {
   Naver = 'NAVER',
   Daum = 'DAUM'
 }
 
 export enum CollectionType {
-  Private = 'Private',
-  Public = 'Public'
+  Private = 'PRIVATE',
+  Public = 'PUBLIC'
 }
 
 /** interface */
@@ -49,8 +34,8 @@ export type Node = {
 export type Connection = {
   edges?: Maybe<Array<Maybe<Edge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type Edge = {
@@ -293,6 +278,9 @@ export type User = Node & {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+  level: Scalars['Int'];
+  exp: Scalars['Int'];
+  status: UserStatus;
   likedCollections: UserCollectionsConnection;
   myCollections: UserCollectionsConnection;
   commentsConnection: UserCommentsConnection;
@@ -340,128 +328,128 @@ export type UserConnection = Connection & {
   __typename?: 'UserConnection';
   edges?: Maybe<Array<Maybe<UserEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type WebtoonConnection = Connection & {
   __typename?: 'WebtoonConnection';
   edges?: Maybe<Array<Maybe<WebtoonEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type CollectionConnection = Connection & {
   __typename?: 'CollectionConnection';
   edges?: Maybe<Array<Maybe<CollectionEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type AuthorConnection = Connection & {
   __typename?: 'AuthorConnection';
   edges?: Maybe<Array<Maybe<AuthorEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type WebtoonAuthorsConnection = Connection & {
   __typename?: 'WebtoonAuthorsConnection';
   edges?: Maybe<Array<Maybe<WebtoonAuthorsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type WebtoonCollectionsConnection = Connection & {
   __typename?: 'WebtoonCollectionsConnection';
   edges?: Maybe<Array<Maybe<WebtoonCollectionsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type WebtoonCommentsConnection = Connection & {
   __typename?: 'WebtoonCommentsConnection';
   edges?: Maybe<Array<Maybe<WebtoonCommentsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type AuthorWebtoonsConnection = Connection & {
   __typename?: 'AuthorWebtoonsConnection';
   edges?: Maybe<Array<Maybe<AuthorWebtoonsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type CollectionWebtoonsConnection = Connection & {
   __typename?: 'CollectionWebtoonsConnection';
   edges?: Maybe<Array<Maybe<CollectionWebtoonsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type CollectionCommentsConnection = Connection & {
   __typename?: 'CollectionCommentsConnection';
   edges?: Maybe<Array<Maybe<CollectionCommentsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type GenreWebtoonsConnection = Connection & {
   __typename?: 'GenreWebtoonsConnection';
   edges?: Maybe<Array<Maybe<GenreWebtoonsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type SearchResultWebtoonsConnection = Connection & {
   __typename?: 'SearchResultWebtoonsConnection';
   edges?: Maybe<Array<Maybe<SearchResultWebtoonsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type SearchResultCollectionsConnection = Connection & {
   __typename?: 'SearchResultCollectionsConnection';
   edges?: Maybe<Array<Maybe<SearchResultCollectionsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type UserCollectionsConnection = Connection & {
   __typename?: 'UserCollectionsConnection';
   edges?: Maybe<Array<Maybe<UserCollectionsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type UserCommentsConnection = Connection & {
   __typename?: 'UserCommentsConnection';
   edges?: Maybe<Array<Maybe<UserCommentsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 export type CommentCommentsConnection = Connection & {
   __typename?: 'CommentCommentsConnection';
   edges?: Maybe<Array<Maybe<CommentCommentsEdge>>>;
   pageInfo: PageInfo;
-  totalCounts: Scalars['Int'];
-  counts: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
 /** searchResult */
@@ -615,6 +603,13 @@ export type Paging = {
   after?: Maybe<Scalars['ID']>;
 };
 
+export type UserStatus = {
+  __typename?: 'UserStatus';
+  commentsCount: Scalars['Int'];
+  collectionsCount: Scalars['Int'];
+  likedCollectionsCount: Scalars['Int'];
+};
+
 export type CollectionsForMainQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CollectionsForMainQuery = { __typename?: 'Query' } & {
@@ -689,7 +684,7 @@ export type WebtoonForWebtoonDetailQuery = { __typename?: 'Query' } & {
       };
       commentsConnection: { __typename?: 'WebtoonCommentsConnection' } & Pick<
         WebtoonCommentsConnection,
-        'counts'
+        'count'
       > & {
           edges?: Maybe<
             Array<
@@ -763,6 +758,20 @@ export type MeForWithAuthQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeForWithAuthQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'User' } & MyProfileFragment;
+};
+
+export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MeForProfileQuery = { __typename?: 'Query' } & {
+  me: { __typename?: 'User' } & Pick<
+    User,
+    'name' | 'email' | 'level' | 'exp'
+  > & {
+      status: { __typename?: 'UserStatus' } & Pick<
+        UserStatus,
+        'commentsCount' | 'collectionsCount' | 'likedCollectionsCount'
+      >;
+    };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -1176,7 +1185,7 @@ export const WebtoonForWebtoonDetailDocument = gql`
         }
       }
       commentsConnection(first: 4) {
-        counts
+        count
         edges {
           node {
             message
@@ -1378,6 +1387,69 @@ export type MeForWithAuthLazyQueryHookResult = ReturnType<
 export type MeForWithAuthQueryResult = Apollo.QueryResult<
   MeForWithAuthQuery,
   MeForWithAuthQueryVariables
+>;
+export const MeForProfileDocument = gql`
+  query meForProfile {
+    me {
+      name
+      email
+      level
+      exp
+      status {
+        commentsCount
+        collectionsCount
+        likedCollectionsCount
+      }
+    }
+  }
+`;
+
+/**
+ * __useMeForProfileQuery__
+ *
+ * To run a query within a React component, call `useMeForProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeForProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeForProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeForProfileQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    MeForProfileQuery,
+    MeForProfileQueryVariables
+  >
+) {
+  return Apollo.useQuery<MeForProfileQuery, MeForProfileQueryVariables>(
+    MeForProfileDocument,
+    baseOptions
+  );
+}
+export function useMeForProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    MeForProfileQuery,
+    MeForProfileQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<MeForProfileQuery, MeForProfileQueryVariables>(
+    MeForProfileDocument,
+    baseOptions
+  );
+}
+export type MeForProfileQueryHookResult = ReturnType<
+  typeof useMeForProfileQuery
+>;
+export type MeForProfileLazyQueryHookResult = ReturnType<
+  typeof useMeForProfileLazyQuery
+>;
+export type MeForProfileQueryResult = Apollo.QueryResult<
+  MeForProfileQuery,
+  MeForProfileQueryVariables
 >;
 export const LoginDocument = gql`
   mutation login($email: String!, $password: String!) {
