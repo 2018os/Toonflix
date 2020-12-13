@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import {
   ApolloClient,
   ApolloProvider,
@@ -9,6 +8,7 @@ import { setContext } from '@apollo/client/link/context';
 import { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
 import React from 'react';
+import { relayStylePagination } from '@apollo/client/utilities';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -40,7 +40,15 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Webtoon: {
+        fields: {
+          commentsConnection: relayStylePagination()
+        }
+      }
+    }
+  }),
   link: authLink.concat(httpLink)
 });
 

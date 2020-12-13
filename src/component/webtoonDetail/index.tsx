@@ -92,9 +92,10 @@ const Badges = styled.div`
 `;
 
 const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
-  const { data, loading } = useWebtoonForWebtoonDetailQuery({
-    variables: { id }
+  const { data, loading, fetchMore } = useWebtoonForWebtoonDetailQuery({
+    variables: { id, afterCommentId: '' }
   });
+  const lastComment = data?.webtoon.commentsConnection.pageInfo.endCursor;
   return (
     <>
       <Section>
@@ -154,7 +155,17 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
         <Description>{data?.webtoon.description}</Description>
       </Section>
       <Section>
-        <Comments comment={data?.webtoon.commentsConnection} />
+        <Comments
+          comments={data?.webtoon.commentsConnection}
+          onLoadMore={() => {
+            fetchMore({
+              variables: {
+                id,
+                afterCommentId: lastComment
+              }
+            });
+          }}
+        />
       </Section>
       {data && !loading
         ? data.webtoon.genres?.map((genre) => {

@@ -654,6 +654,7 @@ export type CollectionsForMainQuery = { __typename?: 'Query' } & {
 
 export type WebtoonForWebtoonDetailQueryVariables = Exact<{
   id: Scalars['ID'];
+  afterCommentId: Scalars['ID'];
 }>;
 
 export type WebtoonForWebtoonDetailQuery = { __typename?: 'Query' } & {
@@ -682,25 +683,9 @@ export type WebtoonForWebtoonDetailQuery = { __typename?: 'Query' } & {
           >
         >;
       };
-      commentsConnection: { __typename?: 'WebtoonCommentsConnection' } & Pick<
-        WebtoonCommentsConnection,
-        'count'
-      > & {
-          edges?: Maybe<
-            Array<
-              Maybe<
-                { __typename?: 'WebtoonCommentsEdge' } & {
-                  node?: Maybe<
-                    { __typename?: 'Comment' } & Pick<
-                      Comment,
-                      'message' | 'createdAt'
-                    > & { writer: { __typename?: 'User' } & Pick<User, 'name'> }
-                  >;
-                }
-              >
-            >
-          >;
-        };
+      commentsConnection: {
+        __typename?: 'WebtoonCommentsConnection';
+      } & CommentsConnectionForWebtoonDetailFragment;
       collectionsConnection: { __typename?: 'WebtoonCollectionsConnection' } & {
         pageInfo: { __typename?: 'PageInfo' } & Pick<
           PageInfo,
@@ -959,6 +944,29 @@ export type RandomWebtoonsForRandomQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export type CommentsConnectionForWebtoonDetailFragment = {
+  __typename?: 'WebtoonCommentsConnection';
+} & {
+  pageInfo: { __typename?: 'PageInfo' } & Pick<
+    PageInfo,
+    'hasNextPage' | 'endCursor'
+  >;
+  edges?: Maybe<
+    Array<
+      Maybe<
+        { __typename?: 'WebtoonCommentsEdge' } & {
+          node?: Maybe<{ __typename?: 'Comment' } & CommentFragment>;
+        }
+      >
+    >
+  >;
+};
+
+export type CommentFragment = { __typename?: 'Comment' } & Pick<
+  Comment,
+  'message' | 'createdAt'
+> & { writer: { __typename?: 'User' } & Pick<User, 'name'> };
+
 export type MyProfileFragment = { __typename?: 'User' } & Pick<
   User,
   'id' | 'name'
@@ -1027,6 +1035,29 @@ export type CollectionCardFragment = { __typename?: 'Collection' } & Pick<
     };
   };
 
+export const CommentFragmentDoc = gql`
+  fragment comment on Comment {
+    message
+    createdAt
+    writer {
+      name
+    }
+  }
+`;
+export const CommentsConnectionForWebtoonDetailFragmentDoc = gql`
+  fragment commentsConnectionForWebtoonDetail on WebtoonCommentsConnection {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        ...comment
+      }
+    }
+  }
+  ${CommentFragmentDoc}
+`;
 export const CollectionCardFragmentDoc = gql`
   fragment collectionCard on Collection {
     id
@@ -1165,7 +1196,7 @@ export type CollectionsForMainQueryResult = Apollo.QueryResult<
   CollectionsForMainQueryVariables
 >;
 export const WebtoonForWebtoonDetailDocument = gql`
-  query webtoonForWebtoonDetail($id: ID!) {
+  query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
     webtoon(id: $id) {
       id
       title
@@ -1184,17 +1215,8 @@ export const WebtoonForWebtoonDetailDocument = gql`
           }
         }
       }
-      commentsConnection(first: 4) {
-        count
-        edges {
-          node {
-            message
-            createdAt
-            writer {
-              name
-            }
-          }
-        }
+      commentsConnection(first: 4, after: $afterCommentId) {
+        ...commentsConnectionForWebtoonDetail
       }
       collectionsConnection(first: 4) {
         pageInfo {
@@ -1224,6 +1246,7 @@ export const WebtoonForWebtoonDetailDocument = gql`
       }
     }
   }
+  ${CommentsConnectionForWebtoonDetailFragmentDoc}
   ${CollectionCardFragmentDoc}
   ${WebtoonCardFragmentDoc}
 `;
@@ -1241,6 +1264,7 @@ export const WebtoonForWebtoonDetailDocument = gql`
  * const { data, loading, error } = useWebtoonForWebtoonDetailQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      afterCommentId: // value for 'afterCommentId'
  *   },
  * });
  */

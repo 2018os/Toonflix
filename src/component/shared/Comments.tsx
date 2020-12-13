@@ -1,16 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
+import Button from '../../styles/Button';
 import { Text } from '../../styles/Typography';
 
-import {
-  WebtoonCommentsConnection,
-  Maybe,
-  Comment,
-  User
-} from '../../generated/graphql';
+import { CommentsConnectionForWebtoonDetailFragment } from '../../generated/graphql';
 
-import { Colors, spacing } from '../../util/theme';
+import { Colors, FontSizes, spacing } from '../../util/theme';
+import dayjs from '../../util/date';
 
 const CommentsWrapper = styled.div`
   border: solid 1px ${Colors.BORDER_COLOR};
@@ -25,65 +22,59 @@ const CommentsHeader = styled.div`
   border-bottom: 1px solid ${Colors.BORDER_COLOR};
 `;
 
-const Button = styled.button`
-  border: 0;
+const StyledButton = styled(Button)`
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: ${Colors.WHITE};
 `;
 
-// TODO: Enhance name
-const CommentBox = styled.div`
+const Comment = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: ${`${spacing[1]} ${spacing[3]}`};
   border-bottom: 1px solid ${Colors.BORDER_COLOR};
 `;
 
+const CommentInfo = styled.div``;
+
+const Message = styled.div``;
+
+const More = styled(Button)`
+  padding: ${spacing[1]};
+  border-radius: 0 0 10px 10px;
+`;
+
 export interface Props {
-  comment?: { __typename?: 'WebtoonCommentsConnection' } & Pick<
-    WebtoonCommentsConnection,
-    'counts'
-  > & {
-      edges?: Maybe<
-        Array<
-          Maybe<
-            { __typename?: 'WebtoonCommentsEdge' } & {
-              node?: Maybe<
-                { __typename?: 'Comment' } & Pick<
-                  Comment,
-                  'message' | 'createdAt'
-                > & { writer: { __typename?: 'User' } & Pick<User, 'name'> }
-              >;
-            }
-          >
-        >
-      >;
-    };
+  onLoadMore: () => any;
+  comments: CommentsConnectionForWebtoonDetailFragment | undefined;
 }
 
-const Comments: FunctionComponent<Props> = ({ comment }) => {
-  return comment ? (
+const Comments: FunctionComponent<Props> = ({ comments, onLoadMore }) => {
+  return (
     <CommentsWrapper>
       <CommentsHeader>
-        <div>
-          <Text>댓글</Text>
-          <Text color={Colors.GRAY}>{comment.counts}</Text>
-        </div>
-        <Button>전체보기</Button>
+        <Text>댓글</Text>
+        <StyledButton>전체보기</StyledButton>
       </CommentsHeader>
-      {comment?.edges?.map((edge) => {
+      {comments?.edges?.map((edge) => {
+        const createdFromNow =
+          edge && edge.node && dayjs().from(edge.node.createdAt);
         return (
-          <CommentBox key={edge?.__typename}>
-            {edge?.node?.writer.name} - {edge?.node?.createdAt} |{' '}
-            {edge?.node?.message}
-          </CommentBox>
+          <Comment key={edge?.__typename}>
+            <CommentInfo>
+              <Text size={FontSizes.SMALLEST}>
+                {edge?.node?.writer.name} - {createdFromNow}
+              </Text>
+            </CommentInfo>
+            <Message>{edge?.node?.message}</Message>
+          </Comment>
         );
       })}
-      <button type="button">더 보기</button>
+      {comments?.pageInfo.hasNextPage && (
+        <More primary isFull onClick={() => onLoadMore()}>
+          더 보기
+        </More>
+      )}
     </CommentsWrapper>
-  ) : (
-    <div>Loaiding</div>
   );
 };
 

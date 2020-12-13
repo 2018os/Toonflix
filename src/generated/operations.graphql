@@ -23,7 +23,7 @@ query collectionsForMain {
   }
 }
 
-query webtoonForWebtoonDetail($id: ID!) {
+query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
   webtoon(id: $id) {
     id
     title
@@ -42,17 +42,8 @@ query webtoonForWebtoonDetail($id: ID!) {
         }
       }
     }
-    commentsConnection(first: 4) {
-      count
-      edges {
-        node {
-          message
-          createdAt
-          writer {
-            name
-          }
-        }
-      }
+    commentsConnection(first: 4, after: $afterCommentId) {
+      ...commentsConnectionForWebtoonDetail
     }
     collectionsConnection(first: 4) {
       pageInfo {
@@ -237,6 +228,26 @@ query randomWebtoonsForRandom {
   randomWebtoons(take: 8) {
     id
     thumbnail
+  }
+}
+
+fragment commentsConnectionForWebtoonDetail on WebtoonCommentsConnection {
+  pageInfo {
+    hasNextPage
+    endCursor
+  }
+  edges {
+    node {
+      ...comment
+    }
+  }
+}
+
+fragment comment on Comment {
+  message
+  createdAt
+  writer {
+    name
   }
 }
 
