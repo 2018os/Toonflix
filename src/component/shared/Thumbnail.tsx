@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
+import { AdultBadge, PayBadge, CompleteBadge } from '../../styles/Badget';
 
 import { ImgSizes, spacing } from '../../util/theme';
 
@@ -62,11 +62,11 @@ const Thumbnail: FunctionComponent<Props> = ({
       <WidgetList>
         {isAdult && (
           <AdultWidgetWrapper>
-            <AdultWidget />
+            <AdultBadge />
           </AdultWidgetWrapper>
         )}
-        {isPay && <PayWidget />}
-        {isFinish && <CompleteWidget />}
+        {isPay && <PayBadge />}
+        {isFinish && <CompleteBadge />}
       </WidgetList>
       <Cover src={src} />
     </ThumbnailWrapper>
