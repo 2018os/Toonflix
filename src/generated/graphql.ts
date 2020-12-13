@@ -610,6 +610,119 @@ export type UserStatus = {
   likedCollectionsCount: Scalars['Int'];
 };
 
+export type SearchForCategoryQueryVariables = Exact<{
+  keyword?: Maybe<Scalars['String']>;
+  where?: Maybe<SearchFiltering>;
+  webtoonId?: Maybe<Scalars['ID']>;
+  collectionId?: Maybe<Scalars['ID']>;
+}>;
+
+export type SearchForCategoryQuery = { __typename?: 'Query' } & {
+  search: { __typename?: 'SearchResult' } & {
+    webtoonResult?: Maybe<
+      { __typename?: 'SearchResultWebtoonsConnection' } & {
+        pageInfo: { __typename?: 'PageInfo' } & Pick<
+          PageInfo,
+          'endCursor' | 'hasNextPage'
+        >;
+        edges?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'SearchResultWebtoonsEdge' } & {
+                node?: Maybe<{ __typename?: 'Webtoon' } & WebtoonCardFragment>;
+              }
+            >
+          >
+        >;
+      }
+    >;
+    collectionResult?: Maybe<
+      { __typename?: 'SearchResultCollectionsConnection' } & {
+        pageInfo: { __typename?: 'PageInfo' } & Pick<
+          PageInfo,
+          'endCursor' | 'hasNextPage'
+        >;
+        edges?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'SearchResultCollectionsEdge' } & {
+                node?: Maybe<
+                  { __typename?: 'Collection' } & CollectionCardFragment
+                >;
+              }
+            >
+          >
+        >;
+      }
+    >;
+  };
+};
+
+export type CollectionForCollectionDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+  after?: Maybe<Scalars['ID']>;
+}>;
+
+export type CollectionForCollectionDetailQuery = { __typename?: 'Query' } & {
+  collection: { __typename?: 'Collection' } & Pick<
+    Collection,
+    'id' | 'title' | 'description'
+  > & {
+      writer: { __typename?: 'User' } & Pick<User, 'name'>;
+      webtoonsConnection: { __typename?: 'CollectionWebtoonsConnection' } & {
+        pageInfo: { __typename?: 'PageInfo' } & Pick<
+          PageInfo,
+          'hasNextPage' | 'endCursor'
+        >;
+        edges?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'CollectionWebtoonsEdge' } & {
+                node?: Maybe<{ __typename?: 'Webtoon' } & WebtoonCardFragment>;
+              }
+            >
+          >
+        >;
+      };
+    };
+};
+
+export type CollectionsForCollectionListQueryVariables = Exact<{
+  keyword?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['ID']>;
+}>;
+
+export type CollectionsForCollectionListQuery = { __typename?: 'Query' } & {
+  collections: { __typename?: 'CollectionConnection' } & {
+    pageInfo: { __typename?: 'PageInfo' } & Pick<
+      PageInfo,
+      'hasNextPage' | 'endCursor'
+    >;
+    edges?: Maybe<
+      Array<
+        Maybe<
+          { __typename?: 'CollectionEdge' } & {
+            node?: Maybe<
+              { __typename?: 'Collection' } & CollectionCardFragment
+            >;
+          }
+        >
+      >
+    >;
+  };
+};
+
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+export type LoginMutation = { __typename?: 'Mutation' } & {
+  login: { __typename?: 'AuthPayload' } & Pick<AuthPayload, 'token'> & {
+      user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
+    };
+};
+
 export type CollectionsForMainQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CollectionsForMainQuery = { __typename?: 'Query' } & {
@@ -650,6 +763,42 @@ export type CollectionsForMainQuery = { __typename?: 'Query' } & {
       >
     >;
   };
+};
+
+export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MeForProfileQuery = { __typename?: 'Query' } & {
+  me: { __typename?: 'User' } & Pick<
+    User,
+    'name' | 'email' | 'level' | 'exp'
+  > & {
+      status: { __typename?: 'UserStatus' } & Pick<
+        UserStatus,
+        'commentsCount' | 'collectionsCount' | 'likedCollectionsCount'
+      >;
+    };
+};
+
+export type RandomWebtoonsForRandomQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type RandomWebtoonsForRandomQuery = { __typename?: 'Query' } & {
+  randomWebtoons?: Maybe<
+    Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
+  >;
+};
+
+export type SignupMutationVariables = Exact<{
+  name: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+export type SignupMutation = { __typename?: 'Mutation' } & {
+  signup: { __typename?: 'AuthPayload' } & Pick<AuthPayload, 'token'> & {
+      user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
+    };
 };
 
 export type WebtoonForWebtoonDetailQueryVariables = Exact<{
@@ -745,116 +894,6 @@ export type MeForWithAuthQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'User' } & MyProfileFragment;
 };
 
-export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
-
-export type MeForProfileQuery = { __typename?: 'Query' } & {
-  me: { __typename?: 'User' } & Pick<
-    User,
-    'name' | 'email' | 'level' | 'exp'
-  > & {
-      status: { __typename?: 'UserStatus' } & Pick<
-        UserStatus,
-        'commentsCount' | 'collectionsCount' | 'likedCollectionsCount'
-      >;
-    };
-};
-
-export type LoginMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
-export type LoginMutation = { __typename?: 'Mutation' } & {
-  login: { __typename?: 'AuthPayload' } & Pick<AuthPayload, 'token'> & {
-      user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
-    };
-};
-
-export type SignupMutationVariables = Exact<{
-  name: Scalars['String'];
-  email: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
-export type SignupMutation = { __typename?: 'Mutation' } & {
-  signup: { __typename?: 'AuthPayload' } & Pick<AuthPayload, 'token'> & {
-      user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
-    };
-};
-
-export type CollectionsForCollectionListQueryVariables = Exact<{
-  keyword?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['ID']>;
-}>;
-
-export type CollectionsForCollectionListQuery = { __typename?: 'Query' } & {
-  collections: { __typename?: 'CollectionConnection' } & {
-    pageInfo: { __typename?: 'PageInfo' } & Pick<
-      PageInfo,
-      'hasNextPage' | 'endCursor'
-    >;
-    edges?: Maybe<
-      Array<
-        Maybe<
-          { __typename?: 'CollectionEdge' } & {
-            node?: Maybe<
-              { __typename?: 'Collection' } & CollectionCardFragment
-            >;
-          }
-        >
-      >
-    >;
-  };
-};
-
-export type SearchForCategoryQueryVariables = Exact<{
-  keyword?: Maybe<Scalars['String']>;
-  where?: Maybe<SearchFiltering>;
-  webtoonId?: Maybe<Scalars['ID']>;
-  collectionId?: Maybe<Scalars['ID']>;
-}>;
-
-export type SearchForCategoryQuery = { __typename?: 'Query' } & {
-  search: { __typename?: 'SearchResult' } & {
-    webtoonResult?: Maybe<
-      { __typename?: 'SearchResultWebtoonsConnection' } & {
-        pageInfo: { __typename?: 'PageInfo' } & Pick<
-          PageInfo,
-          'endCursor' | 'hasNextPage'
-        >;
-        edges?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: 'SearchResultWebtoonsEdge' } & {
-                node?: Maybe<{ __typename?: 'Webtoon' } & WebtoonCardFragment>;
-              }
-            >
-          >
-        >;
-      }
-    >;
-    collectionResult?: Maybe<
-      { __typename?: 'SearchResultCollectionsConnection' } & {
-        pageInfo: { __typename?: 'PageInfo' } & Pick<
-          PageInfo,
-          'endCursor' | 'hasNextPage'
-        >;
-        edges?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: 'SearchResultCollectionsEdge' } & {
-                node?: Maybe<
-                  { __typename?: 'Collection' } & CollectionCardFragment
-                >;
-              }
-            >
-          >
-        >;
-      }
-    >;
-  };
-};
-
 export type GenresForFilterQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GenresForFilterQuery = { __typename?: 'Query' } & {
@@ -903,45 +942,6 @@ export type SearchForAutoCompleteQuery = { __typename?: 'Query' } & {
       }
     >;
   };
-};
-
-export type CollectionForCollectionDetailQueryVariables = Exact<{
-  id: Scalars['ID'];
-  after?: Maybe<Scalars['ID']>;
-}>;
-
-export type CollectionForCollectionDetailQuery = { __typename?: 'Query' } & {
-  collection: { __typename?: 'Collection' } & Pick<
-    Collection,
-    'id' | 'title' | 'description'
-  > & {
-      writer: { __typename?: 'User' } & Pick<User, 'name'>;
-      webtoonsConnection: { __typename?: 'CollectionWebtoonsConnection' } & {
-        pageInfo: { __typename?: 'PageInfo' } & Pick<
-          PageInfo,
-          'hasNextPage' | 'endCursor'
-        >;
-        edges?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: 'CollectionWebtoonsEdge' } & {
-                node?: Maybe<{ __typename?: 'Webtoon' } & WebtoonCardFragment>;
-              }
-            >
-          >
-        >;
-      };
-    };
-};
-
-export type RandomWebtoonsForRandomQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type RandomWebtoonsForRandomQuery = { __typename?: 'Query' } & {
-  randomWebtoons?: Maybe<
-    Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
-  >;
 };
 
 export type CommentsConnectionForWebtoonDetailFragment = {
@@ -1121,6 +1121,288 @@ export const WebtoonCardFragmentDoc = gql`
     thumbnail
   }
 `;
+export const SearchForCategoryDocument = gql`
+  query searchForCategory(
+    $keyword: String
+    $where: SearchFiltering
+    $webtoonId: ID
+    $collectionId: ID
+  ) {
+    search(
+      keyword: $keyword
+      where: $where
+      webtoonPaging: { first: 10, after: $webtoonId }
+      collectionPaging: { first: 10, after: $collectionId }
+    ) {
+      webtoonResult {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            ...webtoonCard
+          }
+        }
+      }
+      collectionResult {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            ...collectionCard
+          }
+        }
+      }
+    }
+  }
+  ${WebtoonCardFragmentDoc}
+  ${CollectionCardFragmentDoc}
+`;
+
+/**
+ * __useSearchForCategoryQuery__
+ *
+ * To run a query within a React component, call `useSearchForCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchForCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchForCategoryQuery({
+ *   variables: {
+ *      keyword: // value for 'keyword'
+ *      where: // value for 'where'
+ *      webtoonId: // value for 'webtoonId'
+ *      collectionId: // value for 'collectionId'
+ *   },
+ * });
+ */
+export function useSearchForCategoryQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    SearchForCategoryQuery,
+    SearchForCategoryQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    SearchForCategoryQuery,
+    SearchForCategoryQueryVariables
+  >(SearchForCategoryDocument, baseOptions);
+}
+export function useSearchForCategoryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SearchForCategoryQuery,
+    SearchForCategoryQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    SearchForCategoryQuery,
+    SearchForCategoryQueryVariables
+  >(SearchForCategoryDocument, baseOptions);
+}
+export type SearchForCategoryQueryHookResult = ReturnType<
+  typeof useSearchForCategoryQuery
+>;
+export type SearchForCategoryLazyQueryHookResult = ReturnType<
+  typeof useSearchForCategoryLazyQuery
+>;
+export type SearchForCategoryQueryResult = Apollo.QueryResult<
+  SearchForCategoryQuery,
+  SearchForCategoryQueryVariables
+>;
+export const CollectionForCollectionDetailDocument = gql`
+  query collectionForCollectionDetail($id: ID!, $after: ID) {
+    collection(id: $id) {
+      id
+      title
+      description
+      writer {
+        name
+      }
+      webtoonsConnection(first: 4, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            ...webtoonCard
+          }
+        }
+      }
+    }
+  }
+  ${WebtoonCardFragmentDoc}
+`;
+
+/**
+ * __useCollectionForCollectionDetailQuery__
+ *
+ * To run a query within a React component, call `useCollectionForCollectionDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionForCollectionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionForCollectionDetailQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useCollectionForCollectionDetailQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CollectionForCollectionDetailQuery,
+    CollectionForCollectionDetailQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    CollectionForCollectionDetailQuery,
+    CollectionForCollectionDetailQueryVariables
+  >(CollectionForCollectionDetailDocument, baseOptions);
+}
+export function useCollectionForCollectionDetailLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CollectionForCollectionDetailQuery,
+    CollectionForCollectionDetailQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    CollectionForCollectionDetailQuery,
+    CollectionForCollectionDetailQueryVariables
+  >(CollectionForCollectionDetailDocument, baseOptions);
+}
+export type CollectionForCollectionDetailQueryHookResult = ReturnType<
+  typeof useCollectionForCollectionDetailQuery
+>;
+export type CollectionForCollectionDetailLazyQueryHookResult = ReturnType<
+  typeof useCollectionForCollectionDetailLazyQuery
+>;
+export type CollectionForCollectionDetailQueryResult = Apollo.QueryResult<
+  CollectionForCollectionDetailQuery,
+  CollectionForCollectionDetailQueryVariables
+>;
+export const CollectionsForCollectionListDocument = gql`
+  query collectionsForCollectionList($keyword: String, $after: ID) {
+    collections(first: 3, keyword: $keyword, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+  }
+  ${CollectionCardFragmentDoc}
+`;
+
+/**
+ * __useCollectionsForCollectionListQuery__
+ *
+ * To run a query within a React component, call `useCollectionsForCollectionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionsForCollectionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionsForCollectionListQuery({
+ *   variables: {
+ *      keyword: // value for 'keyword'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useCollectionsForCollectionListQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >(CollectionsForCollectionListDocument, baseOptions);
+}
+export function useCollectionsForCollectionListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    CollectionsForCollectionListQuery,
+    CollectionsForCollectionListQueryVariables
+  >(CollectionsForCollectionListDocument, baseOptions);
+}
+export type CollectionsForCollectionListQueryHookResult = ReturnType<
+  typeof useCollectionsForCollectionListQuery
+>;
+export type CollectionsForCollectionListLazyQueryHookResult = ReturnType<
+  typeof useCollectionsForCollectionListLazyQuery
+>;
+export type CollectionsForCollectionListQueryResult = Apollo.QueryResult<
+  CollectionsForCollectionListQuery,
+  CollectionsForCollectionListQueryVariables
+>;
+export const LoginDocument = gql`
+  mutation login($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      token
+      user {
+        id
+      }
+    }
+  }
+`;
+export type LoginMutationFn = Apollo.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useLoginMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >
+) {
+  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    baseOptions
+  );
+}
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
+>;
 export const CollectionsForMainDocument = gql`
   query collectionsForMain {
     collections(first: 4) {
@@ -1195,6 +1477,176 @@ export type CollectionsForMainLazyQueryHookResult = ReturnType<
 export type CollectionsForMainQueryResult = Apollo.QueryResult<
   CollectionsForMainQuery,
   CollectionsForMainQueryVariables
+>;
+export const MeForProfileDocument = gql`
+  query meForProfile {
+    me {
+      name
+      email
+      level
+      exp
+      status {
+        commentsCount
+        collectionsCount
+        likedCollectionsCount
+      }
+    }
+  }
+`;
+
+/**
+ * __useMeForProfileQuery__
+ *
+ * To run a query within a React component, call `useMeForProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeForProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeForProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeForProfileQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    MeForProfileQuery,
+    MeForProfileQueryVariables
+  >
+) {
+  return Apollo.useQuery<MeForProfileQuery, MeForProfileQueryVariables>(
+    MeForProfileDocument,
+    baseOptions
+  );
+}
+export function useMeForProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    MeForProfileQuery,
+    MeForProfileQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<MeForProfileQuery, MeForProfileQueryVariables>(
+    MeForProfileDocument,
+    baseOptions
+  );
+}
+export type MeForProfileQueryHookResult = ReturnType<
+  typeof useMeForProfileQuery
+>;
+export type MeForProfileLazyQueryHookResult = ReturnType<
+  typeof useMeForProfileLazyQuery
+>;
+export type MeForProfileQueryResult = Apollo.QueryResult<
+  MeForProfileQuery,
+  MeForProfileQueryVariables
+>;
+export const RandomWebtoonsForRandomDocument = gql`
+  query randomWebtoonsForRandom {
+    randomWebtoons(take: 8) {
+      id
+      thumbnail
+    }
+  }
+`;
+
+/**
+ * __useRandomWebtoonsForRandomQuery__
+ *
+ * To run a query within a React component, call `useRandomWebtoonsForRandomQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRandomWebtoonsForRandomQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRandomWebtoonsForRandomQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRandomWebtoonsForRandomQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    RandomWebtoonsForRandomQuery,
+    RandomWebtoonsForRandomQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    RandomWebtoonsForRandomQuery,
+    RandomWebtoonsForRandomQueryVariables
+  >(RandomWebtoonsForRandomDocument, baseOptions);
+}
+export function useRandomWebtoonsForRandomLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    RandomWebtoonsForRandomQuery,
+    RandomWebtoonsForRandomQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    RandomWebtoonsForRandomQuery,
+    RandomWebtoonsForRandomQueryVariables
+  >(RandomWebtoonsForRandomDocument, baseOptions);
+}
+export type RandomWebtoonsForRandomQueryHookResult = ReturnType<
+  typeof useRandomWebtoonsForRandomQuery
+>;
+export type RandomWebtoonsForRandomLazyQueryHookResult = ReturnType<
+  typeof useRandomWebtoonsForRandomLazyQuery
+>;
+export type RandomWebtoonsForRandomQueryResult = Apollo.QueryResult<
+  RandomWebtoonsForRandomQuery,
+  RandomWebtoonsForRandomQueryVariables
+>;
+export const SignupDocument = gql`
+  mutation signup($name: String!, $email: String!, $password: String!) {
+    signup(input: { name: $name, email: $email, password: $password }) {
+      token
+      user {
+        id
+      }
+    }
+  }
+`;
+export type SignupMutationFn = Apollo.MutationFunction<
+  SignupMutation,
+  SignupMutationVariables
+>;
+
+/**
+ * __useSignupMutation__
+ *
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSignupMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SignupMutation,
+    SignupMutationVariables
+  >
+) {
+  return Apollo.useMutation<SignupMutation, SignupMutationVariables>(
+    SignupDocument,
+    baseOptions
+  );
+}
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
+export type SignupMutationOptions = Apollo.BaseMutationOptions<
+  SignupMutation,
+  SignupMutationVariables
 >;
 export const WebtoonForWebtoonDetailDocument = gql`
   query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
@@ -1413,328 +1865,6 @@ export type MeForWithAuthQueryResult = Apollo.QueryResult<
   MeForWithAuthQuery,
   MeForWithAuthQueryVariables
 >;
-export const MeForProfileDocument = gql`
-  query meForProfile {
-    me {
-      name
-      email
-      level
-      exp
-      status {
-        commentsCount
-        collectionsCount
-        likedCollectionsCount
-      }
-    }
-  }
-`;
-
-/**
- * __useMeForProfileQuery__
- *
- * To run a query within a React component, call `useMeForProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeForProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMeForProfileQuery({
- *   variables: {
- *   },
- * });
- */
-export function useMeForProfileQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    MeForProfileQuery,
-    MeForProfileQueryVariables
-  >
-) {
-  return Apollo.useQuery<MeForProfileQuery, MeForProfileQueryVariables>(
-    MeForProfileDocument,
-    baseOptions
-  );
-}
-export function useMeForProfileLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    MeForProfileQuery,
-    MeForProfileQueryVariables
-  >
-) {
-  return Apollo.useLazyQuery<MeForProfileQuery, MeForProfileQueryVariables>(
-    MeForProfileDocument,
-    baseOptions
-  );
-}
-export type MeForProfileQueryHookResult = ReturnType<
-  typeof useMeForProfileQuery
->;
-export type MeForProfileLazyQueryHookResult = ReturnType<
-  typeof useMeForProfileLazyQuery
->;
-export type MeForProfileQueryResult = Apollo.QueryResult<
-  MeForProfileQuery,
-  MeForProfileQueryVariables
->;
-export const LoginDocument = gql`
-  mutation login($email: String!, $password: String!) {
-    login(input: { email: $email, password: $password }) {
-      token
-      user {
-        id
-      }
-    }
-  }
-`;
-export type LoginMutationFn = Apollo.MutationFunction<
-  LoginMutation,
-  LoginMutationVariables
->;
-
-/**
- * __useLoginMutation__
- *
- * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLoginMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [loginMutation, { data, loading, error }] = useLoginMutation({
- *   variables: {
- *      email: // value for 'email'
- *      password: // value for 'password'
- *   },
- * });
- */
-export function useLoginMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    LoginMutation,
-    LoginMutationVariables
-  >
-) {
-  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    baseOptions
-  );
-}
-export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<
-  LoginMutation,
-  LoginMutationVariables
->;
-export const SignupDocument = gql`
-  mutation signup($name: String!, $email: String!, $password: String!) {
-    signup(input: { name: $name, email: $email, password: $password }) {
-      token
-      user {
-        id
-      }
-    }
-  }
-`;
-export type SignupMutationFn = Apollo.MutationFunction<
-  SignupMutation,
-  SignupMutationVariables
->;
-
-/**
- * __useSignupMutation__
- *
- * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSignupMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [signupMutation, { data, loading, error }] = useSignupMutation({
- *   variables: {
- *      name: // value for 'name'
- *      email: // value for 'email'
- *      password: // value for 'password'
- *   },
- * });
- */
-export function useSignupMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    SignupMutation,
-    SignupMutationVariables
-  >
-) {
-  return Apollo.useMutation<SignupMutation, SignupMutationVariables>(
-    SignupDocument,
-    baseOptions
-  );
-}
-export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
-export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
-export type SignupMutationOptions = Apollo.BaseMutationOptions<
-  SignupMutation,
-  SignupMutationVariables
->;
-export const CollectionsForCollectionListDocument = gql`
-  query collectionsForCollectionList($keyword: String, $after: ID) {
-    collections(first: 3, keyword: $keyword, after: $after) {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      edges {
-        node {
-          ...collectionCard
-        }
-      }
-    }
-  }
-  ${CollectionCardFragmentDoc}
-`;
-
-/**
- * __useCollectionsForCollectionListQuery__
- *
- * To run a query within a React component, call `useCollectionsForCollectionListQuery` and pass it any options that fit your needs.
- * When your component renders, `useCollectionsForCollectionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCollectionsForCollectionListQuery({
- *   variables: {
- *      keyword: // value for 'keyword'
- *      after: // value for 'after'
- *   },
- * });
- */
-export function useCollectionsForCollectionListQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CollectionsForCollectionListQuery,
-    CollectionsForCollectionListQueryVariables
-  >
-) {
-  return Apollo.useQuery<
-    CollectionsForCollectionListQuery,
-    CollectionsForCollectionListQueryVariables
-  >(CollectionsForCollectionListDocument, baseOptions);
-}
-export function useCollectionsForCollectionListLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CollectionsForCollectionListQuery,
-    CollectionsForCollectionListQueryVariables
-  >
-) {
-  return Apollo.useLazyQuery<
-    CollectionsForCollectionListQuery,
-    CollectionsForCollectionListQueryVariables
-  >(CollectionsForCollectionListDocument, baseOptions);
-}
-export type CollectionsForCollectionListQueryHookResult = ReturnType<
-  typeof useCollectionsForCollectionListQuery
->;
-export type CollectionsForCollectionListLazyQueryHookResult = ReturnType<
-  typeof useCollectionsForCollectionListLazyQuery
->;
-export type CollectionsForCollectionListQueryResult = Apollo.QueryResult<
-  CollectionsForCollectionListQuery,
-  CollectionsForCollectionListQueryVariables
->;
-export const SearchForCategoryDocument = gql`
-  query searchForCategory(
-    $keyword: String
-    $where: SearchFiltering
-    $webtoonId: ID
-    $collectionId: ID
-  ) {
-    search(
-      keyword: $keyword
-      where: $where
-      webtoonPaging: { first: 10, after: $webtoonId }
-      collectionPaging: { first: 10, after: $collectionId }
-    ) {
-      webtoonResult {
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        edges {
-          node {
-            ...webtoonCard
-          }
-        }
-      }
-      collectionResult {
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        edges {
-          node {
-            ...collectionCard
-          }
-        }
-      }
-    }
-  }
-  ${WebtoonCardFragmentDoc}
-  ${CollectionCardFragmentDoc}
-`;
-
-/**
- * __useSearchForCategoryQuery__
- *
- * To run a query within a React component, call `useSearchForCategoryQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchForCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchForCategoryQuery({
- *   variables: {
- *      keyword: // value for 'keyword'
- *      where: // value for 'where'
- *      webtoonId: // value for 'webtoonId'
- *      collectionId: // value for 'collectionId'
- *   },
- * });
- */
-export function useSearchForCategoryQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    SearchForCategoryQuery,
-    SearchForCategoryQueryVariables
-  >
-) {
-  return Apollo.useQuery<
-    SearchForCategoryQuery,
-    SearchForCategoryQueryVariables
-  >(SearchForCategoryDocument, baseOptions);
-}
-export function useSearchForCategoryLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SearchForCategoryQuery,
-    SearchForCategoryQueryVariables
-  >
-) {
-  return Apollo.useLazyQuery<
-    SearchForCategoryQuery,
-    SearchForCategoryQueryVariables
-  >(SearchForCategoryDocument, baseOptions);
-}
-export type SearchForCategoryQueryHookResult = ReturnType<
-  typeof useSearchForCategoryQuery
->;
-export type SearchForCategoryLazyQueryHookResult = ReturnType<
-  typeof useSearchForCategoryLazyQuery
->;
-export type SearchForCategoryQueryResult = Apollo.QueryResult<
-  SearchForCategoryQuery,
-  SearchForCategoryQueryVariables
->;
 export const GenresForFilterDocument = gql`
   query genresForFilter {
     genres {
@@ -1865,134 +1995,4 @@ export type SearchForAutoCompleteLazyQueryHookResult = ReturnType<
 export type SearchForAutoCompleteQueryResult = Apollo.QueryResult<
   SearchForAutoCompleteQuery,
   SearchForAutoCompleteQueryVariables
->;
-export const CollectionForCollectionDetailDocument = gql`
-  query collectionForCollectionDetail($id: ID!, $after: ID) {
-    collection(id: $id) {
-      id
-      title
-      description
-      writer {
-        name
-      }
-      webtoonsConnection(first: 4, after: $after) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            ...webtoonCard
-          }
-        }
-      }
-    }
-  }
-  ${WebtoonCardFragmentDoc}
-`;
-
-/**
- * __useCollectionForCollectionDetailQuery__
- *
- * To run a query within a React component, call `useCollectionForCollectionDetailQuery` and pass it any options that fit your needs.
- * When your component renders, `useCollectionForCollectionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCollectionForCollectionDetailQuery({
- *   variables: {
- *      id: // value for 'id'
- *      after: // value for 'after'
- *   },
- * });
- */
-export function useCollectionForCollectionDetailQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CollectionForCollectionDetailQuery,
-    CollectionForCollectionDetailQueryVariables
-  >
-) {
-  return Apollo.useQuery<
-    CollectionForCollectionDetailQuery,
-    CollectionForCollectionDetailQueryVariables
-  >(CollectionForCollectionDetailDocument, baseOptions);
-}
-export function useCollectionForCollectionDetailLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CollectionForCollectionDetailQuery,
-    CollectionForCollectionDetailQueryVariables
-  >
-) {
-  return Apollo.useLazyQuery<
-    CollectionForCollectionDetailQuery,
-    CollectionForCollectionDetailQueryVariables
-  >(CollectionForCollectionDetailDocument, baseOptions);
-}
-export type CollectionForCollectionDetailQueryHookResult = ReturnType<
-  typeof useCollectionForCollectionDetailQuery
->;
-export type CollectionForCollectionDetailLazyQueryHookResult = ReturnType<
-  typeof useCollectionForCollectionDetailLazyQuery
->;
-export type CollectionForCollectionDetailQueryResult = Apollo.QueryResult<
-  CollectionForCollectionDetailQuery,
-  CollectionForCollectionDetailQueryVariables
->;
-export const RandomWebtoonsForRandomDocument = gql`
-  query randomWebtoonsForRandom {
-    randomWebtoons(take: 8) {
-      id
-      thumbnail
-    }
-  }
-`;
-
-/**
- * __useRandomWebtoonsForRandomQuery__
- *
- * To run a query within a React component, call `useRandomWebtoonsForRandomQuery` and pass it any options that fit your needs.
- * When your component renders, `useRandomWebtoonsForRandomQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRandomWebtoonsForRandomQuery({
- *   variables: {
- *   },
- * });
- */
-export function useRandomWebtoonsForRandomQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    RandomWebtoonsForRandomQuery,
-    RandomWebtoonsForRandomQueryVariables
-  >
-) {
-  return Apollo.useQuery<
-    RandomWebtoonsForRandomQuery,
-    RandomWebtoonsForRandomQueryVariables
-  >(RandomWebtoonsForRandomDocument, baseOptions);
-}
-export function useRandomWebtoonsForRandomLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    RandomWebtoonsForRandomQuery,
-    RandomWebtoonsForRandomQueryVariables
-  >
-) {
-  return Apollo.useLazyQuery<
-    RandomWebtoonsForRandomQuery,
-    RandomWebtoonsForRandomQueryVariables
-  >(RandomWebtoonsForRandomDocument, baseOptions);
-}
-export type RandomWebtoonsForRandomQueryHookResult = ReturnType<
-  typeof useRandomWebtoonsForRandomQuery
->;
-export type RandomWebtoonsForRandomLazyQueryHookResult = ReturnType<
-  typeof useRandomWebtoonsForRandomLazyQuery
->;
-export type RandomWebtoonsForRandomQueryResult = Apollo.QueryResult<
-  RandomWebtoonsForRandomQuery,
-  RandomWebtoonsForRandomQueryVariables
 >;

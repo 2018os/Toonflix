@@ -1,0 +1,6 @@
+query randomWebtoonsForRandom {
+  randomWebtoons(take: 8) {
+    id
+    thumbnail
+  }
+}

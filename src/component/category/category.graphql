@@ -1,0 +1,36 @@
+query searchForCategory(
+  $keyword: String
+  $where: SearchFiltering
+  $webtoonId: ID
+  $collectionId: ID
+) {
+  search(
+    keyword: $keyword
+    where: $where
+    webtoonPaging: { first: 10, after: $webtoonId }
+    collectionPaging: { first: 10, after: $collectionId }
+  ) {
+    webtoonResult {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ...webtoonCard
+        }
+      }
+    }
+    collectionResult {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+  }
+}

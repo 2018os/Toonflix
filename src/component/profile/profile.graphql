@@ -1,0 +1,13 @@
+query meForProfile {
+  me {
+    name
+    email
+    level
+    exp
+    status {
+      commentsCount
+      collectionsCount
+      likedCollectionsCount
+    }
+  }
+}

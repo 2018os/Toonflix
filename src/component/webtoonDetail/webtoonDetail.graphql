@@ -1,0 +1,57 @@
+query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
+  webtoon(id: $id) {
+    id
+    title
+    description
+    url
+    thumbnail
+    isPay
+    isAdult
+    isFinish
+    platform
+    authorsConnection(first: 4) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+    commentsConnection(first: 4, after: $afterCommentId) {
+      ...commentsConnectionForWebtoonDetail
+    }
+    collectionsConnection(first: 4) {
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+      }
+      edges {
+        node {
+          ...collectionCard
+        }
+      }
+    }
+    genres {
+      code
+      name
+      webtoonsConnection(first: 6, after: $id) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+        }
+        edges {
+          node {
+            ...webtoonCard
+          }
+        }
+      }
+    }
+  }
+}
+
+query randomWebtoonsForWebtoonDetail {
+  randomWebtoons(take: 6) {
+    id
+    thumbnail
+  }
+}

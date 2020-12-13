@@ -1,0 +1,21 @@
+query collectionForCollectionDetail($id: ID!, $after: ID) {
+  collection(id: $id) {
+    id
+    title
+    description
+    writer {
+      name
+    }
+    webtoonsConnection(first: 4, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          ...webtoonCard
+        }
+      }
+    }
+  }
+}

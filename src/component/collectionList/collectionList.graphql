@@ -1,0 +1,13 @@
+query collectionsForCollectionList($keyword: String, $after: ID) {
+  collections(first: 3, keyword: $keyword, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        ...collectionCard
+      }
+    }
+  }
+}
