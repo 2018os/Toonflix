@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { spacing } from '../../util/theme';
+import { spacing } from '../../../util/theme';
 
 const Tags = styled.div`
   & > * {
@@ -10,4 +10,5 @@ const Tags = styled.div`
     margin-right: 0;
   }
 `;
+
 export default Tags;

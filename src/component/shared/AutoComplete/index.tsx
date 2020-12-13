@@ -2,11 +2,11 @@ import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import { Text } from '../../styles/Typography';
+import { Text } from '../../../styles/Typography';
 
-import { useSearchForAutoCompleteLazyQuery } from '../../generated/graphql';
+import { useSearchForAutoCompleteLazyQuery } from '../../../generated/graphql';
 
-import { Colors, spacing } from '../../util/theme';
+import { Colors, spacing } from '../../../util/theme';
 
 interface Props {
   keyword: string;
@@ -49,6 +49,8 @@ const Button = styled.button`
   padding: ${spacing[1]};
   cursor: pointer;
 `;
+
+// TODO: AutoComplete should not get data
 
 const AutoComplete: FunctionComponent<Props> = ({ keyword }) => {
   const router = useRouter();

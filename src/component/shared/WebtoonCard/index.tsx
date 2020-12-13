@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import Tag from './Tag';
-import Tags from './Tags';
-import Thumbnail from './Thumbnail';
-import Link from './Link';
+import Tag from '../Tag';
+import Tags from '../Tags';
+import Thumbnail from '../Thumbnail';
+import Link from '../Link';
 
-import { WebtoonCardFragment } from '../../generated/graphql';
+import { WebtoonCardFragment } from '../../../generated/graphql';
 
-import { Colors, FontSizes, spacing, ImgSizes } from '../../util/theme';
+import { Colors, FontSizes, spacing, ImgSizes } from '../../../util/theme';
 
 const Card = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { spacing, FontSizes, Colors } from '../../util/theme';
+import { spacing, FontSizes, Colors } from '../../../util/theme';
 
 const Tag = styled.div.attrs({
   className: 'tag'

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { ImgSizes, Colors } from '../../util/theme';
+import { ImgSizes, Colors } from '../../../util/theme';
 
 interface ThumbnailProps {
   size: ImgSizes;

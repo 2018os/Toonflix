@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
-import { ImgSizes, Colors } from '../../util/theme';
+import { ImgSizes, Colors } from '../../../util/theme';
 
-import Link from './Link';
+import Link from '../Link';
 
 interface ThumbnailProps {
   size: ImgSizes;

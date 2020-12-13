@@ -2,9 +2,9 @@ import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import AutoComplete from './AutoComplete';
+import AutoComplete from '../AutoComplete';
 
-import { Colors, FontSizes, IconSizes, spacing } from '../../util/theme';
+import { Colors, FontSizes, IconSizes, spacing } from '../../../util/theme';
 
 type IconSize = 'SMALLER' | 'LARGER';
 

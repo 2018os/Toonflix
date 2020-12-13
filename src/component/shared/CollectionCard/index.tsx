@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { Text } from '../../styles/Typography';
+import { Text } from '../../../styles/Typography';
 
-import { FontSizes, ImgSizes } from '../../util/theme';
+import { FontSizes, ImgSizes } from '../../../util/theme';
 
-import Link from './Link';
-import Thumbnail from './Thumbnail';
+import Link from '../Link';
+import Thumbnail from '../Thumbnail';
 
-import { CollectionCardFragment } from '../../generated/graphql';
+import { CollectionCardFragment } from '../../../generated/graphql';
 
 const CollectionThumbnail = styled.div.attrs({
   className: 'collection-thumbnail'

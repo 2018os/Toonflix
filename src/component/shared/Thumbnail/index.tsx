@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { AdultBadge, PayBadge, CompleteBadge } from '../../styles/Badget';
+import { AdultBadge, PayBadge, CompleteBadge } from '../../../styles/Badget';
 
-import { ImgSizes, spacing } from '../../util/theme';
+import { ImgSizes, spacing } from '../../../util/theme';
 
 type Props = {
   src: string;

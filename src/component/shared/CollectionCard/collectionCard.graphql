@@ -1,0 +1,12 @@
+fragment collectionCard on Collection {
+  id
+  title
+  webtoonsConnection(first: 4) {
+    edges {
+      node {
+        id
+        thumbnail
+      }
+    }
+  }
+}

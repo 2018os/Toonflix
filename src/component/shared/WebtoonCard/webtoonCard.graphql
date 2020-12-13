@@ -1,0 +1,20 @@
+fragment webtoonCard on Webtoon {
+  id
+  title
+  authorsConnection(first: 4) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  genres {
+    code
+    name
+  }
+  isAdult
+  isFinish
+  isPay
+  thumbnail
+}

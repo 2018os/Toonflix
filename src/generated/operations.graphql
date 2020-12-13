@@ -11,52 +11,6 @@ query genresForFilter {
   }
 }
 
-query searchForAutoComplete($keyword: String) {
-  search(
-    keyword: $keyword
-    webtoonPaging: { first: 3 }
-    collectionPaging: { first: 3 }
-  ) {
-    webtoonResult {
-      edges {
-        node {
-          id
-          title
-        }
-      }
-    }
-    collectionResult {
-      edges {
-        node {
-          id
-          title
-        }
-      }
-    }
-  }
-}
-
-fragment commentsConnectionForWebtoonDetail on WebtoonCommentsConnection {
-  pageInfo {
-    hasNextPage
-    endCursor
-  }
-  edges {
-    node {
-      ...comment
-    }
-  }
-}
-
-fragment comment on Comment {
-  id
-  message
-  createdAt
-  writer {
-    name
-  }
-}
-
 fragment myProfile on User {
   id
   name
@@ -65,50 +19,5 @@ fragment myProfile on User {
   }
   likedCollections(first: 8) {
     ...userCollectionCardList
-  }
-}
-
-fragment userCollectionCardList on UserCollectionsConnection {
-  pageInfo {
-    hasNextPage
-  }
-  edges {
-    node {
-      ...collectionCard
-    }
-  }
-}
-
-fragment webtoonCard on Webtoon {
-  id
-  title
-  authorsConnection(first: 4) {
-    edges {
-      node {
-        id
-        name
-      }
-    }
-  }
-  genres {
-    code
-    name
-  }
-  isAdult
-  isFinish
-  isPay
-  thumbnail
-}
-
-fragment collectionCard on Collection {
-  id
-  title
-  webtoonsConnection(first: 4) {
-    edges {
-      node {
-        id
-        thumbnail
-      }
-    }
   }
 }

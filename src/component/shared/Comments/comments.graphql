@@ -1,0 +1,20 @@
+fragment commentsConnectionForWebtoonDetail on WebtoonCommentsConnection {
+  pageInfo {
+    hasNextPage
+    endCursor
+  }
+  edges {
+    node {
+      ...comment
+    }
+  }
+}
+
+fragment comment on Comment {
+  id
+  message
+  createdAt
+  writer {
+    name
+  }
+}

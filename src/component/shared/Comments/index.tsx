@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import Button from '../../styles/Button';
-import { Text } from '../../styles/Typography';
+import Button from '../../../styles/Button';
+import { Text } from '../../../styles/Typography';
 
-import { CommentsConnectionForWebtoonDetailFragment } from '../../generated/graphql';
+// TODO: Enhance Type
+// import { CommentsConnectionFragment } from '../../generated/graphql';
 
-import { Colors, FontSizes, spacing } from '../../util/theme';
-import dayjs from '../../util/date';
+import { Colors, FontSizes, spacing } from '../../../util/theme';
+import dayjs from '../../../util/date';
 
 const CommentsWrapper = styled.div`
   border: solid 1px ${Colors.BORDER_COLOR};
@@ -45,7 +46,7 @@ const More = styled(Button)`
 
 export interface Props {
   onLoadMore: () => any;
-  comments: CommentsConnectionForWebtoonDetailFragment | undefined;
+  comments: any | undefined;
 }
 
 const Comments: FunctionComponent<Props> = ({ comments, onLoadMore }) => {
@@ -55,7 +56,7 @@ const Comments: FunctionComponent<Props> = ({ comments, onLoadMore }) => {
         <Text>댓글</Text>
         <StyledButton>전체보기</StyledButton>
       </CommentsHeader>
-      {comments?.edges?.map((edge) => {
+      {comments?.edges?.map((edge: any) => {
         const createdFromNow =
           edge && edge.node && dayjs().from(edge.node.createdAt);
         return (

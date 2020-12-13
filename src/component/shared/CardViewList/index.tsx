@@ -2,9 +2,9 @@ import React, { FunctionComponent, useRef } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 
-import { Title, SubTitle } from '../../styles/Typography';
+import { Title, SubTitle } from '../../../styles/Typography';
 
-import { FontSizes, Colors, spacing } from '../../util/theme';
+import { FontSizes, Colors, spacing } from '../../../util/theme';
 
 const ContentWrapper = styled.div`
   display: flex;
