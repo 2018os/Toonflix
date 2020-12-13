@@ -59,7 +59,7 @@ const Comments: FunctionComponent<Props> = ({ comments, onLoadMore }) => {
         const createdFromNow =
           edge && edge.node && dayjs().from(edge.node.createdAt);
         return (
-          <Comment key={edge?.__typename}>
+          <Comment key={edge?.node?.id}>
             <CommentInfo>
               <Text size={FontSizes.SMALLEST}>
                 {edge?.node?.writer.name} - {createdFromNow}

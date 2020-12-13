@@ -964,7 +964,7 @@ export type CommentsConnectionForWebtoonDetailFragment = {
 
 export type CommentFragment = { __typename?: 'Comment' } & Pick<
   Comment,
-  'message' | 'createdAt'
+  'id' | 'message' | 'createdAt'
 > & { writer: { __typename?: 'User' } & Pick<User, 'name'> };
 
 export type MyProfileFragment = { __typename?: 'User' } & Pick<
@@ -1037,6 +1037,7 @@ export type CollectionCardFragment = { __typename?: 'Collection' } & Pick<
 
 export const CommentFragmentDoc = gql`
   fragment comment on Comment {
+    id
     message
     createdAt
     writer {

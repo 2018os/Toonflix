@@ -244,6 +244,7 @@ fragment commentsConnectionForWebtoonDetail on WebtoonCommentsConnection {
 }
 
 fragment comment on Comment {
+  id
   message
   createdAt
   writer {
