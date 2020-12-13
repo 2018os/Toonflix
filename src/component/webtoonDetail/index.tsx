@@ -3,7 +3,13 @@ import styled from 'styled-components';
 
 import Section from '../../layout/Section';
 
-import { AdultWidget, PayWidget, CompleteWidget } from '../../styles/Widget';
+import {
+  AdultBadge,
+  CompleteBadge,
+  PayBadge,
+  NaverBadge
+} from '../../styles/Badget';
+import Button from '../../styles/Button';
 import { SubTitle, Text } from '../../styles/Typography';
 
 import RandomCardViewList from './RandomCardViewList';
@@ -24,7 +30,13 @@ import Thumbnail from '../shared/Thumbnail';
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { useWebtoonForWebtoonDetailQuery } from '../../generated/graphql';
-import { Colors, ImgSizes, spacing } from '../../util/theme';
+import {
+  Colors,
+  FontSizes,
+  ImgSizes,
+  IconSizes,
+  spacing
+} from '../../util/theme';
 
 // import { dataForWebtoonDetail as data } from '../../util/dummy';
 
@@ -40,17 +52,20 @@ const ThumbnailWrapper = styled.div`
   }
 `;
 
-const Profile = styled.div`
+const Flex = styled.div`
   display: flex;
+`;
+
+const Profile = styled(Flex)`
   position: relative;
   margin-bottom: ${spacing[2]};
 `;
 
-const Info = styled.div`
-  display: flex;
+const Info = styled(Flex)`
   flex-direction: column;
   justify-content: space-between;
 `;
+
 const Part = styled.div``;
 
 const Description = styled.div`
@@ -61,9 +76,7 @@ const Description = styled.div`
   padding: ${spacing[4]};
 `;
 
-const Authors = styled.div`
-  display: flex;
-`;
+const Authors = styled(Flex)``;
 
 const Bookmark = styled.div`
   width: 25px;
@@ -71,23 +84,24 @@ const Bookmark = styled.div`
   background-color: yellow;
 `;
 
-const Option = styled.div`
+const Option = styled(Flex)`
   position: absolute;
-  display: flex;
   right: 0;
 `;
 
-const StyledButton = styled.button`
+const ReadButton = styled(Button)`
   width: 236px;
   height: 68px;
   border-radius: 5px;
-  border: none;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: ${Colors.PRIMARY_COLOR};
+  margin-right: ${spacing[1]};
+  & > a {
+    text-decoration: none;
+    color: unset;
+  }
 `;
 
-const Badges = styled.div`
-  display: flex;
+const Badges = styled(Flex)`
   margin-bottom: ${spacing[2]};
 `;
 
@@ -137,15 +151,20 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
             </Part>
             <Part>
               <Badges>
-                {data?.webtoon.isAdult && <AdultWidget />}
-                {data?.webtoon.isPay && <PayWidget />}
-                {data?.webtoon.isFinish && <CompleteWidget />}
+                {data?.webtoon.isAdult && <AdultBadge />}
+                {data?.webtoon.isPay && <PayBadge />}
+                {data?.webtoon.isFinish && <CompleteBadge />}
               </Badges>
-              <a target="_blank" rel="noreferrer" href={data?.webtoon.url}>
-                <StyledButton>
-                  <Text>바로가기</Text>
-                </StyledButton>
-              </a>
+              <Flex>
+                <ReadButton primary>
+                  <a target="_blank" rel="noreferrer" href={data?.webtoon.url}>
+                    <Text size={FontSizes.DEFAULT}>바로가기</Text>
+                  </a>
+                </ReadButton>
+                {data?.webtoon.platform === 'NAVER' ? (
+                  <NaverBadge size={IconSizes.LARGEST} />
+                ) : null}
+              </Flex>
             </Part>
           </Info>
           <Option>
