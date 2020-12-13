@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Footer from '../layout/footer';
+import Footer from '../../layout/footer';
 
 const withFooter = (WrappedComponents: React.ComponentType<any | string>) => {
   return (props: any) => {

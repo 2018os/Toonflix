@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   useMeForWithAuthLazyQuery,
   MyProfileFragment
-} from '../generated/graphql';
+} from '../../generated/graphql';
 
 export interface AuthState {
   userId: string | null;

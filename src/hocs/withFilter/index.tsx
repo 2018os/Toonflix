@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Filter, { FilterType } from '../layout/Filter';
+import Filter, { FilterType } from '../../layout/Filter';
 
 const withFilter = (WrappedComponents: React.ComponentType<any | string>) => {
   return (props: any) => {

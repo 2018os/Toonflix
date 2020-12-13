@@ -1,0 +1,6 @@
+query genresForFilter {
+  genres {
+    code
+    name
+  }
+}

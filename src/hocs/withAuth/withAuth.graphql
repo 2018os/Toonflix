@@ -4,13 +4,6 @@ query meForWithAuth {
   }
 }
 
-query genresForFilter {
-  genres {
-    code
-    name
-  }
-}
-
 fragment myProfile on User {
   id
   name
