@@ -23,6 +23,9 @@ const DefaultSetting = createGlobalStyle`
     padding: 0px;
     font-family: NotoSansCJKkr;
   }
+  input, select, textarea, button {
+    font-family: NotoSansCJKkr;
+  }
 `;
 
 const httpLink = createHttpLink({
