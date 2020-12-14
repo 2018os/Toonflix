@@ -1,4 +1,13 @@
-fragment commentsConnectionForWebtoonDetail on WebtoonCommentsConnection {
+fragment comment on Comment {
+  id
+  message
+  createdAt
+  writer {
+    name
+  }
+}
+
+fragment commentsConnectionForComments on CommentsConnection {
   pageInfo {
     hasNextPage
     endCursor
@@ -7,14 +16,5 @@ fragment commentsConnectionForWebtoonDetail on WebtoonCommentsConnection {
     node {
       ...comment
     }
-  }
-}
-
-fragment comment on Comment {
-  id
-  message
-  createdAt
-  writer {
-    name
   }
 }

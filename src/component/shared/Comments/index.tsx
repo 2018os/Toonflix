@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import Button from '../../../styles/Button';
 import { Text } from '../../../styles/Typography';
 
-// TODO: Enhance Type
-// import { CommentsConnectionFragment } from '../../generated/graphql';
+import { CommentsConnectionForCommentsFragment } from '../../../generated/graphql';
 
 import { Colors, FontSizes, spacing } from '../../../util/theme';
 import dayjs from '../../../util/date';
@@ -46,7 +45,7 @@ const More = styled(Button)`
 
 export interface Props {
   onLoadMore: () => any;
-  comments: any | undefined;
+  comments: CommentsConnectionForCommentsFragment | undefined;
 }
 
 const Comments: FunctionComponent<Props> = ({ comments, onLoadMore }) => {
@@ -56,7 +55,7 @@ const Comments: FunctionComponent<Props> = ({ comments, onLoadMore }) => {
         <Text>댓글</Text>
         <StyledButton>전체보기</StyledButton>
       </CommentsHeader>
-      {comments?.edges?.map((edge: any) => {
+      {comments?.edges?.map((edge) => {
         const createdFromNow =
           edge && edge.node && dayjs().from(edge.node.createdAt);
         return (
