@@ -47,7 +47,13 @@ const client = new ApolloClient({
     typePolicies: {
       Webtoon: {
         fields: {
-          commentsConnection: relayStylePagination()
+          comments: relayStylePagination()
+        }
+      },
+      Collection: {
+        fields: {
+          webtoons: relayStylePagination(),
+          comments: relayStylePagination()
         }
       }
     }

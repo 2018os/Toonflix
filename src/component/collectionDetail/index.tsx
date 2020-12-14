@@ -1,11 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
+import Section from '../../layout/Section';
+
 import { Title, Text } from '../../styles/Typography';
 
 import WebtoonCardList from './WebtoonCardList';
 
+import Comments from '../shared/Comments';
+
 import { useCollectionForCollectionDetailQuery } from '../../generated/graphql';
+
 import { spacing } from '../../util/theme';
 
 export interface Props {
@@ -26,9 +31,10 @@ const CollectionProfileItem = styled.div`
 
 const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
   const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
-    variables: { id, after: '' }
+    variables: { id }
   });
-  const afterId = data?.collection.webtoonsConnection.pageInfo.endCursor;
+  const afterWebtoonId = data?.collection.webtoons.pageInfo.endCursor;
+  const afterCommentId = data?.collection.comments.pageInfo.endCursor;
   return !loading && data ? (
     <div>
       작성자 {data.collection.writer.name}
@@ -40,43 +46,30 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
           <Text>{data.collection.description}</Text>
         </CollectionProfileItem>
       </CollectionProfile>
-      <Text>컬렉션에 포함된 작품들</Text>
       <WebtoonCardList
         data={data}
         onLoadMore={() => {
           fetchMore({
-            updateQuery: (previousResult, { fetchMoreResult }) => {
-              if (!fetchMoreResult) {
-                return previousResult;
-              }
-              const prevCollection = previousResult.collection;
-              const nextCollection = fetchMoreResult.collection;
-              const prevEdges = prevCollection.webtoonsConnection.edges;
-              const newEdges = nextCollection.webtoonsConnection.edges;
-              const { pageInfo } = nextCollection.webtoonsConnection;
-              return {
-                collection: {
-                  ...prevCollection,
-                  webtoonsConnection: {
-                    ...prevCollection.webtoonsConnection,
-                    edges: [
-                      ...(prevEdges && prevEdges.length > 0
-                        ? [...prevEdges]
-                        : []),
-                      ...(newEdges && newEdges.length > 0 ? [...newEdges] : [])
-                    ],
-                    pageInfo
-                  }
-                }
-              };
-            },
             variables: {
               id,
-              after: afterId
+              afterWebtoonId
             }
           });
         }}
       />
+      <Section>
+        <Comments
+          comments={data?.collection.comments}
+          onLoadMore={() => {
+            fetchMore({
+              variables: {
+                id,
+                afterCommentId
+              }
+            });
+          }}
+        />
+      </Section>
     </div>
   ) : (
     <div>Loading</div>

@@ -1,4 +1,8 @@
-query collectionForCollectionDetail($id: ID!, $after: ID) {
+query collectionForCollectionDetail(
+  $id: ID!
+  $afterWebtoonId: ID
+  $afterCommentId: ID
+) {
   collection(id: $id) {
     id
     title
@@ -6,7 +10,7 @@ query collectionForCollectionDetail($id: ID!, $after: ID) {
     writer {
       name
     }
-    webtoonsConnection(first: 4, after: $after) {
+    webtoons(first: 4, after: $afterWebtoonId) {
       pageInfo {
         hasNextPage
         endCursor
@@ -16,6 +20,9 @@ query collectionForCollectionDetail($id: ID!, $after: ID) {
           ...webtoonCard
         }
       }
+    }
+    comments(first: 4, after: $afterCommentId) {
+      ...commentsConnectionForComments
     }
   }
 }
