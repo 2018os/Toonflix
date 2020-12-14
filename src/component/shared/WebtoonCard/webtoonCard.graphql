@@ -1,7 +1,7 @@
 fragment webtoonCard on Webtoon {
   id
   title
-  authorsConnection(first: 4) {
+  authors(first: 4) {
     edges {
       node {
         id

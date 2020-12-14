@@ -53,8 +53,7 @@ export interface Props {
 
 const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
   const slicedWebtoons =
-    collection.webtoonsConnection.edges &&
-    collection.webtoonsConnection.edges.slice(0, 4);
+    collection.webtoons.edges && collection.webtoons.edges.slice(0, 4);
   return (
     <Link
       linkProps={{

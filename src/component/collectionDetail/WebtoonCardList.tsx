@@ -43,8 +43,8 @@ const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
     <>
       <Section>
         <WebtoonCardListWrapper>
-          {data.collection.webtoonsConnection.edges &&
-            data.collection.webtoonsConnection.edges.map((edge) => {
+          {data.collection.webtoons.edges &&
+            data.collection.webtoons.edges.map((edge) => {
               if (edge?.node) {
                 const webtoon = edge.node;
                 return (
@@ -57,7 +57,7 @@ const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
             })}
         </WebtoonCardListWrapper>
       </Section>
-      {data.collection.webtoonsConnection.pageInfo.hasNextPage ? (
+      {data.collection.webtoons.pageInfo.hasNextPage ? (
         <Section>
           <MoreButton onClick={() => onLoadMore()}>
             <Text>더 보기</Text>

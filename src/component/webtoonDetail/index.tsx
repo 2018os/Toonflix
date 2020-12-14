@@ -109,7 +109,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
   const { data, loading, fetchMore } = useWebtoonForWebtoonDetailQuery({
     variables: { id, afterCommentId: '' }
   });
-  const lastComment = data?.webtoon.commentsConnection.pageInfo.endCursor;
+  const lastComment = data?.webtoon.comments.pageInfo.endCursor;
   return (
     <>
       <Section>
@@ -140,7 +140,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                 })}
               </Tags>
               <Authors>
-                {data?.webtoon.authorsConnection.edges?.map((authorEdge) => {
+                {data?.webtoon.authors.edges?.map((authorEdge) => {
                   return (
                     <Text key={authorEdge?.node?.id}>
                       {authorEdge?.node?.name}
@@ -175,7 +175,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       </Section>
       <Section>
         <Comments
-          comments={data?.webtoon.commentsConnection}
+          comments={data?.webtoon.comments}
           onLoadMore={() => {
             fetchMore({
               variables: {
@@ -188,7 +188,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       </Section>
       {data && !loading
         ? data.webtoon.genres?.map((genre) => {
-            if (genre.webtoonsConnection) {
+            if (genre.webtoons) {
               return (
                 <Section
                   key={`webtoon-detail-webtoon-card-view-list-section-${genre.code}`}
@@ -197,7 +197,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                     title={`"${genre.name}" 비슷한 작품`}
                     type="pagination"
                   >
-                    {genre.webtoonsConnection.edges?.map((edge) => {
+                    {genre.webtoons.edges?.map((edge) => {
                       if (edge?.node) {
                         const webtoon = edge.node;
                         return (
@@ -228,8 +228,8 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       {data && !loading ? (
         <Section>
           <CardViewList title="작품이 포함된 컬렉션" type="pagination">
-            {data.webtoon.collectionsConnection.edges &&
-              data.webtoon.collectionsConnection.edges.map((edge) => {
+            {data.webtoon.collections.edges &&
+              data.webtoon.collections.edges.map((edge) => {
                 if (edge?.node) {
                   const collection = edge.node;
                   return (

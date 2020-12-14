@@ -9,7 +9,7 @@ query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
     isAdult
     isFinish
     platform
-    authorsConnection(first: 4) {
+    authors(first: 4) {
       edges {
         node {
           id
@@ -17,10 +17,10 @@ query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
         }
       }
     }
-    commentsConnection(first: 4, after: $afterCommentId) {
-      ...commentsConnectionForWebtoonDetail
+    comments(first: 4, after: $afterCommentId) {
+      ...commentsConnectionForComments
     }
-    collectionsConnection(first: 4) {
+    collections(first: 4) {
       pageInfo {
         hasPreviousPage
         hasNextPage
@@ -34,7 +34,7 @@ query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
     genres {
       code
       name
-      webtoonsConnection(first: 6, after: $id) {
+      webtoons(first: 6, after: $id) {
         pageInfo {
           hasNextPage
           hasPreviousPage

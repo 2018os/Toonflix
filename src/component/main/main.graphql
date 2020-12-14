@@ -7,7 +7,7 @@ query collectionsForMain {
         writer {
           name
         }
-        webtoonsConnection(first: 4) {
+        webtoons(first: 4) {
           pageInfo {
             hasNextPage
             hasPreviousPage
