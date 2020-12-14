@@ -14,3 +14,14 @@ fragment myProfile on User {
     ...userCollectionCardList
   }
 }
+
+fragment userCollectionCardList on CollectionsConnection {
+  pageInfo {
+    hasNextPage
+  }
+  edges {
+    node {
+      ...collectionCard
+    }
+  }
+}
