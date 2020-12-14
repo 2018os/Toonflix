@@ -29,11 +29,11 @@ const WidgetList = styled.div`
   padding: ${spacing[1]};
   position: absolute;
   width: 100%;
-  & > .widget {
+  & > .badge {
     margin-bottom: ${spacing[0]};
     margin-left: auto;
   }
-  & > .widget:last-child {
+  & > .badge:last-child {
     margin-bottom: 0;
   }
 `;
