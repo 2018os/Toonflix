@@ -55,7 +55,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
     isFinish,
     isPay,
     title,
-    authorsConnection,
+    authors,
     genres
   } = webtoon;
   return (
@@ -77,7 +77,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
         </ThumbnailWrapper>
         <WebtoonInfoWrapper>
           <Title>{title}</Title>
-          {authorsConnection?.edges?.map((authorEdge) => {
+          {authors?.edges?.map((authorEdge) => {
             if (authorEdge?.node) {
               return (
                 <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
