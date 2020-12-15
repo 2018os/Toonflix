@@ -111,8 +111,6 @@ export type QueryRandomWebtoonsArgs = {
 export type QuerySearchArgs = {
   keyword?: Maybe<Scalars['String']>;
   where?: Maybe<SearchFiltering>;
-  webtoonPaging?: Maybe<Paging>;
-  collectionPaging?: Maybe<Paging>;
 };
 
 /** types */
@@ -184,6 +182,20 @@ export type SearchResult = {
   __typename?: 'SearchResult';
   webtoonResult?: Maybe<SearchResultWebtoonsConnection>;
   collectionResult?: Maybe<SearchResultCollectionsConnection>;
+};
+
+export type SearchResultWebtoonResultArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+export type SearchResultCollectionResultArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 /** nodes */
@@ -472,13 +484,6 @@ export type SearchFiltering = {
   isFinish?: Maybe<Scalars['Boolean']>;
   platforms?: Maybe<Array<Platform>>;
   genres?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type Paging = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
 };
 
 export type SearchForCategoryQueryVariables = Exact<{
@@ -1001,13 +1006,8 @@ export const SearchForCategoryDocument = gql`
     $webtoonId: ID
     $collectionId: ID
   ) {
-    search(
-      keyword: $keyword
-      where: $where
-      webtoonPaging: { first: 10, after: $webtoonId }
-      collectionPaging: { first: 10, after: $collectionId }
-    ) {
-      webtoonResult {
+    search(keyword: $keyword, where: $where) {
+      webtoonResult(first: 12, after: $webtoonId) {
         pageInfo {
           endCursor
           hasNextPage
@@ -1018,7 +1018,7 @@ export const SearchForCategoryDocument = gql`
           }
         }
       }
-      collectionResult {
+      collectionResult(first: 1, after: $collectionId) {
         pageInfo {
           endCursor
           hasNextPage
@@ -1481,12 +1481,8 @@ export type RandomWebtoonsForRandomQueryResult = Apollo.QueryResult<
 >;
 export const SearchForAutoCompleteDocument = gql`
   query searchForAutoComplete($keyword: String) {
-    search(
-      keyword: $keyword
-      webtoonPaging: { first: 3 }
-      collectionPaging: { first: 3 }
-    ) {
-      webtoonResult {
+    search(keyword: $keyword) {
+      webtoonResult(first: 3) {
         edges {
           node {
             id
@@ -1494,7 +1490,7 @@ export const SearchForAutoCompleteDocument = gql`
           }
         }
       }
-      collectionResult {
+      collectionResult(first: 3) {
         edges {
           node {
             id

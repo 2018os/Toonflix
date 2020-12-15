@@ -4,13 +4,8 @@ query searchForCategory(
   $webtoonId: ID
   $collectionId: ID
 ) {
-  search(
-    keyword: $keyword
-    where: $where
-    webtoonPaging: { first: 10, after: $webtoonId }
-    collectionPaging: { first: 10, after: $collectionId }
-  ) {
-    webtoonResult {
+  search(keyword: $keyword, where: $where) {
+    webtoonResult(first: 12, after: $webtoonId) {
       pageInfo {
         endCursor
         hasNextPage
@@ -21,7 +16,7 @@ query searchForCategory(
         }
       }
     }
-    collectionResult {
+    collectionResult(first: 1, after: $collectionId) {
       pageInfo {
         endCursor
         hasNextPage
