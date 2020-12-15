@@ -176,6 +176,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       <Section>
         <Comments
           comments={data?.webtoon.comments}
+          modalTitle={data?.webtoon.title}
           onLoadMore={() => {
             fetchMore({
               variables: {

@@ -1621,7 +1621,7 @@ export const WebtoonForWebtoonDetailDocument = gql`
           }
         }
       }
-      comments(first: 4, after: $afterCommentId) {
+      comments(first: 1, after: $afterCommentId) {
         ...commentsConnectionForComments
       }
       collections(first: 4) {
