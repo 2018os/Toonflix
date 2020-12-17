@@ -461,7 +461,7 @@ export type LoginInput = {
 export type CreateCollectionInput = {
   title: Scalars['String'];
   description: Scalars['String'];
-  webtoonIds: Array<Scalars['ID']>;
+  webtoonIds: Array<Maybe<Scalars['ID']>>;
 };
 
 export type UpdateCollectionInput = {
@@ -650,6 +650,51 @@ export type CollectionsForMainQuery = { __typename?: 'Query' } & {
       >
     >;
   };
+};
+
+export type MeForMyCollectionQueryVariables = Exact<{
+  afterMyCollectionId?: Maybe<Scalars['ID']>;
+  afterLikedCollectionId?: Maybe<Scalars['ID']>;
+}>;
+
+export type MeForMyCollectionQuery = { __typename?: 'Query' } & {
+  me: { __typename?: 'User' } & {
+    myCollections: {
+      __typename?: 'CollectionsConnection';
+    } & UserCollectionCardListFragment;
+    likedCollections: {
+      __typename?: 'CollectionsConnection';
+    } & UserCollectionCardListFragment;
+  };
+};
+
+export type CreateCollectionForMyCollectionMutationVariables = Exact<{
+  title: Scalars['String'];
+  description: Scalars['String'];
+}>;
+
+export type CreateCollectionForMyCollectionMutation = {
+  __typename?: 'Mutation';
+} & {
+  createCollection: { __typename?: 'Collection' } & CollectionCardFragment;
+};
+
+export type UserCollectionCardListFragment = {
+  __typename?: 'CollectionsConnection';
+} & {
+  pageInfo: { __typename?: 'PageInfo' } & Pick<
+    PageInfo,
+    'hasNextPage' | 'endCursor'
+  >;
+  edges?: Maybe<
+    Array<
+      Maybe<
+        { __typename?: 'CollectionEdge' } & {
+          node?: Maybe<{ __typename?: 'Collection' } & CollectionCardFragment>;
+        }
+      >
+    >
+  >;
 };
 
 export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
@@ -893,34 +938,7 @@ export type PostCommentForWebtoonDetailMutation = {
 export type MeForWithAuthQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeForWithAuthQuery = { __typename?: 'Query' } & {
-  me: { __typename?: 'User' } & MyProfileFragment;
-};
-
-export type MyProfileFragment = { __typename?: 'User' } & Pick<
-  User,
-  'id' | 'name'
-> & {
-    myCollections: {
-      __typename?: 'CollectionsConnection';
-    } & UserCollectionCardListFragment;
-    likedCollections: {
-      __typename?: 'CollectionsConnection';
-    } & UserCollectionCardListFragment;
-  };
-
-export type UserCollectionCardListFragment = {
-  __typename?: 'CollectionsConnection';
-} & {
-  pageInfo: { __typename?: 'PageInfo' } & Pick<PageInfo, 'hasNextPage'>;
-  edges?: Maybe<
-    Array<
-      Maybe<
-        { __typename?: 'CollectionEdge' } & {
-          node?: Maybe<{ __typename?: 'Collection' } & CollectionCardFragment>;
-        }
-      >
-    >
-  >;
+  me: { __typename?: 'User' } & Pick<User, 'id' | 'name'>;
 };
 
 export type GenresForFilterQueryVariables = Exact<{ [key: string]: never }>;
@@ -931,6 +949,34 @@ export type GenresForFilterQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export const CollectionCardFragmentDoc = gql`
+  fragment collectionCard on Collection {
+    id
+    title
+    webtoons(first: 4) {
+      edges {
+        node {
+          id
+          thumbnail
+        }
+      }
+    }
+  }
+`;
+export const UserCollectionCardListFragmentDoc = gql`
+  fragment userCollectionCardList on CollectionsConnection {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        ...collectionCard
+      }
+    }
+  }
+  ${CollectionCardFragmentDoc}
+`;
 export const CommentFragmentDoc = gql`
   fragment comment on Comment {
     id
@@ -976,46 +1022,6 @@ export const WebtoonCardFragmentDoc = gql`
     isPay
     thumbnail
   }
-`;
-export const CollectionCardFragmentDoc = gql`
-  fragment collectionCard on Collection {
-    id
-    title
-    webtoons(first: 4) {
-      edges {
-        node {
-          id
-          thumbnail
-        }
-      }
-    }
-  }
-`;
-export const UserCollectionCardListFragmentDoc = gql`
-  fragment userCollectionCardList on CollectionsConnection {
-    pageInfo {
-      hasNextPage
-    }
-    edges {
-      node {
-        ...collectionCard
-      }
-    }
-  }
-  ${CollectionCardFragmentDoc}
-`;
-export const MyProfileFragmentDoc = gql`
-  fragment myProfile on User {
-    id
-    name
-    myCollections(first: 8) {
-      ...userCollectionCardList
-    }
-    likedCollections(first: 8) {
-      ...userCollectionCardList
-    }
-  }
-  ${UserCollectionCardListFragmentDoc}
 `;
 export const SearchForCategoryDocument = gql`
   query searchForCategory(
@@ -1432,6 +1438,129 @@ export type CollectionsForMainLazyQueryHookResult = ReturnType<
 export type CollectionsForMainQueryResult = Apollo.QueryResult<
   CollectionsForMainQuery,
   CollectionsForMainQueryVariables
+>;
+export const MeForMyCollectionDocument = gql`
+  query meForMyCollection(
+    $afterMyCollectionId: ID
+    $afterLikedCollectionId: ID
+  ) {
+    me {
+      myCollections(first: 6, after: $afterMyCollectionId) {
+        ...userCollectionCardList
+      }
+      likedCollections(first: 6, after: $afterLikedCollectionId) {
+        ...userCollectionCardList
+      }
+    }
+  }
+  ${UserCollectionCardListFragmentDoc}
+`;
+
+/**
+ * __useMeForMyCollectionQuery__
+ *
+ * To run a query within a React component, call `useMeForMyCollectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeForMyCollectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeForMyCollectionQuery({
+ *   variables: {
+ *      afterMyCollectionId: // value for 'afterMyCollectionId'
+ *      afterLikedCollectionId: // value for 'afterLikedCollectionId'
+ *   },
+ * });
+ */
+export function useMeForMyCollectionQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    MeForMyCollectionQuery,
+    MeForMyCollectionQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    MeForMyCollectionQuery,
+    MeForMyCollectionQueryVariables
+  >(MeForMyCollectionDocument, baseOptions);
+}
+export function useMeForMyCollectionLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    MeForMyCollectionQuery,
+    MeForMyCollectionQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    MeForMyCollectionQuery,
+    MeForMyCollectionQueryVariables
+  >(MeForMyCollectionDocument, baseOptions);
+}
+export type MeForMyCollectionQueryHookResult = ReturnType<
+  typeof useMeForMyCollectionQuery
+>;
+export type MeForMyCollectionLazyQueryHookResult = ReturnType<
+  typeof useMeForMyCollectionLazyQuery
+>;
+export type MeForMyCollectionQueryResult = Apollo.QueryResult<
+  MeForMyCollectionQuery,
+  MeForMyCollectionQueryVariables
+>;
+export const CreateCollectionForMyCollectionDocument = gql`
+  mutation createCollectionForMyCollection(
+    $title: String!
+    $description: String!
+  ) {
+    createCollection(
+      input: { title: $title, description: $description, webtoonIds: [] }
+    ) {
+      ...collectionCard
+    }
+  }
+  ${CollectionCardFragmentDoc}
+`;
+export type CreateCollectionForMyCollectionMutationFn = Apollo.MutationFunction<
+  CreateCollectionForMyCollectionMutation,
+  CreateCollectionForMyCollectionMutationVariables
+>;
+
+/**
+ * __useCreateCollectionForMyCollectionMutation__
+ *
+ * To run a mutation, you first call `useCreateCollectionForMyCollectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCollectionForMyCollectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCollectionForMyCollectionMutation, { data, loading, error }] = useCreateCollectionForMyCollectionMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useCreateCollectionForMyCollectionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCollectionForMyCollectionMutation,
+    CreateCollectionForMyCollectionMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    CreateCollectionForMyCollectionMutation,
+    CreateCollectionForMyCollectionMutationVariables
+  >(CreateCollectionForMyCollectionDocument, baseOptions);
+}
+export type CreateCollectionForMyCollectionMutationHookResult = ReturnType<
+  typeof useCreateCollectionForMyCollectionMutation
+>;
+export type CreateCollectionForMyCollectionMutationResult = Apollo.MutationResult<
+  CreateCollectionForMyCollectionMutation
+>;
+export type CreateCollectionForMyCollectionMutationOptions = Apollo.BaseMutationOptions<
+  CreateCollectionForMyCollectionMutation,
+  CreateCollectionForMyCollectionMutationVariables
 >;
 export const MeForProfileDocument = gql`
   query meForProfile {
@@ -1890,10 +2019,10 @@ export type PostCommentForWebtoonDetailMutationOptions = Apollo.BaseMutationOpti
 export const MeForWithAuthDocument = gql`
   query meForWithAuth {
     me {
-      ...myProfile
+      id
+      name
     }
   }
-  ${MyProfileFragmentDoc}
 `;
 
 /**

@@ -1,0 +1,33 @@
+query meForMyCollection($afterMyCollectionId: ID, $afterLikedCollectionId: ID) {
+  me {
+    myCollections(first: 6, after: $afterMyCollectionId) {
+      ...userCollectionCardList
+    }
+    likedCollections(first: 6, after: $afterLikedCollectionId) {
+      ...userCollectionCardList
+    }
+  }
+}
+
+mutation createCollectionForMyCollection(
+  $title: String!
+  $description: String!
+) {
+  createCollection(
+    input: { title: $title, description: $description, webtoonIds: [] }
+  ) {
+    ...collectionCard
+  }
+}
+
+fragment userCollectionCardList on CollectionsConnection {
+  pageInfo {
+    hasNextPage
+    endCursor
+  }
+  edges {
+    node {
+      ...collectionCard
+    }
+  }
+}

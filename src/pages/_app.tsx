@@ -66,6 +66,12 @@ const client = new ApolloClient({
           webtoonResult: relayStylePagination(),
           collectionResult: relayStylePagination()
         }
+      },
+      User: {
+        fields: {
+          myCollections: relayStylePagination(),
+          likedCollections: relayStylePagination()
+        }
       }
     }
   }),

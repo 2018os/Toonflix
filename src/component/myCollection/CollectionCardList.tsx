@@ -1,17 +1,22 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
 import Section from '../../layout/Section';
 
+import { MoreButton } from '../../styles/Button';
 import { Text } from '../../styles/Typography';
 
+import CreateCollectionModal from './CreateCollectionModal';
 import CollectionCard from '../shared/CollectionCard';
 
 import { UserCollectionCardListFragment } from '../../generated/graphql';
-import { ImgSizes, spacing, Colors } from '../../util/theme';
+import { ImgSizes, spacing, Colors, FontSizes } from '../../util/theme';
+
+export type CollectionType = 'myCollections' | 'likedCollections';
 
 export interface Props {
   data: UserCollectionCardListFragment;
+  collectionType: CollectionType;
   onLoadMore: () => any;
 }
 
@@ -29,16 +34,41 @@ const Item = styled.div`
   margin-bottom: ${spacing[2]};
 `;
 
-const MoreButton = styled.button`
-  width: 100%;
+const CreateCollectionCard = styled.div`
+  width: ${ImgSizes.LARGE};
+  height: ${ImgSizes.LARGE};
   background-color: ${Colors.PRIMARY_COLOR};
-  padding: ${spacing[1]};
+  color: ${Colors.WHITE};
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  align-items: center;
+  text-align: center;
   border-radius: 10px;
-  border: none;
-  height: 60px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  &:hover {
+    & > .collection-title {
+      display: inline;
+    }
+  }
 `;
 
-const CollectionCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
+const CreateCollectionCardTitle = styled(Text).attrs({
+  className: 'collection-title'
+})`
+  z-index: 1;
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+`;
+
+const CollectionCardList: FunctionComponent<Props> = ({
+  data,
+  collectionType,
+  onLoadMore
+}) => {
+  const [showCreateCollectionModal, toggleModal] = useState(false);
   return (
     <>
       <Section>
@@ -55,15 +85,28 @@ const CollectionCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
               }
               return <div key={edge?.__typename}>collection data loading</div>;
             })}
+          <Item>
+            {collectionType === 'myCollections' && (
+              <CreateCollectionCard onClick={() => toggleModal(true)}>
+                <CreateCollectionCardTitle size={FontSizes.LARGE}>
+                  컬렉션 만들기!!
+                </CreateCollectionCardTitle>
+              </CreateCollectionCard>
+            )}
+          </Item>
         </CollectionCardListWrapper>
       </Section>
       {data.pageInfo.hasNextPage ? (
         <Section>
           <MoreButton onClick={() => onLoadMore()}>
-            <Text>더 보기</Text>
+            <Text size={FontSizes.SMALL}>더 보기</Text>
           </MoreButton>
         </Section>
       ) : null}
+      <CreateCollectionModal
+        isOpen={showCreateCollectionModal}
+        close={() => toggleModal(false)}
+      />
     </>
   );
 };

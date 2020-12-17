@@ -1,17 +1,11 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import withAuth, { AuthState } from '../../hocs/withAuth';
+import CollectionCardList, { CollectionType } from './CollectionCardList';
 
-import CollectionCardList from './CollectionCardList';
+import { useMeForMyCollectionQuery } from '../../generated/graphql';
 
 import { spacing, Colors } from '../../util/theme';
-
-export interface Props {
-  authState: AuthState;
-}
-
-type CollectionType = 'myCollections' | 'likedCollections';
 
 type ButtonProps = {
   isSelected: boolean;
@@ -37,10 +31,19 @@ const CollectionButton = styled.button<ButtonProps>`
   }
 `;
 
-const MyCollectionContainer: FunctionComponent<Props> = ({ authState }) => {
+const MyCollectionContainer = () => {
+  const { data, loading, fetchMore } = useMeForMyCollectionQuery();
   const [collectionType, setCollectionType] = useState<CollectionType>(
     'myCollections'
   );
+  const lastCollectionId = {
+    myCollections: {
+      afterMyCollectionId: data?.me.myCollections.pageInfo.endCursor
+    },
+    likedCollections: {
+      afterLikedCollectionId: data?.me.likedCollections.pageInfo.endCursor
+    }
+  };
   return (
     <>
       <CollectionButtonWrapper>
@@ -63,11 +66,15 @@ const MyCollectionContainer: FunctionComponent<Props> = ({ authState }) => {
           좋아
         </CollectionButton>
       </CollectionButtonWrapper>
-      {authState.me ? (
+      {data && !loading ? (
         <CollectionCardList
-          data={authState.me?.[collectionType]}
+          data={data.me?.[collectionType]}
+          collectionType={collectionType}
           onLoadMore={() => {
-            console.log(1);
+            fetchMore({
+              variables: lastCollectionId[collectionType]
+              // Reset other collectionType
+            });
           }}
         />
       ) : (
@@ -77,4 +84,4 @@ const MyCollectionContainer: FunctionComponent<Props> = ({ authState }) => {
   );
 };
 
-export default withAuth(MyCollectionContainer);
+export default MyCollectionContainer;
