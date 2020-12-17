@@ -45,6 +45,11 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
+      Query: {
+        fields: {
+          collections: relayStylePagination()
+        }
+      },
       Webtoon: {
         fields: {
           comments: relayStylePagination()

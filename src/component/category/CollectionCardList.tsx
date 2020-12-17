@@ -1,13 +1,12 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
-
-import { Text } from '../../styles/Typography';
 
 import CollectionCard from '../shared/CollectionCard';
 
 import { SearchForCategoryQuery } from '../../generated/graphql';
 
-import { ImgSizes, spacing, Colors } from '../../util/theme';
+import handleOnScroll from '../../util/infiniteScroll';
+import { ImgSizes, spacing } from '../../util/theme';
 
 export interface Props {
   data: SearchForCategoryQuery;
@@ -28,17 +27,15 @@ const Item = styled.div`
   margin-bottom: ${spacing[2]};
 `;
 
-const MoreButton = styled.button`
-  width: 100%;
-  background-color: ${Colors.PRIMARY_COLOR};
-  padding: ${spacing[1]};
-  border-radius: 10px;
-  border: none;
-  height: 60px;
-`;
-
-// TODO: Change More to Infinite scroll
 const CollectionCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
+  useEffect(() => {
+    global.window.addEventListener('scroll', () => handleOnScroll(onLoadMore));
+    return () => {
+      global.window.removeEventListener('scroll', () =>
+        handleOnScroll(onLoadMore)
+      );
+    };
+  });
   return (
     <>
       <CollectionCardListWrapper>
@@ -55,11 +52,6 @@ const CollectionCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
             return <div key={edge?.__typename}>collection data loading</div>;
           })}
       </CollectionCardListWrapper>
-      {data.search.collectionResult?.pageInfo.hasNextPage ? (
-        <MoreButton onClick={() => onLoadMore()}>
-          <Text>더 보기</Text>
-        </MoreButton>
-      ) : null}
     </>
   );
 };

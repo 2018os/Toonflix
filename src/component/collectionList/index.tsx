@@ -79,30 +79,6 @@ const CollectionListContainer = () => {
             onLoadMore={() => {
               if (fetchMore)
                 fetchMore({
-                  updateQuery: (previousResult, { fetchMoreResult }) => {
-                    if (!fetchMoreResult) {
-                      return previousResult;
-                    }
-                    const prevCollection = previousResult.collections;
-                    const nextCollection = fetchMoreResult.collections;
-                    const prevEdges = prevCollection.edges;
-                    const newEdges = nextCollection.edges;
-                    const { pageInfo } = nextCollection;
-                    return {
-                      collections: {
-                        ...prevCollection,
-                        pageInfo,
-                        edges: [
-                          ...(prevEdges && prevEdges.length > 0
-                            ? [...prevEdges]
-                            : []),
-                          ...(newEdges && newEdges.length > 0
-                            ? [...newEdges]
-                            : [])
-                        ]
-                      }
-                    };
-                  },
                   variables: {
                     after: afterId
                   }
