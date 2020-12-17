@@ -55,3 +55,9 @@ query randomWebtoonsForWebtoonDetail {
     thumbnail
   }
 }
+
+mutation postCommentForWebtoonDetail($webtoonId: ID!, $message: String!) {
+  postComment(input: { webtoonId: $webtoonId, message: $message }) {
+    ...comment
+  }
+}

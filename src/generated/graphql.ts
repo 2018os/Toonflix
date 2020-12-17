@@ -872,6 +872,15 @@ export type RandomWebtoonsForWebtoonDetailQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export type PostCommentForWebtoonDetailMutationVariables = Exact<{
+  webtoonId: Scalars['ID'];
+  message: Scalars['String'];
+}>;
+
+export type PostCommentForWebtoonDetailMutation = {
+  __typename?: 'Mutation';
+} & { postComment: { __typename?: 'Comment' } & CommentFragment };
+
 export type MeForWithAuthQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeForWithAuthQuery = { __typename?: 'Query' } & {
@@ -1621,7 +1630,7 @@ export const WebtoonForWebtoonDetailDocument = gql`
           }
         }
       }
-      comments(first: 1, after: $afterCommentId) {
+      comments(first: 4, after: $afterCommentId) {
         ...commentsConnectionForComments
       }
       collections(first: 4) {
@@ -1761,6 +1770,58 @@ export type RandomWebtoonsForWebtoonDetailLazyQueryHookResult = ReturnType<
 export type RandomWebtoonsForWebtoonDetailQueryResult = Apollo.QueryResult<
   RandomWebtoonsForWebtoonDetailQuery,
   RandomWebtoonsForWebtoonDetailQueryVariables
+>;
+export const PostCommentForWebtoonDetailDocument = gql`
+  mutation postCommentForWebtoonDetail($webtoonId: ID!, $message: String!) {
+    postComment(input: { webtoonId: $webtoonId, message: $message }) {
+      ...comment
+    }
+  }
+  ${CommentFragmentDoc}
+`;
+export type PostCommentForWebtoonDetailMutationFn = Apollo.MutationFunction<
+  PostCommentForWebtoonDetailMutation,
+  PostCommentForWebtoonDetailMutationVariables
+>;
+
+/**
+ * __usePostCommentForWebtoonDetailMutation__
+ *
+ * To run a mutation, you first call `usePostCommentForWebtoonDetailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostCommentForWebtoonDetailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postCommentForWebtoonDetailMutation, { data, loading, error }] = usePostCommentForWebtoonDetailMutation({
+ *   variables: {
+ *      webtoonId: // value for 'webtoonId'
+ *      message: // value for 'message'
+ *   },
+ * });
+ */
+export function usePostCommentForWebtoonDetailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PostCommentForWebtoonDetailMutation,
+    PostCommentForWebtoonDetailMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    PostCommentForWebtoonDetailMutation,
+    PostCommentForWebtoonDetailMutationVariables
+  >(PostCommentForWebtoonDetailDocument, baseOptions);
+}
+export type PostCommentForWebtoonDetailMutationHookResult = ReturnType<
+  typeof usePostCommentForWebtoonDetailMutation
+>;
+export type PostCommentForWebtoonDetailMutationResult = Apollo.MutationResult<
+  PostCommentForWebtoonDetailMutation
+>;
+export type PostCommentForWebtoonDetailMutationOptions = Apollo.BaseMutationOptions<
+  PostCommentForWebtoonDetailMutation,
+  PostCommentForWebtoonDetailMutationVariables
 >;
 export const MeForWithAuthDocument = gql`
   query meForWithAuth {

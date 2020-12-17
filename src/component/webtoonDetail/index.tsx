@@ -29,7 +29,13 @@ import Tags from '../shared/Tags';
 import Thumbnail from '../shared/Thumbnail';
 import WebtoonCard from '../shared/WebtoonCard';
 
-import { useWebtoonForWebtoonDetailQuery } from '../../generated/graphql';
+import {
+  useWebtoonForWebtoonDetailQuery,
+  WebtoonForWebtoonDetailQuery,
+  WebtoonForWebtoonDetailQueryVariables,
+  WebtoonForWebtoonDetailDocument,
+  usePostCommentForWebtoonDetailMutation
+} from '../../generated/graphql';
 import {
   Colors,
   FontSizes,
@@ -109,6 +115,40 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
   const { data, loading, fetchMore } = useWebtoonForWebtoonDetailQuery({
     variables: { id, afterCommentId: '' }
   });
+  const [postComment] = usePostCommentForWebtoonDetailMutation({
+    update: (cache, mutationResult) => {
+      const newComment = mutationResult.data?.postComment;
+      const existing = cache.readQuery<
+        WebtoonForWebtoonDetailQuery,
+        WebtoonForWebtoonDetailQueryVariables
+      >({
+        query: WebtoonForWebtoonDetailDocument,
+        variables: { id, afterCommentId: '' }
+      });
+      if (existing && existing.webtoon.comments.edges && newComment) {
+        cache.writeQuery({
+          query: WebtoonForWebtoonDetailDocument,
+          variables: { id, afterCommentId: '' },
+          data: {
+            ...existing,
+            webtoon: {
+              ...existing.webtoon,
+              comments: {
+                ...existing.webtoon.comments,
+                edges: [
+                  {
+                    __typename: 'CommentEdge',
+                    node: newComment
+                  },
+                  ...existing.webtoon.comments.edges
+                ]
+              }
+            }
+          }
+        });
+      }
+    }
+  });
   const lastComment = data?.webtoon.comments.pageInfo.endCursor;
   return (
     <>
@@ -174,18 +214,25 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
         <Description>{data?.webtoon.description}</Description>
       </Section>
       <Section>
-        <Comments
-          comments={data?.webtoon.comments}
-          modalTitle={data?.webtoon.title}
-          onLoadMore={() => {
-            fetchMore({
-              variables: {
-                id,
-                afterCommentId: lastComment
-              }
-            });
-          }}
-        />
+        {data && (
+          <Comments
+            comments={data.webtoon.comments}
+            modalTitle={data.webtoon.title}
+            onPostComment={async (message: string) => {
+              await postComment({
+                variables: { webtoonId: data.webtoon.id, message }
+              });
+            }}
+            onLoadMore={() => {
+              fetchMore({
+                variables: {
+                  id,
+                  afterCommentId: lastComment
+                }
+              });
+            }}
+          />
+        )}
       </Section>
       {data && !loading
         ? data.webtoon.genres?.map((genre) => {

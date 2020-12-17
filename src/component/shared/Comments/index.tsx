@@ -5,6 +5,7 @@ import Button from '../../../styles/Button';
 import { Text, Title } from '../../../styles/Typography';
 
 import Comment from './Comment';
+import PostCommentModal from './PostCommentModal';
 import Modal from '../Modal';
 
 import { CommentsConnectionForCommentsFragment } from '../../../generated/graphql';
@@ -24,6 +25,12 @@ const CommentsHeader = styled.div`
   border-bottom: 1px solid ${Colors.BORDER_COLOR};
 `;
 
+const ButtonWrapper = styled.div`
+  & > ${Button}:last-child {
+    margin-left: ${spacing[2]};
+  }
+`;
+
 const StyledButton = styled(Button)`
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -38,20 +45,30 @@ export interface Props {
   // TODO: Enhance naming
   modalTitle?: string | undefined;
   onLoadMore: () => any;
+  onPostComment: (message: string) => any;
   comments: CommentsConnectionForCommentsFragment | undefined;
 }
 
 const Comments: FunctionComponent<Props> = ({
   modalTitle,
   comments,
-  onLoadMore
+  onLoadMore,
+  onPostComment
 }) => {
-  const [showModal, toggleModal] = useState(false);
+  const [showAllCommentModal, toggleAllCommentModal] = useState(false);
+  const [showPostCommentModal, togglePostCommentModal] = useState(false);
   return (
     <CommentsWrapper>
       <CommentsHeader>
         <Text>댓글</Text>
-        <StyledButton onClick={() => toggleModal(true)}>전체보기</StyledButton>
+        <ButtonWrapper>
+          <StyledButton onClick={() => togglePostCommentModal(true)}>
+            댓글 작성
+          </StyledButton>
+          <StyledButton onClick={() => toggleAllCommentModal(true)}>
+            전체보기
+          </StyledButton>
+        </ButtonWrapper>
       </CommentsHeader>
       {comments?.edges?.map(
         (edge) =>
@@ -69,7 +86,15 @@ const Comments: FunctionComponent<Props> = ({
           더 보기
         </More>
       )}
-      <Modal isOpen={showModal} onRequestClose={() => toggleModal(false)}>
+      <PostCommentModal
+        isOpen={showPostCommentModal}
+        close={() => togglePostCommentModal(false)}
+        onPostComment={(message) => onPostComment(message)}
+      />
+      <Modal
+        isOpen={showAllCommentModal}
+        onRequestClose={() => toggleAllCommentModal(false)}
+      >
         <Title>{modalTitle}</Title>
         {comments?.edges?.map(
           (edge) =>
