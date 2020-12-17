@@ -9,7 +9,13 @@ import WebtoonCardList from './WebtoonCardList';
 
 import Comments from '../shared/Comments';
 
-import { useCollectionForCollectionDetailQuery } from '../../generated/graphql';
+import {
+  useCollectionForCollectionDetailQuery,
+  CollectionForCollectionDetailDocument,
+  CollectionForCollectionDetailQueryVariables,
+  CollectionForCollectionDetailQuery,
+  usePostCommentForCollectionDetailMutation
+} from '../../generated/graphql';
 
 import { spacing } from '../../util/theme';
 
@@ -31,7 +37,41 @@ const CollectionProfileItem = styled.div`
 
 const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
   const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
-    variables: { id }
+    variables: { id, afterCommentId: '', afterWebtoonId: '' }
+  });
+  const [postComment] = usePostCommentForCollectionDetailMutation({
+    update: (cache, mutationResult) => {
+      const newComment = mutationResult.data?.postComment;
+      const existing = cache.readQuery<
+        CollectionForCollectionDetailQuery,
+        CollectionForCollectionDetailQueryVariables
+      >({
+        query: CollectionForCollectionDetailDocument,
+        variables: { id, afterCommentId: '', afterWebtoonId: '' }
+      });
+      if (existing && existing.collection.comments.edges && newComment) {
+        cache.writeQuery({
+          query: CollectionForCollectionDetailDocument,
+          variables: { id, afterCommentId: '', afterWebtoonId: '' },
+          data: {
+            ...existing,
+            collection: {
+              ...existing.collection,
+              comments: {
+                ...existing.collection.comments,
+                edges: [
+                  {
+                    __typename: 'CommentEdge',
+                    node: newComment
+                  },
+                  ...existing.collection.comments.edges
+                ]
+              }
+            }
+          }
+        });
+      }
+    }
   });
   const afterWebtoonId = data?.collection.webtoons.pageInfo.endCursor;
   const afterCommentId = data?.collection.comments.pageInfo.endCursor;
@@ -60,6 +100,11 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
       <Section>
         <Comments
           comments={data?.collection.comments}
+          onPostComment={async (message: string) => {
+            await postComment({
+              variables: { collectionId: data.collection.id, message }
+            });
+          }}
           onLoadMore={() => {
             fetchMore({
               variables: {

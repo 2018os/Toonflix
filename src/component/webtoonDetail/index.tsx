@@ -149,7 +149,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       }
     }
   });
-  const lastComment = data?.webtoon.comments.pageInfo.endCursor;
+  const afterCommentId = data?.webtoon.comments.pageInfo.endCursor;
   return (
     <>
       <Section>
@@ -227,7 +227,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
               fetchMore({
                 variables: {
                   id,
-                  afterCommentId: lastComment
+                  afterCommentId
                 }
               });
             }}

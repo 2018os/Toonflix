@@ -536,8 +536,8 @@ export type SearchForCategoryQuery = { __typename?: 'Query' } & {
 
 export type CollectionForCollectionDetailQueryVariables = Exact<{
   id: Scalars['ID'];
-  afterWebtoonId?: Maybe<Scalars['ID']>;
-  afterCommentId?: Maybe<Scalars['ID']>;
+  afterWebtoonId: Scalars['ID'];
+  afterCommentId: Scalars['ID'];
 }>;
 
 export type CollectionForCollectionDetailQuery = { __typename?: 'Query' } & {
@@ -566,6 +566,15 @@ export type CollectionForCollectionDetailQuery = { __typename?: 'Query' } & {
       } & CommentsConnectionForCommentsFragment;
     };
 };
+
+export type PostCommentForCollectionDetailMutationVariables = Exact<{
+  collectionId: Scalars['ID'];
+  message: Scalars['String'];
+}>;
+
+export type PostCommentForCollectionDetailMutation = {
+  __typename?: 'Mutation';
+} & { postComment: { __typename?: 'Comment' } & CommentFragment };
 
 export type CollectionsForCollectionListQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
@@ -1098,8 +1107,8 @@ export type SearchForCategoryQueryResult = Apollo.QueryResult<
 export const CollectionForCollectionDetailDocument = gql`
   query collectionForCollectionDetail(
     $id: ID!
-    $afterWebtoonId: ID
-    $afterCommentId: ID
+    $afterWebtoonId: ID!
+    $afterCommentId: ID!
   ) {
     collection(id: $id) {
       id
@@ -1177,6 +1186,61 @@ export type CollectionForCollectionDetailLazyQueryHookResult = ReturnType<
 export type CollectionForCollectionDetailQueryResult = Apollo.QueryResult<
   CollectionForCollectionDetailQuery,
   CollectionForCollectionDetailQueryVariables
+>;
+export const PostCommentForCollectionDetailDocument = gql`
+  mutation postCommentForCollectionDetail(
+    $collectionId: ID!
+    $message: String!
+  ) {
+    postComment(input: { collectionId: $collectionId, message: $message }) {
+      ...comment
+    }
+  }
+  ${CommentFragmentDoc}
+`;
+export type PostCommentForCollectionDetailMutationFn = Apollo.MutationFunction<
+  PostCommentForCollectionDetailMutation,
+  PostCommentForCollectionDetailMutationVariables
+>;
+
+/**
+ * __usePostCommentForCollectionDetailMutation__
+ *
+ * To run a mutation, you first call `usePostCommentForCollectionDetailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostCommentForCollectionDetailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postCommentForCollectionDetailMutation, { data, loading, error }] = usePostCommentForCollectionDetailMutation({
+ *   variables: {
+ *      collectionId: // value for 'collectionId'
+ *      message: // value for 'message'
+ *   },
+ * });
+ */
+export function usePostCommentForCollectionDetailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PostCommentForCollectionDetailMutation,
+    PostCommentForCollectionDetailMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    PostCommentForCollectionDetailMutation,
+    PostCommentForCollectionDetailMutationVariables
+  >(PostCommentForCollectionDetailDocument, baseOptions);
+}
+export type PostCommentForCollectionDetailMutationHookResult = ReturnType<
+  typeof usePostCommentForCollectionDetailMutation
+>;
+export type PostCommentForCollectionDetailMutationResult = Apollo.MutationResult<
+  PostCommentForCollectionDetailMutation
+>;
+export type PostCommentForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
+  PostCommentForCollectionDetailMutation,
+  PostCommentForCollectionDetailMutationVariables
 >;
 export const CollectionsForCollectionListDocument = gql`
   query collectionsForCollectionList($keyword: String, $after: ID) {
