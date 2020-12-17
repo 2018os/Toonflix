@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
+import { MoreButton } from '../../styles/Button';
 import { Text } from '../../styles/Typography';
 
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { SearchForCategoryQuery } from '../../generated/graphql';
 
-import { ImgSizes, spacing, Colors } from '../../util/theme';
+import { ImgSizes, spacing, FontSizes } from '../../util/theme';
 
 export interface Props {
   data: SearchForCategoryQuery;
@@ -26,15 +27,6 @@ const WebtoonCardListWrapper = styled.div`
 
 const Item = styled.div`
   margin-bottom: ${spacing[2]};
-`;
-
-const MoreButton = styled.button`
-  width: 100%;
-  background-color: ${Colors.PRIMARY_COLOR};
-  padding: ${spacing[1]};
-  border-radius: 10px;
-  border: none;
-  height: 60px;
 `;
 
 const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
@@ -56,7 +48,7 @@ const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
       </WebtoonCardListWrapper>
       {data.search.webtoonResult?.pageInfo.hasNextPage ? (
         <MoreButton onClick={() => onLoadMore()}>
-          <Text>더 보기</Text>
+          <Text size={FontSizes.SMALL}>더 보기</Text>
         </MoreButton>
       ) : null}
     </>

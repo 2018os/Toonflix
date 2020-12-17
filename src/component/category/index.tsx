@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 
 import Section from '../../layout/Section';
 
+import { Title } from '../../styles/Typography';
+
 import CollectionCardList from './CollectionCardList';
 import WebtoonCardList from './WebtoonCardList';
-
-import { Title } from '../../styles/Typography';
 
 import { Colors, FontSizes, spacing } from '../../util/theme';
 

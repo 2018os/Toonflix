@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 import Section from '../../layout/Section';
 
+import { MoreButton } from '../../styles/Button';
 import { Text } from '../../styles/Typography';
 
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { CollectionForCollectionDetailQuery } from '../../generated/graphql';
-import { ImgSizes, spacing, Colors } from '../../util/theme';
+import { ImgSizes, spacing, FontSizes } from '../../util/theme';
 
 export interface Props {
   data: CollectionForCollectionDetailQuery;
@@ -27,15 +28,6 @@ const WebtoonCardListWrapper = styled.div`
 
 const Item = styled.div`
   margin-bottom: ${spacing[2]};
-`;
-
-const MoreButton = styled.button`
-  width: 100%;
-  background-color: ${Colors.PRIMARY_COLOR};
-  padding: ${spacing[1]};
-  border-radius: 10px;
-  border: none;
-  height: 60px;
 `;
 
 const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
@@ -60,7 +52,7 @@ const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
       {data.collection.webtoons.pageInfo.hasNextPage ? (
         <Section>
           <MoreButton onClick={() => onLoadMore()}>
-            <Text>더 보기</Text>
+            <Text size={FontSizes.SMALL}>더 보기</Text>
           </MoreButton>
         </Section>
       ) : null}
