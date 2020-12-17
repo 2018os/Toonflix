@@ -1,27 +1,6 @@
 query meForWithAuth {
   me {
-    ...myProfile
-  }
-}
-
-fragment myProfile on User {
-  id
-  name
-  myCollections(first: 8) {
-    ...userCollectionCardList
-  }
-  likedCollections(first: 8) {
-    ...userCollectionCardList
-  }
-}
-
-fragment userCollectionCardList on CollectionsConnection {
-  pageInfo {
-    hasNextPage
-  }
-  edges {
-    node {
-      ...collectionCard
-    }
+    id
+    name
   }
 }
