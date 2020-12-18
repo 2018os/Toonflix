@@ -39,9 +39,10 @@ const ThumbnailWrapper = styled.div``;
 
 export interface Props {
   webtoon: WebtoonCardFragment;
+  handleClick?: () => any;
 }
 
-const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
+const WebtoonCard: FunctionComponent<Props> = ({ webtoon, handleClick }) => {
   const {
     id,
     thumbnail,
@@ -52,7 +53,36 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
     authors,
     genres
   } = webtoon;
-  return (
+  return handleClick ? (
+    <DefaultWebtoonCard onClick={() => handleClick()}>
+      <ThumbnailWrapper>
+        <Thumbnail
+          src={thumbnail}
+          size={ImgSizes.DEFAULT}
+          isAdult={isAdult}
+          isFinish={isFinish}
+          isPay={isPay}
+        />
+      </ThumbnailWrapper>
+      <WebtoonInfoWrapper>
+        <Title>{title}</Title>
+        {authors?.edges?.map((authorEdge) => {
+          if (authorEdge?.node) {
+            return (
+              <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
+            );
+          }
+          return <div key={authorEdge?.__typename}>Author data Loading</div>;
+        })}
+        <Tags>
+          {genres &&
+            genres.map((genre) => {
+              return <Tag key={genre.code}># {genre.name}</Tag>;
+            })}
+        </Tags>
+      </WebtoonInfoWrapper>
+    </DefaultWebtoonCard>
+  ) : (
     <Link
       linkProps={{
         href: '/webtoon/[id]',
