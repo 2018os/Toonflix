@@ -1,15 +1,34 @@
 import styled from 'styled-components';
 
+import { Text } from './Typography';
+
 import { ImgSizes } from '../util/theme';
 
 type Props = {
   isHover?: boolean;
 };
 
+const CardText = styled(Text)`
+  position: absolute;
+  left: 0;
+  right: 0;
+`;
+
+const CardHoverText = styled(CardText).attrs({
+  className: 'card-hover-text'
+})`
+  z-index: 1;
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+`;
+
 const Card = styled.div<Props>`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: hidden;
+  cursor: pointer;
   ${(props) =>
     props.isHover &&
     `
@@ -39,4 +58,4 @@ const DefaultCollectionCard = styled(Card)`
 `;
 
 export default Card;
-export { DefaultWebtoonCard, DefaultCollectionCard };
+export { CardText, CardHoverText, DefaultWebtoonCard, DefaultCollectionCard };
