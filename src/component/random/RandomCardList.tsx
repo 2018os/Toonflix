@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Card from '../../styles/Card';
+
 import { EmptyThumbnail } from '../shared/Empty';
 import Link from '../shared/Link';
 import Thumbnail from '../shared/Thumbnail';
@@ -17,12 +19,6 @@ const Button = styled.button`
   height: 30px;
   border-radius: 10px;
   background-color: #ffffff;
-`;
-
-const Card = styled.div`
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
 `;
 
 const CardList = styled.div`
