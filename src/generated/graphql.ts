@@ -536,35 +536,39 @@ export type SearchForCategoryQuery = { __typename?: 'Query' } & {
 
 export type CollectionForCollectionDetailQueryVariables = Exact<{
   id: Scalars['ID'];
-  afterWebtoonId: Scalars['ID'];
-  afterCommentId: Scalars['ID'];
+  afterWebtoonId?: Maybe<Scalars['ID']>;
+  afterCommentId?: Maybe<Scalars['ID']>;
 }>;
 
 export type CollectionForCollectionDetailQuery = { __typename?: 'Query' } & {
-  collection: { __typename?: 'Collection' } & Pick<
-    Collection,
-    'id' | 'title' | 'description'
-  > & {
-      writer: { __typename?: 'User' } & Pick<User, 'name'>;
-      webtoons: { __typename?: 'WebtoonsConnection' } & {
+  collection: { __typename?: 'Collection' } & CollectionFragment;
+};
+
+export type SearchForAddWebtoonsModalQueryVariables = Exact<{
+  keyword?: Maybe<Scalars['String']>;
+  afterWebtoonId?: Maybe<Scalars['ID']>;
+}>;
+
+export type SearchForAddWebtoonsModalQuery = { __typename?: 'Query' } & {
+  search: { __typename?: 'SearchResult' } & {
+    webtoonResult?: Maybe<
+      { __typename?: 'SearchResultWebtoonsConnection' } & {
         pageInfo: { __typename?: 'PageInfo' } & Pick<
           PageInfo,
-          'hasNextPage' | 'endCursor'
+          'endCursor' | 'hasNextPage'
         >;
         edges?: Maybe<
           Array<
             Maybe<
-              { __typename?: 'WebtoonEdge' } & {
+              { __typename?: 'SearchResultWebtoonsEdge' } & {
                 node?: Maybe<{ __typename?: 'Webtoon' } & WebtoonCardFragment>;
               }
             >
           >
         >;
-      };
-      comments: {
-        __typename?: 'CommentsConnection';
-      } & CommentsConnectionForCommentsFragment;
-    };
+      }
+    >;
+  };
 };
 
 export type PostCommentForCollectionDetailMutationVariables = Exact<{
@@ -575,6 +579,42 @@ export type PostCommentForCollectionDetailMutationVariables = Exact<{
 export type PostCommentForCollectionDetailMutation = {
   __typename?: 'Mutation';
 } & { postComment: { __typename?: 'Comment' } & CommentFragment };
+
+export type AddWebtoonsForCollectionDetailMutationVariables = Exact<{
+  collectionId: Scalars['ID'];
+  webtoonIds?: Maybe<Array<Scalars['ID']>>;
+  afterWebtoonId?: Maybe<Scalars['ID']>;
+  afterCommentId?: Maybe<Scalars['ID']>;
+}>;
+
+export type AddWebtoonsForCollectionDetailMutation = {
+  __typename?: 'Mutation';
+} & { updateCollection: { __typename?: 'Collection' } & CollectionFragment };
+
+export type CollectionFragment = { __typename?: 'Collection' } & Pick<
+  Collection,
+  'id' | 'title' | 'description'
+> & {
+    writer: { __typename?: 'User' } & Pick<User, 'id' | 'name'>;
+    webtoons: { __typename?: 'WebtoonsConnection' } & {
+      pageInfo: { __typename?: 'PageInfo' } & Pick<
+        PageInfo,
+        'hasNextPage' | 'endCursor'
+      >;
+      edges?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'WebtoonEdge' } & {
+              node?: Maybe<{ __typename?: 'Webtoon' } & WebtoonCardFragment>;
+            }
+          >
+        >
+      >;
+    };
+    comments: {
+      __typename?: 'CommentsConnection';
+    } & CommentsConnectionForCommentsFragment;
+  };
 
 export type CollectionsForCollectionListQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
@@ -949,6 +989,79 @@ export type GenresForFilterQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export const WebtoonCardFragmentDoc = gql`
+  fragment webtoonCard on Webtoon {
+    id
+    title
+    authors(first: 4) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+    genres {
+      code
+      name
+    }
+    isAdult
+    isFinish
+    isPay
+    thumbnail
+  }
+`;
+export const CommentFragmentDoc = gql`
+  fragment comment on Comment {
+    id
+    message
+    createdAt
+    writer {
+      name
+    }
+  }
+`;
+export const CommentsConnectionForCommentsFragmentDoc = gql`
+  fragment commentsConnectionForComments on CommentsConnection {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        ...comment
+      }
+    }
+  }
+  ${CommentFragmentDoc}
+`;
+export const CollectionFragmentDoc = gql`
+  fragment collection on Collection {
+    id
+    title
+    description
+    writer {
+      id
+      name
+    }
+    webtoons(first: 4, after: $afterWebtoonId) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          ...webtoonCard
+        }
+      }
+    }
+    comments(first: 4, after: $afterCommentId) {
+      ...commentsConnectionForComments
+    }
+  }
+  ${WebtoonCardFragmentDoc}
+  ${CommentsConnectionForCommentsFragmentDoc}
+`;
 export const CollectionCardFragmentDoc = gql`
   fragment collectionCard on Collection {
     id
@@ -976,52 +1089,6 @@ export const UserCollectionCardListFragmentDoc = gql`
     }
   }
   ${CollectionCardFragmentDoc}
-`;
-export const CommentFragmentDoc = gql`
-  fragment comment on Comment {
-    id
-    message
-    createdAt
-    writer {
-      name
-    }
-  }
-`;
-export const CommentsConnectionForCommentsFragmentDoc = gql`
-  fragment commentsConnectionForComments on CommentsConnection {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    edges {
-      node {
-        ...comment
-      }
-    }
-  }
-  ${CommentFragmentDoc}
-`;
-export const WebtoonCardFragmentDoc = gql`
-  fragment webtoonCard on Webtoon {
-    id
-    title
-    authors(first: 4) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-    genres {
-      code
-      name
-    }
-    isAdult
-    isFinish
-    isPay
-    thumbnail
-  }
 `;
 export const SearchForCategoryDocument = gql`
   query searchForCategory(
@@ -1113,34 +1180,14 @@ export type SearchForCategoryQueryResult = Apollo.QueryResult<
 export const CollectionForCollectionDetailDocument = gql`
   query collectionForCollectionDetail(
     $id: ID!
-    $afterWebtoonId: ID!
-    $afterCommentId: ID!
+    $afterWebtoonId: ID
+    $afterCommentId: ID
   ) {
     collection(id: $id) {
-      id
-      title
-      description
-      writer {
-        name
-      }
-      webtoons(first: 4, after: $afterWebtoonId) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            ...webtoonCard
-          }
-        }
-      }
-      comments(first: 4, after: $afterCommentId) {
-        ...commentsConnectionForComments
-      }
+      ...collection
     }
   }
-  ${WebtoonCardFragmentDoc}
-  ${CommentsConnectionForCommentsFragmentDoc}
+  ${CollectionFragmentDoc}
 `;
 
 /**
@@ -1192,6 +1239,74 @@ export type CollectionForCollectionDetailLazyQueryHookResult = ReturnType<
 export type CollectionForCollectionDetailQueryResult = Apollo.QueryResult<
   CollectionForCollectionDetailQuery,
   CollectionForCollectionDetailQueryVariables
+>;
+export const SearchForAddWebtoonsModalDocument = gql`
+  query searchForAddWebtoonsModal($keyword: String, $afterWebtoonId: ID) {
+    search(keyword: $keyword) {
+      webtoonResult(first: 8, after: $afterWebtoonId) {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            ...webtoonCard
+          }
+        }
+      }
+    }
+  }
+  ${WebtoonCardFragmentDoc}
+`;
+
+/**
+ * __useSearchForAddWebtoonsModalQuery__
+ *
+ * To run a query within a React component, call `useSearchForAddWebtoonsModalQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchForAddWebtoonsModalQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchForAddWebtoonsModalQuery({
+ *   variables: {
+ *      keyword: // value for 'keyword'
+ *      afterWebtoonId: // value for 'afterWebtoonId'
+ *   },
+ * });
+ */
+export function useSearchForAddWebtoonsModalQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    SearchForAddWebtoonsModalQuery,
+    SearchForAddWebtoonsModalQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    SearchForAddWebtoonsModalQuery,
+    SearchForAddWebtoonsModalQueryVariables
+  >(SearchForAddWebtoonsModalDocument, baseOptions);
+}
+export function useSearchForAddWebtoonsModalLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SearchForAddWebtoonsModalQuery,
+    SearchForAddWebtoonsModalQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    SearchForAddWebtoonsModalQuery,
+    SearchForAddWebtoonsModalQueryVariables
+  >(SearchForAddWebtoonsModalDocument, baseOptions);
+}
+export type SearchForAddWebtoonsModalQueryHookResult = ReturnType<
+  typeof useSearchForAddWebtoonsModalQuery
+>;
+export type SearchForAddWebtoonsModalLazyQueryHookResult = ReturnType<
+  typeof useSearchForAddWebtoonsModalLazyQuery
+>;
+export type SearchForAddWebtoonsModalQueryResult = Apollo.QueryResult<
+  SearchForAddWebtoonsModalQuery,
+  SearchForAddWebtoonsModalQueryVariables
 >;
 export const PostCommentForCollectionDetailDocument = gql`
   mutation postCommentForCollectionDetail(
@@ -1247,6 +1362,67 @@ export type PostCommentForCollectionDetailMutationResult = Apollo.MutationResult
 export type PostCommentForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
   PostCommentForCollectionDetailMutation,
   PostCommentForCollectionDetailMutationVariables
+>;
+export const AddWebtoonsForCollectionDetailDocument = gql`
+  mutation addWebtoonsForCollectionDetail(
+    $collectionId: ID!
+    $webtoonIds: [ID!]
+    $afterWebtoonId: ID
+    $afterCommentId: ID
+  ) {
+    updateCollection(
+      input: { collectionId: $collectionId, webtoonIds: $webtoonIds }
+    ) {
+      ...collection
+    }
+  }
+  ${CollectionFragmentDoc}
+`;
+export type AddWebtoonsForCollectionDetailMutationFn = Apollo.MutationFunction<
+  AddWebtoonsForCollectionDetailMutation,
+  AddWebtoonsForCollectionDetailMutationVariables
+>;
+
+/**
+ * __useAddWebtoonsForCollectionDetailMutation__
+ *
+ * To run a mutation, you first call `useAddWebtoonsForCollectionDetailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddWebtoonsForCollectionDetailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addWebtoonsForCollectionDetailMutation, { data, loading, error }] = useAddWebtoonsForCollectionDetailMutation({
+ *   variables: {
+ *      collectionId: // value for 'collectionId'
+ *      webtoonIds: // value for 'webtoonIds'
+ *      afterWebtoonId: // value for 'afterWebtoonId'
+ *      afterCommentId: // value for 'afterCommentId'
+ *   },
+ * });
+ */
+export function useAddWebtoonsForCollectionDetailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddWebtoonsForCollectionDetailMutation,
+    AddWebtoonsForCollectionDetailMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    AddWebtoonsForCollectionDetailMutation,
+    AddWebtoonsForCollectionDetailMutationVariables
+  >(AddWebtoonsForCollectionDetailDocument, baseOptions);
+}
+export type AddWebtoonsForCollectionDetailMutationHookResult = ReturnType<
+  typeof useAddWebtoonsForCollectionDetailMutation
+>;
+export type AddWebtoonsForCollectionDetailMutationResult = Apollo.MutationResult<
+  AddWebtoonsForCollectionDetailMutation
+>;
+export type AddWebtoonsForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
+  AddWebtoonsForCollectionDetailMutation,
+  AddWebtoonsForCollectionDetailMutationVariables
 >;
 export const CollectionsForCollectionListDocument = gql`
   query collectionsForCollectionList($keyword: String, $after: ID) {

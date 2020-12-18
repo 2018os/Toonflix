@@ -1,19 +1,19 @@
 query collectionForCollectionDetail(
   $id: ID!
-  $afterWebtoonId: ID!
-  $afterCommentId: ID!
+  $afterWebtoonId: ID
+  $afterCommentId: ID
 ) {
   collection(id: $id) {
-    id
-    title
-    description
-    writer {
-      name
-    }
-    webtoons(first: 4, after: $afterWebtoonId) {
+    ...collection
+  }
+}
+
+query searchForAddWebtoonsModal($keyword: String, $afterWebtoonId: ID) {
+  search(keyword: $keyword) {
+    webtoonResult(first: 8, after: $afterWebtoonId) {
       pageInfo {
-        hasNextPage
         endCursor
+        hasNextPage
       }
       edges {
         node {
@@ -21,14 +21,48 @@ query collectionForCollectionDetail(
         }
       }
     }
-    comments(first: 4, after: $afterCommentId) {
-      ...commentsConnectionForComments
-    }
   }
 }
 
 mutation postCommentForCollectionDetail($collectionId: ID!, $message: String!) {
   postComment(input: { collectionId: $collectionId, message: $message }) {
     ...comment
+  }
+}
+
+mutation addWebtoonsForCollectionDetail(
+  $collectionId: ID!
+  $webtoonIds: [ID!]
+  $afterWebtoonId: ID
+  $afterCommentId: ID
+) {
+  updateCollection(
+    input: { collectionId: $collectionId, webtoonIds: $webtoonIds }
+  ) {
+    ...collection
+  }
+}
+
+fragment collection on Collection {
+  id
+  title
+  description
+  writer {
+    id
+    name
+  }
+  webtoons(first: 4, after: $afterWebtoonId) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        ...webtoonCard
+      }
+    }
+  }
+  comments(first: 4, after: $afterCommentId) {
+    ...commentsConnectionForComments
   }
 }
