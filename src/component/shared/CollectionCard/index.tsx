@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
+import { DefaultCollectionCard } from '../../../styles/Card';
 import { Text } from '../../../styles/Typography';
 
 import { FontSizes, ImgSizes } from '../../../util/theme';
@@ -11,34 +12,14 @@ import Thumbnail from '../Thumbnail';
 import { CollectionCardFragment } from '../../../generated/graphql';
 
 const CollectionThumbnail = styled.div.attrs({
-  className: 'collection-thumbnail'
+  className: 'card-hover-background'
 })`
   display: flex;
   flex-wrap: wrap;
 `;
 
-const Card = styled.div`
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  width: ${ImgSizes.LARGE};
-  height: ${ImgSizes.LARGE};
-  display: flex;
-  position: relative;
-  align-items: center;
-  text-align: center;
-  &:hover {
-    & > .collection-thumbnail {
-      opacity: 0.3;
-    }
-    & > .collection-title {
-      display: inline;
-    }
-  }
-`;
-
 const CollectionTitle = styled(Text).attrs({
-  className: 'collection-title'
+  className: 'card-hover-text'
 })`
   z-index: 1;
   display: none;
@@ -61,7 +42,7 @@ const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
         as: `/collection/${collection.id}`
       }}
     >
-      <Card>
+      <DefaultCollectionCard isHover>
         <CollectionTitle size={FontSizes.LARGE} bold>
           {collection.title}
         </CollectionTitle>
@@ -84,7 +65,7 @@ const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
             <div>collection card thumbnail loading</div>
           )}
         </CollectionThumbnail>
-      </Card>
+      </DefaultCollectionCard>
     </Link>
   );
 };

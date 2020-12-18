@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
+import { DefaultWebtoonCard } from '../../../styles/Card';
+
 import Tag from '../Tag';
 import Tags from '../Tags';
 import Thumbnail from '../Thumbnail';
@@ -9,14 +11,6 @@ import Link from '../Link';
 import { WebtoonCardFragment } from '../../../generated/graphql';
 
 import { Colors, FontSizes, spacing, ImgSizes } from '../../../util/theme';
-
-const Card = styled.div`
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  width: 236px;
-  height: 360px;
-`;
 
 const WebtoonInfoWrapper = styled.div`
   width: 236px;
@@ -65,7 +59,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
         as: `/webtoon/${id}`
       }}
     >
-      <Card>
+      <DefaultWebtoonCard>
         <ThumbnailWrapper>
           <Thumbnail
             src={thumbnail}
@@ -92,7 +86,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon }) => {
               })}
           </Tags>
         </WebtoonInfoWrapper>
-      </Card>
+      </DefaultWebtoonCard>
     </Link>
   );
 };
