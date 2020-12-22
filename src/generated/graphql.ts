@@ -1109,7 +1109,7 @@ export const SearchForCategoryDocument = gql`
           }
         }
       }
-      collectionResult(first: 1, after: $collectionId) {
+      collectionResult(first: 3, after: $collectionId) {
         pageInfo {
           endCursor
           hasNextPage
