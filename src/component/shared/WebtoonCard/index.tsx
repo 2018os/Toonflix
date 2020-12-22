@@ -53,8 +53,8 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon, handleClick }) => {
     authors,
     genres
   } = webtoon;
-  return handleClick ? (
-    <DefaultWebtoonCard onClick={() => handleClick()}>
+  const Webtoon = (
+    <>
       <ThumbnailWrapper>
         <Thumbnail
           src={thumbnail}
@@ -81,6 +81,11 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon, handleClick }) => {
             })}
         </Tags>
       </WebtoonInfoWrapper>
+    </>
+  );
+  return handleClick ? (
+    <DefaultWebtoonCard onClick={() => handleClick()}>
+      {Webtoon}
     </DefaultWebtoonCard>
   ) : (
     <Link
@@ -89,34 +94,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon, handleClick }) => {
         as: `/webtoon/${id}`
       }}
     >
-      <DefaultWebtoonCard>
-        <ThumbnailWrapper>
-          <Thumbnail
-            src={thumbnail}
-            size={ImgSizes.DEFAULT}
-            isAdult={isAdult}
-            isFinish={isFinish}
-            isPay={isPay}
-          />
-        </ThumbnailWrapper>
-        <WebtoonInfoWrapper>
-          <Title>{title}</Title>
-          {authors?.edges?.map((authorEdge) => {
-            if (authorEdge?.node) {
-              return (
-                <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
-              );
-            }
-            return null;
-          })}
-          <Tags>
-            {genres &&
-              genres.map((genre) => {
-                return <Tag key={genre.code}># {genre.name}</Tag>;
-              })}
-          </Tags>
-        </WebtoonInfoWrapper>
-      </DefaultWebtoonCard>
+      <DefaultWebtoonCard>{Webtoon}</DefaultWebtoonCard>
     </Link>
   );
 };
