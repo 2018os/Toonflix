@@ -49,6 +49,13 @@ const WebtoonCardList: FunctionComponent<Props> = ({
     <>
       <Section>
         <WebtoonCardListWrapper>
+          {data.collection.writer.id === authState.me?.id && (
+            <AddWebtoonsCard isHover onClick={() => toggleModal(true)}>
+              <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
+                웹툰 추가하기
+              </CardText>
+            </AddWebtoonsCard>
+          )}
           {data.collection.webtoons.edges &&
             data.collection.webtoons.edges.map((edge) => {
               if (edge?.node) {
@@ -61,13 +68,6 @@ const WebtoonCardList: FunctionComponent<Props> = ({
               }
               return <div key={edge?.__typename}>webtoon data loading</div>;
             })}
-          {data.collection.writer.id === authState.me?.id && (
-            <AddWebtoonsCard isHover onClick={() => toggleModal(true)}>
-              <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
-                웹툰 추가하기
-              </CardText>
-            </AddWebtoonsCard>
-          )}
         </WebtoonCardListWrapper>
       </Section>
       {data.collection.webtoons.pageInfo.hasNextPage ? (

@@ -73,6 +73,15 @@ const CollectionCardList: FunctionComponent<Props> = ({
     <>
       <Section>
         <CollectionCardListWrapper>
+          {collectionType === 'myCollections' && (
+            <Item>
+              <CreateCollectionCard onClick={() => toggleModal(true)}>
+                <CreateCollectionCardTitle size={FontSizes.LARGE}>
+                  컬렉션 만들기!!
+                </CreateCollectionCardTitle>
+              </CreateCollectionCard>
+            </Item>
+          )}
           {data?.edges &&
             data?.edges.map((edge) => {
               if (edge?.node) {
@@ -85,15 +94,6 @@ const CollectionCardList: FunctionComponent<Props> = ({
               }
               return <div key={edge?.__typename}>collection data loading</div>;
             })}
-          <Item>
-            {collectionType === 'myCollections' && (
-              <CreateCollectionCard onClick={() => toggleModal(true)}>
-                <CreateCollectionCardTitle size={FontSizes.LARGE}>
-                  컬렉션 만들기!!
-                </CreateCollectionCardTitle>
-              </CreateCollectionCard>
-            )}
-          </Item>
         </CollectionCardListWrapper>
       </Section>
       {data.pageInfo.hasNextPage ? (
