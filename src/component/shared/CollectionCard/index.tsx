@@ -36,7 +36,7 @@ const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
           {collection.title}
         </CardHoverText>
         <CollectionThumbnail>
-          {slicedWebtoons ? (
+          {slicedWebtoons &&
             slicedWebtoons.map((webtoon) => {
               if (webtoon?.node) {
                 const { id, thumbnail } = webtoon.node;
@@ -49,10 +49,7 @@ const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
                 );
               }
               return null;
-            })
-          ) : (
-            <div>collection card thumbnail loading</div>
-          )}
+            })}
         </CollectionThumbnail>
       </DefaultCollectionCard>
     </Link>

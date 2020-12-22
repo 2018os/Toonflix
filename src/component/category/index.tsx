@@ -8,6 +8,7 @@ import { Title } from '../../styles/Typography';
 
 import CollectionCardList from './CollectionCardList';
 import WebtoonCardList from './WebtoonCardList';
+import { LoadingCardList } from '../shared/Loading';
 
 import { Colors, FontSizes, spacing } from '../../util/theme';
 import getScrolledToBottom from '../../util/infiniteScroll';
@@ -86,7 +87,7 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
               }}
             />
           ) : (
-            <div>LOADING</div>
+            <LoadingCardList cardRange={12} cardType="webtoon" />
           )}
         </CardListWrapper>
       </Section>
@@ -95,7 +96,11 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
           컬렉션 검색 결과
         </Title>
         <CardListWrapper>
-          {data && <CollectionCardList data={data} />}
+          {!loading && data ? (
+            <CollectionCardList data={data} />
+          ) : (
+            <LoadingCardList cardRange={3} cardType="collection" />
+          )}
         </CardListWrapper>
       </Section>
     </>

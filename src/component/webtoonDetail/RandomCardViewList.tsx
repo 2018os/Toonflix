@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import CardViewList from '../shared/CardViewList';
-import { EmptyThumbnail } from '../shared/Empty';
+import { LoadingCardViewList } from '../shared/Loading';
 import Link from '../shared/Link';
 import Thumbnail from '../shared/Thumbnail';
 // import {
@@ -29,29 +29,26 @@ const RandomCardViewList = () => {
       type="refresh"
       refetch={() => refetch()}
     >
-      {!loading && data?.randomWebtoons
-        ? data.randomWebtoons.map(({ id, thumbnail }) => {
-            return (
-              <Link
-                linkProps={{
-                  href: '/webtoon/[id]',
-                  as: `/webtoon/${id}`
-                }}
-                key={`random-thumbnail-${id}`}
-                isNewTab
-              >
-                <Card>
-                  <Thumbnail size={ImgSizes.SMALLER} src={thumbnail} />
-                </Card>
-              </Link>
-            );
-          })
-        : [0, 1, 2, 3, 4, 5].map((index) => (
-            <EmptyThumbnail
-              size={ImgSizes.SMALLER}
-              key={`empty-random-thumbnail-${index}`}
-            />
-          ))}
+      {!loading && data?.randomWebtoons ? (
+        data.randomWebtoons.map(({ id, thumbnail }) => {
+          return (
+            <Link
+              linkProps={{
+                href: '/webtoon/[id]',
+                as: `/webtoon/${id}`
+              }}
+              key={`random-thumbnail-${id}`}
+              isNewTab
+            >
+              <Card>
+                <Thumbnail size={ImgSizes.SMALLER} src={thumbnail} />
+              </Card>
+            </Link>
+          );
+        })
+      ) : (
+        <LoadingCardViewList range={1} cardType="thumbnail" />
+      )}
     </CardViewList>
   );
 };

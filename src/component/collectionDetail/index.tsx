@@ -8,6 +8,11 @@ import { Title, Text } from '../../styles/Typography';
 import WebtoonCardList from './WebtoonCardList';
 
 import Comments from '../shared/Comments';
+import {
+  LoadingCardList,
+  LoadingCollectionProfile,
+  LoadingComments
+} from '../shared/Loading';
 
 import {
   useCollectionForCollectionDetailQuery,
@@ -75,49 +80,65 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
   });
   const afterWebtoonId = data?.collection.webtoons.pageInfo.endCursor;
   const afterCommentId = data?.collection.comments.pageInfo.endCursor;
-  return !loading && data ? (
+  return (
     <div>
-      작성자 {data.collection.writer.name}
-      <CollectionProfile>
-        <CollectionProfileItem>
-          <Title>{data.collection.title}</Title>
-        </CollectionProfileItem>
-        <CollectionProfileItem>
-          <Text>{data.collection.description}</Text>
-        </CollectionProfileItem>
-      </CollectionProfile>
-      <WebtoonCardList
-        data={data}
-        onLoadMore={() => {
-          fetchMore({
-            variables: {
-              id,
-              afterWebtoonId
-            }
-          });
-        }}
-      />
       <Section>
-        <Comments
-          comments={data?.collection.comments}
-          onPostComment={async (message: string) => {
-            await postComment({
-              variables: { collectionId: data.collection.id, message }
-            });
-          }}
-          onLoadMore={() => {
-            fetchMore({
-              variables: {
-                id,
-                afterCommentId
-              }
-            });
-          }}
-        />
+        {data && !loading ? (
+          <>
+            작성자 {data.collection.writer.name}
+            <CollectionProfile>
+              <CollectionProfileItem>
+                <Title>{data.collection.title}</Title>
+              </CollectionProfileItem>
+              <CollectionProfileItem>
+                <Text>{data.collection.description}</Text>
+              </CollectionProfileItem>
+            </CollectionProfile>
+          </>
+        ) : (
+          <LoadingCollectionProfile />
+        )}
+      </Section>
+      <Section>
+        {data && !loading ? (
+          <WebtoonCardList
+            data={data.collection}
+            onLoadMore={() => {
+              fetchMore({
+                variables: {
+                  id,
+                  afterWebtoonId
+                }
+              });
+            }}
+          />
+        ) : (
+          <LoadingCardList cardType="webtoon" cardRange={8} />
+        )}
+      </Section>
+      <Section>
+        {data && !loading ? (
+          <Comments
+            comments={data.collection.comments}
+            onPostComment={async (message: string) => {
+              await postComment({
+                variables: { collectionId: data.collection.id, message }
+              });
+            }}
+            onLoadMore={() => {
+              fetchMore({
+                variables: {
+                  id,
+                  afterCommentId
+                }
+              });
+            }}
+          />
+        ) : (
+          <LoadingComments />
+        )}
       </Section>
     </div>
-  ) : (
-    <div>Loading</div>
   );
 };
 

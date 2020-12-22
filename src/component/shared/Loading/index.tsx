@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { ImgSizes, Colors, spacing } from '../../../util/theme';
 
-type CardType = 'collection' | 'webtoon' | 'thumbnail';
+type CardType = 'collection' | 'webtoon' | 'thumbnail' | 'largeThumbnail';
 
 type Props = {
   cardType: CardType;
@@ -37,7 +37,13 @@ const CardListWrapper = styled.div`
 
 const CardViewList = styled.div<{ type: CardType }>`
   width: 992px;
-  height: ${(props) => (props.type === 'collection' ? '398px' : '438px')};
+  height: ${(props) =>
+    ({
+      collection: '398px',
+      webtoon: '438px',
+      thumbnail: '152px',
+      largeThumbnail: '236px'
+    }[props.type])};
   ${baseCss};
 `;
 
@@ -112,6 +118,12 @@ export const LoadingCardList: FunctionComponent<CardListProps> = ({
             <LoadingThumbnail
               key={`loading-thumbnail-card-${number}`}
               size={ImgSizes.SMALLER}
+            />
+          ),
+          largeThumbnail: (
+            <LoadingThumbnail
+              key={`loading-thumbnail-card-${number}`}
+              size={ImgSizes.DEFAULT}
             />
           )
         }[cardType])

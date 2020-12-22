@@ -12,11 +12,11 @@ import { Text } from '../../styles/Typography';
 import AddWebtoonsModal from './AddWebtoonsModal';
 import WebtoonCard from '../shared/WebtoonCard';
 
-import { CollectionForCollectionDetailQuery } from '../../generated/graphql';
+import { CollectionFragment } from '../../generated/graphql';
 import { Colors, ImgSizes, spacing, FontSizes } from '../../util/theme';
 
 export interface Props {
-  data: CollectionForCollectionDetailQuery;
+  data: CollectionFragment;
   authState: AuthState;
   onLoadMore: () => any;
 }
@@ -49,15 +49,15 @@ const WebtoonCardList: FunctionComponent<Props> = ({
     <>
       <Section>
         <WebtoonCardListWrapper>
-          {data.collection.writer.id === authState.me?.id && (
+          {data.writer.id === authState.me?.id && (
             <AddWebtoonsCard isHover onClick={() => toggleModal(true)}>
               <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
                 웹툰 추가하기
               </CardText>
             </AddWebtoonsCard>
           )}
-          {data.collection.webtoons.edges &&
-            data.collection.webtoons.edges.map((edge) => {
+          {data.webtoons.edges &&
+            data.webtoons.edges.map((edge) => {
               if (edge?.node) {
                 const webtoon = edge.node;
                 return (
@@ -66,21 +66,21 @@ const WebtoonCardList: FunctionComponent<Props> = ({
                   </Item>
                 );
               }
-              return <div key={edge?.__typename}>webtoon data loading</div>;
+              return null;
             })}
         </WebtoonCardListWrapper>
       </Section>
-      {data.collection.webtoons.pageInfo.hasNextPage ? (
+      {data.webtoons.pageInfo.hasNextPage && (
         <Section>
           <MoreButton onClick={() => onLoadMore()}>
             <Text size={FontSizes.SMALL}>더 보기</Text>
           </MoreButton>
         </Section>
-      ) : null}
+      )}
       <AddWebtoonsModal
         isOpen={showAddWebtoonsModal}
         close={() => toggleModal(false)}
-        collectionId={data.collection.id}
+        collectionId={data.id}
       />
     </>
   );

@@ -72,7 +72,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon, handleClick }) => {
               <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
             );
           }
-          return <div key={authorEdge?.__typename}>Author data Loading</div>;
+          return null;
         })}
         <Tags>
           {genres &&
@@ -107,7 +107,7 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon, handleClick }) => {
                 <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
               );
             }
-            return <div key={authorEdge?.__typename}>Author data Loading</div>;
+            return null;
           })}
           <Tags>
             {genres &&

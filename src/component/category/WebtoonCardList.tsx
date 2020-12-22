@@ -43,7 +43,7 @@ const WebtoonCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
                 </Item>
               );
             }
-            return <div key={edge?.__typename}>webtoon data loading</div>;
+            return null;
           })}
       </WebtoonCardListWrapper>
       {data.search.webtoonResult?.pageInfo.hasNextPage ? (

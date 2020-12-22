@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import CollectionCardList, { CollectionType } from './CollectionCardList';
+import { LoadingCardList } from '../shared/Loading';
 
 import { useMeForMyCollectionQuery } from '../../generated/graphql';
 
@@ -73,12 +74,12 @@ const MyCollectionContainer = () => {
           onLoadMore={() => {
             fetchMore({
               variables: lastCollectionId[collectionType]
-              // Reset other collectionType
+              // TODO: Reset other collectionType
             });
           }}
         />
       ) : (
-        <div>Loading</div>
+        <LoadingCardList cardType="collection" cardRange={3} />
       )}
     </>
   );

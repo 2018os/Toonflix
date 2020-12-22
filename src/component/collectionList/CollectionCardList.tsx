@@ -39,7 +39,7 @@ const CollectionCardList: FunctionComponent<Props> = ({ data }) => {
                 </Item>
               );
             }
-            return <div key={edge?.__typename}>collection data loading</div>;
+            return null;
           })}
       </CollectionCardListWrapper>
     </>

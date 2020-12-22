@@ -112,48 +112,44 @@ function MainContainer() {
           </Link>
         </LinkButtonWrapper>
       </Section>
-      {data && !loading
-        ? data.collections.edges?.map((collection, index) => {
-            if (collection?.node?.webtoons) {
-              return (
-                <Section
-                  key={`main-webtoon-card-view-list-section-${collection.node.id}`}
+      {data && !loading ? (
+        data.collections.edges?.map((collection) => {
+          if (collection?.node?.webtoons) {
+            return (
+              <Section
+                key={`main-webtoon-card-view-list-section-${collection.node.id}`}
+              >
+                <CardViewList
+                  title={collection.node.title}
+                  subTitle={`by ${collection.node.writer.name}`}
+                  type="pagination"
                 >
-                  <CardViewList
-                    title={collection.node.title}
-                    subTitle={`by ${collection.node.writer.name}`}
-                    type="pagination"
-                  >
-                    {collection.node.webtoons.edges?.map((edge, edgeIndex) => {
-                      if (edge?.node) {
-                        const webtoon = edge.node;
-                        return (
-                          <WebtoonCard
-                            webtoon={webtoon}
-                            key={`main-webtoon-card-${webtoon.id}`}
-                          />
-                        );
-                      }
+                  {collection.node.webtoons.edges?.map((edge, edgeIndex) => {
+                    if (edge?.node) {
+                      const webtoon = edge.node;
                       return (
-                        <LoadingWebtoonCard
-                          key={`loading-${edge?.__typename}-${edgeIndex}`}
+                        <WebtoonCard
+                          webtoon={webtoon}
+                          key={`main-webtoon-card-${webtoon.id}`}
                         />
                       );
-                    })}
-                    <EmptyWebtoonCard
-                      src={`/collection/${collection.node.id}`}
-                    />
-                  </CardViewList>
-                </Section>
-              );
-            }
-            return (
-              <LoadingCardViewList
-                key={`loading-card-view-list-${collection?.__typename}-${index}`}
-              />
+                    }
+                    return (
+                      <LoadingWebtoonCard
+                        key={`loading-${edge?.__typename}-${edgeIndex}`}
+                      />
+                    );
+                  })}
+                  <EmptyWebtoonCard src={`/collection/${collection.node.id}`} />
+                </CardViewList>
+              </Section>
             );
-          })
-        : null}
+          }
+          return null;
+        })
+      ) : (
+        <LoadingCardViewList range={4} cardType="webtoon" />
+      )}
     </>
   );
 }
