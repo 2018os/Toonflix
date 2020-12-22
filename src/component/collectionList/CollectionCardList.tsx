@@ -1,16 +1,14 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import CollectionCard from '../shared/CollectionCard';
 
 import { CollectionsForCollectionListQuery } from '../../generated/graphql';
 
-import handleOnScroll from '../../util/infiniteScroll';
 import { ImgSizes, spacing } from '../../util/theme';
 
 export interface Props {
   data: CollectionsForCollectionListQuery;
-  onLoadMore: () => any;
 }
 
 const CollectionCardListWrapper = styled.div`
@@ -27,15 +25,7 @@ const Item = styled.div`
   margin-bottom: ${spacing[2]};
 `;
 
-const CollectionCardList: FunctionComponent<Props> = ({ data, onLoadMore }) => {
-  useEffect(() => {
-    global.window.addEventListener('scroll', () => handleOnScroll(onLoadMore));
-    return () => {
-      global.window.removeEventListener('scroll', () =>
-        handleOnScroll(onLoadMore)
-      );
-    };
-  });
+const CollectionCardList: FunctionComponent<Props> = ({ data }) => {
   return (
     <>
       <CollectionCardListWrapper>

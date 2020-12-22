@@ -11,6 +11,7 @@ import SearchBar from '../shared/SearchBar';
 
 import { useCollectionsForCollectionListLazyQuery } from '../../generated/graphql';
 
+import getScrolledToBottom from '../../util/infiniteScroll';
 import { ImgSizes, spacing } from '../../util/theme';
 
 // import { dataForCollectionList as data, loading } from '../../util/dummy';
@@ -54,14 +55,33 @@ const CollectionListContainer = () => {
     setKeyword(value);
   };
 
+  const handleOnScroll = () => {
+    if (getScrolledToBottom()) {
+      if (fetchMore)
+        fetchMore({
+          variables: {
+            after: afterId
+          }
+        });
+    }
+  };
+
   useEffect(() => {
     if (searchKeyword) {
       setKeyword(searchKeyword);
     }
   }, [searchKeyword]);
+
   useEffect(() => {
     getCollection({ variables: { keyword } });
   }, [keyword, getCollection]);
+
+  useEffect(() => {
+    global.window.addEventListener('scroll', handleOnScroll);
+    return () => {
+      global.window.removeEventListener('scroll', handleOnScroll);
+    };
+  });
 
   // No SearchBar component
 
@@ -74,17 +94,7 @@ const CollectionListContainer = () => {
       </Section>
       <Section>
         {data ? (
-          <CollectionCardList
-            data={data}
-            onLoadMore={() => {
-              if (fetchMore)
-                fetchMore({
-                  variables: {
-                    after: afterId
-                  }
-                });
-            }}
-          />
+          <CollectionCardList data={data} />
         ) : (
           <CollectionCardContainer>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((key) => (

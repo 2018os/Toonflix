@@ -1,6 +1,4 @@
-type ActionOnScrolledToBottom = () => any;
-
-const handleOnScroll = (action: ActionOnScrolledToBottom) => {
+const getScrolledToBottom = () => {
   const { document, window } = global;
   const scrollTop =
     (document.documentElement && document.documentElement.scrollTop) ||
@@ -10,10 +8,7 @@ const handleOnScroll = (action: ActionOnScrolledToBottom) => {
     document.body.scrollHeight;
   const clientHeight =
     document.documentElement.clientHeight || window.innerHeight;
-  const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-  if (scrolledToBottom) {
-    action();
-  }
+  return Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 };
 
-export default handleOnScroll;
+export default getScrolledToBottom;

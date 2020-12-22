@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -10,6 +10,7 @@ import CollectionCardList from './CollectionCardList';
 import WebtoonCardList from './WebtoonCardList';
 
 import { Colors, FontSizes, spacing } from '../../util/theme';
+import getScrolledToBottom from '../../util/infiniteScroll';
 
 import {
   useSearchForCategoryQuery,
@@ -41,6 +42,27 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
   });
   const webtoonId = data?.search.webtoonResult?.pageInfo.endCursor;
   const collectionId = data?.search.collectionResult?.pageInfo.endCursor;
+
+  const handleOnScroll = () => {
+    if (getScrolledToBottom()) {
+      fetchMore({
+        variables: {
+          keyword,
+          where: {
+            ...filter
+          },
+          collectionId
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    global.window.addEventListener('scroll', handleOnScroll);
+    return () => {
+      global.window.removeEventListener('scroll', handleOnScroll);
+    };
+  });
   return (
     <>
       <Section>
@@ -73,22 +95,7 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
           컬렉션 검색 결과
         </Title>
         <CardListWrapper>
-          {data && (
-            <CollectionCardList
-              data={data}
-              onLoadMore={() => {
-                fetchMore({
-                  variables: {
-                    keyword,
-                    where: {
-                      ...filter
-                    },
-                    collectionId
-                  }
-                });
-              }}
-            />
-          )}
+          {data && <CollectionCardList data={data} />}
         </CardListWrapper>
       </Section>
     </>
