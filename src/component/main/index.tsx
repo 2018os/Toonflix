@@ -103,6 +103,13 @@ function MainContainer() {
               </Text>
             </LinkButton>
           </Link>
+          <Link linkProps={{ href: '/random' }}>
+            <LinkButton>
+              <Text bold color={Colors.WHITE}>
+                무작위 웹툰 고르기
+              </Text>
+            </LinkButton>
+          </Link>
         </LinkButtonWrapper>
       </Section>
       {data && !loading
