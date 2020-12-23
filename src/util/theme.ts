@@ -14,9 +14,11 @@ export enum Colors {
   PRIMARY_COLOR = '#076EFF',
   SKELETON_COLOR = '#ecefff',
   BORDER_COLOR = '#DBDBDB',
+  TEXT_GRAY = '#7a7a7a',
   GRAY = '#EAEDED',
   BLACK = '#212121',
   WHITE = '#ffffff',
+  RED = '#ff5e5e',
   ADULT = '#ff7800'
 }
 
