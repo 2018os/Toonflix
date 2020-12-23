@@ -81,7 +81,7 @@ export type QueryCollectionsArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
-  keyword?: Maybe<Scalars['String']>;
+  where?: Maybe<CollectionFiltering>;
 };
 
 /** types */
@@ -314,6 +314,7 @@ export type UserLikedCollectionsArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  where?: Maybe<CollectionFiltering>;
 };
 
 export type UserMyCollectionsArgs = {
@@ -321,6 +322,7 @@ export type UserMyCollectionsArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  where?: Maybe<CollectionFiltering>;
 };
 
 export type UserCommentsArgs = {
@@ -478,6 +480,11 @@ export type CommentInput = {
   commentId?: Maybe<Scalars['ID']>;
 };
 
+export type CollectionFiltering = {
+  keyword?: Maybe<Scalars['String']>;
+  containWebtoonIds?: Maybe<Array<Scalars['ID']>>;
+};
+
 export type SearchFiltering = {
   isPay?: Maybe<Scalars['Boolean']>;
   isAdult?: Maybe<Scalars['Boolean']>;
@@ -580,14 +587,14 @@ export type PostCommentForCollectionDetailMutation = {
   __typename?: 'Mutation';
 } & { postComment: { __typename?: 'Comment' } & CommentFragment };
 
-export type AddWebtoonsForCollectionDetailMutationVariables = Exact<{
+export type UpdateCollectionForCollectionDetailMutationVariables = Exact<{
   collectionId: Scalars['ID'];
   webtoonIds?: Maybe<Array<Scalars['ID']>>;
   afterWebtoonId?: Maybe<Scalars['ID']>;
   afterCommentId?: Maybe<Scalars['ID']>;
 }>;
 
-export type AddWebtoonsForCollectionDetailMutation = {
+export type UpdateCollectionForCollectionDetailMutation = {
   __typename?: 'Mutation';
 } & { updateCollection: { __typename?: 'Collection' } & CollectionFragment };
 
@@ -963,6 +970,42 @@ export type RandomWebtoonsForWebtoonDetailQueryVariables = Exact<{
 export type RandomWebtoonsForWebtoonDetailQuery = { __typename?: 'Query' } & {
   randomWebtoons?: Maybe<
     Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
+  >;
+};
+
+export type MeForAddToCollectionModalQueryVariables = Exact<{
+  afterMyCollectionId?: Maybe<Scalars['ID']>;
+}>;
+
+export type MeForAddToCollectionModalQuery = { __typename?: 'Query' } & {
+  me: { __typename?: 'User' } & {
+    myCollections: { __typename?: 'CollectionsConnection' } & {
+      edges?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'CollectionEdge' } & {
+              node?: Maybe<
+                { __typename?: 'Collection' } & Pick<Collection, 'id' | 'title'>
+              >;
+            }
+          >
+        >
+      >;
+    };
+  };
+};
+
+export type UpdateCollectionForWebtoonDetailMutationVariables = Exact<{
+  collectionId: Scalars['ID'];
+  webtoonIds?: Maybe<Array<Scalars['ID']>>;
+}>;
+
+export type UpdateCollectionForWebtoonDetailMutation = {
+  __typename?: 'Mutation';
+} & {
+  updateCollection: { __typename?: 'Collection' } & Pick<
+    Collection,
+    'id' | 'title'
   >;
 };
 
@@ -1363,8 +1406,8 @@ export type PostCommentForCollectionDetailMutationOptions = Apollo.BaseMutationO
   PostCommentForCollectionDetailMutation,
   PostCommentForCollectionDetailMutationVariables
 >;
-export const AddWebtoonsForCollectionDetailDocument = gql`
-  mutation addWebtoonsForCollectionDetail(
+export const UpdateCollectionForCollectionDetailDocument = gql`
+  mutation updateCollectionForCollectionDetail(
     $collectionId: ID!
     $webtoonIds: [ID!]
     $afterWebtoonId: ID
@@ -1378,23 +1421,23 @@ export const AddWebtoonsForCollectionDetailDocument = gql`
   }
   ${CollectionFragmentDoc}
 `;
-export type AddWebtoonsForCollectionDetailMutationFn = Apollo.MutationFunction<
-  AddWebtoonsForCollectionDetailMutation,
-  AddWebtoonsForCollectionDetailMutationVariables
+export type UpdateCollectionForCollectionDetailMutationFn = Apollo.MutationFunction<
+  UpdateCollectionForCollectionDetailMutation,
+  UpdateCollectionForCollectionDetailMutationVariables
 >;
 
 /**
- * __useAddWebtoonsForCollectionDetailMutation__
+ * __useUpdateCollectionForCollectionDetailMutation__
  *
- * To run a mutation, you first call `useAddWebtoonsForCollectionDetailMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddWebtoonsForCollectionDetailMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateCollectionForCollectionDetailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCollectionForCollectionDetailMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addWebtoonsForCollectionDetailMutation, { data, loading, error }] = useAddWebtoonsForCollectionDetailMutation({
+ * const [updateCollectionForCollectionDetailMutation, { data, loading, error }] = useUpdateCollectionForCollectionDetailMutation({
  *   variables: {
  *      collectionId: // value for 'collectionId'
  *      webtoonIds: // value for 'webtoonIds'
@@ -1403,30 +1446,30 @@ export type AddWebtoonsForCollectionDetailMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useAddWebtoonsForCollectionDetailMutation(
+export function useUpdateCollectionForCollectionDetailMutation(
   baseOptions?: Apollo.MutationHookOptions<
-    AddWebtoonsForCollectionDetailMutation,
-    AddWebtoonsForCollectionDetailMutationVariables
+    UpdateCollectionForCollectionDetailMutation,
+    UpdateCollectionForCollectionDetailMutationVariables
   >
 ) {
   return Apollo.useMutation<
-    AddWebtoonsForCollectionDetailMutation,
-    AddWebtoonsForCollectionDetailMutationVariables
-  >(AddWebtoonsForCollectionDetailDocument, baseOptions);
+    UpdateCollectionForCollectionDetailMutation,
+    UpdateCollectionForCollectionDetailMutationVariables
+  >(UpdateCollectionForCollectionDetailDocument, baseOptions);
 }
-export type AddWebtoonsForCollectionDetailMutationHookResult = ReturnType<
-  typeof useAddWebtoonsForCollectionDetailMutation
+export type UpdateCollectionForCollectionDetailMutationHookResult = ReturnType<
+  typeof useUpdateCollectionForCollectionDetailMutation
 >;
-export type AddWebtoonsForCollectionDetailMutationResult = Apollo.MutationResult<
-  AddWebtoonsForCollectionDetailMutation
+export type UpdateCollectionForCollectionDetailMutationResult = Apollo.MutationResult<
+  UpdateCollectionForCollectionDetailMutation
 >;
-export type AddWebtoonsForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
-  AddWebtoonsForCollectionDetailMutation,
-  AddWebtoonsForCollectionDetailMutationVariables
+export type UpdateCollectionForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
+  UpdateCollectionForCollectionDetailMutation,
+  UpdateCollectionForCollectionDetailMutationVariables
 >;
 export const CollectionsForCollectionListDocument = gql`
   query collectionsForCollectionList($keyword: String, $after: ID) {
-    collections(first: 3, keyword: $keyword, after: $after) {
+    collections(first: 3, after: $after, where: { keyword: $keyword }) {
       pageInfo {
         hasNextPage
         endCursor
@@ -2139,6 +2182,126 @@ export type RandomWebtoonsForWebtoonDetailLazyQueryHookResult = ReturnType<
 export type RandomWebtoonsForWebtoonDetailQueryResult = Apollo.QueryResult<
   RandomWebtoonsForWebtoonDetailQuery,
   RandomWebtoonsForWebtoonDetailQueryVariables
+>;
+export const MeForAddToCollectionModalDocument = gql`
+  query meForAddToCollectionModal($afterMyCollectionId: ID) {
+    me {
+      myCollections(first: 10, after: $afterMyCollectionId) {
+        edges {
+          node {
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useMeForAddToCollectionModalQuery__
+ *
+ * To run a query within a React component, call `useMeForAddToCollectionModalQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeForAddToCollectionModalQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeForAddToCollectionModalQuery({
+ *   variables: {
+ *      afterMyCollectionId: // value for 'afterMyCollectionId'
+ *   },
+ * });
+ */
+export function useMeForAddToCollectionModalQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    MeForAddToCollectionModalQuery,
+    MeForAddToCollectionModalQueryVariables
+  >
+) {
+  return Apollo.useQuery<
+    MeForAddToCollectionModalQuery,
+    MeForAddToCollectionModalQueryVariables
+  >(MeForAddToCollectionModalDocument, baseOptions);
+}
+export function useMeForAddToCollectionModalLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    MeForAddToCollectionModalQuery,
+    MeForAddToCollectionModalQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<
+    MeForAddToCollectionModalQuery,
+    MeForAddToCollectionModalQueryVariables
+  >(MeForAddToCollectionModalDocument, baseOptions);
+}
+export type MeForAddToCollectionModalQueryHookResult = ReturnType<
+  typeof useMeForAddToCollectionModalQuery
+>;
+export type MeForAddToCollectionModalLazyQueryHookResult = ReturnType<
+  typeof useMeForAddToCollectionModalLazyQuery
+>;
+export type MeForAddToCollectionModalQueryResult = Apollo.QueryResult<
+  MeForAddToCollectionModalQuery,
+  MeForAddToCollectionModalQueryVariables
+>;
+export const UpdateCollectionForWebtoonDetailDocument = gql`
+  mutation updateCollectionForWebtoonDetail(
+    $collectionId: ID!
+    $webtoonIds: [ID!]
+  ) {
+    updateCollection(
+      input: { collectionId: $collectionId, webtoonIds: $webtoonIds }
+    ) {
+      id
+      title
+    }
+  }
+`;
+export type UpdateCollectionForWebtoonDetailMutationFn = Apollo.MutationFunction<
+  UpdateCollectionForWebtoonDetailMutation,
+  UpdateCollectionForWebtoonDetailMutationVariables
+>;
+
+/**
+ * __useUpdateCollectionForWebtoonDetailMutation__
+ *
+ * To run a mutation, you first call `useUpdateCollectionForWebtoonDetailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCollectionForWebtoonDetailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCollectionForWebtoonDetailMutation, { data, loading, error }] = useUpdateCollectionForWebtoonDetailMutation({
+ *   variables: {
+ *      collectionId: // value for 'collectionId'
+ *      webtoonIds: // value for 'webtoonIds'
+ *   },
+ * });
+ */
+export function useUpdateCollectionForWebtoonDetailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateCollectionForWebtoonDetailMutation,
+    UpdateCollectionForWebtoonDetailMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    UpdateCollectionForWebtoonDetailMutation,
+    UpdateCollectionForWebtoonDetailMutationVariables
+  >(UpdateCollectionForWebtoonDetailDocument, baseOptions);
+}
+export type UpdateCollectionForWebtoonDetailMutationHookResult = ReturnType<
+  typeof useUpdateCollectionForWebtoonDetailMutation
+>;
+export type UpdateCollectionForWebtoonDetailMutationResult = Apollo.MutationResult<
+  UpdateCollectionForWebtoonDetailMutation
+>;
+export type UpdateCollectionForWebtoonDetailMutationOptions = Apollo.BaseMutationOptions<
+  UpdateCollectionForWebtoonDetailMutation,
+  UpdateCollectionForWebtoonDetailMutationVariables
 >;
 export const PostCommentForWebtoonDetailDocument = gql`
   mutation postCommentForWebtoonDetail($webtoonId: ID!, $message: String!) {

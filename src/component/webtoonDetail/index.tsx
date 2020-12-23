@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
 import Section from '../../layout/Section';
@@ -12,7 +12,10 @@ import {
 import Button from '../../styles/Button';
 import { SubTitle, Text } from '../../styles/Typography';
 
+import AddToCollectionModal from './AddToCollectionModal';
 import RandomCardViewList from './RandomCardViewList';
+
+import Dropdown, { Option } from '../shared/Dropdown';
 import CardViewList from '../shared/CardViewList';
 import CollectionCard from '../shared/CollectionCard';
 import Comments from '../shared/Comments';
@@ -59,7 +62,6 @@ const Flex = styled.div`
 `;
 
 const Profile = styled(Flex)`
-  position: relative;
   margin-bottom: ${spacing[2]};
 `;
 
@@ -80,15 +82,14 @@ const Description = styled.div`
 
 const Authors = styled(Flex)``;
 
-const Bookmark = styled.div`
-  width: 25px;
-  height: 25px;
-  background-color: yellow;
+const DropDownWrapper = styled.div`
+  margin-left: auto;
 `;
 
-const Option = styled(Flex)`
-  position: absolute;
-  right: 0;
+const Bookmark = styled.img.attrs({
+  src: '/static/icon/more.svg'
+})`
+  cursor: pointer;
 `;
 
 const ReadButton = styled(Button)`
@@ -108,6 +109,8 @@ const Badges = styled(Flex)`
 `;
 
 const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
+  const [showDropdown, toggleDropdown] = useState(false);
+  const [showAddToCollectionModal, toggleModal] = useState(false);
   const { data, loading, fetchMore } = useWebtoonForWebtoonDetailQuery({
     variables: { id, afterCommentId: '' }
   });
@@ -203,9 +206,19 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
               </Flex>
             </Part>
           </Info>
-          <Option>
-            <Bookmark />
-          </Option>
+          <DropDownWrapper>
+            <Dropdown
+              isOpen={showDropdown}
+              openButton={
+                <Bookmark onClick={() => toggleDropdown(!showDropdown)} />
+              }
+            >
+              <Option onClick={() => toggleModal(true)}>컬렉션에 추가</Option>
+              <Option>
+                <Text color={Colors.RED}>신고 / 수정요청</Text>
+              </Option>
+            </Dropdown>
+          </DropDownWrapper>
         </Profile>
         <Description>{data?.webtoon.description}</Description>
       </Section>
@@ -293,6 +306,11 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       <Section>
         <RandomCardViewList />
       </Section>
+      <AddToCollectionModal
+        webtoonId={id}
+        isOpen={showAddToCollectionModal}
+        close={() => toggleModal(false)}
+      />
     </>
   );
 };

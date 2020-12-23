@@ -56,6 +56,31 @@ query randomWebtoonsForWebtoonDetail {
   }
 }
 
+query meForAddToCollectionModal($afterMyCollectionId: ID) {
+  me {
+    myCollections(first: 10, after: $afterMyCollectionId) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+  }
+}
+
+mutation updateCollectionForWebtoonDetail(
+  $collectionId: ID!
+  $webtoonIds: [ID!]
+) {
+  updateCollection(
+    input: { collectionId: $collectionId, webtoonIds: $webtoonIds }
+  ) {
+    id
+    title
+  }
+}
+
 mutation postCommentForWebtoonDetail($webtoonId: ID!, $message: String!) {
   postComment(input: { webtoonId: $webtoonId, message: $message }) {
     ...comment
