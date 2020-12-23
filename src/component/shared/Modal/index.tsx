@@ -10,6 +10,8 @@ const baseStyle: ReactModal.Styles = {
   }
 };
 
+export type ModalProps = ReactModal.Props;
+
 const Modal: FunctionComponent<ReactModal.Props> = (props) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {

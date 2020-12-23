@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from '../../styles/Button';
 import { Title } from '../../styles/Typography';
 
-import Modal from '../shared/Modal';
+import Modal, { ModalProps } from '../shared/Modal';
 
 import {
   useCreateCollectionForMyCollectionMutation,
@@ -16,8 +16,7 @@ import {
 
 import { spacing } from '../../util/theme';
 
-type Props = {
-  isOpen: boolean;
+type Props = ModalProps & {
   close: () => any;
 };
 

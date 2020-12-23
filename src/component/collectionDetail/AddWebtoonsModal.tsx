@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Button from '../../styles/Button';
 import { Title } from '../../styles/Typography';
 
-import Modal from '../shared/Modal';
+import Modal, { ModalProps } from '../shared/Modal';
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { spacing } from '../../util/theme';
@@ -14,9 +14,8 @@ import {
   useSearchForAddWebtoonsModalQuery
 } from '../../generated/graphql';
 
-type Props = {
+type Props = ModalProps & {
   collectionId: string;
-  isOpen: boolean;
   close: () => any;
 };
 

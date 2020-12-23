@@ -5,12 +5,11 @@ import styled from 'styled-components';
 import Button from '../../../styles/Button';
 import { Title } from '../../../styles/Typography';
 
-import Modal from '../Modal';
+import Modal, { ModalProps } from '../Modal';
 
 import { spacing } from '../../../util/theme';
 
-type Props = {
-  isOpen: boolean;
+type Props = ModalProps & {
   close: () => any;
   onPostComment: (message: string) => any;
 };
