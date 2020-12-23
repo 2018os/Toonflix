@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <clipPath id="eweeo912sa">
+            <path fill="#076eff" d="M0 0H24V24H0z" transform="translate(1424 120)"/>
+        </clipPath>
+    </defs>
+    <g clip-path="url(#eweeo912sa)" transform="translate(-1424 -120)">
+        <g>
+            <path fill="none" d="M0 0h24v24H0z" transform="translate(1424 120)"/>
+            <path d="M15.5 4A1.5 1.5 0 1 0 17 5.5 1.5 1.5 0 0 0 15.5 4zm0 15a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5zm0-7.5A1.5 1.5 0 1 0 17 13a1.5 1.5 0 0 0-1.5-1.5z" transform="translate(1424 120) translate(-3.5 -1)"/>
+        </g>
+    </g>
+</svg>
