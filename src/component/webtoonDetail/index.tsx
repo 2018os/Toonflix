@@ -43,8 +43,6 @@ import {
   spacing
 } from '../../util/theme';
 
-// import { dataForWebtoonDetail as data } from '../../util/dummy';
-
 type Props = {
   id: string;
 };
@@ -80,7 +78,10 @@ const Description = styled.div`
   padding: ${spacing[4]};
 `;
 
-const Authors = styled(Flex)``;
+const Author = styled.div`
+  display: inline-block;
+  margin-left: ${spacing[0]};
+`;
 
 const DropDownWrapper = styled.div`
   margin-left: auto;
@@ -178,15 +179,13 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                   );
                 })}
               </Tags>
-              <Authors>
-                {data?.webtoon.authors.edges?.map((authorEdge) => {
-                  return (
-                    <Text key={authorEdge?.node?.id}>
-                      {authorEdge?.node?.name}
-                    </Text>
-                  );
-                })}
-              </Authors>
+              {data?.webtoon.authors.edges?.map((authorEdge) => {
+                return (
+                  <Author key={authorEdge?.node?.id}>
+                    <Text>{authorEdge?.node?.name}</Text>
+                  </Author>
+                );
+              })}
             </Part>
             <Part>
               <Badges>

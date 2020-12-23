@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { DefaultWebtoonCard } from '../../../styles/Card';
 
+import { Text } from '../../../styles/Typography';
+
 import Tag from '../Tag';
 import Tags from '../Tags';
 import Thumbnail from '../Thumbnail';
@@ -10,7 +12,7 @@ import Link from '../Link';
 
 import { WebtoonCardFragment } from '../../../generated/graphql';
 
-import { Colors, FontSizes, spacing, ImgSizes } from '../../../util/theme';
+import { Colors, FontSizes, ImgSizes, spacing } from '../../../util/theme';
 
 const WebtoonInfoWrapper = styled.div`
   width: 236px;
@@ -20,19 +22,13 @@ const WebtoonInfoWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  padding-top: 10px;
-  font-size: ${FontSizes.DEFAULT};
+  padding-top: ${spacing[1]};
   font-weight: bold;
-  line-height: 1.5;
-  color: ${Colors.BLACK};
 `;
 
 const Author = styled.div`
-  margin-top: ${spacing[0]};
-  font-size: ${FontSizes.SMALLEST};
-  font-weight: 500;
-  text-align: center;
-  color: ${Colors.GRAY};
+  display: inline-block;
+  margin-left: ${spacing[0]};
 `;
 
 const ThumbnailWrapper = styled.div``;
@@ -65,11 +61,19 @@ const WebtoonCard: FunctionComponent<Props> = ({ webtoon, handleClick }) => {
         />
       </ThumbnailWrapper>
       <WebtoonInfoWrapper>
-        <Title>{title}</Title>
+        <Title>
+          <Text color={Colors.BLACK} size={FontSizes.DEFAULT}>
+            {title}
+          </Text>
+        </Title>
         {authors?.edges?.map((authorEdge) => {
           if (authorEdge?.node) {
             return (
-              <Author key={authorEdge.node.id}>{authorEdge.node.name}</Author>
+              <Author key={authorEdge.node.id}>
+                <Text color={Colors.TEXT_GRAY} size={FontSizes.SMALLEST}>
+                  {authorEdge.node.name}
+                </Text>
+              </Author>
             );
           }
           return null;
