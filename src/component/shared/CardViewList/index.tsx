@@ -23,9 +23,13 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${Colors.GRAY};
+  color: ${Colors.TEXT_GRAY};
   font-size: ${FontSizes.H3};
 `;
+
+const Refresh = styled.img.attrs({
+  src: '/static/icon/refresh.svg'
+})``;
 
 type Action = 'refresh' | 'pagination';
 
@@ -71,7 +75,9 @@ const Header: FunctionComponent<HeaderProps> = ({
     </ContentWrapper>
     <ContentWrapper>
       {type === 'refresh' && refetch ? (
-        <Button onClick={refetch}>R</Button>
+        <Button onClick={refetch}>
+          <Refresh />
+        </Button>
       ) : (
         <>
           <Button

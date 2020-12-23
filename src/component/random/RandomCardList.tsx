@@ -9,7 +9,7 @@ import Thumbnail from '../shared/Thumbnail';
 
 import { useRandomWebtoonsForRandomQuery } from '../../generated/graphql';
 
-import { ImgSizes, spacing } from '../../util/theme';
+import { Colors, ImgSizes, spacing } from '../../util/theme';
 
 const ButtonWrapper = styled.div`
   text-align: right;
@@ -17,10 +17,12 @@ const ButtonWrapper = styled.div`
 `;
 
 const Button = styled.button`
+  cursor: pointer;
   width: 40px;
   height: 30px;
   border-radius: 10px;
-  background-color: #ffffff;
+  border: none;
+  background-color: ${Colors.WHITE};
 `;
 
 const CardList = styled.div`
@@ -32,6 +34,10 @@ const CardList = styled.div`
   }
 `;
 
+const Refresh = styled.img.attrs({
+  src: 'static/icon/refresh.svg'
+})``;
+
 const RandomCardViewList = () => {
   const { data, loading, refetch } = useRandomWebtoonsForRandomQuery({
     notifyOnNetworkStatusChange: true
@@ -40,7 +46,7 @@ const RandomCardViewList = () => {
     <>
       <ButtonWrapper>
         <Button type="button" onClick={() => refetch()}>
-          R
+          <Refresh />
         </Button>
       </ButtonWrapper>
       <CardList>
