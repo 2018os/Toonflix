@@ -30,7 +30,7 @@ mutation postCommentForCollectionDetail($collectionId: ID!, $message: String!) {
   }
 }
 
-mutation addWebtoonsForCollectionDetail(
+mutation updateCollectionForCollectionDetail(
   $collectionId: ID!
   $webtoonIds: [ID!]
   $afterWebtoonId: ID

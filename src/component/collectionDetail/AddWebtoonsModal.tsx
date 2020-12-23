@@ -10,7 +10,7 @@ import WebtoonCard from '../shared/WebtoonCard';
 import { spacing } from '../../util/theme';
 
 import {
-  useAddWebtoonsForCollectionDetailMutation,
+  useUpdateCollectionForCollectionDetailMutation,
   useSearchForAddWebtoonsModalQuery
 } from '../../generated/graphql';
 
@@ -47,7 +47,7 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
   close
 }) => {
   const { data, loading } = useSearchForAddWebtoonsModalQuery();
-  const [updateCollection] = useAddWebtoonsForCollectionDetailMutation();
+  const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
   const [webtoonIds, setWebtoonIds] = useState<string[]>([]);
   return (
     <Modal isOpen={isOpen} onRequestClose={() => close()}>
@@ -103,29 +103,6 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
       >
         다음
       </Button>
-      {/* <Formik
-        initialValues={{
-          title: '',
-          description: ''
-        }}
-        onSubmit={(value) => {
-          updateCollection({
-            variables: {
-              collectionId,
-              webtoonIds: ['MTE2ODc='],
-              afterWebtoonId: '',
-              afterCommentId: ''
-            }
-          });
-          close();
-        }}
-      >
-        <Form>
-          <Button type="submit" isFull primary>
-            보내기
-          </Button>
-        </Form>
-      </Formik> */}
     </Modal>
   );
 };
