@@ -6,9 +6,20 @@ import withAuth, { AuthState } from '../hocs/withAuth';
 
 import { Text } from '../styles/Typography';
 
+import Dropdown, { Option } from '../component/shared/Dropdown';
 import Link from '../component/shared/Link';
 import SearchBar from '../component/shared/SearchBar';
-import { spacing, TextColors } from '../util/theme';
+
+import { spacing, Colors } from '../util/theme';
+
+export interface Props {
+  authState: AuthState;
+}
+
+export interface ProfileProps {
+  authState: AuthState;
+  isMain?: boolean;
+}
 
 const NavigationWrapper = styled.div`
   display: flex;
@@ -36,12 +47,10 @@ const SearchWrapper = styled.div`
 
 const Tab = styled(Text)<{ isCurrentPath: boolean }>`
   color: ${(props) =>
-    props.isCurrentPath ? TextColors.PRIMARY_COLOR : TextColors.BLACK};
+    props.isCurrentPath ? Colors.PRIMARY_COLOR : Colors.BLACK};
 `;
 
 const ProfileWrapper = styled.div<{ isMain: boolean }>`
-  display: flex;
-  jusitfy-content: flex-end;
   ${(props) =>
     props.isMain &&
     `
@@ -51,25 +60,30 @@ const ProfileWrapper = styled.div<{ isMain: boolean }>`
     `}
 `;
 
-export interface Props {
-  authState: AuthState;
-}
-
-export interface ProfileProps {
-  authState: AuthState;
-  isMain?: boolean;
-}
-
 const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const router = useRouter();
   return (
     <ProfileWrapper isMain={!!isMain}>
-      {authState.user && authState.userId ? (
-        <div>
-          <div>{authState.user.name}</div>
-          <button type="button" onClick={() => authState.signOut()}>
-            로그아웃
-          </button>
-        </div>
+      {authState.me && authState.token ? (
+        <>
+          <Dropdown
+            isOpen={isOpenMenu}
+            openButton={
+              <Text onClick={() => setIsOpenMenu(!isOpenMenu)}>
+                {authState.me.name}
+              </Text>
+            }
+          >
+            <Option onClick={() => router.push('/profile')}>내 프로필</Option>
+            <Option onClick={() => router.push('/mycollection')}>
+              내 컬렉션
+            </Option>
+            <Option onClick={() => authState.signOut()}>
+              <Text color={Colors.RED}>로그아웃</Text>
+            </Option>
+          </Dropdown>
+        </>
       ) : (
         <Link linkProps={{ href: '/login' }}>
           <Text>로그인</Text>
