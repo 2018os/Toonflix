@@ -16,7 +16,7 @@ query searchForCategory(
         }
       }
     }
-    collectionResult(first: 3, after: $collectionId) {
+    collectionResult(first: 6, after: $collectionId) {
       pageInfo {
         endCursor
         hasNextPage

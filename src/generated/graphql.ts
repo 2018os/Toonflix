@@ -1152,7 +1152,7 @@ export const SearchForCategoryDocument = gql`
           }
         }
       }
-      collectionResult(first: 3, after: $collectionId) {
+      collectionResult(first: 6, after: $collectionId) {
         pageInfo {
           endCursor
           hasNextPage
@@ -1469,7 +1469,7 @@ export type UpdateCollectionForCollectionDetailMutationOptions = Apollo.BaseMuta
 >;
 export const CollectionsForCollectionListDocument = gql`
   query collectionsForCollectionList($keyword: String, $after: ID) {
-    collections(first: 3, after: $after, where: { keyword: $keyword }) {
+    collections(first: 9, after: $after, where: { keyword: $keyword }) {
       pageInfo {
         hasNextPage
         endCursor

@@ -1,5 +1,5 @@
 query collectionsForCollectionList($keyword: String, $after: ID) {
-  collections(first: 3, after: $after, where: { keyword: $keyword }) {
+  collections(first: 9, after: $after, where: { keyword: $keyword }) {
     pageInfo {
       hasNextPage
       endCursor
