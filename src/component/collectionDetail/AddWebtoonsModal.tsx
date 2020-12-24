@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
-import Button from '../../styles/Button';
 import { Title } from '../../styles/Typography';
 
 import Modal, { ModalProps } from '../shared/Modal';

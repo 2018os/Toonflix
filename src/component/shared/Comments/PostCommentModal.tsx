@@ -2,7 +2,6 @@ import { Formik, Form, Field } from 'formik';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import Button from '../../../styles/Button';
 import { Title } from '../../../styles/Typography';
 
 import Modal, { ModalProps } from '../Modal';
