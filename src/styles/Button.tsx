@@ -10,8 +10,9 @@ interface Props {
 const Button = styled.button<Props>`
   cursor: pointer;
   width: ${(props) => props.isFull && `100%`};
-  background-color: ${(props) => props.primary && Colors.PRIMARY_COLOR};
-  color: ${(props) => props.primary && Colors.WHITE};
+  background-color: ${(props) =>
+    props.primary ? Colors.PRIMARY_COLOR : Colors.WHITE};
+  color: ${(props) => (props.primary ? Colors.WHITE : Colors.BLACK)};
   border: none;
 `;
 
