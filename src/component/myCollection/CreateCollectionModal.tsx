@@ -2,7 +2,6 @@ import { Formik, Form, Field } from 'formik';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import Button from '../../styles/Button';
 import { Title } from '../../styles/Typography';
 
 import Modal, { ModalProps } from '../shared/Modal';
@@ -27,6 +26,18 @@ const TextField = styled(Field)`
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   outline: none;
+  margin-bottom: ${spacing[1]};
+  &: last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const Content = styled.div`
+  text-align: center;
+`;
+
+const TitleWrapper = styled.div`
+  margin-bottom: ${spacing[3]};
 `;
 
 const CreateCollectionModal: FunctionComponent<Props> = ({ isOpen, close }) => {
@@ -66,42 +77,47 @@ const CreateCollectionModal: FunctionComponent<Props> = ({ isOpen, close }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={() => close()}
-      // style={{
-      //   content: {
-      //     width: '800px',
-      //     height: '500px',
-      //     padding: 0,
-      //     margin: 'auto'
-      //   }
-      // }}
+      style={{
+        content: {
+          width: '800px',
+          height: '500px',
+          margin: 'auto'
+        }
+      }}
+      submit
     >
-      <Title>컬렉션 생성</Title>
-      <Formik
-        initialValues={{
-          title: '',
-          description: ''
-        }}
-        onSubmit={(value) => {
-          createCollection({
-            variables: value
-          });
-          close();
-        }}
-      >
-        <Form>
-          <Field id="title" name="title" />
-          <TextField
-            id="description"
-            name="description"
-            autoComplete="off"
-            placeholder="내용을 입력하세요"
-          />
-          <br />
-          <Button type="submit" isFull primary>
-            보내기
-          </Button>
-        </Form>
-      </Formik>
+      <Content>
+        <TitleWrapper>
+          <Title>컬렉션 생성</Title>
+        </TitleWrapper>
+        <Formik
+          initialValues={{
+            title: '',
+            description: ''
+          }}
+          onSubmit={(value) => {
+            createCollection({
+              variables: value
+            });
+            close();
+          }}
+        >
+          <Form>
+            <TextField
+              id="title"
+              name="title"
+              autoComplete="off"
+              placeholder="컬렉션 제목"
+            />
+            <TextField
+              id="description"
+              name="description"
+              autoComplete="off"
+              placeholder="내용을 입력하세요"
+            />
+          </Form>
+        </Formik>
+      </Content>
     </Modal>
   );
 };

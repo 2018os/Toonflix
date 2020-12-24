@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
-import Button from '../../styles/Button';
 import { Title } from '../../styles/Typography';
 
 import Modal, { ModalProps } from '../shared/Modal';
@@ -42,7 +41,7 @@ const AddToCollectionModal: FunctionComponent<Props> = ({
   isOpen,
   close
 }) => {
-  const { data, loading } = useMeForAddToCollectionModalQuery();
+  const { data } = useMeForAddToCollectionModalQuery();
   const [updateCollection] = useUpdateCollectionForWebtoonDetailMutation();
   const [selectedCollection, setSelectedCollection] = useState<
     string | undefined
@@ -58,6 +57,20 @@ const AddToCollectionModal: FunctionComponent<Props> = ({
           margin: 'auto',
           borderRadius: '10px'
         }
+      }}
+      submit={() => {
+        if (
+          data &&
+          data.me.myCollections.edges &&
+          data.me.myCollections.edges[0]?.node?.id
+        )
+          updateCollection({
+            variables: {
+              collectionId:
+                selectedCollection || data.me.myCollections.edges[0].node.id,
+              webtoonIds: [webtoonId]
+            }
+          });
       }}
     >
       <Title>컬렉션 작품 추가</Title>
@@ -83,24 +96,6 @@ const AddToCollectionModal: FunctionComponent<Props> = ({
           return null;
         })}
       </CollectionList>
-      <Button
-        onClick={() => {
-          if (
-            data &&
-            data.me.myCollections.edges &&
-            data.me.myCollections.edges[0]?.node?.id
-          )
-            updateCollection({
-              variables: {
-                collectionId:
-                  selectedCollection || data.me.myCollections.edges[0].node.id,
-                webtoonIds: [webtoonId]
-              }
-            });
-        }}
-      >
-        완료
-      </Button>
     </Modal>
   );
 };

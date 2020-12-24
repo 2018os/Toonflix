@@ -40,6 +40,7 @@ const PostCommentModal: FunctionComponent<Props> = ({
           margin: 'auto'
         }
       }}
+      submit
     >
       <Title>댓글 작성</Title>
       <Formik
@@ -56,10 +57,6 @@ const PostCommentModal: FunctionComponent<Props> = ({
             autoComplete="off"
             placeholder="내용을 입력하세요"
           />
-          <br />
-          <Button type="submit" isFull primary>
-            보내기
-          </Button>
         </Form>
       </Formik>
     </Modal>

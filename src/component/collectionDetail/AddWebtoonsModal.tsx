@@ -50,7 +50,22 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
   const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
   const [webtoonIds, setWebtoonIds] = useState<string[]>([]);
   return (
-    <Modal isOpen={isOpen} onRequestClose={() => close()}>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={() => close()}
+      submit={() => {
+        updateCollection({
+          variables: {
+            collectionId,
+            webtoonIds,
+            afterWebtoonId: '',
+            afterCommentId: ''
+          }
+        });
+        setWebtoonIds([]);
+        close();
+      }}
+    >
       <Title>컬렉션 생성</Title>
       {data && !loading && (
         <WebtoonCardListWrapper>
@@ -84,25 +99,6 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
           })}
         </WebtoonCardListWrapper>
       )}
-      <Button
-        isFull
-        primary
-        type="button"
-        onClick={() => {
-          updateCollection({
-            variables: {
-              collectionId,
-              webtoonIds,
-              afterWebtoonId: '',
-              afterCommentId: ''
-            }
-          });
-          setWebtoonIds([]);
-          close();
-        }}
-      >
-        다음
-      </Button>
     </Modal>
   );
 };
