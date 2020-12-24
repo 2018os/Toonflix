@@ -8,6 +8,7 @@ import { Text } from '../styles/Typography';
 
 import Dropdown, { Option } from '../component/shared/Dropdown';
 import Link from '../component/shared/Link';
+import LoginModal from '../component/shared/LoginModal';
 import SearchBar from '../component/shared/SearchBar';
 
 import { spacing, Colors } from '../util/theme';
@@ -60,8 +61,13 @@ const ProfileWrapper = styled.div<{ isMain: boolean }>`
     `}
 `;
 
+const TextButton = styled(Text)`
+  cursor: pointer;
+`;
+
 const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [openLoginModal, toggleModal] = useState(false);
   const router = useRouter();
   return (
     <ProfileWrapper isMain={!!isMain}>
@@ -70,9 +76,9 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
           <Dropdown
             isOpen={isOpenMenu}
             openButton={
-              <Text onClick={() => setIsOpenMenu(!isOpenMenu)}>
+              <TextButton onClick={() => setIsOpenMenu(!isOpenMenu)}>
                 {authState.me.name}
-              </Text>
+              </TextButton>
             }
           >
             <Option onClick={() => router.push('/profile')}>내 프로필</Option>
@@ -85,10 +91,9 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
           </Dropdown>
         </>
       ) : (
-        <Link linkProps={{ href: '/login' }}>
-          <Text>로그인</Text>
-        </Link>
+        <TextButton onClick={() => toggleModal(true)}>로그인</TextButton>
       )}
+      <LoginModal isOpen={openLoginModal} close={() => toggleModal(false)} />
     </ProfileWrapper>
   );
 };
