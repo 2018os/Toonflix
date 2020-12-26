@@ -17,6 +17,7 @@ const CollectionButtonWrapper = styled.div`
 `;
 
 const CollectionButton = styled.button<ButtonProps>`
+  cursor: pointer;
   width: 160px;
   padding: ${spacing[1]};
   border-width: 0;
