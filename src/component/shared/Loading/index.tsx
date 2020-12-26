@@ -44,7 +44,7 @@ const CardViewList = styled.div<{ type: CardType }>`
       thumbnail: '152px',
       largeThumbnail: '236px'
     }[props.type])};
-  ${baseCss};
+  ${baseCss}
 `;
 
 const CardViewListWrapper = styled.div`
@@ -80,13 +80,13 @@ export const LoadingCollectionCard = styled.div`
 export const LoadingComments = styled.div`
   width: 992px;
   height: 100px;
-  ${baseCss};
+  ${baseCss}
 `;
 
 export const LoadingCollectionProfile = styled.div`
   width: 992px;
   height: 324px;
-  ${baseCss};
+  ${baseCss}
 `;
 
 export const LoadingCardViewList: FunctionComponent<CardViewListProps> = ({
