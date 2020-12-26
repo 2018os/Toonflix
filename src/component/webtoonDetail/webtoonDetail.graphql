@@ -1,4 +1,4 @@
-query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
+query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID) {
   webtoon(id: $id) {
     id
     title

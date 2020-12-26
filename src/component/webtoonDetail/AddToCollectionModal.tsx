@@ -6,6 +6,9 @@ import { Title, Text } from '../../styles/Typography';
 import Modal, { ModalProps, ModalSubmitButton } from '../shared/Modal';
 
 import {
+  WebtoonForWebtoonDetailDocument,
+  WebtoonForWebtoonDetailQuery,
+  WebtoonForWebtoonDetailQueryVariables,
   useMeForAddToCollectionModalQuery,
   useUpdateCollectionForWebtoonDetailMutation
 } from '../../generated/graphql';
@@ -42,7 +45,45 @@ const AddToCollectionModal: FunctionComponent<Props> = ({
   close
 }) => {
   const { data } = useMeForAddToCollectionModalQuery();
-  const [updateCollection] = useUpdateCollectionForWebtoonDetailMutation();
+  const [updateCollection] = useUpdateCollectionForWebtoonDetailMutation({
+    update: (cache, mutationResult) => {
+      const updatingCollection = mutationResult.data?.updateCollection;
+      const existing = cache.readQuery<
+        WebtoonForWebtoonDetailQuery,
+        WebtoonForWebtoonDetailQueryVariables
+      >({
+        query: WebtoonForWebtoonDetailDocument,
+        variables: {
+          id: webtoonId
+        }
+      });
+      if (
+        existing &&
+        existing.webtoon.collections.edges &&
+        updatingCollection
+      ) {
+        cache.writeQuery({
+          query: WebtoonForWebtoonDetailDocument,
+          data: {
+            ...existing,
+            webtoon: {
+              ...existing.webtoon,
+              collections: {
+                ...existing.webtoon.collections,
+                edges: [
+                  ...existing.webtoon.collections.edges,
+                  {
+                    __typename: 'CollectionEdge',
+                    node: updatingCollection
+                  }
+                ]
+              }
+            }
+          }
+        });
+      }
+    }
+  });
   const [selectedCollection, setSelectedCollection] = useState<
     string | undefined
   >();

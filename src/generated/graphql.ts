@@ -888,7 +888,7 @@ export type WebtoonCardFragment = { __typename?: 'Webtoon' } & Pick<
 
 export type WebtoonForWebtoonDetailQueryVariables = Exact<{
   id: Scalars['ID'];
-  afterCommentId: Scalars['ID'];
+  afterCommentId?: Maybe<Scalars['ID']>;
 }>;
 
 export type WebtoonForWebtoonDetailQuery = { __typename?: 'Query' } & {
@@ -2035,7 +2035,7 @@ export type SignupForSignupModalMutationOptions = Apollo.BaseMutationOptions<
   SignupForSignupModalMutationVariables
 >;
 export const WebtoonForWebtoonDetailDocument = gql`
-  query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID!) {
+  query webtoonForWebtoonDetail($id: ID!, $afterCommentId: ID) {
     webtoon(id: $id) {
       id
       title
