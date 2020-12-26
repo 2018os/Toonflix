@@ -1,7 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { DefaultCollectionCard, CardHoverText } from '../../../styles/Card';
+import {
+  DefaultCollectionCard,
+  CardText,
+  CardBackground
+} from '../../../styles/Card';
 
 import { FontSizes, ImgSizes } from '../../../util/theme';
 
@@ -10,9 +14,7 @@ import Thumbnail from '../Thumbnail';
 
 import { CollectionCardFragment } from '../../../generated/graphql';
 
-const CollectionThumbnail = styled.div.attrs({
-  className: 'card-hover-background'
-})`
+const CollectionThumbnail = styled(CardBackground)`
   display: flex;
   flex-wrap: wrap;
 `;
@@ -32,9 +34,9 @@ const CollectionCard: FunctionComponent<Props> = ({ collection }) => {
       }}
     >
       <DefaultCollectionCard isHover>
-        <CardHoverText size={FontSizes.LARGE} bold>
+        <CardText size={FontSizes.LARGE} bold>
           {collection.title}
-        </CardHoverText>
+        </CardText>
         <CollectionThumbnail>
           {slicedWebtoons &&
             slicedWebtoons.map((webtoon) => {

@@ -140,7 +140,10 @@ function MainContainer() {
                       />
                     );
                   })}
-                  <EmptyWebtoonCard src={`/collection/${collection.node.id}`} />
+                  <EmptyWebtoonCard
+                    click={`/collection/${collection.node.id}`}
+                    title="더 보기"
+                  />
                 </CardViewList>
               </Section>
             );

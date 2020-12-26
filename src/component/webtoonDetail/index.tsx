@@ -267,7 +267,11 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                     }
                     return null;
                   })}
-                  <EmptyWebtoonCard src="/category" keyword={genre.name} />
+                  <EmptyWebtoonCard
+                    click="/category"
+                    keyword={genre.name}
+                    title="더 보기"
+                  />
                 </CardViewList>
               </Section>
             );
@@ -294,8 +298,9 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                 return null;
               })}
             <EmptyCollectionCard
-              src="/collections"
+              click="/collections"
               keyword={data.webtoon.title}
+              title="더 보기"
             />
           </CardViewList>
         </Section>

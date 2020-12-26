@@ -5,25 +5,22 @@ import withAuth, { AuthState } from '../../hocs/withAuth';
 
 import Section from '../../layout/Section';
 
-import { DefaultWebtoonCard, CardText } from '../../styles/Card';
 import { MoreButton } from '../../styles/Button';
 import { Text } from '../../styles/Typography';
 
 import AddWebtoonsModal from './AddWebtoonsModal';
+
+import { EmptyWebtoonCard } from '../shared/Empty';
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { CollectionFragment } from '../../generated/graphql';
-import { Colors, ImgSizes, spacing, FontSizes } from '../../util/theme';
+import { ImgSizes, spacing, FontSizes } from '../../util/theme';
 
 export interface Props {
   data: CollectionFragment;
   authState: AuthState;
   onLoadMore: () => any;
 }
-
-const AddWebtoonsCard = styled(DefaultWebtoonCard)`
-  background-color: ${Colors.PRIMARY_COLOR};
-`;
 
 const WebtoonCardListWrapper = styled.div`
   display: flex;
@@ -50,11 +47,10 @@ const WebtoonCardList: FunctionComponent<Props> = ({
       <Section>
         <WebtoonCardListWrapper>
           {data.writer.id === authState.me?.id && (
-            <AddWebtoonsCard isHover onClick={() => toggleModal(true)}>
-              <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
-                웹툰 추가하기
-              </CardText>
-            </AddWebtoonsCard>
+            <EmptyWebtoonCard
+              click={() => toggleModal(true)}
+              title="웹툰 추가하기"
+            />
           )}
           {data.webtoons.edges &&
             data.webtoons.edges.map((edge) => {

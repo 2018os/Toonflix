@@ -7,10 +7,12 @@ import { MoreButton } from '../../styles/Button';
 import { Text } from '../../styles/Typography';
 
 import CreateCollectionModal from './CreateCollectionModal';
+
 import CollectionCard from '../shared/CollectionCard';
+import { EmptyCollectionCard } from '../shared/Empty';
 
 import { UserCollectionCardListFragment } from '../../generated/graphql';
-import { ImgSizes, spacing, Colors, FontSizes } from '../../util/theme';
+import { ImgSizes, spacing, FontSizes } from '../../util/theme';
 
 export type CollectionType = 'myCollections' | 'likedCollections';
 
@@ -34,35 +36,6 @@ const Item = styled.div`
   margin-bottom: ${spacing[2]};
 `;
 
-const CreateCollectionCard = styled.div`
-  width: ${ImgSizes.LARGE};
-  height: ${ImgSizes.LARGE};
-  background-color: ${Colors.PRIMARY_COLOR};
-  color: ${Colors.WHITE};
-  cursor: pointer;
-  display: flex;
-  position: relative;
-  align-items: center;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
-  &:hover {
-    & > .collection-title {
-      display: inline;
-    }
-  }
-`;
-
-const CreateCollectionCardTitle = styled(Text).attrs({
-  className: 'collection-title'
-})`
-  z-index: 1;
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-`;
-
 const CollectionCardList: FunctionComponent<Props> = ({
   data,
   collectionType,
@@ -75,11 +48,10 @@ const CollectionCardList: FunctionComponent<Props> = ({
         <CollectionCardListWrapper>
           {collectionType === 'myCollections' && (
             <Item>
-              <CreateCollectionCard onClick={() => toggleModal(true)}>
-                <CreateCollectionCardTitle size={FontSizes.LARGE}>
-                  컬렉션 만들기!!
-                </CreateCollectionCardTitle>
-              </CreateCollectionCard>
+              <EmptyCollectionCard
+                click={() => toggleModal(true)}
+                title="컬렉션 만들기"
+              />
             </Item>
           )}
           {data?.edges &&

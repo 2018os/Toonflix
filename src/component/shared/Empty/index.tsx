@@ -1,75 +1,102 @@
 import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
-import { ImgSizes, Colors } from '../../../util/theme';
+
+import {
+  DefaultWebtoonCard,
+  DefaultCollectionCard,
+  CardText
+} from '../../../styles/Card';
 
 import Link from '../Link';
 
-interface ThumbnailProps {
-  size: ImgSizes;
-}
+import { Colors, FontSizes } from '../../../util/theme';
+
+type ClickAction = () => any;
 
 interface Props {
-  src: string;
+  click: ClickAction | string;
+  title: string;
   keyword?: string;
 }
 
 const baseCss = css`
+  position: relative;
   background-color: ${Colors.PRIMARY_COLOR};
   color: ${Colors.WHITE};
-  border-radius: 10px;
 `;
 
-const EmptyThumbnail = styled.div<ThumbnailProps>`
-  width: ${(props) => props.size};
-  height: ${(props) => props.size};
+const WebtoonCard = styled(DefaultWebtoonCard).attrs({
+  isHover: true
+})`
   ${baseCss}
 `;
 
-// TODO: Enhance size
-const Card = styled.div`
-  width: 236px;
-  height: 360px;
+const CollectionCard = styled(DefaultCollectionCard).attrs({
+  isHover: true
+})`
   ${baseCss}
 `;
 
-const CollectionCard = styled.div`
-  width: ${ImgSizes.LARGE};
-  height: ${ImgSizes.LARGE};
-  ${baseCss}
-`;
-
-const EmptyWebtoonCard: FunctionComponent<Props> = ({ src, keyword }) => {
-  return (
+const EmptyWebtoonCard: FunctionComponent<Props> = ({
+  click,
+  keyword,
+  title
+}) => {
+  return typeof click === 'string' ? (
     <Link
       linkProps={{
         href: {
-          pathname: src,
+          pathname: click,
           query: keyword && {
             keyword
           }
         }
       }}
     >
-      <Card>자세히 보기</Card>
+      <WebtoonCard>
+        <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
+          {title}
+        </CardText>
+      </WebtoonCard>
     </Link>
+  ) : (
+    <WebtoonCard onClick={() => click()}>
+      <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
+        {title}
+      </CardText>
+    </WebtoonCard>
   );
 };
 
-const EmptyCollectionCard: FunctionComponent<Props> = ({ src, keyword }) => {
-  return (
+const EmptyCollectionCard: FunctionComponent<Props> = ({
+  click,
+  keyword,
+  title
+}) => {
+  return typeof click === 'string' ? (
     <Link
       linkProps={{
         href: {
-          pathname: src,
+          pathname: click,
           query: keyword && {
             keyword
           }
         }
       }}
     >
-      <CollectionCard>더 보기</CollectionCard>
+      <CollectionCard>
+        <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
+          {title}
+        </CardText>
+      </CollectionCard>
     </Link>
+  ) : (
+    <CollectionCard onClick={() => click()}>
+      <CardText size={FontSizes.LARGE} color={Colors.WHITE}>
+        {title}
+      </CardText>
+    </CollectionCard>
   );
 };
 
-export { EmptyThumbnail, EmptyWebtoonCard, EmptyCollectionCard };
+export { EmptyWebtoonCard, EmptyCollectionCard };
