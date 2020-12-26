@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
-import { Title } from '../../styles/Typography';
+import { Title, Text } from '../../styles/Typography';
 
-import Modal, { ModalProps } from '../shared/Modal';
+import Modal, { ModalProps, ModalSubmitButton } from '../shared/Modal';
 
 import {
   useMeForAddToCollectionModalQuery,
@@ -58,20 +58,6 @@ const AddToCollectionModal: FunctionComponent<Props> = ({
           borderRadius: '10px'
         }
       }}
-      submit={() => {
-        if (
-          data &&
-          data.me.myCollections.edges &&
-          data.me.myCollections.edges[0]?.node?.id
-        )
-          updateCollection({
-            variables: {
-              collectionId:
-                selectedCollection || data.me.myCollections.edges[0].node.id,
-              webtoonIds: [webtoonId]
-            }
-          });
-      }}
     >
       <Title>컬렉션 작품 추가</Title>
       <CollectionList>
@@ -96,6 +82,25 @@ const AddToCollectionModal: FunctionComponent<Props> = ({
           return null;
         })}
       </CollectionList>
+      <ModalSubmitButton
+        onClick={() => {
+          if (
+            data &&
+            data.me.myCollections.edges &&
+            data.me.myCollections.edges[0]?.node?.id
+          )
+            updateCollection({
+              variables: {
+                collectionId:
+                  selectedCollection || data.me.myCollections.edges[0].node.id,
+                webtoonIds: [webtoonId]
+              }
+            });
+          close();
+        }}
+      >
+        <Text>완료</Text>
+      </ModalSubmitButton>
     </Modal>
   );
 };

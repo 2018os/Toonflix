@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Title } from '../../styles/Typography';
 
-import Modal, { ModalProps } from '../shared/Modal';
+import Modal, { ModalProps, ModalSubmitButton } from '../shared/Modal';
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { spacing } from '../../util/theme';
@@ -49,22 +49,7 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
   const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
   const [webtoonIds, setWebtoonIds] = useState<string[]>([]);
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={() => close()}
-      submit={() => {
-        updateCollection({
-          variables: {
-            collectionId,
-            webtoonIds,
-            afterWebtoonId: '',
-            afterCommentId: ''
-          }
-        });
-        setWebtoonIds([]);
-        close();
-      }}
-    >
+    <Modal isOpen={isOpen} onRequestClose={() => close()}>
       <Title>컬렉션 생성</Title>
       {data && !loading && (
         <WebtoonCardListWrapper>
@@ -98,6 +83,22 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
           })}
         </WebtoonCardListWrapper>
       )}
+      <ModalSubmitButton
+        onClick={() => {
+          updateCollection({
+            variables: {
+              collectionId,
+              webtoonIds,
+              afterWebtoonId: '',
+              afterCommentId: ''
+            }
+          });
+          setWebtoonIds([]);
+          close();
+        }}
+      >
+        완료
+      </ModalSubmitButton>
     </Modal>
   );
 };

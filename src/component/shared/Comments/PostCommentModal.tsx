@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Title } from '../../../styles/Typography';
 
-import Modal, { ModalProps } from '../Modal';
+import Modal, { ModalProps, ModalSubmitButton } from '../Modal';
 
 import { spacing } from '../../../util/theme';
 
@@ -39,7 +39,6 @@ const PostCommentModal: FunctionComponent<Props> = ({
           margin: 'auto'
         }
       }}
-      submit
     >
       <Title>댓글 작성</Title>
       <Formik
@@ -56,6 +55,7 @@ const PostCommentModal: FunctionComponent<Props> = ({
             autoComplete="off"
             placeholder="내용을 입력하세요"
           />
+          <ModalSubmitButton>완료</ModalSubmitButton>
         </Form>
       </Formik>
     </Modal>

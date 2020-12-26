@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Title } from '../../styles/Typography';
 
-import Modal, { ModalProps } from '../shared/Modal';
+import Modal, { ModalProps, ModalSubmitButton } from '../shared/Modal';
 
 import {
   useCreateCollectionForMyCollectionMutation,
@@ -84,7 +84,6 @@ const CreateCollectionModal: FunctionComponent<Props> = ({ isOpen, close }) => {
           margin: 'auto'
         }
       }}
-      submit
     >
       <Content>
         <TitleWrapper>
@@ -115,6 +114,7 @@ const CreateCollectionModal: FunctionComponent<Props> = ({ isOpen, close }) => {
               autoComplete="off"
               placeholder="내용을 입력하세요"
             />
+            <ModalSubmitButton>완료</ModalSubmitButton>
           </Form>
         </Formik>
       </Content>

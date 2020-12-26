@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import ReactModal from 'react-modal';
 
 import Button from '../../../styles/Button';
-import { Text } from '../../../styles/Typography';
 
-import { spacing, FontSizes } from '../../../util/theme';
+import { spacing } from '../../../util/theme';
 
-type SubmitAction = () => any;
-export type ModalProps = ReactModal.Props & {
-  submit?: boolean | SubmitAction;
-};
+export type ModalProps = ReactModal.Props;
 
-const SubmitButton = styled(Button)`
+export const ModalSubmitButton = styled(Button).attrs({
+  isFull: true,
+  primary: true,
+  type: 'submit'
+})`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -26,22 +26,8 @@ const Modal: FunctionComponent<ModalProps> = (props) => {
       ReactModal.setAppElement('body');
     }
   }, []);
-  const { children, submit } = props;
-  return (
-    <ReactModal {...props}>
-      {children}
-      {submit && (
-        <SubmitButton
-          onClick={() => typeof submit === 'function' && submit()}
-          isFull
-          primary
-          type="submit"
-        >
-          <Text size={FontSizes.SMALL}>완료</Text>
-        </SubmitButton>
-      )}
-    </ReactModal>
-  );
+  const { children } = props;
+  return <ReactModal {...props}>{children}</ReactModal>;
 };
 
 export default Modal;
