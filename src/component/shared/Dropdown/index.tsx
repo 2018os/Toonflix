@@ -20,6 +20,7 @@ const OptionWrapper = styled.div<{ isOpen: boolean }>`
 `;
 
 export const Option = styled.div`
+  cursor: pointer;
   padding: ${spacing[0]} ${spacing[1]};
   &:hover {
     background-color: ${Colors.GRAY};
