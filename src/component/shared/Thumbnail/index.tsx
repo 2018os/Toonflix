@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { AdultBadge, PayBadge, CompleteBadge } from '../../../styles/Badget';
+import { AdultBadge, PayBadge, CompleteBadge } from '../../../styles/Badge';
 
 import { ImgSizes, spacing } from '../../../util/theme';
 

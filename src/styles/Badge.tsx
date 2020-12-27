@@ -18,7 +18,7 @@ const AdultBadge = styled(StyledImg).attrs({
 })``;
 
 const PayBadge = styled(StyledImg).attrs({
-  src: '/static/icon/paidService.png'
+  src: '/static/icon/pay.svg'
 })``;
 
 const CompleteBadge = styled(StyledImg).attrs({

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <clipPath id="clip-path">
+            <path id="사각형_1038" d="M0 0H24V24H0z"/>
+        </clipPath>
+        <style>
+            .cls-3{fill:none}
+        </style>
+    </defs>
+    <g id="완결_24x24" clip-path="url(#clip-path)">
+        <path id="사각형_1037" fill="#076eff" d="M0 0H24V24H0z"/>
+        <g id="check-line" transform="translate(3 4)">
+            <path id="패스_202" d="M0 0h17.328v17.328H0z" class="cls-3"/>
+        </g>
+        <path id="패스_203" fill="#fff" d="M8.231 12.616l6.637-6.637L15.889 7l-7.658 7.658-4.6-4.6 1.026-1.016z" transform="translate(1.989 .021)"/>
+        <g id="사각형_1021" fill="none" stroke="#fff">
+            <path stroke="none" d="M0 0H14V2H0z" transform="translate(5 16.684)"/>
+            <path d="M0.5 0.5H13.5V1.5H0.5z" class="cls-3" transform="translate(5 16.684)"/>
+        </g>
+    </g>
+</svg>

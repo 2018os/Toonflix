@@ -11,7 +11,7 @@ import {
   PayBadge,
   NaverBadge,
   DaumBadge
-} from '../../styles/Badget';
+} from '../../styles/Badge';
 import Button from '../../styles/Button';
 import { SubTitle, Text } from '../../styles/Typography';
 
