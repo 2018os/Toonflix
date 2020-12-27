@@ -1,16 +1,29 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
+import withAuth, { AuthState } from '../../../hocs/withAuth';
+
 import Button from '../../../styles/Button';
 import { Text, Title } from '../../../styles/Typography';
 
 import Comment from './Comment';
 import PostCommentModal from './PostCommentModal';
+
+import LoginModal from '../LoginModal';
 import Modal from '../Modal';
 
 import { CommentsConnectionForCommentsFragment } from '../../../generated/graphql';
 
 import { Colors, spacing } from '../../../util/theme';
+
+export interface Props {
+  // TODO: Enhance naming
+  modalTitle?: string | undefined;
+  onLoadMore: () => any;
+  onPostComment: (message: string) => any;
+  comments: CommentsConnectionForCommentsFragment | undefined;
+  authState: AuthState;
+}
 
 const CommentsWrapper = styled.div`
   border: solid 1px ${Colors.BORDER_COLOR};
@@ -41,28 +54,28 @@ const More = styled(Button)`
   border-radius: 0 0 10px 10px;
 `;
 
-export interface Props {
-  // TODO: Enhance naming
-  modalTitle?: string | undefined;
-  onLoadMore: () => any;
-  onPostComment: (message: string) => any;
-  comments: CommentsConnectionForCommentsFragment | undefined;
-}
-
 const Comments: FunctionComponent<Props> = ({
   modalTitle,
   comments,
   onLoadMore,
-  onPostComment
+  onPostComment,
+  authState
 }) => {
   const [showAllCommentModal, toggleAllCommentModal] = useState(false);
   const [showPostCommentModal, togglePostCommentModal] = useState(false);
+  const [showLoginModal, toggleLoginModal] = useState(false);
   return (
     <CommentsWrapper>
       <CommentsHeader>
         <Text>댓글</Text>
         <ButtonWrapper>
-          <StyledButton onClick={() => togglePostCommentModal(true)}>
+          <StyledButton
+            onClick={() =>
+              authState.token
+                ? togglePostCommentModal(true)
+                : toggleLoginModal(true)
+            }
+          >
             댓글 작성
           </StyledButton>
           <StyledButton onClick={() => toggleAllCommentModal(true)}>
@@ -113,8 +126,12 @@ const Comments: FunctionComponent<Props> = ({
           </More>
         )}
       </Modal>
+      <LoginModal
+        isOpen={showLoginModal}
+        close={() => toggleLoginModal(false)}
+      />
     </CommentsWrapper>
   );
 };
 
-export default Comments;
+export default withAuth(Comments);
