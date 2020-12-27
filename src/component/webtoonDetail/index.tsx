@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
+import withAuth, { AuthState } from '../../hocs/withAuth';
+
 import Section from '../../layout/Section';
 
 import {
@@ -21,6 +23,7 @@ import CollectionCard from '../shared/CollectionCard';
 import Comments from '../shared/Comments';
 import { EmptyWebtoonCard, EmptyCollectionCard } from '../shared/Empty';
 import Link from '../shared/Link';
+import LoginModal from '../shared/LoginModal';
 import { LoadingComments, LoadingCardViewList } from '../shared/Loading';
 import Tag from '../shared/Tag';
 import Tags from '../shared/Tags';
@@ -45,6 +48,7 @@ import {
 
 type Props = {
   id: string;
+  authState: AuthState;
 };
 
 const ThumbnailWrapper = styled.div`
@@ -109,9 +113,15 @@ const Badges = styled(Flex)`
   margin-bottom: ${spacing[2]};
 `;
 
-const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
+const WebtoonDetailContainer: FunctionComponent<Props> = ({
+  id,
+  authState
+}) => {
   const [showDropdown, toggleDropdown] = useState(false);
-  const [showAddToCollectionModal, toggleModal] = useState(false);
+  const [showLoginModal, toggleLoginModal] = useState(false);
+  const [showAddToCollectionModal, toggleAddToCollectionModal] = useState(
+    false
+  );
   const { data, loading, fetchMore } = useWebtoonForWebtoonDetailQuery({
     variables: { id, afterCommentId: '' }
   });
@@ -194,11 +204,11 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                 {data?.webtoon.isFinish && <CompleteBadge />}
               </Badges>
               <Flex>
-                <ReadButton primary>
-                  <a target="_blank" rel="noreferrer" href={data?.webtoon.url}>
+                <a target="_blank" rel="noreferrer" href={data?.webtoon.url}>
+                  <ReadButton primary>
                     <Text size={FontSizes.DEFAULT}>바로가기</Text>
-                  </a>
-                </ReadButton>
+                  </ReadButton>
+                </a>
                 {data?.webtoon.platform === 'NAVER' ? (
                   <NaverBadge size={IconSizes.LARGEST} />
                 ) : null}
@@ -212,7 +222,15 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
                 <Bookmark onClick={() => toggleDropdown(!showDropdown)} />
               }
             >
-              <Option onClick={() => toggleModal(true)}>컬렉션에 추가</Option>
+              <Option
+                onClick={() =>
+                  authState.token
+                    ? toggleAddToCollectionModal(true)
+                    : toggleLoginModal(true)
+                }
+              >
+                컬렉션에 추가
+              </Option>
               <Option>
                 <Text color={Colors.RED}>신고 / 수정요청</Text>
               </Option>
@@ -313,10 +331,14 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({ id }) => {
       <AddToCollectionModal
         webtoonId={id}
         isOpen={showAddToCollectionModal}
-        close={() => toggleModal(false)}
+        close={() => toggleAddToCollectionModal(false)}
+      />
+      <LoginModal
+        isOpen={showLoginModal}
+        close={() => toggleLoginModal(false)}
       />
     </>
   );
 };
 
-export default WebtoonDetailContainer;
+export default withAuth(WebtoonDetailContainer);
