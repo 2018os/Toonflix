@@ -9,7 +9,8 @@ import {
   AdultBadge,
   CompleteBadge,
   PayBadge,
-  NaverBadge
+  NaverBadge,
+  DaumBadge
 } from '../../styles/Badget';
 import Button from '../../styles/Button';
 import { SubTitle, Text } from '../../styles/Typography';
@@ -209,9 +210,12 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({
                     <Text size={FontSizes.DEFAULT}>바로가기</Text>
                   </ReadButton>
                 </a>
-                {data?.webtoon.platform === 'NAVER' ? (
-                  <NaverBadge size={IconSizes.LARGEST} />
-                ) : null}
+                {data
+                  ? {
+                      NAVER: <NaverBadge size={IconSizes.LARGEST} />,
+                      DAUM: <DaumBadge size={IconSizes.LARGEST} />
+                    }[data.webtoon.platform]
+                  : null}
               </Flex>
             </Part>
           </Info>

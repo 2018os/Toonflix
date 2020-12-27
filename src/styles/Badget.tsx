@@ -29,4 +29,8 @@ const NaverBadge = styled(StyledImg).attrs({
   src: '/static/icon/naver.png'
 })``;
 
-export { AdultBadge, PayBadge, CompleteBadge, NaverBadge };
+const DaumBadge = styled(StyledImg).attrs({
+  src: '/static/icon/daum.png'
+})``;
+
+export { AdultBadge, PayBadge, CompleteBadge, NaverBadge, DaumBadge };
