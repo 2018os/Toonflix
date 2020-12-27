@@ -1,10 +1,11 @@
+import { Formik, Form, Field } from 'formik';
 import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import Section from '../../layout/Section';
 
-import { Title } from '../../styles/Typography';
+import { Title, Text } from '../../styles/Typography';
 
 import CollectionCardList from './CollectionCardList';
 import WebtoonCardList from './WebtoonCardList';
@@ -28,6 +29,22 @@ interface SearchQueryString {
 
 const CardListWrapper = styled.div`
   margin-top: ${spacing[1]};
+`;
+
+const Label = styled.label`
+  display: flex;
+  justify-content: center;
+`;
+
+const SearchBar = styled(Field)`
+  border: none;
+  outline: none;
+  background-color: ${Colors.GRAY};
+  font-size: ${FontSizes.LARGEST};
+  width: 200px;
+  &:focus {
+    width: auto;
+  }
 `;
 
 const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
@@ -66,6 +83,31 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
   });
   return (
     <>
+      <Section>
+        <Formik
+          initialValues={{ keyword: '' }}
+          onSubmit={(value) => {
+            router.push({
+              pathname: '/category',
+              query: {
+                keyword: value.keyword
+              }
+            });
+          }}
+        >
+          <Form>
+            <Label>
+              <Text size={FontSizes.LARGEST}>#</Text>
+              <SearchBar
+                placeholder={keyword}
+                id="keyword"
+                name="keyword"
+                autoComplete="off"
+              />
+            </Label>
+          </Form>
+        </Formik>
+      </Section>
       <Section>
         <Title size={FontSizes.LARGER} color={Colors.PRIMARY_COLOR}>
           작품 검색 결과
