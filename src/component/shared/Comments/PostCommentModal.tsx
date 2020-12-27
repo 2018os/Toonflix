@@ -13,13 +13,25 @@ type Props = ModalProps & {
   onPostComment: (message: string) => any;
 };
 
-const CommentTextField = styled(Field)`
-  width: 100%;
-  padding: ${spacing[2]};
+const TitleWrapper = styled.div`
+  margin-bottom: ${spacing[2]};
+`;
+
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CommentTextField = styled(Field).attrs({
+  component: 'textarea'
+})`
   border: none;
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   outline: none;
+  resize: none;
+  height: 340px;
+  padding: ${spacing[2]};
 `;
 
 const PostCommentModal: FunctionComponent<Props> = ({
@@ -35,12 +47,15 @@ const PostCommentModal: FunctionComponent<Props> = ({
         content: {
           width: '800px',
           height: '500px',
-          padding: 0,
-          margin: 'auto'
+          padding: spacing[3],
+          margin: 'auto',
+          borderRadius: '10px'
         }
       }}
     >
-      <Title>댓글 작성</Title>
+      <TitleWrapper>
+        <Title>댓글 작성</Title>
+      </TitleWrapper>
       <Formik
         initialValues={{ message: '' }}
         onSubmit={(value) => {
@@ -49,12 +64,14 @@ const PostCommentModal: FunctionComponent<Props> = ({
         }}
       >
         <Form>
-          <CommentTextField
-            id="message"
-            name="message"
-            autoComplete="off"
-            placeholder="내용을 입력하세요"
-          />
+          <Label>
+            <CommentTextField
+              id="message"
+              name="message"
+              autoComplete="off"
+              placeholder="내용을 입력하세요"
+            />
+          </Label>
           <ModalSubmitButton>완료</ModalSubmitButton>
         </Form>
       </Formik>

@@ -19,8 +19,13 @@ type Props = ModalProps & {
   close: () => any;
 };
 
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${spacing[2]};
+`;
+
 const TextField = styled(Field)`
-  width: 100%;
   padding: ${spacing[2]};
   border: none;
   border-radius: 5px;
@@ -79,8 +84,9 @@ const CreateCollectionModal: FunctionComponent<Props> = ({ isOpen, close }) => {
       onRequestClose={() => close()}
       style={{
         content: {
-          width: '800px',
-          height: '500px',
+          width: '600px',
+          height: '300px',
+          borderRadius: '10px',
           margin: 'auto'
         }
       }}
@@ -102,18 +108,22 @@ const CreateCollectionModal: FunctionComponent<Props> = ({ isOpen, close }) => {
           }}
         >
           <Form>
-            <TextField
-              id="title"
-              name="title"
-              autoComplete="off"
-              placeholder="컬렉션 제목"
-            />
-            <TextField
-              id="description"
-              name="description"
-              autoComplete="off"
-              placeholder="내용을 입력하세요"
-            />
+            <Label>
+              <TextField
+                id="title"
+                name="title"
+                autoComplete="off"
+                placeholder="컬렉션 제목"
+              />
+            </Label>
+            <Label>
+              <TextField
+                id="description"
+                name="description"
+                autoComplete="off"
+                placeholder="내용을 입력하세요"
+              />
+            </Label>
             <ModalSubmitButton>완료</ModalSubmitButton>
           </Form>
         </Formik>
