@@ -26,6 +26,12 @@ const DefaultSetting = createGlobalStyle`
   input, select, textarea, button {
     font-family: NotoSansCJKkr;
   }
+  .ReactModal__Body--open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const httpLink = createHttpLink({
