@@ -1294,7 +1294,7 @@ export type CollectionForCollectionDetailQueryResult = Apollo.QueryResult<
 export const SearchForAddWebtoonsModalDocument = gql`
   query searchForAddWebtoonsModal($keyword: String, $afterWebtoonId: ID) {
     search(keyword: $keyword) {
-      webtoonResult(first: 8, after: $afterWebtoonId) {
+      webtoonResult(first: 4, after: $afterWebtoonId) {
         pageInfo {
           endCursor
           hasNextPage

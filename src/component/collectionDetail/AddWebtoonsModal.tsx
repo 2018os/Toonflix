@@ -22,6 +22,10 @@ type WebtoonCardWrapperProps = {
   isSelected?: boolean;
 };
 
+const TitleWrapper = styled.div`
+  margin-bottom: ${spacing[2]};
+`;
+
 const WebtoonCardWrapper = styled.div<WebtoonCardWrapperProps>`
   ${(props) =>
     props.isSelected &&
@@ -49,8 +53,20 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
   const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
   const [webtoonIds, setWebtoonIds] = useState<string[]>([]);
   return (
-    <Modal isOpen={isOpen} onRequestClose={() => close()}>
-      <Title>컬렉션 생성</Title>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={() => close()}
+      style={{
+        content: {
+          margin: 'auto',
+          width: '1024px',
+          height: '700px'
+        }
+      }}
+    >
+      <TitleWrapper>
+        <Title>웹툰 추가</Title>
+      </TitleWrapper>
       {data && !loading && (
         <WebtoonCardListWrapper>
           {data.search.webtoonResult?.edges?.map((edge) => {
