@@ -598,6 +598,14 @@ export type UpdateCollectionForCollectionDetailMutation = {
   __typename?: 'Mutation';
 } & { updateCollection: { __typename?: 'Collection' } & CollectionFragment };
 
+export type LikeCollectionForCollectionDetailMutationVariables = Exact<{
+  collectionId: Scalars['ID'];
+}>;
+
+export type LikeCollectionForCollectionDetailMutation = {
+  __typename?: 'Mutation';
+} & { likeCollection: { __typename?: 'User' } & Pick<User, 'id'> };
+
 export type CollectionFragment = { __typename?: 'Collection' } & Pick<
   Collection,
   'id' | 'title' | 'description'
@@ -1466,6 +1474,56 @@ export type UpdateCollectionForCollectionDetailMutationResult = Apollo.MutationR
 export type UpdateCollectionForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
   UpdateCollectionForCollectionDetailMutation,
   UpdateCollectionForCollectionDetailMutationVariables
+>;
+export const LikeCollectionForCollectionDetailDocument = gql`
+  mutation likeCollectionForCollectionDetail($collectionId: ID!) {
+    likeCollection(collectionId: $collectionId) {
+      id
+    }
+  }
+`;
+export type LikeCollectionForCollectionDetailMutationFn = Apollo.MutationFunction<
+  LikeCollectionForCollectionDetailMutation,
+  LikeCollectionForCollectionDetailMutationVariables
+>;
+
+/**
+ * __useLikeCollectionForCollectionDetailMutation__
+ *
+ * To run a mutation, you first call `useLikeCollectionForCollectionDetailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLikeCollectionForCollectionDetailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [likeCollectionForCollectionDetailMutation, { data, loading, error }] = useLikeCollectionForCollectionDetailMutation({
+ *   variables: {
+ *      collectionId: // value for 'collectionId'
+ *   },
+ * });
+ */
+export function useLikeCollectionForCollectionDetailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LikeCollectionForCollectionDetailMutation,
+    LikeCollectionForCollectionDetailMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    LikeCollectionForCollectionDetailMutation,
+    LikeCollectionForCollectionDetailMutationVariables
+  >(LikeCollectionForCollectionDetailDocument, baseOptions);
+}
+export type LikeCollectionForCollectionDetailMutationHookResult = ReturnType<
+  typeof useLikeCollectionForCollectionDetailMutation
+>;
+export type LikeCollectionForCollectionDetailMutationResult = Apollo.MutationResult<
+  LikeCollectionForCollectionDetailMutation
+>;
+export type LikeCollectionForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
+  LikeCollectionForCollectionDetailMutation,
+  LikeCollectionForCollectionDetailMutationVariables
 >;
 export const CollectionsForCollectionListDocument = gql`
   query collectionsForCollectionList($keyword: String, $after: ID) {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
 import Section from '../../layout/Section';
@@ -8,6 +8,7 @@ import { Title, Text } from '../../styles/Typography';
 import WebtoonCardList from './WebtoonCardList';
 
 import Comments from '../shared/Comments';
+import Dropdown, { Option } from '../shared/Dropdown';
 import {
   LoadingCardList,
   LoadingCollectionProfile,
@@ -19,7 +20,8 @@ import {
   CollectionForCollectionDetailDocument,
   CollectionForCollectionDetailQueryVariables,
   CollectionForCollectionDetailQuery,
-  usePostCommentForCollectionDetailMutation
+  usePostCommentForCollectionDetailMutation,
+  useLikeCollectionForCollectionDetailMutation
 } from '../../generated/graphql';
 
 import { spacing } from '../../util/theme';
@@ -27,6 +29,10 @@ import { spacing } from '../../util/theme';
 export interface Props {
   id: string;
 }
+
+const ProfileWrapper = styled.div`
+  position: relative;
+`;
 
 const CollectionProfile = styled.div`
   height: 300px;
@@ -40,7 +46,19 @@ const CollectionProfileItem = styled.div`
   margin-bottom: ${spacing[1]};
 `;
 
+const DropDownWrapper = styled.div`
+  position: absolute;
+  right: 0;
+`;
+
+const Bookmark = styled.img.attrs({
+  src: '/static/icon/more.svg'
+})`
+  cursor: pointer;
+`;
+
 const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
+  const [showDropdown, toggleDropdown] = useState(false);
   const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
     variables: { id, afterCommentId: '', afterWebtoonId: '' }
   });
@@ -78,14 +96,35 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
       }
     }
   });
+  const [likeCollection] = useLikeCollectionForCollectionDetailMutation();
   const afterWebtoonId = data?.collection.webtoons.pageInfo.endCursor;
   const afterCommentId = data?.collection.comments.pageInfo.endCursor;
   return (
     <div>
       <Section>
         {data && !loading ? (
-          <>
+          <ProfileWrapper>
             작성자 {data.collection.writer.name}
+            <DropDownWrapper>
+              <Dropdown
+                isOpen={showDropdown}
+                openButton={
+                  <Bookmark onClick={() => toggleDropdown(!showDropdown)} />
+                }
+              >
+                <Option
+                  onClick={() =>
+                    likeCollection({
+                      variables: {
+                        collectionId: data.collection.id
+                      }
+                    })
+                  }
+                >
+                  찜 하기
+                </Option>
+              </Dropdown>
+            </DropDownWrapper>
             <CollectionProfile>
               <CollectionProfileItem>
                 <Title>{data.collection.title}</Title>
@@ -94,7 +133,7 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
                 <Text>{data.collection.description}</Text>
               </CollectionProfileItem>
             </CollectionProfile>
-          </>
+          </ProfileWrapper>
         ) : (
           <LoadingCollectionProfile />
         )}

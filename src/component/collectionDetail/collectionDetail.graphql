@@ -43,6 +43,12 @@ mutation updateCollectionForCollectionDetail(
   }
 }
 
+mutation likeCollectionForCollectionDetail($collectionId: ID!) {
+  likeCollection(collectionId: $collectionId) {
+    id
+  }
+}
+
 fragment collection on Collection {
   id
   title
