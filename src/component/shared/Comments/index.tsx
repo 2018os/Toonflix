@@ -3,18 +3,18 @@ import styled from 'styled-components';
 
 import withAuth, { AuthState } from '../../../hocs/withAuth';
 
-import Button from '../../../styles/Button';
-import { Text, Title } from '../../../styles/Typography';
+import Button, { MoreButton } from '../../../styles/Button';
+import { Text } from '../../../styles/Typography';
 
 import Comment from './Comment';
+import AllCommentsModal from './AllCommentModal';
 import PostCommentModal from './PostCommentModal';
 
 import LoginModal from '../LoginModal';
-import Modal from '../Modal';
 
 import { CommentsConnectionForCommentsFragment } from '../../../generated/graphql';
 
-import { Colors, spacing } from '../../../util/theme';
+import { Colors, FontSizes, spacing } from '../../../util/theme';
 
 export interface Props {
   // TODO: Enhance naming
@@ -49,8 +49,7 @@ const StyledButton = styled(Button)`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
-const More = styled(Button)`
-  padding: ${spacing[1]};
+const More = styled(MoreButton)`
   border-radius: 0 0 10px 10px;
 `;
 
@@ -95,37 +94,22 @@ const Comments: FunctionComponent<Props> = ({
           )
       )}
       {comments?.pageInfo.hasNextPage && (
-        <More primary isFull onClick={() => onLoadMore()}>
-          더 보기
+        <More onClick={() => onLoadMore()}>
+          <Text size={FontSizes.SMALL}>더 보기</Text>
         </More>
       )}
+      <AllCommentsModal
+        isOpen={showAllCommentModal}
+        modalTitle={modalTitle}
+        comments={comments}
+        close={() => toggleAllCommentModal(false)}
+        onLoadMore={() => onLoadMore()}
+      />
       <PostCommentModal
         isOpen={showPostCommentModal}
         close={() => togglePostCommentModal(false)}
         onPostComment={(message) => onPostComment(message)}
       />
-      <Modal
-        isOpen={showAllCommentModal}
-        onRequestClose={() => toggleAllCommentModal(false)}
-      >
-        <Title>{modalTitle}</Title>
-        {comments?.edges?.map(
-          (edge) =>
-            edge?.node && (
-              <Comment
-                key={edge?.node?.id}
-                createdAt={edge?.node?.createdAt}
-                writer={edge?.node?.writer.name}
-                message={edge.node?.message}
-              />
-            )
-        )}
-        {comments?.pageInfo.hasNextPage && (
-          <More primary isFull onClick={() => onLoadMore()}>
-            더 보기
-          </More>
-        )}
-      </Modal>
       <LoginModal
         isOpen={showLoginModal}
         close={() => toggleLoginModal(false)}
