@@ -35,8 +35,8 @@ const Logo = styled.div`
 const Input = styled(Field)`
   height: 40px;
   border-radius: 5px;
-  border: solid 1px #707070;
-  background-color: #ffffff;
+  border: solid 1px ${Colors.TEXT_GRAY};
+  background-color: ${Colors.WHITE};
 `;
 
 const Label = styled.label`
