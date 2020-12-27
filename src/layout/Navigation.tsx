@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import withAuth, { AuthState } from '../hocs/withAuth';
 
+import Logo from '../styles/Logo';
 import { Text } from '../styles/Typography';
 
 import Dropdown, { Option } from '../component/shared/Dropdown';
@@ -27,8 +28,6 @@ const NavigationWrapper = styled.div`
   justify-content: space-between;
   padding: ${spacing[3]} ${spacing[5]};
 `;
-
-const Logo = styled.div``;
 
 const ItemWrapper = styled.div`
   display: flex;
@@ -63,6 +62,11 @@ const ProfileWrapper = styled.div<{ isMain: boolean }>`
 
 const TextButton = styled(Text)`
   cursor: pointer;
+`;
+
+const StyledLogo = styled(Logo)`
+  width: 140px;
+  vertical-align: middle;
 `;
 
 const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
@@ -113,9 +117,9 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
     <Profile authState={authState} isMain />
   ) : (
     <NavigationWrapper>
-      <Logo>
-        <Link linkProps={{ href: '/' }}>메인</Link>
-      </Logo>
+      <Link linkProps={{ href: '/' }}>
+        <StyledLogo />
+      </Link>
       <ItemWrapper>
         <Item>
           <Link linkProps={{ href: '/collections' }}>

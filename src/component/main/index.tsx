@@ -8,6 +8,7 @@ import { LoadingCardViewList, LoadingWebtoonCard } from '../shared/Loading';
 import SearchBar from '../shared/SearchBar';
 import WebtoonCard from '../shared/WebtoonCard';
 
+import Logo from '../../styles/Logo';
 import { Text } from '../../styles/Typography';
 
 import Section from '../../layout/Section';
@@ -18,22 +19,12 @@ import { Colors, spacing } from '../../util/theme';
 
 // import { dataForMain as data, loading } from '../../util/dummy';
 
-const Button = styled.div`
-  line-height: 1.5;
-  width: 572px;
-  height: 150px;
-  background-color: ${Colors.PRIMARY_COLOR};
-  font-size: 66px;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${Colors.GRAY};
+const LogoWrapper = styled.div`
+  text-align: center;
 `;
 
-const ButtonWrapper = styled.div`
-  width: fit-content;
-  margin: auto;
+const StyledLogo = styled(Logo)`
+  width: 500px;
 `;
 
 const SearchBarWrapper = styled.div`
@@ -75,9 +66,9 @@ function MainContainer() {
   return (
     <>
       <Section>
-        <ButtonWrapper>
-          <Button>로고</Button>
-        </ButtonWrapper>
+        <LogoWrapper>
+          <StyledLogo />
+        </LogoWrapper>
       </Section>
       <Section>
         <SearchBarWrapper>

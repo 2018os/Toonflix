@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import withAuth, { AuthState } from '../../../hocs/withAuth';
 
 import Button from '../../../styles/Button';
-import { Title, Text } from '../../../styles/Typography';
+import Logo from '../../../styles/Logo';
+import { Text } from '../../../styles/Typography';
 
 import Modal, { ModalProps } from '../Modal';
 import SignupModal from '../SignupModal';
@@ -28,8 +29,12 @@ const Content = styled.div`
   text-align: center;
 `;
 
-const Logo = styled.div`
-  margin-bottom: ${spacing[2]};
+const LogoWrapper = styled.div`
+  margin: ${spacing[3]};
+`;
+
+const StyledLogo = styled(Logo)`
+  width: 200px;
 `;
 
 const Input = styled(Field)`
@@ -85,9 +90,9 @@ const LoginModal: FunctionComponent<Props> = ({ isOpen, close, authState }) => {
       }}
     >
       <Content>
-        <Logo>
-          <Title>로고</Title>
-        </Logo>
+        <LogoWrapper>
+          <StyledLogo />
+        </LogoWrapper>
         <Formik
           initialValues={initialValues}
           validate={(values) => {
