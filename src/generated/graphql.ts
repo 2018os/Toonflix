@@ -127,6 +127,7 @@ export type Mutation = {
   likeCollection: User;
   dislikeCollection: User;
   postComment: Comment;
+  deleteCollection: Collection;
 };
 
 export type MutationLoginArgs = {
@@ -155,6 +156,10 @@ export type MutationDislikeCollectionArgs = {
 
 export type MutationPostCommentArgs = {
   input: CommentInput;
+};
+
+export type MutationDeleteCollectionArgs = {
+  collectionId: Scalars['ID'];
 };
 
 export type AuthPayload = {
@@ -606,6 +611,19 @@ export type LikeCollectionForCollectionDetailMutation = {
   __typename?: 'Mutation';
 } & { likeCollection: { __typename?: 'User' } & Pick<User, 'id'> };
 
+export type DeleteCollectionForCollectionDetailMutationVariables = Exact<{
+  collectionId: Scalars['ID'];
+}>;
+
+export type DeleteCollectionForCollectionDetailMutation = {
+  __typename?: 'Mutation';
+} & {
+  deleteCollection: { __typename?: 'Collection' } & Pick<
+    Collection,
+    'id' | 'title'
+  >;
+};
+
 export type CollectionFragment = { __typename?: 'Collection' } & Pick<
   Collection,
   'id' | 'title' | 'description'
@@ -703,12 +721,40 @@ export type MeForMyCollectionQueryVariables = Exact<{
 
 export type MeForMyCollectionQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'User' } & {
-    myCollections: {
-      __typename?: 'CollectionsConnection';
-    } & UserCollectionCardListFragment;
-    likedCollections: {
-      __typename?: 'CollectionsConnection';
-    } & UserCollectionCardListFragment;
+    myCollections: { __typename?: 'CollectionsConnection' } & {
+      pageInfo: { __typename?: 'PageInfo' } & Pick<
+        PageInfo,
+        'hasNextPage' | 'endCursor'
+      >;
+      edges?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'CollectionEdge' } & {
+              node?: Maybe<
+                { __typename?: 'Collection' } & CollectionCardFragment
+              >;
+            }
+          >
+        >
+      >;
+    };
+    likedCollections: { __typename?: 'CollectionsConnection' } & {
+      pageInfo: { __typename?: 'PageInfo' } & Pick<
+        PageInfo,
+        'hasNextPage' | 'endCursor'
+      >;
+      edges?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'CollectionEdge' } & {
+              node?: Maybe<
+                { __typename?: 'Collection' } & CollectionCardFragment
+              >;
+            }
+          >
+        >
+      >;
+    };
   };
 };
 
@@ -723,30 +769,12 @@ export type CreateCollectionForMyCollectionMutation = {
   createCollection: { __typename?: 'Collection' } & CollectionCardFragment;
 };
 
-export type UserCollectionCardListFragment = {
-  __typename?: 'CollectionsConnection';
-} & {
-  pageInfo: { __typename?: 'PageInfo' } & Pick<
-    PageInfo,
-    'hasNextPage' | 'endCursor'
-  >;
-  edges?: Maybe<
-    Array<
-      Maybe<
-        { __typename?: 'CollectionEdge' } & {
-          node?: Maybe<{ __typename?: 'Collection' } & CollectionCardFragment>;
-        }
-      >
-    >
-  >;
-};
-
 export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeForProfileQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'User' } & Pick<
     User,
-    'name' | 'email' | 'level' | 'exp'
+    'id' | 'name' | 'email' | 'level' | 'exp'
   > & {
       status: { __typename?: 'UserStatus' } & Pick<
         UserStatus,
@@ -1127,20 +1155,6 @@ export const CollectionCardFragmentDoc = gql`
     }
   }
 `;
-export const UserCollectionCardListFragmentDoc = gql`
-  fragment userCollectionCardList on CollectionsConnection {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    edges {
-      node {
-        ...collectionCard
-      }
-    }
-  }
-  ${CollectionCardFragmentDoc}
-`;
 export const SearchForCategoryDocument = gql`
   query searchForCategory(
     $keyword: String
@@ -1294,7 +1308,7 @@ export type CollectionForCollectionDetailQueryResult = Apollo.QueryResult<
 export const SearchForAddWebtoonsModalDocument = gql`
   query searchForAddWebtoonsModal($keyword: String, $afterWebtoonId: ID) {
     search(keyword: $keyword) {
-      webtoonResult(first: 4, after: $afterWebtoonId) {
+      webtoonResult(first: 8, after: $afterWebtoonId) {
         pageInfo {
           endCursor
           hasNextPage
@@ -1525,6 +1539,57 @@ export type LikeCollectionForCollectionDetailMutationOptions = Apollo.BaseMutati
   LikeCollectionForCollectionDetailMutation,
   LikeCollectionForCollectionDetailMutationVariables
 >;
+export const DeleteCollectionForCollectionDetailDocument = gql`
+  mutation deleteCollectionForCollectionDetail($collectionId: ID!) {
+    deleteCollection(collectionId: $collectionId) {
+      id
+      title
+    }
+  }
+`;
+export type DeleteCollectionForCollectionDetailMutationFn = Apollo.MutationFunction<
+  DeleteCollectionForCollectionDetailMutation,
+  DeleteCollectionForCollectionDetailMutationVariables
+>;
+
+/**
+ * __useDeleteCollectionForCollectionDetailMutation__
+ *
+ * To run a mutation, you first call `useDeleteCollectionForCollectionDetailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCollectionForCollectionDetailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCollectionForCollectionDetailMutation, { data, loading, error }] = useDeleteCollectionForCollectionDetailMutation({
+ *   variables: {
+ *      collectionId: // value for 'collectionId'
+ *   },
+ * });
+ */
+export function useDeleteCollectionForCollectionDetailMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteCollectionForCollectionDetailMutation,
+    DeleteCollectionForCollectionDetailMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    DeleteCollectionForCollectionDetailMutation,
+    DeleteCollectionForCollectionDetailMutationVariables
+  >(DeleteCollectionForCollectionDetailDocument, baseOptions);
+}
+export type DeleteCollectionForCollectionDetailMutationHookResult = ReturnType<
+  typeof useDeleteCollectionForCollectionDetailMutation
+>;
+export type DeleteCollectionForCollectionDetailMutationResult = Apollo.MutationResult<
+  DeleteCollectionForCollectionDetailMutation
+>;
+export type DeleteCollectionForCollectionDetailMutationOptions = Apollo.BaseMutationOptions<
+  DeleteCollectionForCollectionDetailMutation,
+  DeleteCollectionForCollectionDetailMutationVariables
+>;
 export const CollectionsForCollectionListDocument = gql`
   query collectionsForCollectionList($keyword: String, $after: ID) {
     collections(first: 9, after: $after, where: { keyword: $keyword }) {
@@ -1673,14 +1738,30 @@ export const MeForMyCollectionDocument = gql`
   ) {
     me {
       myCollections(first: 6, after: $afterMyCollectionId) {
-        ...userCollectionCardList
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            ...collectionCard
+          }
+        }
       }
       likedCollections(first: 6, after: $afterLikedCollectionId) {
-        ...userCollectionCardList
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            ...collectionCard
+          }
+        }
       }
     }
   }
-  ${UserCollectionCardListFragmentDoc}
+  ${CollectionCardFragmentDoc}
 `;
 
 /**
@@ -1792,6 +1873,7 @@ export type CreateCollectionForMyCollectionMutationOptions = Apollo.BaseMutation
 export const MeForProfileDocument = gql`
   query meForProfile {
     me {
+      id
       name
       email
       level

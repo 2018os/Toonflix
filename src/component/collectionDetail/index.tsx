@@ -1,10 +1,14 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
+
+import withAuth, { AuthState } from '../../hocs/withAuth';
 
 import Section from '../../layout/Section';
 
 import { Title, Text } from '../../styles/Typography';
 
+import DeleteCollectionModal from './DeleteCollectionModal';
 import WebtoonCardList from './WebtoonCardList';
 
 import Comments from '../shared/Comments';
@@ -24,10 +28,11 @@ import {
   useLikeCollectionForCollectionDetailMutation
 } from '../../generated/graphql';
 
-import { spacing } from '../../util/theme';
+import { spacing, Colors } from '../../util/theme';
 
 export interface Props {
   id: string;
+  authState: AuthState;
 }
 
 const ProfileWrapper = styled.div`
@@ -57,8 +62,10 @@ const Bookmark = styled.img.attrs({
   cursor: pointer;
 `;
 
-const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
+const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
+  const router = useRouter();
   const [showDropdown, toggleDropdown] = useState(false);
+  const [showDeleteCollectionModal, toggleModal] = useState(false);
   const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
     variables: { id, afterCommentId: '', afterWebtoonId: '' }
   });
@@ -112,17 +119,23 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
                   <Bookmark onClick={() => toggleDropdown(!showDropdown)} />
                 }
               >
-                <Option
-                  onClick={() =>
-                    likeCollection({
-                      variables: {
-                        collectionId: data.collection.id
-                      }
-                    })
-                  }
-                >
-                  찜 하기
-                </Option>
+                {data.collection.writer.id === authState.data?.me.id ? (
+                  <Option onClick={() => toggleModal(true)}>
+                    <Text color={Colors.RED}>컬렉션 삭제</Text>
+                  </Option>
+                ) : (
+                  <Option
+                    onClick={() =>
+                      likeCollection({
+                        variables: {
+                          collectionId: data.collection.id
+                        }
+                      })
+                    }
+                  >
+                    찜 하기
+                  </Option>
+                )}
               </Dropdown>
             </DropDownWrapper>
             <CollectionProfile>
@@ -177,8 +190,21 @@ const CollectionDetail: FunctionComponent<Props> = ({ id }) => {
           <LoadingComments />
         )}
       </Section>
+      <DeleteCollectionModal
+        isOpen={showDeleteCollectionModal}
+        close={() => {
+          toggleModal(false);
+        }}
+        collectionId={id}
+        onDeleteSuccess={() => {
+          toggleModal(false);
+          router.push({
+            pathname: '/mycollection'
+          });
+        }}
+      />
     </div>
   );
 };
 
-export default CollectionDetail;
+export default withAuth(CollectionDetail);

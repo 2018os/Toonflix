@@ -10,7 +10,7 @@ query collectionForCollectionDetail(
 
 query searchForAddWebtoonsModal($keyword: String, $afterWebtoonId: ID) {
   search(keyword: $keyword) {
-    webtoonResult(first: 4, after: $afterWebtoonId) {
+    webtoonResult(first: 8, after: $afterWebtoonId) {
       pageInfo {
         endCursor
         hasNextPage
@@ -46,6 +46,13 @@ mutation updateCollectionForCollectionDetail(
 mutation likeCollectionForCollectionDetail($collectionId: ID!) {
   likeCollection(collectionId: $collectionId) {
     id
+  }
+}
+
+mutation deleteCollectionForCollectionDetail($collectionId: ID!) {
+  deleteCollection(collectionId: $collectionId) {
+    id
+    title
   }
 }
 
