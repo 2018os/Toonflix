@@ -2,51 +2,46 @@ import React, { useEffect, useState } from 'react';
 
 import {
   useMeForWithAuthLazyQuery,
-  MyProfileFragment
+  MeForWithAuthQuery
 } from '../../generated/graphql';
 
 export interface AuthState {
-  userId: string | null;
-  signIn: (token: string, userId: string) => void;
+  signIn: (token: string) => void;
   signOut: () => void;
   token?: string;
-  me?: MyProfileFragment | null;
+  data?: MeForWithAuthQuery;
 }
 
 const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
   const initialAuthState = {
-    userId: null,
-    token: undefined,
-    me: null
+    token: undefined
   };
   return (props: any) => {
     const [authState, setAuthState] = useState(initialAuthState as AuthState);
-    const [meQuery, { data }] = useMeForWithAuthLazyQuery();
+    const [meQuery, { data }] = useMeForWithAuthLazyQuery({
+      fetchPolicy: 'cache-and-network'
+    });
 
     useEffect(() => {
-      const id = localStorage.getItem('userId');
       const token = localStorage.getItem('token');
-      if (id !== authState.userId) {
-        if (id) {
-          meQuery();
+      if (token) {
+        meQuery();
+        if (data && data !== authState.data) {
           setAuthState({
             ...authState,
-            userId: id,
-            token: token || undefined
+            data,
+            token
           });
-        } else {
-          setAuthState(initialAuthState as AuthState);
         }
       }
-    }, [authState, meQuery, data?.me]);
+    }, [authState, meQuery, data]);
 
-    const signIn = (token: string, userId: string) => {
+    const signIn = (token: string) => {
       setAuthState({
         ...authState,
         token
       });
       if (typeof window !== 'undefined') {
-        localStorage.setItem('userId', userId);
         localStorage.setItem('token', token);
       }
     };
@@ -54,7 +49,6 @@ const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
     const signOut = () => {
       setAuthState(initialAuthState as AuthState);
       if (typeof window !== 'undefined') {
-        localStorage.removeItem('userId');
         localStorage.removeItem('token');
       }
     };
@@ -62,7 +56,11 @@ const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
     return (
       <WrappedComponents
         {...props}
-        authState={{ ...authState, signIn, signOut, me: data?.me }}
+        authState={{
+          ...authState,
+          signIn,
+          signOut
+        }}
       />
     );
   };
