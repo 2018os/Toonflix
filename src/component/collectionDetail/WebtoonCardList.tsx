@@ -46,7 +46,7 @@ const WebtoonCardList: FunctionComponent<Props> = ({
     <>
       <Section>
         <WebtoonCardListWrapper>
-          {data.writer.id === authState.me?.id && (
+          {data.writer.id === authState?.data?.me?.id && (
             <EmptyWebtoonCard
               click={() => toggleModal(true)}
               title="웹툰 추가하기"
