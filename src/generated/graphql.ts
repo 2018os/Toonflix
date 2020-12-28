@@ -721,40 +721,12 @@ export type MeForMyCollectionQueryVariables = Exact<{
 
 export type MeForMyCollectionQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'User' } & {
-    myCollections: { __typename?: 'CollectionsConnection' } & {
-      pageInfo: { __typename?: 'PageInfo' } & Pick<
-        PageInfo,
-        'hasNextPage' | 'endCursor'
-      >;
-      edges?: Maybe<
-        Array<
-          Maybe<
-            { __typename?: 'CollectionEdge' } & {
-              node?: Maybe<
-                { __typename?: 'Collection' } & CollectionCardFragment
-              >;
-            }
-          >
-        >
-      >;
-    };
-    likedCollections: { __typename?: 'CollectionsConnection' } & {
-      pageInfo: { __typename?: 'PageInfo' } & Pick<
-        PageInfo,
-        'hasNextPage' | 'endCursor'
-      >;
-      edges?: Maybe<
-        Array<
-          Maybe<
-            { __typename?: 'CollectionEdge' } & {
-              node?: Maybe<
-                { __typename?: 'Collection' } & CollectionCardFragment
-              >;
-            }
-          >
-        >
-      >;
-    };
+    myCollections: {
+      __typename?: 'CollectionsConnection';
+    } & UserCollectionCardListFragment;
+    likedCollections: {
+      __typename?: 'CollectionsConnection';
+    } & UserCollectionCardListFragment;
   };
 };
 
@@ -767,6 +739,24 @@ export type CreateCollectionForMyCollectionMutation = {
   __typename?: 'Mutation';
 } & {
   createCollection: { __typename?: 'Collection' } & CollectionCardFragment;
+};
+
+export type UserCollectionCardListFragment = {
+  __typename?: 'CollectionsConnection';
+} & {
+  pageInfo: { __typename?: 'PageInfo' } & Pick<
+    PageInfo,
+    'hasNextPage' | 'endCursor'
+  >;
+  edges?: Maybe<
+    Array<
+      Maybe<
+        { __typename?: 'CollectionEdge' } & {
+          node?: Maybe<{ __typename?: 'Collection' } & CollectionCardFragment>;
+        }
+      >
+    >
+  >;
 };
 
 export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
@@ -1154,6 +1144,20 @@ export const CollectionCardFragmentDoc = gql`
       }
     }
   }
+`;
+export const UserCollectionCardListFragmentDoc = gql`
+  fragment userCollectionCardList on CollectionsConnection {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        ...collectionCard
+      }
+    }
+  }
+  ${CollectionCardFragmentDoc}
 `;
 export const SearchForCategoryDocument = gql`
   query searchForCategory(
@@ -1738,30 +1742,14 @@ export const MeForMyCollectionDocument = gql`
   ) {
     me {
       myCollections(first: 6, after: $afterMyCollectionId) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            ...collectionCard
-          }
-        }
+        ...userCollectionCardList
       }
       likedCollections(first: 6, after: $afterLikedCollectionId) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            ...collectionCard
-          }
-        }
+        ...userCollectionCardList
       }
     }
   }
-  ${CollectionCardFragmentDoc}
+  ${UserCollectionCardListFragmentDoc}
 `;
 
 /**
