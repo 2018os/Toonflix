@@ -14,6 +14,7 @@ const Button = styled.button<Props>`
     props.primary ? Colors.PRIMARY_COLOR : Colors.WHITE};
   color: ${(props) => (props.primary ? Colors.WHITE : Colors.BLACK)};
   border: none;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
 export const MoreButton = styled(Button).attrs({
@@ -23,7 +24,6 @@ export const MoreButton = styled(Button).attrs({
   padding: ${spacing[1]};
   border-radius: 10px;
   height: 60px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
 export default Button;

@@ -60,7 +60,6 @@ const StyledButton = styled(Button)`
   border-radius: 5px;
   padding: ${spacing[1]};
   margin-top: ${spacing[3]};
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
 const SignupModal: FunctionComponent<Props> = ({

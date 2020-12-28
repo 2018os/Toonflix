@@ -102,7 +102,6 @@ const ReadButton = styled(Button)`
   width: 236px;
   height: 68px;
   border-radius: 5px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   margin-right: ${spacing[1]};
   & > a {
     text-decoration: none;

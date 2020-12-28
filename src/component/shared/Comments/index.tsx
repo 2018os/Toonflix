@@ -46,7 +46,6 @@ const ButtonWrapper = styled.div`
 
 const StyledButton = styled(Button)`
   border-radius: 5px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
 const More = styled(MoreButton)`
