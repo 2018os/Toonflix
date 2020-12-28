@@ -856,7 +856,7 @@ export type LoginForLoginModalMutationVariables = Exact<{
 
 export type LoginForLoginModalMutation = { __typename?: 'Mutation' } & {
   login: { __typename?: 'AuthPayload' } & Pick<AuthPayload, 'token'> & {
-      user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
+      user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'name'>>;
     };
 };
 
@@ -1985,6 +1985,7 @@ export const LoginForLoginModalDocument = gql`
       token
       user {
         id
+        name
       }
     }
   }

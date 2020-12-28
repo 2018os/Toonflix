@@ -14,10 +14,6 @@ import SearchBar from '../component/shared/SearchBar';
 
 import { spacing, Colors } from '../util/theme';
 
-export interface Props {
-  authState: AuthState;
-}
-
 export interface ProfileProps {
   authState: AuthState;
   isMain?: boolean;
@@ -75,13 +71,13 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
   const router = useRouter();
   return (
     <ProfileWrapper isMain={!!isMain}>
-      {authState.me && authState.token ? (
+      {authState.data && authState.token ? (
         <>
           <Dropdown
             isOpen={isOpenMenu}
             openButton={
               <TextButton onClick={() => setIsOpenMenu(!isOpenMenu)}>
-                {authState.me.name}
+                {authState.data.me.name}
               </TextButton>
             }
           >
@@ -89,7 +85,12 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
             <Option onClick={() => router.push('/mycollection')}>
               내 컬렉션
             </Option>
-            <Option onClick={() => authState.signOut()}>
+            <Option
+              onClick={() => {
+                setIsOpenMenu(false);
+                authState.signOut();
+              }}
+            >
               <Text color={Colors.RED}>로그아웃</Text>
             </Option>
           </Dropdown>
@@ -97,12 +98,17 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
       ) : (
         <TextButton onClick={() => toggleModal(true)}>로그인</TextButton>
       )}
-      <LoginModal isOpen={openLoginModal} close={() => toggleModal(false)} />
+      <LoginModal
+        isOpen={openLoginModal}
+        close={() => toggleModal(false)}
+        onLoginSuccess={(token) => authState.signIn(token)}
+      />
     </ProfileWrapper>
   );
 };
 
-const Navigation: FunctionComponent<Props> = ({ authState }) => {
+const AuthProfile = withAuth(Profile);
+const Navigation = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState('');
   const { pathname } = router;
@@ -114,7 +120,7 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
   // TODO: Improve SearchBar structure
 
   return pathname === '/' ? (
-    <Profile authState={authState} isMain />
+    <AuthProfile isMain />
   ) : (
     <NavigationWrapper>
       <Link linkProps={{ href: '/' }}>
@@ -137,9 +143,9 @@ const Navigation: FunctionComponent<Props> = ({ authState }) => {
           </SearchWrapper>
         </Item>
       </ItemWrapper>
-      <Profile authState={authState} />
+      <AuthProfile />
     </NavigationWrapper>
   );
 };
 
-export default withAuth(Navigation);
+export default Navigation;

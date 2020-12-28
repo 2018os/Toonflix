@@ -2,8 +2,6 @@ import { Formik, Form, Field, FormikErrors, ErrorMessage } from 'formik';
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
-import withAuth, { AuthState } from '../../../hocs/withAuth';
-
 import Button from '../../../styles/Button';
 import Logo from '../../../styles/Logo';
 import { Text } from '../../../styles/Typography';
@@ -17,7 +15,7 @@ import { spacing, Colors, FontSizes } from '../../../util/theme';
 
 type Props = ModalProps & {
   close: () => any;
-  authState: AuthState;
+  onLoginSuccess: (token: string) => any;
 };
 
 interface LoginFormValues {
@@ -70,7 +68,11 @@ const StyledButton = styled(Button)`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
-const LoginModal: FunctionComponent<Props> = ({ isOpen, close, authState }) => {
+const LoginModal: FunctionComponent<Props> = ({
+  isOpen,
+  close,
+  onLoginSuccess
+}) => {
   const [openSignupModal, toggleModal] = useState(false);
   const initialValues: LoginFormValues = { email: '', password: '' };
   const [login] = useLoginForLoginModalMutation();
@@ -109,8 +111,8 @@ const LoginModal: FunctionComponent<Props> = ({ isOpen, close, authState }) => {
           onSubmit={async (value) => {
             try {
               const { data } = await login({ variables: { ...value } });
-              if (data && data.login.token && data.login.user) {
-                authState.signIn(data.login.token, data.login.user.id);
+              if (data && data.login.token) {
+                onLoginSuccess(data.login.token);
                 close();
               }
             } catch (err) {
@@ -156,4 +158,4 @@ const LoginModal: FunctionComponent<Props> = ({ isOpen, close, authState }) => {
   );
 };
 
-export default withAuth(LoginModal);
+export default LoginModal;

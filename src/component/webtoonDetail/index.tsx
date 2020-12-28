@@ -340,6 +340,7 @@ const WebtoonDetailContainer: FunctionComponent<Props> = ({
       <LoginModal
         isOpen={showLoginModal}
         close={() => toggleLoginModal(false)}
+        onLoginSuccess={(token) => authState.signIn(token)}
       />
     </>
   );

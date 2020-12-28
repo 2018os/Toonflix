@@ -27,6 +27,9 @@ const More = styled(MoreButton)`
   border-radius: 0 0 10px 10px;
 `;
 
+// new query
+// infinite scroll
+
 const AllCommentModal: FunctionComponent<Props> = ({
   isOpen,
   close,
