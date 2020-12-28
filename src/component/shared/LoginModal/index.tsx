@@ -153,7 +153,14 @@ const LoginModal: FunctionComponent<Props> = ({
           <Text size={FontSizes.DEFAULT}>회원가입</Text>
         </StyledButton>
       </Content>
-      <SignupModal isOpen={openSignupModal} close={() => toggleModal(false)} />
+      <SignupModal
+        isOpen={openSignupModal}
+        close={() => {
+          toggleModal(false);
+          close();
+        }}
+        onSignupSuccess={(token) => onLoginSuccess(token)}
+      />
     </Modal>
   );
 };

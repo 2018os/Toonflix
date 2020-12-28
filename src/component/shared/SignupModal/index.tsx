@@ -2,8 +2,6 @@ import { Formik, Form, Field, FormikErrors, ErrorMessage } from 'formik';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import withAuth, { AuthState } from '../../../hocs/withAuth';
-
 import Button from '../../../styles/Button';
 import { Title, Text } from '../../../styles/Typography';
 
@@ -15,7 +13,7 @@ import { spacing, Colors, FontSizes } from '../../../util/theme';
 
 type Props = ModalProps & {
   close: () => any;
-  authState: AuthState;
+  onSignupSuccess: (token: string) => any;
 };
 
 interface SignupFormValues {
@@ -68,7 +66,7 @@ const StyledButton = styled(Button)`
 const SignupModal: FunctionComponent<Props> = ({
   isOpen,
   close,
-  authState
+  onSignupSuccess
 }) => {
   const initialValues: SignupFormValues = { name: '', email: '', password: '' };
   const [signup] = useSignupForSignupModalMutation();
@@ -108,11 +106,11 @@ const SignupModal: FunctionComponent<Props> = ({
             try {
               const { data } = await signup({ variables: { ...value } });
               if (data && data.signup.token && data.signup.user) {
-                authState.signIn(data.signup.token, data.signup.user.id);
+                onSignupSuccess(data.signup.token);
                 close();
               }
             } catch (err) {
-              alert('이메일 혹은 비밀번호가 틀립니다.');
+              alert('중복된 이메일 입니다.');
             }
           }}
         >
@@ -156,4 +154,4 @@ const SignupModal: FunctionComponent<Props> = ({
   );
 };
 
-export default withAuth(SignupModal);
+export default SignupModal;
