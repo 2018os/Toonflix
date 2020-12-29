@@ -5,7 +5,7 @@ import CardViewList from '../shared/CardViewList';
 import Link from '../shared/Link';
 import { EmptyWebtoonCard } from '../shared/Empty';
 import { LoadingCardViewList, LoadingWebtoonCard } from '../shared/Loading';
-import SearchBar from '../shared/SearchBar';
+import SearchBar, { SearchIcon } from '../shared/SearchBar';
 import WebtoonCard from '../shared/WebtoonCard';
 
 import Logo from '../../styles/Logo';
@@ -15,7 +15,7 @@ import Section from '../../layout/Section';
 
 import { useCollectionsForMainQuery } from '../../generated/graphql';
 
-import { Colors, spacing } from '../../util/theme';
+import { Colors, spacing, FontSizes } from '../../util/theme';
 
 // import { dataForMain as data, loading } from '../../util/dummy';
 
@@ -28,7 +28,23 @@ const StyledLogo = styled(Logo)`
 `;
 
 const SearchBarWrapper = styled.div`
-  width: 992px;
+  & > .search-wrapper {
+    border-radius: 10px;
+    border: 4px solid ${Colors.PRIMARY_COLOR};
+  }
+  & > .search-wrapper > form > label > .search-input {
+    padding: ${spacing[2]};
+    &::placeholder {
+      color: ${Colors.PRIMARY_COLOR};
+    }
+  }
+  & > .search-wrapper > form > .auto-complete {
+    margin-top: -4px;
+  }
+`;
+
+const StyledIcon = styled(SearchIcon)`
+  padding: ${spacing[3]};
 `;
 
 const LinkButtonWrapper = styled.div`
@@ -56,12 +72,8 @@ const LinkButton = styled.div`
 `;
 
 function MainContainer() {
-  const { data, loading } = useCollectionsForMainQuery();
   const [keyword, setKeyword] = useState('');
-
-  const onChange = (value: string) => {
-    setKeyword(value);
-  };
+  const { data, loading } = useCollectionsForMainQuery();
 
   return (
     <>
@@ -73,10 +85,11 @@ function MainContainer() {
       <Section>
         <SearchBarWrapper>
           <SearchBar
-            isMain
+            keyword={keyword}
+            handleChange={(value) => setKeyword(value)}
+            inputSize={FontSizes.LARGER}
             autoComplete
-            value={keyword}
-            handleChange={onChange}
+            inputPrefix={<StyledIcon />}
           />
         </SearchBarWrapper>
         <LinkButtonWrapper>

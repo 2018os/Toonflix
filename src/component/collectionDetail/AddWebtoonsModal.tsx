@@ -1,12 +1,15 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Title } from '../../styles/Typography';
+import Button from '../../styles/Button';
+import { Title, Text } from '../../styles/Typography';
 
-import Modal, { ModalProps, ModalSubmitButton } from '../shared/Modal';
+import { LoadingCardList } from '../shared/Loading';
+import Modal, { ModalProps } from '../shared/Modal';
+import SearchBar from '../shared/SearchBar';
 import WebtoonCard from '../shared/WebtoonCard';
 
-import { spacing } from '../../util/theme';
+import { spacing, FontSizes } from '../../util/theme';
 
 import {
   useUpdateCollectionForCollectionDetailMutation,
@@ -36,6 +39,7 @@ const WebtoonCardWrapper = styled.div<WebtoonCardWrapperProps>`
 
 const WebtoonCardListWrapper = styled.div`
   display: flex;
+  margin-top: ${spacing[5]};
   justify-content: space-between;
   flex-flow: row wrap;
 `;
@@ -44,14 +48,30 @@ const Item = styled.div`
   margin-bottom: ${spacing[2]};
 `;
 
+const SearchBarWrapper = styled.div`
+  margin: auto;
+  max-width: 600px;
+`;
+
+const StyledButton = styled(Button)`
+  padding: ${spacing[2]};
+  border-radius: 10px;
+`;
+
 const AddWebtoonsModal: FunctionComponent<Props> = ({
   collectionId,
   isOpen,
   close
 }) => {
-  const { data, loading } = useSearchForAddWebtoonsModalQuery();
-  const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
   const [webtoonIds, setWebtoonIds] = useState<string[]>([]);
+  const [keyword, setKeyword] = useState('');
+  const { data, loading, refetch } = useSearchForAddWebtoonsModalQuery();
+  const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
+
+  useEffect(() => {
+    refetch({ keyword });
+  }, [keyword, refetch]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -67,9 +87,19 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
       <TitleWrapper>
         <Title>웹툰 추가</Title>
       </TitleWrapper>
-      {data && !loading && (
-        <WebtoonCardListWrapper>
-          {data.search.webtoonResult?.edges?.map((edge) => {
+      <SearchBarWrapper>
+        <SearchBar
+          inputSize={FontSizes.LARGER}
+          noWrapper
+          keyword={keyword}
+          handleChange={(value) => setKeyword(value)}
+          inputPrefix={<Text size={FontSizes.LARGER}>#</Text>}
+          placeholder="컬렉션에 어울리는 웹툰을 검색하세요!"
+        />
+      </SearchBarWrapper>
+      <WebtoonCardListWrapper>
+        {data && !loading ? (
+          data.search.webtoonResult?.edges?.map((edge) => {
             if (edge?.node) {
               const webtoon = edge.node;
               return (
@@ -95,11 +125,16 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
                 </Item>
               );
             }
-            return <div key={edge?.__typename}>Loading</div>;
-          })}
-        </WebtoonCardListWrapper>
-      )}
-      <ModalSubmitButton
+            return null;
+          })
+        ) : (
+          <LoadingCardList cardType="webtoon" cardRange={8} />
+        )}
+      </WebtoonCardListWrapper>
+      <StyledButton
+        primary
+        isFull
+        type="submit"
         onClick={() => {
           updateCollection({
             variables: {
@@ -113,8 +148,8 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
           close();
         }}
       >
-        완료
-      </ModalSubmitButton>
+        <Text size={FontSizes.DEFAULT}>완료</Text>
+      </StyledButton>
     </Modal>
   );
 };

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import Section from '../../layout/Section';
+
+import { Text } from '../../styles/Typography';
 
 import CollectionCardList from './CollectionCardList';
 
@@ -12,34 +13,20 @@ import SearchBar from '../shared/SearchBar';
 import { useCollectionsForCollectionListLazyQuery } from '../../generated/graphql';
 
 import getScrolledToBottom from '../../util/infiniteScroll';
-import { spacing } from '../../util/theme';
-
-// import { dataForCollectionList as data, loading } from '../../util/dummy';
-
-interface SearchQueryString {
-  keyword?: string;
-}
+import { FontSizes } from '../../util/theme';
 
 const SearchBarWrapper = styled.div`
-  padding: ${spacing[2]};
-  margin-bottom: ${spacing[3]};
-  border-radius: 5px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+  margin: auto;
+  max-width: 600px;
 `;
 
 const CollectionListContainer = () => {
-  const router = useRouter();
-  const { keyword: searchKeyword }: SearchQueryString = router.query;
   const [
     getCollection,
     { data, loading, fetchMore }
   ] = useCollectionsForCollectionListLazyQuery();
-  const [keyword, setKeyword] = useState('');
+  const [searchKeyword, setKeyword] = useState('');
   const afterId = data?.collections.pageInfo.endCursor;
-
-  const onChange = (value: string) => {
-    setKeyword(value);
-  };
 
   const handleOnScroll = () => {
     if (getScrolledToBottom()) {
@@ -53,14 +40,8 @@ const CollectionListContainer = () => {
   };
 
   useEffect(() => {
-    if (searchKeyword) {
-      setKeyword(searchKeyword);
-    }
-  }, [searchKeyword]);
-
-  useEffect(() => {
-    getCollection({ variables: { keyword } });
-  }, [keyword, getCollection]);
+    getCollection({ variables: { keyword: searchKeyword } });
+  }, [searchKeyword, getCollection]);
 
   useEffect(() => {
     global.window.addEventListener('scroll', handleOnScroll);
@@ -69,13 +50,20 @@ const CollectionListContainer = () => {
     };
   });
 
-  // No SearchBar component
-
   return (
     <>
       <Section>
         <SearchBarWrapper>
-          <SearchBar handleChange={onChange} value={keyword} />
+          <SearchBar
+            placeholder="컬렉션의 키워드를 검색해보세요"
+            keyword={searchKeyword}
+            inputSize={FontSizes.LARGER}
+            noWrapper
+            handleChange={(value) => {
+              setKeyword(value);
+            }}
+            inputPrefix={<Text size={FontSizes.LARGER}>#</Text>}
+          />
         </SearchBarWrapper>
       </Section>
       <Section>

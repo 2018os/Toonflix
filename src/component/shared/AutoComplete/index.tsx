@@ -60,6 +60,7 @@ const AutoComplete: FunctionComponent<Props> = ({ keyword }) => {
   }, [keyword, getAutoComplete]);
   return (
     <div
+      className="auto-complete"
       style={{
         position: 'absolute',
         zIndex: 1,

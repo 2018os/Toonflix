@@ -1,5 +1,4 @@
-import { Formik, Form, Field } from 'formik';
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -9,7 +8,9 @@ import { Title, Text } from '../../styles/Typography';
 
 import CollectionCardList from './CollectionCardList';
 import WebtoonCardList from './WebtoonCardList';
+
 import { LoadingCardList } from '../shared/Loading';
+import SearchBar from '../shared/SearchBar';
 
 import { Colors, FontSizes, spacing } from '../../util/theme';
 import getScrolledToBottom from '../../util/infiniteScroll';
@@ -31,26 +32,11 @@ const CardListWrapper = styled.div`
   margin-top: ${spacing[1]};
 `;
 
-const Label = styled.label`
-  display: flex;
-  justify-content: center;
-`;
-
-const SearchBar = styled(Field)`
-  border: none;
-  outline: none;
-  background-color: ${Colors.GRAY};
-  font-size: ${FontSizes.LARGEST};
-  width: 200px;
-  &:focus {
-    width: auto;
-  }
-`;
-
 const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
+  const [searchKeyword, setKeyword] = useState('');
   const router = useRouter();
   const { keyword }: SearchQueryString = router.query;
-  const { data, loading, fetchMore } = useSearchForCategoryQuery({
+  const { data, loading, fetchMore, refetch } = useSearchForCategoryQuery({
     variables: {
       keyword,
       where: {
@@ -81,32 +67,29 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
       global.window.removeEventListener('scroll', handleOnScroll);
     };
   });
+
+  useEffect(() => {
+    refetch({
+      keyword: searchKeyword,
+      where: {
+        ...filter
+      }
+    });
+  }, [searchKeyword, refetch, filter]);
+
   return (
     <>
       <Section>
-        <Formik
-          initialValues={{ keyword: '' }}
-          onSubmit={(value) => {
-            router.push({
-              pathname: '/category',
-              query: {
-                keyword: value.keyword
-              }
-            });
+        <SearchBar
+          keyword={searchKeyword}
+          inputSize={FontSizes.LARGER}
+          noWrapper
+          handleChange={(value) => {
+            setKeyword(value);
           }}
-        >
-          <Form>
-            <Label>
-              <Text size={FontSizes.LARGEST}>#</Text>
-              <SearchBar
-                placeholder={keyword}
-                id="keyword"
-                name="keyword"
-                autoComplete="off"
-              />
-            </Label>
-          </Form>
-        </Formik>
+          inputPrefix={<Text size={FontSizes.LARGER}>#</Text>}
+          placeholder={keyword}
+        />
       </Section>
       <Section>
         <Title size={FontSizes.LARGER} color={Colors.PRIMARY_COLOR}>

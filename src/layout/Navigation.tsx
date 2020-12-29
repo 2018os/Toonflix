@@ -10,9 +10,9 @@ import { Text } from '../styles/Typography';
 import Dropdown, { Option } from '../component/shared/Dropdown';
 import Link from '../component/shared/Link';
 import LoginModal from '../component/shared/LoginModal';
-import SearchBar from '../component/shared/SearchBar';
+import SearchBar, { SearchIcon } from '../component/shared/SearchBar';
 
-import { spacing, Colors } from '../util/theme';
+import { spacing, Colors, FontSizes, IconSizes } from '../util/theme';
 
 export interface ProfileProps {
   authState: AuthState;
@@ -37,13 +37,18 @@ const Item = styled.div`
   }
 `;
 
-const SearchWrapper = styled.div`
-  width: 500px;
-`;
-
 const Tab = styled(Text)<{ isCurrentPath: boolean }>`
   color: ${(props) =>
     props.isCurrentPath ? Colors.PRIMARY_COLOR : Colors.BLACK};
+`;
+
+const SearchBarWrapper = styled.div`
+  min-width: 500px;
+`;
+
+const StyledSearchIcon = styled(SearchIcon)`
+  width: ${IconSizes.DEFAULT};
+  height: ${IconSizes.DEFAULT};
 `;
 
 const ProfileWrapper = styled.div<{ isMain: boolean }>`
@@ -108,16 +113,11 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
 };
 
 const AuthProfile = withAuth(Profile);
+
 const Navigation = () => {
-  const router = useRouter();
   const [keyword, setKeyword] = useState('');
+  const router = useRouter();
   const { pathname } = router;
-
-  const onChange = (value: string) => {
-    setKeyword(value);
-  };
-
-  // TODO: Improve SearchBar structure
 
   return pathname === '/' ? (
     <AuthProfile isMain />
@@ -138,9 +138,15 @@ const Navigation = () => {
           </Link>
         </Item>
         <Item>
-          <SearchWrapper>
-            <SearchBar autoComplete value={keyword} handleChange={onChange} />
-          </SearchWrapper>
+          <SearchBarWrapper>
+            <SearchBar
+              keyword={keyword}
+              handleChange={(value) => setKeyword(value)}
+              inputSize={FontSizes.SMALL}
+              autoComplete
+              inputPrefix={<StyledSearchIcon />}
+            />
+          </SearchBarWrapper>
         </Item>
       </ItemWrapper>
       <AuthProfile />
