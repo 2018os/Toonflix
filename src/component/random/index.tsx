@@ -13,7 +13,7 @@ const RandomContainer = () => {
     <>
       <Head>
         <Title>썸네일만 보고 골라요~</Title>
-        <div>Description</div>
+        <div>마음에 드는 그림체를 가진 만화를 찾아 볼 수 있어요</div>
       </Head>
       <RandomCardList />
     </>
