@@ -2,112 +2,92 @@ import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
+import SearchInput from './Input';
 import AutoComplete from '../AutoComplete';
 
-import { Colors, FontSizes, IconSizes, spacing } from '../../../util/theme';
-
-type IconSize = 'SMALLER' | 'LARGER';
+import { Colors, FontSizes, spacing } from '../../../util/theme';
 
 export interface Props {
-  isMain?: boolean;
+  keyword: string;
   handleChange: (value: string) => any;
+  inputSize: FontSizes;
   autoComplete?: boolean;
-  value: string;
+  noWrapper?: boolean;
+  inputPrefix?: React.ReactNode;
+  placeholder?: string;
 }
 
-const SearchBarWrapper = styled.div<{
-  isMain?: boolean;
+export const SearchIcon = styled.img.attrs({
+  className: 'search-icon',
+  src: '/static/icon/search.svg'
+})`
+  padding: ${spacing[0]};
+`;
+
+const SearchBarWrapper = styled.div.attrs({
+  className: 'search-wrapper'
+})<{
   autoCompleteOpen: boolean;
 }>`
   position: relative;
   border-style: solid;
   background-color: ${Colors.WHITE};
-  ${(props) =>
-    props.isMain
-      ? `
-          border-color: ${Colors.PRIMARY_COLOR};
-          border-width: 4px;
-          border-radius: ${props.autoCompleteOpen ? '10px 10px 0 0' : '10px'};
-      `
-      : `
-          border-color: ${Colors.GRAY};
-          border-width: 1px;
-          border-radius: ${props.autoCompleteOpen ? '5px 5px 0 0' : '5px'};
-      `}
+  border-color: ${Colors.GRAY};
+  border-width: 1px;
+  border-radius: ${(props) => (props.autoCompleteOpen ? '5px 5px 0 0' : '5px')};
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
 
-const SearchInputWrapper = styled.div`
-  display: flex;
-`;
-
-const Icon = styled.img.attrs({
-  src: '/static/icon/search.svg'
-})<{ iconSize: IconSize }>`
-  ${(props) => `
-    width:${IconSizes[props.iconSize]};
-    height:${IconSizes[props.iconSize]};
-    margin: ${
-      props.iconSize === 'SMALLER'
-        ? `auto 0 auto ${spacing[1]}`
-        : `auto 0 auto ${spacing[5]}`
-    };
-  `}
-`;
-
-const StyledInput = styled.input<{ isMain?: boolean }>`
-  ${(props) => `
-    width: 80%;
-    border: none;
-    outline: none;
-    font-size: ${props.isMain ? FontSizes.H2 : FontSizes.SMALLEST};
-    padding: ${props.isMain ? spacing[4] : spacing[1]};
-    &::placeholder {
-      color: ${props.isMain && Colors.PRIMARY_COLOR};
-    }
-  `}
-`;
-
 const SearchBar: FunctionComponent<Props> = ({
-  isMain,
+  keyword,
   handleChange,
-  value,
-  autoComplete
+  autoComplete,
+  noWrapper,
+  inputPrefix,
+  inputSize,
+  placeholder
 }) => {
   const router = useRouter();
   const [autoCompleteOpen, setAutoCompleteOpen] = useState(false);
-  const iconSize = isMain ? 'LARGER' : 'SMALLER';
-  return (
-    <SearchBarWrapper isMain={isMain} autoCompleteOpen={autoCompleteOpen}>
+  const Input = (
+    <SearchInput
+      placeholder={
+        placeholder || '컬렉션, 장르, 키워드, 작가 등을 검색해보세요'
+      }
+      className="search-input"
+      value={keyword}
+      handleChange={handleChange}
+      inputPrefix={inputPrefix}
+      inputSize={inputSize}
+      onFocus={() => {
+        if (autoComplete) setAutoCompleteOpen(true);
+      }}
+      onBlur={() => {
+        if (autoComplete) setAutoCompleteOpen(false);
+      }}
+    />
+  );
+
+  return noWrapper ? (
+    <>
+      {Input}
+      {autoComplete && autoCompleteOpen && <AutoComplete keyword={keyword} />}
+    </>
+  ) : (
+    <SearchBarWrapper autoCompleteOpen={autoCompleteOpen}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           router.push({
             pathname: '/category',
             query: {
-              keyword: value
+              keyword
             }
           });
         }}
       >
-        <SearchInputWrapper>
-          <Icon iconSize={iconSize} />
-          <StyledInput
-            placeholder="컬렉션 장르, 키워드, 작가 등을 검색해보세요"
-            isMain={isMain}
-            value={value}
-            onChange={(e) => {
-              handleChange(e.target.value);
-            }}
-            onFocus={() => {
-              setAutoCompleteOpen(true);
-            }}
-            onBlur={() => {
-              setAutoCompleteOpen(false);
-            }}
-          />
-        </SearchInputWrapper>
-        {autoComplete && autoCompleteOpen && <AutoComplete keyword={value} />}
+        {Input}
+        {autoComplete && autoCompleteOpen && <AutoComplete keyword={keyword} />}
       </form>
     </SearchBarWrapper>
   );
