@@ -13,6 +13,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Button = styled.button`
+  outline: none;
   border: none;
   cursor: pointer;
   width: 40px;
@@ -52,9 +53,9 @@ interface HeaderProps {
 const settings = {
   className: 'slider',
   dots: false,
-  infinite: false,
+  infinite: true,
+  autoplay: true,
   draggable: true,
-  initialSlide: 0,
   variableWidth: true,
   arrows: false
 };
