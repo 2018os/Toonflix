@@ -30,12 +30,12 @@ const CardList = styled.div`
   justify-content: space-between;
   flex-flow: row wrap;
   & > div {
-    margin-bottom: ${spacing[4]};
+    margin-bottom: ${spacing[2]};
   }
 `;
 
 const Refresh = styled.img.attrs({
-  src: 'static/icon/refresh.svg'
+  src: '/static/icon/refresh.svg'
 })``;
 
 const RandomCardViewList = () => {
@@ -59,7 +59,6 @@ const RandomCardViewList = () => {
                     href: '/webtoon/[id]',
                     as: `/webtoon/${id}`
                   }}
-                  isNewTab
                 >
                   <Thumbnail size={ImgSizes.DEFAULT} src={thumbnail} />
                 </Link>

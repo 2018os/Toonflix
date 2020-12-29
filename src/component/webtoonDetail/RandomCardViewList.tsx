@@ -38,7 +38,6 @@ const RandomCardViewList = () => {
                 as: `/webtoon/${id}`
               }}
               key={`random-thumbnail-${id}`}
-              isNewTab
             >
               <Card>
                 <Thumbnail size={ImgSizes.SMALLER} src={thumbnail} />
