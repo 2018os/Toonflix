@@ -82,7 +82,7 @@ const LoginModal: FunctionComponent<Props> = ({
       style={{
         content: {
           width: '400px',
-          height: '400px',
+          height: '450px',
           borderRadius: '10px',
           paddingRight: spacing[6],
           paddingLeft: spacing[6],

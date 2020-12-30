@@ -3,7 +3,8 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import Button from '../../../styles/Button';
-import { Title, Text } from '../../../styles/Typography';
+import Logo from '../../../styles/Logo';
+import { Text } from '../../../styles/Typography';
 
 import Modal, { ModalProps } from '../Modal';
 
@@ -26,8 +27,12 @@ const Content = styled.div`
   text-align: center;
 `;
 
-const Logo = styled.div`
-  margin-bottom: ${spacing[2]};
+const LogoWrapper = styled.div`
+  margin: ${spacing[3]};
+`;
+
+const StyledLogo = styled(Logo)`
+  width: 200px;
 `;
 
 const Input = styled(Field)`
@@ -76,7 +81,7 @@ const SignupModal: FunctionComponent<Props> = ({
       style={{
         content: {
           width: '400px',
-          height: '400px',
+          height: '450px',
           borderRadius: '10px',
           paddingRight: spacing[6],
           paddingLeft: spacing[6],
@@ -85,9 +90,9 @@ const SignupModal: FunctionComponent<Props> = ({
       }}
     >
       <Content>
-        <Logo>
-          <Title>로고</Title>
-        </Logo>
+        <LogoWrapper>
+          <StyledLogo />
+        </LogoWrapper>
         <Formik
           initialValues={initialValues}
           validate={(values) => {
