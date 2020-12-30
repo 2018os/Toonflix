@@ -1,69 +1,19 @@
-import React, { useEffect, useState } from 'react';
-
+import React from 'react';
 import {
-  useMeForWithAuthLazyQuery,
-  MeForWithAuthQuery
-} from '../../generated/graphql';
-
-export interface AuthState {
-  signIn: (token: string) => void;
-  signOut: () => void;
-  token?: string;
-  data?: MeForWithAuthQuery;
-}
+  AuthContext,
+  AuthState as BaseAuthState
+} from '../../context/AuthContext';
 
 const withAuth = (WrappedComponents: React.ComponentType<any | string>) => {
-  const initialAuthState = {
-    token: undefined
-  };
   return (props: any) => {
-    const [authState, setAuthState] = useState(initialAuthState as AuthState);
-    const [meQuery, { data }] = useMeForWithAuthLazyQuery({
-      fetchPolicy: 'cache-and-network'
-    });
-
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        meQuery();
-        if (data && data !== authState.data) {
-          setAuthState({
-            ...authState,
-            data,
-            token
-          });
-        }
-      }
-    }, [authState, meQuery, data]);
-
-    const signIn = (token: string) => {
-      setAuthState({
-        ...authState,
-        token
-      });
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('token', token);
-      }
-    };
-
-    const signOut = () => {
-      setAuthState(initialAuthState as AuthState);
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('token');
-      }
-    };
-
     return (
-      <WrappedComponents
-        {...props}
-        authState={{
-          ...authState,
-          signIn,
-          signOut
-        }}
-      />
+      <AuthContext.Consumer>
+        {(state) => <WrappedComponents {...props} authState={state} />}
+      </AuthContext.Consumer>
     );
   };
 };
+
+export type AuthState = BaseAuthState;
 
 export default withAuth;

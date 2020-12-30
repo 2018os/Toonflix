@@ -13,6 +13,8 @@ import { relayStylePagination } from '@apollo/client/utilities';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import { AuthProvider } from '../context/AuthContext';
+
 const DefaultSetting = createGlobalStyle`
   @font-face {
     font-family: NotoSansCJKkr;
@@ -87,8 +89,10 @@ const client = new ApolloClient({
 const PageWrapper = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
-      <DefaultSetting />
+      <AuthProvider>
+        <Component {...pageProps} />
+        <DefaultSetting />
+      </AuthProvider>
     </ApolloProvider>
   );
 };
