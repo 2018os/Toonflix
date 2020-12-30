@@ -18,6 +18,7 @@ import {
   LoadingCollectionProfile,
   LoadingComments
 } from '../shared/Loading';
+import LoginModal from '../shared/LoginModal';
 
 import {
   useCollectionForCollectionDetailQuery,
@@ -65,7 +66,10 @@ const Bookmark = styled.img.attrs({
 const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
   const router = useRouter();
   const [showDropdown, toggleDropdown] = useState(false);
-  const [showDeleteCollectionModal, toggleModal] = useState(false);
+  const [showDeleteCollectionModal, toggleDeleteCollectionModal] = useState(
+    false
+  );
+  const [showLoginModal, toggleLoginModal] = useState(false);
   const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
     variables: { id, afterCommentId: '', afterWebtoonId: '' }
   });
@@ -120,18 +124,24 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
                 }
               >
                 {data.collection.writer.id === authState.data?.me.id ? (
-                  <Option onClick={() => toggleModal(true)}>
+                  <Option onClick={() => toggleDeleteCollectionModal(true)}>
                     <Text color={Colors.RED}>컬렉션 삭제</Text>
                   </Option>
                 ) : (
                   <Option
-                    onClick={() =>
-                      likeCollection({
-                        variables: {
-                          collectionId: data.collection.id
-                        }
-                      })
-                    }
+                    onClick={() => {
+                      if (authState.token) {
+                        likeCollection({
+                          variables: {
+                            collectionId: data.collection.id
+                          }
+                        });
+                        alert('저장되었습니다');
+                        toggleDropdown(false);
+                      } else {
+                        toggleLoginModal(true);
+                      }
+                    }}
                   >
                     찜 하기
                   </Option>
@@ -193,15 +203,20 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
       <DeleteCollectionModal
         isOpen={showDeleteCollectionModal}
         close={() => {
-          toggleModal(false);
+          toggleDeleteCollectionModal(false);
         }}
         collectionId={id}
         onDeleteSuccess={() => {
-          toggleModal(false);
+          toggleDeleteCollectionModal(false);
           router.push({
             pathname: '/mycollection'
           });
         }}
+      />
+      <LoginModal
+        isOpen={showLoginModal}
+        close={() => toggleLoginModal(false)}
+        onLoginSuccess={(token) => authState.signIn(token)}
       />
     </div>
   );
