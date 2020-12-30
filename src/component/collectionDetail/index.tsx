@@ -64,15 +64,19 @@ const Bookmark = styled.img.attrs({
 `;
 
 const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
+  const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
+    variables: { id, afterCommentId: '', afterWebtoonId: '' }
+  });
   const router = useRouter();
   const [showDropdown, toggleDropdown] = useState(false);
   const [showDeleteCollectionModal, toggleDeleteCollectionModal] = useState(
     false
   );
   const [showLoginModal, toggleLoginModal] = useState(false);
-  const { data, loading, fetchMore } = useCollectionForCollectionDetailQuery({
-    variables: { id, afterCommentId: '', afterWebtoonId: '' }
-  });
+  const afterWebtoonId = data?.collection.webtoons.pageInfo.endCursor;
+  const afterCommentId = data?.collection.comments.pageInfo.endCursor;
+  const [beforeWebtoonId, setBeforeWebtoonId] = useState('');
+  const [beforeCommentId, setBeforeCommentId] = useState('');
   const [postComment] = usePostCommentForCollectionDetailMutation({
     update: (cache, mutationResult) => {
       const newComment = mutationResult.data?.postComment;
@@ -108,8 +112,6 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
     }
   });
   const [likeCollection] = useLikeCollectionForCollectionDetailMutation();
-  const afterWebtoonId = data?.collection.webtoons.pageInfo.endCursor;
-  const afterCommentId = data?.collection.comments.pageInfo.endCursor;
   return (
     <div>
       <Section>
@@ -166,10 +168,12 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
           <WebtoonCardList
             data={data.collection}
             onLoadMore={() => {
+              if (afterWebtoonId) setBeforeWebtoonId(afterWebtoonId);
               fetchMore({
                 variables: {
                   id,
-                  afterWebtoonId
+                  afterWebtoonId,
+                  afterCommentId: beforeCommentId
                 }
               });
             }}
@@ -188,9 +192,11 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
               });
             }}
             onLoadMore={() => {
+              if (afterCommentId) setBeforeCommentId(afterCommentId);
               fetchMore({
                 variables: {
                   id,
+                  afterWebtoonId: beforeWebtoonId,
                   afterCommentId
                 }
               });

@@ -1,11 +1,11 @@
 query searchForCategory(
   $keyword: String
   $where: SearchFiltering
-  $webtoonId: ID
-  $collectionId: ID
+  $afterWebtoonId: ID
+  $afterCollectionId: ID
 ) {
   search(keyword: $keyword, where: $where) {
-    webtoonResult(first: 12, after: $webtoonId) {
+    webtoonResult(first: 12, after: $afterWebtoonId) {
       pageInfo {
         endCursor
         hasNextPage
@@ -16,7 +16,7 @@ query searchForCategory(
         }
       }
     }
-    collectionResult(first: 6, after: $collectionId) {
+    collectionResult(first: 6, after: $afterCollectionId) {
       pageInfo {
         endCursor
         hasNextPage

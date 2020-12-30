@@ -501,8 +501,8 @@ export type SearchFiltering = {
 export type SearchForCategoryQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
   where?: Maybe<SearchFiltering>;
-  webtoonId?: Maybe<Scalars['ID']>;
-  collectionId?: Maybe<Scalars['ID']>;
+  afterWebtoonId?: Maybe<Scalars['ID']>;
+  afterCollectionId?: Maybe<Scalars['ID']>;
 }>;
 
 export type SearchForCategoryQuery = { __typename?: 'Query' } & {
@@ -764,7 +764,7 @@ export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
 export type MeForProfileQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'User' } & Pick<
     User,
-    'id' | 'name' | 'email' | 'level' | 'exp'
+    'name' | 'email' | 'level' | 'exp'
   > & {
       status: { __typename?: 'UserStatus' } & Pick<
         UserStatus,
@@ -1163,11 +1163,11 @@ export const SearchForCategoryDocument = gql`
   query searchForCategory(
     $keyword: String
     $where: SearchFiltering
-    $webtoonId: ID
-    $collectionId: ID
+    $afterWebtoonId: ID
+    $afterCollectionId: ID
   ) {
     search(keyword: $keyword, where: $where) {
-      webtoonResult(first: 12, after: $webtoonId) {
+      webtoonResult(first: 12, after: $afterWebtoonId) {
         pageInfo {
           endCursor
           hasNextPage
@@ -1178,7 +1178,7 @@ export const SearchForCategoryDocument = gql`
           }
         }
       }
-      collectionResult(first: 6, after: $collectionId) {
+      collectionResult(first: 6, after: $afterCollectionId) {
         pageInfo {
           endCursor
           hasNextPage
@@ -1209,8 +1209,8 @@ export const SearchForCategoryDocument = gql`
  *   variables: {
  *      keyword: // value for 'keyword'
  *      where: // value for 'where'
- *      webtoonId: // value for 'webtoonId'
- *      collectionId: // value for 'collectionId'
+ *      afterWebtoonId: // value for 'afterWebtoonId'
+ *      afterCollectionId: // value for 'afterCollectionId'
  *   },
  * });
  */
@@ -1861,7 +1861,6 @@ export type CreateCollectionForMyCollectionMutationOptions = Apollo.BaseMutation
 export const MeForProfileDocument = gql`
   query meForProfile {
     me {
-      id
       name
       email
       level

@@ -32,6 +32,11 @@ const CardListWrapper = styled.div`
   margin-top: ${spacing[1]};
 `;
 
+const SearchBarWrapper = styled.div`
+  margin: auto;
+  max-width: 700px;
+`;
+
 const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
   const [searchKeyword, setKeyword] = useState('');
   const router = useRouter();
@@ -44,18 +49,18 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
       }
     }
   });
-  const webtoonId = data?.search.webtoonResult?.pageInfo.endCursor;
-  const collectionId = data?.search.collectionResult?.pageInfo.endCursor;
+  const [beforeWebtoonId, setBeforeWebtoonId] = useState('');
+  const [beforeCollectionId, setBeforeCollectionId] = useState('');
+  const afterWebtoonId = data?.search.webtoonResult?.pageInfo.endCursor;
+  const afterCollectionId = data?.search.collectionResult?.pageInfo.endCursor;
 
   const handleOnScroll = () => {
     if (getScrolledToBottom()) {
+      if (afterCollectionId) setBeforeCollectionId(afterCollectionId);
       fetchMore({
         variables: {
-          keyword,
-          where: {
-            ...filter
-          },
-          collectionId
+          afterWebtoonId: beforeWebtoonId,
+          afterCollectionId
         }
       });
     }
@@ -80,16 +85,18 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
   return (
     <>
       <Section>
-        <SearchBar
-          keyword={searchKeyword}
-          inputSize={FontSizes.LARGER}
-          noWrapper
-          handleChange={(value) => {
-            setKeyword(value);
-          }}
-          inputPrefix={<Text size={FontSizes.LARGER}>#</Text>}
-          placeholder={keyword}
-        />
+        <SearchBarWrapper>
+          <SearchBar
+            keyword={searchKeyword}
+            inputSize={FontSizes.LARGER}
+            noWrapper
+            handleChange={(value) => {
+              setKeyword(value);
+            }}
+            inputPrefix={<Text size={FontSizes.LARGER}>#</Text>}
+            placeholder={keyword}
+          />
+        </SearchBarWrapper>
       </Section>
       <Section>
         <Title size={FontSizes.LARGER} color={Colors.PRIMARY_COLOR}>
@@ -100,13 +107,11 @@ const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
             <WebtoonCardList
               data={data}
               onLoadMore={() => {
+                if (afterWebtoonId) setBeforeWebtoonId(afterWebtoonId);
                 fetchMore({
                   variables: {
-                    keyword,
-                    where: {
-                      ...filter
-                    },
-                    webtoonId
+                    afterWebtoonId,
+                    afterCollectionId: beforeCollectionId
                   }
                 });
               }}
