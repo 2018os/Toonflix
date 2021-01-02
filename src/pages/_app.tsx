@@ -37,7 +37,7 @@ const DefaultSetting = createGlobalStyle`
 `;
 
 const httpLink = createHttpLink({
-  uri: 'http://127.0.0.1:4000/graphql'
+  uri: 'http://comicsquare.org:4000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
