@@ -128,7 +128,8 @@ export type Mutation = {
   dislikeCollection: User;
   postComment: Comment;
   deleteCollection: Collection;
-  sendEmail: SendEmailPayload;
+  authenticateByEmail: SendEmailPayload;
+  updateUser: User;
 };
 
 export type MutationLoginArgs = {
@@ -163,13 +164,17 @@ export type MutationDeleteCollectionArgs = {
   collectionId: Scalars['ID'];
 };
 
-export type MutationSendEmailArgs = {
+export type MutationAuthenticateByEmailArgs = {
   input: SendEmailInput;
+};
+
+export type MutationUpdateUserArgs = {
+  input: UpdateUserInput;
 };
 
 export type SendEmailPayload = {
   __typename?: 'SendEmailPayload';
-  user?: Maybe<User>;
+  code: Scalars['String'];
 };
 
 export type AuthPayload = {
@@ -513,6 +518,12 @@ export type SendEmailInput = {
   email: Scalars['String'];
 };
 
+export type UpdateUserInput = {
+  name?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  isAuthentication?: Maybe<Scalars['Boolean']>;
+};
+
 export type SearchForCategoryQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
   where?: Maybe<SearchFiltering>;
@@ -797,6 +808,27 @@ export type RandomWebtoonsForRandomQuery = { __typename?: 'Query' } & {
     Array<{ __typename?: 'Webtoon' } & Pick<Webtoon, 'id' | 'thumbnail'>>
   >;
 };
+
+export type AuthenticateByEmailForAuthenticationModalMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+export type AuthenticateByEmailForAuthenticationModalMutation = {
+  __typename?: 'Mutation';
+} & {
+  authenticateByEmail: { __typename?: 'SendEmailPayload' } & Pick<
+    SendEmailPayload,
+    'code'
+  >;
+};
+
+export type UpdateUserForAuthenticationModalMutationVariables = Exact<{
+  isAuthentication?: Maybe<Scalars['Boolean']>;
+}>;
+
+export type UpdateUserForAuthenticationModalMutation = {
+  __typename?: 'Mutation';
+} & { updateUser: { __typename?: 'User' } & Pick<User, 'id'> };
 
 export type SearchForAutoCompleteQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
@@ -1991,6 +2023,106 @@ export type RandomWebtoonsForRandomLazyQueryHookResult = ReturnType<
 export type RandomWebtoonsForRandomQueryResult = Apollo.QueryResult<
   RandomWebtoonsForRandomQuery,
   RandomWebtoonsForRandomQueryVariables
+>;
+export const AuthenticateByEmailForAuthenticationModalDocument = gql`
+  mutation authenticateByEmailForAuthenticationModal($email: String!) {
+    authenticateByEmail(input: { email: $email }) {
+      code
+    }
+  }
+`;
+export type AuthenticateByEmailForAuthenticationModalMutationFn = Apollo.MutationFunction<
+  AuthenticateByEmailForAuthenticationModalMutation,
+  AuthenticateByEmailForAuthenticationModalMutationVariables
+>;
+
+/**
+ * __useAuthenticateByEmailForAuthenticationModalMutation__
+ *
+ * To run a mutation, you first call `useAuthenticateByEmailForAuthenticationModalMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthenticateByEmailForAuthenticationModalMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authenticateByEmailForAuthenticationModalMutation, { data, loading, error }] = useAuthenticateByEmailForAuthenticationModalMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useAuthenticateByEmailForAuthenticationModalMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AuthenticateByEmailForAuthenticationModalMutation,
+    AuthenticateByEmailForAuthenticationModalMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    AuthenticateByEmailForAuthenticationModalMutation,
+    AuthenticateByEmailForAuthenticationModalMutationVariables
+  >(AuthenticateByEmailForAuthenticationModalDocument, baseOptions);
+}
+export type AuthenticateByEmailForAuthenticationModalMutationHookResult = ReturnType<
+  typeof useAuthenticateByEmailForAuthenticationModalMutation
+>;
+export type AuthenticateByEmailForAuthenticationModalMutationResult = Apollo.MutationResult<
+  AuthenticateByEmailForAuthenticationModalMutation
+>;
+export type AuthenticateByEmailForAuthenticationModalMutationOptions = Apollo.BaseMutationOptions<
+  AuthenticateByEmailForAuthenticationModalMutation,
+  AuthenticateByEmailForAuthenticationModalMutationVariables
+>;
+export const UpdateUserForAuthenticationModalDocument = gql`
+  mutation updateUserForAuthenticationModal($isAuthentication: Boolean) {
+    updateUser(input: { isAuthentication: $isAuthentication }) {
+      id
+    }
+  }
+`;
+export type UpdateUserForAuthenticationModalMutationFn = Apollo.MutationFunction<
+  UpdateUserForAuthenticationModalMutation,
+  UpdateUserForAuthenticationModalMutationVariables
+>;
+
+/**
+ * __useUpdateUserForAuthenticationModalMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserForAuthenticationModalMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserForAuthenticationModalMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserForAuthenticationModalMutation, { data, loading, error }] = useUpdateUserForAuthenticationModalMutation({
+ *   variables: {
+ *      isAuthentication: // value for 'isAuthentication'
+ *   },
+ * });
+ */
+export function useUpdateUserForAuthenticationModalMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateUserForAuthenticationModalMutation,
+    UpdateUserForAuthenticationModalMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    UpdateUserForAuthenticationModalMutation,
+    UpdateUserForAuthenticationModalMutationVariables
+  >(UpdateUserForAuthenticationModalDocument, baseOptions);
+}
+export type UpdateUserForAuthenticationModalMutationHookResult = ReturnType<
+  typeof useUpdateUserForAuthenticationModalMutation
+>;
+export type UpdateUserForAuthenticationModalMutationResult = Apollo.MutationResult<
+  UpdateUserForAuthenticationModalMutation
+>;
+export type UpdateUserForAuthenticationModalMutationOptions = Apollo.BaseMutationOptions<
+  UpdateUserForAuthenticationModalMutation,
+  UpdateUserForAuthenticationModalMutationVariables
 >;
 export const SearchForAutoCompleteDocument = gql`
   query searchForAutoComplete($keyword: String) {

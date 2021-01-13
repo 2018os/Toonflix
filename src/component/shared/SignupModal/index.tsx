@@ -1,11 +1,12 @@
 import { Formik, Form, Field, FormikErrors, ErrorMessage } from 'formik';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '../../../styles/Button';
 import Logo from '../../../styles/Logo';
 import { Text } from '../../../styles/Typography';
 
+import AuthenticationModal from '../AuthenticationModal';
 import Modal, { ModalProps } from '../Modal';
 
 import { useSignupForSignupModalMutation } from '../../../generated/graphql';
@@ -72,6 +73,8 @@ const SignupModal: FunctionComponent<Props> = ({
   close,
   onSignupSuccess
 }) => {
+  const [showModal, toggleModal] = useState(false);
+  const [email, setEmail] = useState('');
   const initialValues: SignupFormValues = { name: '', email: '', password: '' };
   const [signup] = useSignupForSignupModalMutation();
   return (
@@ -111,7 +114,8 @@ const SignupModal: FunctionComponent<Props> = ({
               const { data } = await signup({ variables: { ...value } });
               if (data && data.signup.token && data.signup.user) {
                 onSignupSuccess(data.signup.token);
-                close();
+                toggleModal(true);
+                setEmail(value.email);
               }
             } catch (err) {
               alert('중복된 이메일 입니다.');
@@ -149,11 +153,19 @@ const SignupModal: FunctionComponent<Props> = ({
               />
             </Label>
             <StyledButton type="submit" isFull primary>
-              <Text size={FontSizes.DEFAULT}>로그인</Text>
+              <Text size={FontSizes.DEFAULT}>회원가입</Text>
             </StyledButton>
           </Form>
         </Formik>
       </Content>
+      <AuthenticationModal
+        email={email}
+        isOpen={showModal}
+        close={() => {
+          toggleModal(false);
+          close();
+        }}
+      />
     </Modal>
   );
 };

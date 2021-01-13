@@ -1,0 +1,11 @@
+mutation authenticateByEmailForAuthenticationModal($email: String!) {
+  authenticateByEmail(input: { email: $email }) {
+    code
+  }
+}
+
+mutation updateUserForAuthenticationModal($isAuthentication: Boolean) {
+  updateUser(input: { isAuthentication: $isAuthentication }) {
+    id
+  }
+}
