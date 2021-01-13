@@ -128,6 +128,7 @@ export type Mutation = {
   dislikeCollection: User;
   postComment: Comment;
   deleteCollection: Collection;
+  sendEmail: SendEmailPayload;
 };
 
 export type MutationLoginArgs = {
@@ -160,6 +161,15 @@ export type MutationPostCommentArgs = {
 
 export type MutationDeleteCollectionArgs = {
   collectionId: Scalars['ID'];
+};
+
+export type MutationSendEmailArgs = {
+  input: SendEmailInput;
+};
+
+export type SendEmailPayload = {
+  __typename?: 'SendEmailPayload';
+  user?: Maybe<User>;
 };
 
 export type AuthPayload = {
@@ -308,6 +318,7 @@ export type User = Node & {
   password: Scalars['String'];
   level: Scalars['Int'];
   exp: Scalars['Int'];
+  isAuthentication: Scalars['Boolean'];
   status: UserStatus;
   likedCollections: CollectionsConnection;
   myCollections: CollectionsConnection;
@@ -468,14 +479,14 @@ export type LoginInput = {
 export type CreateCollectionInput = {
   title: Scalars['String'];
   description: Scalars['String'];
-  webtoonIds: Array<Maybe<Scalars['ID']>>;
+  webtoonIds: Array<Scalars['ID']>;
 };
 
 export type UpdateCollectionInput = {
   collectionId: Scalars['ID'];
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  webtoonIds?: Maybe<Array<Scalars['ID']>>;
+  webtoonIds: Array<Scalars['ID']>;
 };
 
 export type CommentInput = {
@@ -496,6 +507,10 @@ export type SearchFiltering = {
   isFinish?: Maybe<Scalars['Boolean']>;
   platforms?: Maybe<Array<Platform>>;
   genres?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type SendEmailInput = {
+  email: Scalars['String'];
 };
 
 export type SearchForCategoryQueryVariables = Exact<{
@@ -594,7 +609,7 @@ export type PostCommentForCollectionDetailMutation = {
 
 export type UpdateCollectionForCollectionDetailMutationVariables = Exact<{
   collectionId: Scalars['ID'];
-  webtoonIds?: Maybe<Array<Scalars['ID']>>;
+  webtoonIds: Array<Scalars['ID']>;
   afterWebtoonId?: Maybe<Scalars['ID']>;
   afterCommentId?: Maybe<Scalars['ID']>;
 }>;
@@ -1023,7 +1038,7 @@ export type MeForAddToCollectionModalQuery = { __typename?: 'Query' } & {
 
 export type UpdateCollectionForWebtoonDetailMutationVariables = Exact<{
   collectionId: Scalars['ID'];
-  webtoonIds?: Maybe<Array<Scalars['ID']>>;
+  webtoonIds: Array<Scalars['ID']>;
 }>;
 
 export type UpdateCollectionForWebtoonDetailMutation = {
@@ -1435,7 +1450,7 @@ export type PostCommentForCollectionDetailMutationOptions = Apollo.BaseMutationO
 export const UpdateCollectionForCollectionDetailDocument = gql`
   mutation updateCollectionForCollectionDetail(
     $collectionId: ID!
-    $webtoonIds: [ID!]
+    $webtoonIds: [ID!]!
     $afterWebtoonId: ID
     $afterCommentId: ID
   ) {
@@ -2389,7 +2404,7 @@ export type MeForAddToCollectionModalQueryResult = Apollo.QueryResult<
 export const UpdateCollectionForWebtoonDetailDocument = gql`
   mutation updateCollectionForWebtoonDetail(
     $collectionId: ID!
-    $webtoonIds: [ID!]
+    $webtoonIds: [ID!]!
   ) {
     updateCollection(
       input: { collectionId: $collectionId, webtoonIds: $webtoonIds }

@@ -71,7 +71,7 @@ query meForAddToCollectionModal($afterMyCollectionId: ID) {
 
 mutation updateCollectionForWebtoonDetail(
   $collectionId: ID!
-  $webtoonIds: [ID!]
+  $webtoonIds: [ID!]!
 ) {
   updateCollection(
     input: { collectionId: $collectionId, webtoonIds: $webtoonIds }

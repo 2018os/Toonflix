@@ -32,7 +32,7 @@ mutation postCommentForCollectionDetail($collectionId: ID!, $message: String!) {
 
 mutation updateCollectionForCollectionDetail(
   $collectionId: ID!
-  $webtoonIds: [ID!]
+  $webtoonIds: [ID!]!
   $afterWebtoonId: ID
   $afterCommentId: ID
 ) {
