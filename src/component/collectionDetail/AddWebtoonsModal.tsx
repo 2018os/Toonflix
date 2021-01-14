@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Button from '../../styles/Button';
-import { Title, Text } from '../../styles/Typography';
+import { Text } from '../../styles/Typography';
 
 import { LoadingCardList } from '../shared/Loading';
 import Modal, { ModalProps } from '../shared/Modal';
@@ -24,10 +24,6 @@ type Props = ModalProps & {
 type WebtoonCardWrapperProps = {
   isSelected?: boolean;
 };
-
-const TitleWrapper = styled.div`
-  margin-bottom: ${spacing[2]};
-`;
 
 const WebtoonCardWrapper = styled.div<WebtoonCardWrapperProps>`
   ${(props) =>
@@ -84,9 +80,6 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
         }
       }}
     >
-      <TitleWrapper>
-        <Title>웹툰 추가</Title>
-      </TitleWrapper>
       <SearchBarWrapper>
         <SearchBar
           inputSize={FontSizes.LARGER}
