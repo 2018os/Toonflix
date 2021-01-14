@@ -9,6 +9,8 @@ import { Text } from '../../../styles/Typography';
 import Modal, { ModalProps } from '../Modal';
 
 import {
+  MeForWithAuthDocument,
+  MeForWithAuthQuery,
   useAuthenticateByEmailForAuthenticationModalMutation,
   useUpdateUserForAuthenticationModalMutation
 } from '../../../generated/graphql';
@@ -72,7 +74,26 @@ const AuthenticateModal: FunctionComponent<Props> = ({
     authenticateByEmail,
     { data }
   ] = useAuthenticateByEmailForAuthenticationModalMutation();
-  const [updateUser] = useUpdateUserForAuthenticationModalMutation();
+  const [updateUser] = useUpdateUserForAuthenticationModalMutation({
+    update: (cache, mutationResult) => {
+      const newMe = mutationResult.data?.updateUser;
+      const exsiting = cache.readQuery<MeForWithAuthQuery>({
+        query: MeForWithAuthDocument
+      });
+      if (exsiting && exsiting.me && newMe) {
+        cache.writeQuery({
+          query: MeForWithAuthDocument,
+          data: {
+            ...exsiting,
+            me: {
+              ...exsiting.me,
+              isAuthentication: newMe.isAuthentication
+            }
+          }
+        });
+      }
+    }
+  });
   const sendEmail = useCallback(
     (value: string) => {
       authenticateByEmail({

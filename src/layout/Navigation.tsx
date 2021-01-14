@@ -7,6 +7,7 @@ import withAuth, { AuthState } from '../hocs/withAuth';
 import Logo from '../styles/Logo';
 import { Text } from '../styles/Typography';
 
+import AuthenticationModal from '../component/shared/AuthenticationModal';
 import Dropdown, { Option } from '../component/shared/Dropdown';
 import Link from '../component/shared/Link';
 import LoginModal from '../component/shared/LoginModal';
@@ -72,7 +73,8 @@ const StyledLogo = styled(Logo)`
 
 const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [openLoginModal, toggleModal] = useState(false);
+  const [showLoginModal, toggleLoginModal] = useState(false);
+  const [showAuthenticationModal, toggleAuthenticationModal] = useState(false);
   const router = useRouter();
   return (
     <ProfileWrapper isMain={!!isMain}>
@@ -86,6 +88,11 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
               </TextButton>
             }
           >
+            {!authState.data.me.isAuthentication && (
+              <Option onClick={() => toggleAuthenticationModal(true)}>
+                이메일 인증
+              </Option>
+            )}
             <Option onClick={() => router.push('/profile')}>내 프로필</Option>
             <Option onClick={() => router.push('/mycollection')}>
               내 컬렉션
@@ -99,13 +106,18 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
               <Text color={Colors.RED}>로그아웃</Text>
             </Option>
           </Dropdown>
+          <AuthenticationModal
+            isOpen={showAuthenticationModal}
+            email={authState.data.me.email}
+            close={() => toggleAuthenticationModal(false)}
+          />
         </>
       ) : (
-        <TextButton onClick={() => toggleModal(true)}>로그인</TextButton>
+        <TextButton onClick={() => toggleLoginModal(true)}>로그인</TextButton>
       )}
       <LoginModal
-        isOpen={openLoginModal}
-        close={() => toggleModal(false)}
+        isOpen={showLoginModal}
+        close={() => toggleLoginModal(false)}
         onLoginSuccess={(token) => authState.signIn(token)}
       />
     </ProfileWrapper>

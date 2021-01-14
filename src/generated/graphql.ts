@@ -790,7 +790,7 @@ export type MeForProfileQueryVariables = Exact<{ [key: string]: never }>;
 export type MeForProfileQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'User' } & Pick<
     User,
-    'name' | 'email' | 'level' | 'exp'
+    'id' | 'name' | 'email' | 'level' | 'exp'
   > & {
       status: { __typename?: 'UserStatus' } & Pick<
         UserStatus,
@@ -828,7 +828,7 @@ export type UpdateUserForAuthenticationModalMutationVariables = Exact<{
 
 export type UpdateUserForAuthenticationModalMutation = {
   __typename?: 'Mutation';
-} & { updateUser: { __typename?: 'User' } & Pick<User, 'id'> };
+} & { updateUser: { __typename?: 'User' } & MyInfoFragment };
 
 export type SearchForAutoCompleteQueryVariables = Exact<{
   keyword?: Maybe<Scalars['String']>;
@@ -1094,8 +1094,13 @@ export type PostCommentForWebtoonDetailMutation = {
 export type MeForWithAuthQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeForWithAuthQuery = { __typename?: 'Query' } & {
-  me: { __typename?: 'User' } & Pick<User, 'id' | 'name'>;
+  me: { __typename?: 'User' } & MyInfoFragment;
 };
+
+export type MyInfoFragment = { __typename?: 'User' } & Pick<
+  User,
+  'id' | 'name' | 'email' | 'isAuthentication'
+>;
 
 export type GenresForFilterQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -1205,6 +1210,14 @@ export const UserCollectionCardListFragmentDoc = gql`
     }
   }
   ${CollectionCardFragmentDoc}
+`;
+export const MyInfoFragmentDoc = gql`
+  fragment myInfo on User {
+    id
+    name
+    email
+    isAuthentication
+  }
 `;
 export const SearchForCategoryDocument = gql`
   query searchForCategory(
@@ -1908,6 +1921,7 @@ export type CreateCollectionForMyCollectionMutationOptions = Apollo.BaseMutation
 export const MeForProfileDocument = gql`
   query meForProfile {
     me {
+      id
       name
       email
       level
@@ -2077,9 +2091,10 @@ export type AuthenticateByEmailForAuthenticationModalMutationOptions = Apollo.Ba
 export const UpdateUserForAuthenticationModalDocument = gql`
   mutation updateUserForAuthenticationModal($isAuthentication: Boolean) {
     updateUser(input: { isAuthentication: $isAuthentication }) {
-      id
+      ...myInfo
     }
   }
+  ${MyInfoFragmentDoc}
 `;
 export type UpdateUserForAuthenticationModalMutationFn = Apollo.MutationFunction<
   UpdateUserForAuthenticationModalMutation,
@@ -2645,10 +2660,10 @@ export type PostCommentForWebtoonDetailMutationOptions = Apollo.BaseMutationOpti
 export const MeForWithAuthDocument = gql`
   query meForWithAuth {
     me {
-      id
-      name
+      ...myInfo
     }
   }
+  ${MyInfoFragmentDoc}
 `;
 
 /**

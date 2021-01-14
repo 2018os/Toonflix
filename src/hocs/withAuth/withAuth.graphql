@@ -1,6 +1,12 @@
 query meForWithAuth {
   me {
-    id
-    name
+    ...myInfo
   }
+}
+
+fragment myInfo on User {
+  id
+  name
+  email
+  isAuthentication
 }

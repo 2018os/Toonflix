@@ -6,6 +6,6 @@ mutation authenticateByEmailForAuthenticationModal($email: String!) {
 
 mutation updateUserForAuthenticationModal($isAuthentication: Boolean) {
   updateUser(input: { isAuthentication: $isAuthentication }) {
-    id
+    ...myInfo
   }
 }
