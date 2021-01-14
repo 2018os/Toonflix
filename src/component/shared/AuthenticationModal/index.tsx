@@ -50,8 +50,9 @@ const StyledButton = styled(Button)`
 const Input = styled(Field)`
   height: 40px;
   border-radius: 5px;
-  border: solid 1px #707070;
-  background-color: #ffffff;
+  border: solid 1px ${Colors.TEXT_GRAY};
+  background-color: ${Colors.WHITE};
+  font-size: ${FontSizes.DEFAULT};
 `;
 
 const InfoMessage = styled(Text)`
@@ -119,21 +120,17 @@ const AuthenticateModal: FunctionComponent<Props> = ({
             return errors;
           }}
           onSubmit={async (value) => {
-            try {
-              if (
-                data?.authenticateByEmail.code &&
-                data.authenticateByEmail.code === value.code
-              ) {
-                await updateUser({
-                  variables: {
-                    isAuthentication: true
-                  }
-                });
-                close();
-              } else {
-                alert('잘못된 코드입니다.');
-              }
-            } catch (err) {
+            if (
+              data?.authenticateByEmail.code &&
+              data.authenticateByEmail.code === value.code
+            ) {
+              await updateUser({
+                variables: {
+                  isAuthentication: true
+                }
+              });
+              close();
+            } else {
               alert('잘못된 코드입니다.');
             }
           }}
@@ -155,6 +152,7 @@ const AuthenticateModal: FunctionComponent<Props> = ({
           color={Colors.TEXT_GRAY}
           onClick={() => {
             sendEmail(email);
+            alert('메일을 다시 전송했습니다.');
           }}
         >
           메일이 다시 받기
