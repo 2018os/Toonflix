@@ -68,6 +68,12 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
     refetch({ keyword });
   }, [keyword, refetch]);
 
+  useEffect(() => {
+    if (isOpen) {
+      setKeyword('');
+    }
+  }, [isOpen]);
+
   return (
     <Modal
       isOpen={isOpen}

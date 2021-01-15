@@ -10,7 +10,7 @@ query collectionForCollectionDetail(
 
 query searchForAddWebtoonsModal($keyword: String, $afterWebtoonId: ID) {
   search(keyword: $keyword) {
-    webtoonResult(first: 8, after: $afterWebtoonId) {
+    webtoonResult(first: 12, after: $afterWebtoonId) {
       pageInfo {
         endCursor
         hasNextPage
@@ -64,7 +64,7 @@ fragment collection on Collection {
     id
     name
   }
-  webtoons(first: 4, after: $afterWebtoonId) {
+  webtoons(first: 8, after: $afterWebtoonId) {
     pageInfo {
       hasNextPage
       endCursor
@@ -75,7 +75,7 @@ fragment collection on Collection {
       }
     }
   }
-  comments(first: 4, after: $afterCommentId) {
+  comments(first: 8, after: $afterCommentId) {
     ...commentsConnectionForComments
   }
 }

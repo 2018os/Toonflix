@@ -1165,7 +1165,7 @@ export const CollectionFragmentDoc = gql`
       id
       name
     }
-    webtoons(first: 4, after: $afterWebtoonId) {
+    webtoons(first: 8, after: $afterWebtoonId) {
       pageInfo {
         hasNextPage
         endCursor
@@ -1176,7 +1176,7 @@ export const CollectionFragmentDoc = gql`
         }
       }
     }
-    comments(first: 4, after: $afterCommentId) {
+    comments(first: 8, after: $afterCommentId) {
       ...commentsConnectionForComments
     }
   }
@@ -1372,7 +1372,7 @@ export type CollectionForCollectionDetailQueryResult = Apollo.QueryResult<
 export const SearchForAddWebtoonsModalDocument = gql`
   query searchForAddWebtoonsModal($keyword: String, $afterWebtoonId: ID) {
     search(keyword: $keyword) {
-      webtoonResult(first: 8, after: $afterWebtoonId) {
+      webtoonResult(first: 12, after: $afterWebtoonId) {
         pageInfo {
           endCursor
           hasNextPage
