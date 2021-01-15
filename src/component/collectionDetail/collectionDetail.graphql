@@ -32,6 +32,24 @@ mutation postCommentForCollectionDetail($collectionId: ID!, $message: String!) {
 
 mutation updateCollectionForCollectionDetail(
   $collectionId: ID!
+  $title: String!
+  $description: String
+  $afterWebtoonId: ID
+  $afterCommentId: ID
+) {
+  updateCollection(
+    input: {
+      collectionId: $collectionId
+      title: $title
+      description: $description
+    }
+  ) {
+    ...collection
+  }
+}
+
+mutation AddWebtoonsForCollectionDetail(
+  $collectionId: ID!
   $webtoonIds: [ID!]!
   $afterWebtoonId: ID
   $afterCommentId: ID

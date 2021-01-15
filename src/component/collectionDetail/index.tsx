@@ -9,6 +9,7 @@ import Section from '../../layout/Section';
 import { Title, Text } from '../../styles/Typography';
 
 import DeleteCollectionModal from './DeleteCollectionModal';
+import UpdateCollectionModal from './UpdateCollectionModal';
 import WebtoonCardList from './WebtoonCardList';
 
 import Comments from '../shared/Comments';
@@ -72,6 +73,9 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
   const [showDeleteCollectionModal, toggleDeleteCollectionModal] = useState(
     false
   );
+  const [showUpdateCollectionModal, toggleUpdateCollectionModal] = useState(
+    false
+  );
   const [showLoginModal, toggleLoginModal] = useState(false);
   const afterWebtoonId = data?.collection.webtoons.pageInfo.endCursor;
   const afterCommentId = data?.collection.comments.pageInfo.endCursor;
@@ -126,9 +130,14 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
                 }
               >
                 {data.collection.writer.id === authState.data?.me.id ? (
-                  <Option onClick={() => toggleDeleteCollectionModal(true)}>
-                    <Text color={Colors.RED}>컬렉션 삭제</Text>
-                  </Option>
+                  <>
+                    <Option onClick={() => toggleDeleteCollectionModal(true)}>
+                      <Text color={Colors.RED}>컬렉션 삭제</Text>
+                    </Option>
+                    <Option onClick={() => toggleUpdateCollectionModal(true)}>
+                      <Text>컬렉션 수정</Text>
+                    </Option>
+                  </>
                 ) : (
                   <Option
                     onClick={() => {
@@ -223,6 +232,15 @@ const CollectionDetail: FunctionComponent<Props> = ({ id, authState }) => {
         isOpen={showLoginModal}
         close={() => toggleLoginModal(false)}
         onLoginSuccess={(token) => authState.signIn(token)}
+      />
+      <UpdateCollectionModal
+        isOpen={showUpdateCollectionModal}
+        close={() => {
+          toggleUpdateCollectionModal(false);
+        }}
+        collectionId={id}
+        beforeDescription={data?.collection.description}
+        beforeTitle={data?.collection.title}
       />
     </div>
   );

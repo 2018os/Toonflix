@@ -12,7 +12,7 @@ import WebtoonCard from '../shared/WebtoonCard';
 import { spacing, FontSizes } from '../../util/theme';
 
 import {
-  useUpdateCollectionForCollectionDetailMutation,
+  useAddWebtoonsForCollectionDetailMutation,
   useSearchForAddWebtoonsModalQuery
 } from '../../generated/graphql';
 
@@ -68,7 +68,7 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
     refetch,
     fetchMore
   } = useSearchForAddWebtoonsModalQuery();
-  const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
+  const [addWebtoons] = useAddWebtoonsForCollectionDetailMutation();
   const afterWebtoonId = data?.search.webtoonResult?.pageInfo.endCursor;
 
   useEffect(() => {
@@ -156,7 +156,7 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
         isFull
         type="submit"
         onClick={() => {
-          updateCollection({
+          addWebtoons({
             variables: {
               collectionId,
               webtoonIds,
