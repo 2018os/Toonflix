@@ -105,8 +105,8 @@ const AuthenticateModal: FunctionComponent<Props> = ({
     [authenticateByEmail]
   );
   useEffect(() => {
-    if (email) sendEmail(email);
-  }, [email, sendEmail]);
+    if (email && isOpen) sendEmail(email);
+  }, [email, isOpen, sendEmail]);
   return (
     <Modal
       isOpen={isOpen}
