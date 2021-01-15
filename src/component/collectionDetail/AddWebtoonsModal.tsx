@@ -50,6 +50,7 @@ const SearchBarWrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
+  margin-top: ${spacing[2]};
   padding: ${spacing[2]};
   border-radius: 10px;
 `;
@@ -61,8 +62,14 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
 }) => {
   const [webtoonIds, setWebtoonIds] = useState<string[]>([]);
   const [keyword, setKeyword] = useState('');
-  const { data, loading, refetch } = useSearchForAddWebtoonsModalQuery();
+  const {
+    data,
+    loading,
+    refetch,
+    fetchMore
+  } = useSearchForAddWebtoonsModalQuery();
   const [updateCollection] = useUpdateCollectionForCollectionDetailMutation();
+  const afterWebtoonId = data?.search.webtoonResult?.pageInfo.endCursor;
 
   useEffect(() => {
     refetch({ keyword });
@@ -128,6 +135,20 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
           })
         ) : (
           <LoadingCardList cardType="webtoon" cardRange={8} />
+        )}
+        {data?.search.webtoonResult?.pageInfo.hasNextPage && (
+          <StyledButton
+            isFull
+            onClick={() =>
+              fetchMore({
+                variables: {
+                  afterWebtoonId
+                }
+              })
+            }
+          >
+            <Text size={FontSizes.SMALL}>더 보기</Text>
+          </StyledButton>
         )}
       </WebtoonCardListWrapper>
       <StyledButton
