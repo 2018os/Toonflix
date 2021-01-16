@@ -4,11 +4,12 @@ import {
   createHttpLink,
   InMemoryCache
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
+import Head from 'next/head';
 import React from 'react';
 import { relayStylePagination } from '@apollo/client/utilities';
+import { setContext } from '@apollo/client/link/context';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -90,6 +91,9 @@ const PageWrapper = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
+        <Head>
+          <link rel="shortcut icon" href="/static/favicon.ico" />
+        </Head>
         <Component {...pageProps} />
         <DefaultSetting />
       </AuthProvider>
