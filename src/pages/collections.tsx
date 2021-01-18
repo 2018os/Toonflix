@@ -1,6 +1,5 @@
 import React from 'react';
 
-import withFooter from '../hocs/withFooter';
 import withNavigation from '../hocs/withNavigation';
 
 import Container from '../layout/Container';
@@ -17,4 +16,4 @@ const Collections = () => {
     </Page>
   );
 };
-export default withNavigation(withFooter(Collections));
+export default withNavigation(Collections);

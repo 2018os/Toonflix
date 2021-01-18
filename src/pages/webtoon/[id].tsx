@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import withFooter from '../../hocs/withFooter';
 import withNavigation from '../../hocs/withNavigation';
 
 import Container from '../../layout/Container';
@@ -24,4 +23,4 @@ const Webtoon = () => {
   ); // TODO: Enhance type
 };
 
-export default withNavigation(withFooter(Webtoon));
+export default withNavigation(Webtoon);

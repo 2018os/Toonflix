@@ -1,6 +1,5 @@
 import React from 'react';
 
-import withFooter from '../hocs/withFooter';
 import withNavigation from '../hocs/withNavigation';
 
 import Container from '../layout/Container';
@@ -18,4 +17,4 @@ const MyCollection = () => {
   );
 };
 
-export default withNavigation(withFooter(MyCollection));
+export default withNavigation(MyCollection);

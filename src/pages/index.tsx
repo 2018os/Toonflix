@@ -1,6 +1,5 @@
 import React from 'react';
 
-import withFooter from '../hocs/withFooter';
 import withNavigation from '../hocs/withNavigation';
 
 import Container from '../layout/Container';
@@ -20,4 +19,4 @@ class Index extends React.PureComponent {
   }
 }
 
-export default withNavigation(withFooter(Index));
+export default withNavigation(Index);
