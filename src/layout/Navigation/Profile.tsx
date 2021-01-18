@@ -2,55 +2,20 @@ import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import withAuth, { AuthState } from '../hocs/withAuth';
+import withAuth, { AuthState } from '../../hocs/withAuth';
 
-import Logo from '../styles/Logo';
-import { Text } from '../styles/Typography';
+import { Text } from '../../styles/Typography';
 
-import AuthenticationModal from '../component/shared/AuthenticationModal';
-import Dropdown, { Option } from '../component/shared/Dropdown';
-import Link from '../component/shared/Link';
-import LoginModal from '../component/shared/LoginModal';
-import SearchBar, { SearchIcon } from '../component/shared/SearchBar';
+import AuthenticationModal from '../../component/shared/AuthenticationModal';
+import Dropdown, { Option } from '../../component/shared/Dropdown';
+import LoginModal from '../../component/shared/LoginModal';
 
-import { spacing, Colors, FontSizes, IconSizes } from '../util/theme';
+import { spacing, Colors } from '../../util/theme';
 
 export interface ProfileProps {
   authState: AuthState;
   isMain?: boolean;
 }
-
-const NavigationWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: ${spacing[3]} ${spacing[5]};
-`;
-
-const ItemWrapper = styled.div`
-  display: flex;
-  width: 992px;
-`;
-
-const Item = styled.div`
-  margin: auto ${spacing[2]} auto ${spacing[0]};
-  &:last-child {
-    margin: 0;
-  }
-`;
-
-const Tab = styled(Text)<{ isCurrentPath: boolean }>`
-  color: ${(props) =>
-    props.isCurrentPath ? Colors.PRIMARY_COLOR : Colors.BLACK};
-`;
-
-const SearchBarWrapper = styled.div`
-  min-width: 500px;
-`;
-
-const StyledSearchIcon = styled(SearchIcon)`
-  width: ${IconSizes.DEFAULT};
-  height: ${IconSizes.DEFAULT};
-`;
 
 const ProfileWrapper = styled.div<{ isMain: boolean }>`
   ${(props) =>
@@ -64,11 +29,6 @@ const ProfileWrapper = styled.div<{ isMain: boolean }>`
 
 const TextButton = styled(Text)`
   cursor: pointer;
-`;
-
-const StyledLogo = styled(Logo)`
-  width: 140px;
-  vertical-align: middle;
 `;
 
 const DropdownWrapper = styled.div`
@@ -131,46 +91,4 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
   );
 };
 
-const AuthProfile = withAuth(Profile);
-
-const Navigation = () => {
-  const [keyword, setKeyword] = useState('');
-  const router = useRouter();
-  const { pathname } = router;
-
-  return pathname === '/' ? (
-    <AuthProfile isMain />
-  ) : (
-    <NavigationWrapper>
-      <Link linkProps={{ href: '/' }}>
-        <StyledLogo />
-      </Link>
-      <ItemWrapper>
-        <Item>
-          <Link linkProps={{ href: '/collections' }}>
-            <Tab isCurrentPath={pathname === '/collections'}>컬렉션</Tab>
-          </Link>
-        </Item>
-        <Item>
-          <Link linkProps={{ href: '/category' }}>
-            <Tab isCurrentPath={pathname === '/category'}>카테고리</Tab>
-          </Link>
-        </Item>
-        <Item>
-          <SearchBarWrapper>
-            <SearchBar
-              keyword={keyword}
-              handleChange={(value) => setKeyword(value)}
-              inputSize={FontSizes.SMALL}
-              autoComplete
-              inputPrefix={<StyledSearchIcon />}
-            />
-          </SearchBarWrapper>
-        </Item>
-      </ItemWrapper>
-      <AuthProfile />
-    </NavigationWrapper>
-  );
-};
-
-export default Navigation;
+export default withAuth(Profile);
