@@ -85,10 +85,11 @@ const Comments: FunctionComponent<Props> = ({
         (edge) =>
           edge?.node && (
             <Comment
-              key={edge?.node?.id}
-              createdAt={edge?.node?.createdAt}
-              writer={edge?.node?.writer.name}
-              message={edge.node?.message}
+              key={edge.node.id}
+              createdAt={edge.node.createdAt}
+              writer={edge.node.writer.name}
+              message={edge.node.message}
+              level={edge.node.writer.level}
             />
           )
       )}

@@ -4,6 +4,7 @@ fragment comment on Comment {
   createdAt
   writer {
     name
+    level
   }
 }
 

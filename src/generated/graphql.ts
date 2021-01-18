@@ -906,7 +906,7 @@ export type CollectionCardFragment = { __typename?: 'Collection' } & Pick<
 export type CommentFragment = { __typename?: 'Comment' } & Pick<
   Comment,
   'id' | 'message' | 'createdAt'
-> & { writer: { __typename?: 'User' } & Pick<User, 'name'> };
+> & { writer: { __typename?: 'User' } & Pick<User, 'name' | 'level'> };
 
 export type CommentsConnectionForCommentsFragment = {
   __typename?: 'CommentsConnection';
@@ -1151,6 +1151,7 @@ export const CommentFragmentDoc = gql`
     createdAt
     writer {
       name
+      level
     }
   }
 `;

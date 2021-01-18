@@ -10,6 +10,7 @@ type Props = {
   writer: string;
   createdAt: string;
   message: string;
+  level: number;
 };
 
 const CommentInfo = styled.div``;
@@ -23,11 +24,19 @@ const CommentWrapper = styled.div`
   border-bottom: 1px solid ${Colors.BORDER_COLOR};
 `;
 
-const Comment: FunctionComponent<Props> = ({ createdAt, writer, message }) => {
+const Comment: FunctionComponent<Props> = ({
+  createdAt,
+  writer,
+  message,
+  level
+}) => {
   const createdFromNow = dayjs().from(createdAt);
   return (
     <CommentWrapper>
       <CommentInfo>
+        <Text size={FontSizes.SMALLEST} color={Colors.PRIMARY_COLOR}>
+          LV.{level}{' '}
+        </Text>
         <Text size={FontSizes.SMALLEST}>
           {writer} - {createdFromNow}
         </Text>
