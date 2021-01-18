@@ -38,9 +38,9 @@ const SearchBarWrapper = styled.div`
 `;
 
 const CategoryContainer: FunctionComponent<Props> = ({ filter }) => {
-  const [searchKeyword, setKeyword] = useState('');
   const router = useRouter();
   const { keyword }: SearchQueryString = router.query;
+  const [searchKeyword, setKeyword] = useState(keyword || '');
   const { data, loading, fetchMore, refetch } = useSearchForCategoryQuery({
     variables: {
       keyword,
