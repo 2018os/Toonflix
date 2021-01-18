@@ -7,7 +7,7 @@ const Tag = styled.div.attrs({
 })`
   padding: 0 ${spacing[0]};
   height: 24px;
-  display: inline;
+  display: inline-block;
   align-items: center;
   font-size: ${FontSizes.SMALL};
   background-color: ${Colors.WHITE};
