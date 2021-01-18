@@ -9,7 +9,16 @@ type Props = {
   children: React.ReactNode;
 };
 
-const OptionWrapper = styled.div<{ isOpen: boolean }>`
+const DropdownWrapper = styled.div.attrs({
+  className: 'dropdown'
+})`
+  position: relative;
+`;
+
+const OptionWrapper = styled.div.attrs({
+  className: 'option-wrapper'
+})<{ isOpen: boolean }>`
+  text-align: center;
   position: absolute;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   display: ${(props) => !props.isOpen && `none`};
@@ -33,10 +42,10 @@ const Dropdown: FunctionComponent<Props> = ({
   children
 }) => {
   return (
-    <div>
+    <DropdownWrapper>
       {openButton}
       <OptionWrapper isOpen={isOpen}>{children}</OptionWrapper>
-    </div>
+    </DropdownWrapper>
   );
 };
 

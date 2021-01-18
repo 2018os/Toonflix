@@ -71,6 +71,13 @@ const StyledLogo = styled(Logo)`
   vertical-align: middle;
 `;
 
+const DropdownWrapper = styled.div`
+  & > .dropdown > .option-wrapper {
+    min-width: 100px;
+    right: 0;
+  }
+`;
+
 const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [showLoginModal, toggleLoginModal] = useState(false);
@@ -79,7 +86,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
   return (
     <ProfileWrapper isMain={!!isMain}>
       {authState.data && authState.token ? (
-        <>
+        <DropdownWrapper>
           <Dropdown
             isOpen={isOpenMenu}
             openButton={
@@ -111,7 +118,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ authState, isMain }) => {
             email={authState.data.me.email}
             close={() => toggleAuthenticationModal(false)}
           />
-        </>
+        </DropdownWrapper>
       ) : (
         <TextButton onClick={() => toggleLoginModal(true)}>로그인</TextButton>
       )}
