@@ -3,12 +3,34 @@ import styled from 'styled-components';
 
 import Container from './Container';
 
+import { NaverBadge, DaumBadge } from '../styles/Badge';
+
 import BaseTag from '../component/shared/Tag';
 import Tags from '../component/shared/Tags';
 
-import { Colors, spacing } from '../util/theme';
+import { Colors, spacing, IconSizes } from '../util/theme';
 
 import { Platform, useGenresForFilterQuery } from '../generated/graphql';
+
+type Status = {
+  isPay?: boolean;
+  isAdult?: boolean;
+  isFinish?: boolean;
+};
+
+export type FilterType = Status & {
+  genres: string[];
+  platforms: Platform[];
+};
+
+interface Props {
+  filter: FilterType;
+  setFilter: Dispatch<SetStateAction<FilterType>>;
+}
+
+type PlatformBadge = {
+  [key in Platform]: any;
+};
 
 const Field = styled.div`
   background-color: ${Colors.WHITE};
@@ -17,8 +39,8 @@ const Field = styled.div`
 `;
 
 const Tag = styled(BaseTag)<{ isSelect: boolean }>`
+  cursor: pointer;
   ${(props) => `
-    cursor: pointer;
     background: ${props.isSelect ? Colors.PRIMARY_COLOR : Colors.WHITE};
     color: ${props.isSelect ? Colors.WHITE : Colors.BLACK};
   `}
@@ -28,55 +50,53 @@ const AdultTag = styled(Tag)`
   background: ${(props) => (props.isSelect ? Colors.ADULT : Colors.WHITE)};
 `;
 
-export interface FilterType {
-  isPay?: boolean;
-  isAdult?: boolean;
-  isFinish?: boolean;
-  genres: string[];
-  platforms: Platform[];
-}
-
-interface Props {
-  filter: FilterType;
-  setFilter: Dispatch<SetStateAction<FilterType>>;
-}
+const BadgeWrapper = styled.div<{ isSelect: boolean }>`
+  display: inline-block;
+  cursor: pointer;
+  opacity: ${(props) => props.isSelect && 0.5};
+  margin-right: ${spacing[0]};
+  &:last-child {
+    margin-right: 0;
+  }
+`;
 
 const Filter: FunctionComponent<Props> = ({ filter, setFilter }) => {
   const { data } = useGenresForFilterQuery();
+  const platformBadge: PlatformBadge = {
+    NAVER: NaverBadge,
+    DAUM: DaumBadge
+  };
+
   return (
     <Container>
       <Field>
+        {Object.values(platformBadge).map((badge, i) => {
+          const platformName = Object.keys(platformBadge)[i] as Platform;
+          const PlatformComponent = React.createElement(badge, {
+            size: IconSizes.LARGER
+          });
+          return (
+            <BadgeWrapper
+              isSelect={!!filter.platforms.includes(platformName)}
+              onClick={() => {
+                setFilter({
+                  ...filter,
+                  platforms: filter.platforms.includes(platformName)
+                    ? filter.platforms.filter(
+                        (platform) => platform !== platformName
+                      )
+                    : [...filter.platforms, platformName]
+                });
+              }}
+              key={`${platformName}-badge-wrapper`}
+            >
+              {PlatformComponent}
+            </BadgeWrapper>
+          );
+        })}
+      </Field>
+      <Field>
         <Tags>
-          <Tag
-            isSelect={!!filter.platforms.includes(Platform.Naver)}
-            onClick={() => {
-              setFilter({
-                ...filter,
-                platforms: filter.platforms.includes(Platform.Naver)
-                  ? filter.platforms.filter(
-                      (platform) => platform !== Platform.Naver
-                    )
-                  : [...filter.platforms, Platform.Naver]
-              });
-            }}
-          >
-            네이버
-          </Tag>
-          <Tag
-            isSelect={!!filter.platforms.includes(Platform.Daum)}
-            onClick={() => {
-              setFilter({
-                ...filter,
-                platforms: filter.platforms.includes(Platform.Daum)
-                  ? filter.platforms.filter(
-                      (platform) => platform !== Platform.Daum
-                    )
-                  : [...filter.platforms, Platform.Daum]
-              });
-            }}
-          >
-            다음
-          </Tag>
           <Tag
             isSelect={!!filter.isFinish}
             onClick={() => {
