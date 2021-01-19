@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { spacing } from '../../../util/theme';
 
 const Tags = styled.div`
-  & > * {
+  & > .tag {
     margin-right: ${spacing[0]};
     margin-bottom: ${spacing[0]};
   }
-  & > *:last-child {
+  & > .tag:last-child {
     margin-right: 0;
   }
 `;
