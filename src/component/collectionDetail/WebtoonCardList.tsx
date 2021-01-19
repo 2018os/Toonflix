@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState } from 'react';
-import styled from 'styled-components';
 
 import withAuth, { AuthState } from '../../hocs/withAuth';
 
@@ -10,31 +9,18 @@ import { Text } from '../../styles/Typography';
 
 import AddWebtoonsModal from './AddWebtoonsModal';
 
+import CardList, { Item } from '../shared/CardList';
 import { EmptyWebtoonCard } from '../shared/Empty';
 import WebtoonCard from '../shared/WebtoonCard';
 
 import { CollectionFragment } from '../../generated/graphql';
-import { ImgSizes, spacing, FontSizes } from '../../util/theme';
+import { FontSizes } from '../../util/theme';
 
 export interface Props {
   data: CollectionFragment;
   authState: AuthState;
   onLoadMore: () => any;
 }
-
-const WebtoonCardListWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-flow: row wrap;
-  ::after {
-    content: '';
-    flex: 0 0 ${ImgSizes.DEFAULT};
-  }
-`;
-
-const Item = styled.div`
-  margin-bottom: ${spacing[2]};
-`;
 
 const WebtoonCardList: FunctionComponent<Props> = ({
   data,
@@ -45,7 +31,7 @@ const WebtoonCardList: FunctionComponent<Props> = ({
   return (
     <>
       <Section>
-        <WebtoonCardListWrapper>
+        <CardList type="webtoon" itemCount={data.webtoons.edges?.length}>
           {data.writer.id === authState?.data?.me?.id && (
             <EmptyWebtoonCard
               click={() => toggleModal(true)}
@@ -64,7 +50,7 @@ const WebtoonCardList: FunctionComponent<Props> = ({
               }
               return null;
             })}
-        </WebtoonCardListWrapper>
+        </CardList>
       </Section>
       {data.webtoons.pageInfo.hasNextPage && (
         <Section>
