@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Button from '../../styles/Button';
 import { Text } from '../../styles/Typography';
 
+import CardList, { Item } from '../shared/CardList';
 import { LoadingCardList } from '../shared/Loading';
 import Modal, { ModalProps } from '../shared/Modal';
 import SearchBar from '../shared/SearchBar';
@@ -31,17 +32,6 @@ const WebtoonCardWrapper = styled.div<WebtoonCardWrapperProps>`
     `
     opacity: 0.5;
   `}
-`;
-
-const WebtoonCardListWrapper = styled.div`
-  display: flex;
-  margin-top: ${spacing[5]};
-  justify-content: space-between;
-  flex-flow: row wrap;
-`;
-
-const Item = styled.div`
-  margin-bottom: ${spacing[2]};
 `;
 
 const SearchBarWrapper = styled.div`
@@ -103,7 +93,10 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
           placeholder="컬렉션에 어울리는 웹툰을 검색하세요!"
         />
       </SearchBarWrapper>
-      <WebtoonCardListWrapper>
+      <CardList
+        itemCount={data?.search.webtoonResult?.edges?.length}
+        type="webtoon"
+      >
         {data && !loading ? (
           data.search.webtoonResult?.edges?.map((edge) => {
             if (edge?.node) {
@@ -150,7 +143,7 @@ const AddWebtoonsModal: FunctionComponent<Props> = ({
             <Text size={FontSizes.SMALL}>더 보기</Text>
           </StyledButton>
         )}
-      </WebtoonCardListWrapper>
+      </CardList>
       <StyledButton
         primary
         isFull
