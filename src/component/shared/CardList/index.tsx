@@ -9,7 +9,7 @@ export interface Props {
   itemCount?: number;
 }
 
-const WebtoonCardListWrapper = styled.div<{ afterWidth: string }>`
+const CardListWrapper = styled.div<{ afterWidth: string }>`
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
@@ -23,13 +23,9 @@ export const Item = styled.div`
   margin-bottom: ${spacing[2]};
 `;
 
-const WebtoonCardList: FunctionComponent<Props> = ({
-  type,
-  children,
-  itemCount
-}) => {
-  const remainingWebtoonCount = itemCount ? itemCount % 4 : 0;
-  const webtoonAfterWidthByCount: {
+const CardList: FunctionComponent<Props> = ({ type, children, itemCount }) => {
+  const remainingCount = itemCount ? itemCount % 4 : 0;
+  const afterWidthByCount: {
     [key in number]: string;
   } = {
     0: '0',
@@ -38,14 +34,10 @@ const WebtoonCardList: FunctionComponent<Props> = ({
     3: '24%'
   };
   const afterWidth = {
-    webtoon: webtoonAfterWidthByCount[remainingWebtoonCount],
+    webtoon: afterWidthByCount[remainingCount],
     collection: ImgSizes.LARGE
   }[type];
-  return (
-    <WebtoonCardListWrapper afterWidth={afterWidth}>
-      {children}
-    </WebtoonCardListWrapper>
-  );
+  return <CardListWrapper afterWidth={afterWidth}>{children}</CardListWrapper>;
 };
 
-export default WebtoonCardList;
+export default CardList;
