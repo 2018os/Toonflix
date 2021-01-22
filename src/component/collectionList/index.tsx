@@ -25,7 +25,7 @@ const CollectionListContainer = () => {
     getCollection,
     { data, loading, fetchMore }
   ] = useCollectionsForCollectionListLazyQuery({
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'network-only'
   });
   const [searchKeyword, setKeyword] = useState('');
   const afterId = data?.collections.pageInfo.endCursor;
