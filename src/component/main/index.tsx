@@ -73,7 +73,9 @@ const LinkButton = styled.div`
 
 function MainContainer() {
   const [keyword, setKeyword] = useState('');
-  const { data, loading } = useCollectionsForMainQuery();
+  const { data, loading } = useCollectionsForMainQuery({
+    fetchPolicy: 'cache-and-network'
+  });
 
   return (
     <>
