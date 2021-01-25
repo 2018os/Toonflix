@@ -7,12 +7,15 @@ import {
 import { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
 import Head from 'next/head';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { relayStylePagination } from '@apollo/client/utilities';
 import { setContext } from '@apollo/client/link/context';
+import { useRouter } from 'next/router';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
+import * as gtag from '../util/gtag';
 
 import { AuthProvider } from '../context/AuthContext';
 
@@ -88,6 +91,18 @@ const client = new ApolloClient({
 });
 
 const PageWrapper = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      gtag.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
